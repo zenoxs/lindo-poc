@@ -2,7 +2,7 @@ import { RootStoreSnapshot, IJsonPatch } from '@lindo/shared'
 import type { Observable } from 'rxjs'
 import type { ISerializedActionCall, IJsonPatch } from 'mobx-state-tree'
 
-export { }
+export {}
 
 declare global {
   interface Window {

@@ -29,7 +29,7 @@ export default defineConfig({
        * Node.js native module
        * Use lib2esm() to easy to convert ESM
        * Equivalent to
-       * 
+       *
        * ```js
        * sqlite3: () => `
        * const _M_ = require('sqlite3');
@@ -43,39 +43,34 @@ export default defineConfig({
         // CJS lib name
         'serialport',
         // export memebers
-        [
-          'SerialPort',
-          'SerialPortMock',
-        ],
-        { format: 'cjs' },
-      ),
-    }),
+        ['SerialPort', 'SerialPortMock'],
+        { format: 'cjs' }
+      )
+    })
   ],
   base: './',
   build: {
     outDir: '../../dist/renderer',
     emptyOutDir: true,
-    sourcemap: true,
+    sourcemap: true
   },
   resolve: {
     alias: {
-      '@lindo/shared' : join(__dirname, '../../packages/shared'),
-      '@': join(__dirname, 'src'),
-    },
+      '@lindo/shared': join(__dirname, '../../packages/shared'),
+      '@': join(__dirname, 'src')
+    }
   },
   server: {
     host: pkg.env.VITE_DEV_SERVER_HOST,
-    port: pkg.env.VITE_DEV_SERVER_PORT,
-  },
+    port: pkg.env.VITE_DEV_SERVER_PORT
+  }
 })
 
 /**
  * For usage of Electron and NodeJS APIs in the Renderer process
  * @see https://github.com/caoxiemeihao/electron-vue-vite/issues/52
  */
-export function electron(
-  entries: Parameters<typeof optimizer>[0] = {}
-): Plugin {
+export function electron(entries: Parameters<typeof optimizer>[0] = {}): Plugin {
   const builtins = builtinModules.filter((t) => !t.startsWith('_'))
 
   /**
@@ -84,7 +79,7 @@ export function electron(
   return optimizer({
     electron: electronExport(),
     ...builtinModulesExport(builtins),
-    ...entries,
+    ...entries
   })
 
   function electronExport() {
@@ -125,7 +120,7 @@ export {
       .map((moduleId) => {
         const nodeModule = require(moduleId)
         const requireModule = `const M = require("${moduleId}");`
-        const exportDefault = `export default M;`
+        const exportDefault = 'export default M;'
         const exportMembers =
           Object.keys(nodeModule)
             .map((attr) => `export const ${attr} = M.${attr}`)

@@ -1,5 +1,5 @@
-import { IPCEvents, RootStoreModel } from "@lindo/shared";
-import { ipcMain, webContents } from "electron";
+import { IPCEvents, RootStoreModel } from '@lindo/shared'
+import { ipcMain, webContents } from 'electron'
 import hash from 'object-hash'
 import {
   applyAction,
@@ -9,8 +9,8 @@ import {
   Instance,
   ISerializedActionCall,
   onPatch,
-  types,
-} from "mobx-state-tree";
+  types
+} from 'mobx-state-tree'
 
 /**
  * The key we'll be saving our state as within async storage.
@@ -22,62 +22,56 @@ import {
  */
 export async function setupRootStore() {
   // prepare the environment that will be associated with the RootStore.
-  const env = await Promise.resolve({});
+  const env = await Promise.resolve({})
   // const optionsPlugin = await SystemJS.import("http://localhost:3001/dist/plugin-test.js");
 
   // const ExtendedRootStoreModel = RootStoreModel.props({
   //   optionsStore: types.optional(optionsPlugin.PluginStoreModel, {}),
   // })
 
-  const rootStore: Instance<typeof RootStoreModel> = RootStoreModel.create(
-    {},
-    env
-  );
+  const rootStore: Instance<typeof RootStoreModel> = RootStoreModel.create({}, env)
 
-  const patchesFromRenderer: Array<string> = [];
+  const patchesFromRenderer: Array<string> = []
 
   ipcMain.handle(IPCEvents.INIT_STATE_ASYNC, async () => {
     return JSON.stringify(getSnapshot(rootStore))
-  });
+  })
 
   ipcMain.on(IPCEvents.INIT_STATE, (event) => {
     event.returnValue = JSON.stringify(getSnapshot(rootStore))
-  });
+  })
 
   // When receiving an action from a renderer
   ipcMain.on(IPCEvents.PATCH, (event, patch: IJsonPatch) => {
     // TODO: manage local patch, scoped to one process
     // const localPatch = stopForwarding(patch)
-    console.log("Got patch: ", patch);
-    patchesFromRenderer.push(hash(patch));
-    applyPatch(rootStore, patch);
+    console.log('Got patch: ', patch)
+    patchesFromRenderer.push(hash(patch))
+    applyPatch(rootStore, patch)
 
     // Forward it to all of the other renderers
     webContents.getAllWebContents().forEach((contents) => {
       // Ignore the renderer that sent the action and chromium devtools
-      if (
-        contents.id !== event.sender.id &&
-        !contents.getURL().startsWith("devtools://")
-      ) {
-        contents.send(IPCEvents.PATCH, patch);
+      if (contents.id !== event.sender.id && !contents.getURL().startsWith('devtools://')) {
+        contents.send(IPCEvents.PATCH, patch)
       }
-    });
-  });
+    })
+  })
 
   onPatch(rootStore, (patch) => {
-    console.info("Got change: ", patch);
+    console.info('Got change: ', patch)
 
     const patchHash = hash(patch)
     if (patchesFromRenderer.includes(patchHash)) {
-      console.log("patch already applied ", patchHash);
-      patchesFromRenderer.splice(patchesFromRenderer.indexOf(patchHash), 1);
-      return;
+      console.log('patch already applied ', patchHash)
+      patchesFromRenderer.splice(patchesFromRenderer.indexOf(patchHash), 1)
+      return
     }
 
     webContents.getAllWebContents().forEach((contents) => {
-      contents.send(IPCEvents.PATCH, patch);
-    });
-  });
+      contents.send(IPCEvents.PATCH, patch)
+    })
+  })
 
-  return rootStore;
+  return rootStore
 }

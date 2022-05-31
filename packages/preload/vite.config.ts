@@ -8,29 +8,29 @@ export default defineConfig({
   build: {
     outDir: '../../dist/preload',
     emptyOutDir: true,
-    minify: process.env./* from mode option */NODE_ENV === 'production',
+    minify: process.env./* from mode option */ NODE_ENV === 'production',
     // https://github.com/caoxiemeihao/electron-vue-vite/issues/61
     sourcemap: 'inline',
     rollupOptions: {
       input: {
         // multiple entry
-        index: join(__dirname, 'index.ts'),
+        index: join(__dirname, 'index.ts')
       },
       output: {
         format: 'cjs',
         entryFileNames: '[name].cjs',
-        manualChunks: {},
+        manualChunks: {}
       },
       external: [
         'electron',
-        ...builtinModules,
-        //...Object.keys(pkg.dependencies || {}),
-      ],
-    },
+        ...builtinModules
+        // ...Object.keys(pkg.dependencies || {}),
+      ]
+    }
   },
   resolve: {
     alias: {
-      '@lindo/shared' : join(__dirname, '../../packages/shared'),
-    },
-  },
+      '@lindo/shared': join(__dirname, '../../packages/shared')
+    }
+  }
 })

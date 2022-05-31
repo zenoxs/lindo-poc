@@ -1,12 +1,11 @@
 import { SnapshotOut, types } from 'mobx-state-tree'
 import { ConfStore, ConfStoreModel } from '../conf-store'
 
-
 /**
  * A RootStore model.
  */
 export const RootStoreModel = types.model('RootStore').props({
-  confStore: types.optional(ConfStoreModel, {}),
+  confStore: types.optional(ConfStoreModel, {})
 })
 
 /**

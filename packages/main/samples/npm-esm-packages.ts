@@ -1,6 +1,5 @@
 import { execa } from 'execa'
-
-(async () => {
+;(async () => {
   const { stdout } = await execa('echo', ['unicorns'])
 
   // console.log(stdout) // unicorns

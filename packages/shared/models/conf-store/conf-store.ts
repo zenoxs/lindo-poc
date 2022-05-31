@@ -6,8 +6,9 @@ import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 export const ConfStoreModel = types
   .model('ConfStore')
   .props({
-    appName: types.optional(types.string, 'Demo'),
-  }).actions(self => ({
+    appName: types.optional(types.string, 'Demo')
+  })
+  .actions((self) => ({
     setAppName(appName: string) {
       self.appName = appName
     }

@@ -1,11 +1,8 @@
-import { useStores } from "@lindo/shared";
+import React from 'react'
+import { useStores } from '@lindo/shared'
 
 export const TestComponent = () => {
-  const stores = useStores();
+  const stores = useStores()
 
-  return (
-    <button onClick={() => stores.confStore.setAppName("Tst" + Math.random())}>
-      Change app name
-    </button>
-  );
-};
+  return <button onClick={() => stores.confStore.setAppName('Tst' + Math.random())}>Change app name</button>
+}
