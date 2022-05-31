@@ -7,6 +7,8 @@ import { IPCEvents, RootStoreSnapshot } from '@lindo/shared'
 
 const { appendLoading, removeLoading } = useLoading()
 
+console.log('hello')
+alert('hello')
 ;(async () => {
   await domReady()
 
