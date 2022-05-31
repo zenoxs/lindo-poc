@@ -2,7 +2,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import React, { useEffect, useRef, useState } from 'react'
 import { RootStore, RootStoreProvider } from '@lindo/shared'
 import { setupRootStore } from './setup-root-store'
-import { MainScreen } from './screens/MainScreen'
+import { MainScreen } from './screens/MainScreen/MainScreen'
 
 export const App = () => {
   const didSetUpRootStoreRef = useRef(false)
