@@ -1,4 +1,5 @@
 import { builtinModules } from 'module'
+import { join } from 'path'
 import { defineConfig } from 'vite'
 import esmodule from 'vite-plugin-esmodule'
 import pkg from '../../package.json'
@@ -26,6 +27,11 @@ export default defineConfig({
         ...builtinModules,
         ...Object.keys(pkg.dependencies || {}),
       ],
+    },
+  },
+    resolve: {
+    alias: {
+      '@lindo/shared' : join(__dirname, '../../packages/shared')
     },
   },
 })

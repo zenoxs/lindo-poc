@@ -5,6 +5,9 @@
     "paths": {
       "@/*": [
         "packages/renderer/src/*"
+      ],
+      "@lindo/shared": [
+        "packages/shared/index.ts"
       ]
     }
   }
