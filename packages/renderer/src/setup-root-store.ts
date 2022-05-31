@@ -1,5 +1,14 @@
-import { IPCEvents, RootStoreModel } from '@lindo/shared'
-import { Instance, onPatch, types } from 'mobx-state-tree'
+import { IPCEvents, RootStoreModel } from "@lindo/shared";
+import * as hash from 'object-hash'
+import {
+  addMiddleware,
+  applyPatch,
+  IJsonPatch,
+  Instance,
+  onAction,
+  onPatch,
+  types,
+} from "mobx-state-tree";
 /**
  * The key we'll be saving our state as within async storage.
  */
@@ -9,11 +18,12 @@ import { Instance, onPatch, types } from 'mobx-state-tree'
  * Setup the root state.
  */
 export async function setupRootStore() {
+  console.log("setupRootStore");
   // prepare the environment that will be associated with the RootStore.
   const env = await Promise.resolve({});
 
   const state = await window.fetchInitialStateAsync();
-  console.log("Got state: ", state);
+  console.log("Got initial state: ", state);
 
   // const optionsPlugin = await SystemJS.import("http://localhost:3001/dist/plugin-test.js");
 
@@ -21,11 +31,29 @@ export async function setupRootStore() {
   //   optionsStore: types.optional(optionsPlugin.PluginStoreModel, {}),
   // })
 
-  const rootStore: Instance<typeof RootStoreModel> = RootStoreModel.create(state, env)
+  const rootStore: Instance<typeof RootStoreModel> = RootStoreModel.create(
+    state,
+    env
+  );
 
-  onPatch(rootStore, patch => {
+  const patchesFromMain: Array<string> = [];
+
+  window.subscribeToIPCPatch((patch: IJsonPatch) => {
+    console.log({ patch });
+    patchesFromMain.push(hash(patch));
+    applyPatch(rootStore, patch);
+  });
+
+  onPatch(rootStore, (patch) => {
+    console.log("onPatch", patch);
+    const patchHash = hash(patch)
+    if (patchesFromMain.includes(patchHash)) {
+      console.log("patch already applied ", patchHash);
+      patchesFromMain.splice(patchesFromMain.indexOf(patchHash), 1);
+      return;
+    }
     window.forwardPatchToMain(patch);
-  })
+  });
 
-  return rootStore
+  return rootStore;
 }

@@ -1,10 +1,13 @@
 import { IPCEvents, RootStoreModel } from "@lindo/shared";
 import { ipcMain, webContents } from "electron";
+import hash from 'object-hash'
 import {
+  applyAction,
   applyPatch,
   getSnapshot,
   IJsonPatch,
   Instance,
+  ISerializedActionCall,
   onPatch,
   types,
 } from "mobx-state-tree";
@@ -31,6 +34,8 @@ export async function setupRootStore() {
     env
   );
 
+  const patchesFromRenderer: Array<string> = [];
+
   ipcMain.handle(IPCEvents.INIT_STATE_ASYNC, async () => {
     return JSON.stringify(getSnapshot(rootStore))
   });
@@ -44,6 +49,7 @@ export async function setupRootStore() {
     // TODO: manage local patch, scoped to one process
     // const localPatch = stopForwarding(patch)
     console.log("Got patch: ", patch);
+    patchesFromRenderer.push(hash(patch));
     applyPatch(rootStore, patch);
 
     // Forward it to all of the other renderers
@@ -60,6 +66,17 @@ export async function setupRootStore() {
 
   onPatch(rootStore, (patch) => {
     console.info("Got change: ", patch);
+
+    const patchHash = hash(patch)
+    if (patchesFromRenderer.includes(patchHash)) {
+      console.log("patch already applied ", patchHash);
+      patchesFromRenderer.splice(patchesFromRenderer.indexOf(patchHash), 1);
+      return;
+    }
+
+    webContents.getAllWebContents().forEach((contents) => {
+      contents.send(IPCEvents.PATCH, patch);
+    });
   });
 
   return rootStore;
