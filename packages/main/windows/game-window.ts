@@ -9,18 +9,25 @@ type GameWindowEvents = {
 
 export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWindowEvents>) {
   private readonly _win: BrowserWindow
+
+  get id() {
+    return this._win.id!
+  }
+
   constructor() {
     super()
     this._win = new BrowserWindow({
       show: false,
       webPreferences: {
-        preload: join(__dirname, '../preload/index.cjs')
-        // defaultFontSize: 13,
-        // defaultEncoding: 'UTF-8',
-        // backgroundThrottling: false,
+        preload: join(__dirname, '../preload/index.cjs'),
+        defaultFontSize: 13,
+        defaultEncoding: 'UTF-8',
+        backgroundThrottling: false
         // webSecurity: false
       }
     })
+
+    console.log(this._win.id)
 
     this._win.on('close', (event) => {
       console.log('GameWindow ->', 'close')
@@ -39,12 +46,10 @@ export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWind
       if (process.env.NODE_ENV === 'development') {
         this._win.webContents.openDevTools({ mode: 'detach' })
       }
-      // win.webContents.openDevTools()
     }
 
-    // Test active push message to Renderer-process
+    // Show window when page is ready
     this._win.webContents.on('did-finish-load', () => {
-      console.log('GameWindow ->', 'did-finish-load')
       this._win.show()
     })
 

@@ -1,4 +1,5 @@
-import { app } from 'electron'
+import { app, Menu } from 'electron'
+import { getAppMenu } from './menu'
 import { GameWindow } from './windows'
 
 export class Application {
@@ -21,14 +22,15 @@ export class Application {
       if (this._gWindows.length) {
         this._gWindows[0].focus()
       } else {
-        this._createGameWindow()
+        this.createGameWindow()
       }
     })
 
-    this._createGameWindow()
+    Menu.setApplicationMenu(getAppMenu())
+    this.createGameWindow()
   }
 
-  private _createGameWindow() {
+  createGameWindow() {
     console.log('Application ->', '_createGameWindow')
     const gWindow = new GameWindow()
     gWindow.on('close', () => {
