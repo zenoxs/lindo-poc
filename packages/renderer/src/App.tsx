@@ -1,14 +1,12 @@
-import electron from '@/assets/electron.png'
-import react from '@/assets/react.svg'
-import vite from '@/assets/vite.svg'
-import styles from '@/styles/app.module.scss'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 import React, { useEffect, useRef, useState } from 'react'
 import { RootStore, RootStoreProvider } from '@lindo/shared'
-import { TestComponent } from './components/TestComponent'
 import { setupRootStore } from './setup-root-store'
+import { MainScreen } from './screens/MainScreen'
 
 export const App = () => {
   const didSetUpRootStoreRef = useRef(false)
+  const mdTheme = createTheme()
   const [rootStore, setRootStore] = useState<RootStore | undefined>(undefined)
 
   useEffect(() => {
@@ -24,7 +22,9 @@ export const App = () => {
 
   return (
     <RootStoreProvider value={rootStore}>
-      <TestComponent />
+      <ThemeProvider theme={mdTheme}>
+        <MainScreen />
+      </ThemeProvider>
     </RootStoreProvider>
   )
 }
