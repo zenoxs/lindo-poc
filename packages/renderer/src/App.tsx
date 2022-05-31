@@ -3,8 +3,9 @@ import react from "@/assets/react.svg";
 import vite from "@/assets/vite.svg";
 import styles from "@/styles/app.module.scss";
 import { useEffect, useState } from "react";
-import { RootStore, RootStoreProvider, setupRootStore } from "@lindo/shared";
+import { RootStore, RootStoreProvider } from "@lindo/shared";
 import { TestComponent } from "./components/TestComponent";
+import { setupRootStore } from "./setup-root-store";
 
 const App = () => {
   const [count, setCount] = useState(0);

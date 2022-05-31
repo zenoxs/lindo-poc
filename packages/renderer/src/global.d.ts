@@ -1,3 +1,4 @@
+import { RootStoreSnapshot } from '@lindo/shared'
 
 export { }
 
@@ -7,5 +8,7 @@ declare global {
     fs: typeof import('fs')
     ipcRenderer: import('electron').IpcRenderer
     removeLoading: () => void
+    forwardPatchToMain: (IJsonPatch) => void
+    fetchInitialStateAsync: () => Promise<RootStoreSnapshot>
   }
 }

@@ -1,4 +1,4 @@
-import { setupRootStore } from "@lindo/shared";
+import { setupRootStore } from "./setup-root-store";
 
 
 (async () => {

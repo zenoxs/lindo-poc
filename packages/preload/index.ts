@@ -2,6 +2,8 @@ import fs from 'fs'
 import { contextBridge, ipcRenderer } from 'electron'
 import { domReady } from './utils'
 import { useLoading } from './loading'
+import { IJsonPatch } from 'mobx-state-tree';
+import { IPCEvents } from '@lindo/shared';
 
 const { appendLoading, removeLoading } = useLoading()
 
@@ -15,6 +17,19 @@ const { appendLoading, removeLoading } = useLoading()
 contextBridge.exposeInMainWorld('fs', fs)
 contextBridge.exposeInMainWorld('removeLoading', removeLoading)
 contextBridge.exposeInMainWorld('ipcRenderer', withPrototype(ipcRenderer))
+
+const forwardPatchToMain = (patch: IJsonPatch) => {
+  ipcRenderer.send(IPCEvents.PATCH, patch)
+}
+
+const fetchInitialStateAsync = async () => {
+  const data = await ipcRenderer.invoke(IPCEvents.INIT_STATE_ASYNC)
+  return JSON.parse(data);
+}
+
+// mobx
+contextBridge.exposeInMainWorld('forwardPatchToMain', forwardPatchToMain)
+contextBridge.exposeInMainWorld('fetchInitialStateAsync', fetchInitialStateAsync)
 
 // `exposeInMainWorld` can't detect attributes and methods of `prototype`, manually patching it.
 function withPrototype(obj: Record<string, any>) {
