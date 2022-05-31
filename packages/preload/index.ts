@@ -2,13 +2,11 @@ import fs from 'fs'
 import { contextBridge, ipcRenderer } from 'electron'
 import { domReady } from './utils'
 import { useLoading } from './loading'
-import { IJsonPatch, ISerializedActionCall } from 'mobx-state-tree'
+import { IJsonPatch } from 'mobx-state-tree'
 import { IPCEvents, RootStoreSnapshot } from '@lindo/shared'
 
 const { appendLoading, removeLoading } = useLoading()
 
-console.log('hello')
-alert('hello')
 ;(async () => {
   await domReady()
 

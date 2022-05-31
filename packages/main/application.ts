@@ -31,6 +31,9 @@ export class Application {
   private _createGameWindow() {
     console.log('Application ->', '_createGameWindow')
     const gWindow = new GameWindow()
+    gWindow.on('close', () => {
+      this._gWindows.splice(this._gWindows.indexOf(gWindow), 1)
+    })
     this._gWindows.push(gWindow)
   }
 }

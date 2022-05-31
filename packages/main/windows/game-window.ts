@@ -1,12 +1,18 @@
 import { app, BrowserWindow, shell } from 'electron'
 import { join } from 'path'
+import { EventEmitter } from 'stream'
+import TypedEmitter from 'typed-emitter'
 
-export class GameWindow {
+type GameWindowEvents = {
+  close: (event: Event) => void
+}
+
+export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWindowEvents>) {
   private readonly _win: BrowserWindow
   constructor() {
-    console.log('GameWindow ->', 'constructor')
-    console.log(join(__dirname, '../preload/index.cjs'))
+    super()
     this._win = new BrowserWindow({
+      show: false,
       webPreferences: {
         preload: join(__dirname, '../preload/index.cjs')
         // defaultFontSize: 13,
@@ -15,16 +21,19 @@ export class GameWindow {
         // webSecurity: false
       }
     })
-    this._win.on('close', () => {
+
+    this._win.on('close', (event) => {
       console.log('GameWindow ->', 'close')
-      this._close()
+      this._close(event)
     })
 
     if (app.isPackaged) {
       this._win.loadFile(join(__dirname, '../renderer/index.html'))
     } else {
       // 🚧 Use ['ENV_NAME'] avoid vite:define plugin
-      const url = `http://${process.env.VITE_DEV_SERVER_HOST}:${process.env.VITE_DEV_SERVER_PORT}`
+
+      // eslint-disable-next-line dot-notation
+      const url = `http://${process.env['VITE_DEV_SERVER_HOST']}:${process.env['VITE_DEV_SERVER_PORT']}`
 
       this._win.loadURL(url)
       if (process.env.NODE_ENV === 'development') {
@@ -36,11 +45,7 @@ export class GameWindow {
     // Test active push message to Renderer-process
     this._win.webContents.on('did-finish-load', () => {
       console.log('GameWindow ->', 'did-finish-load')
-      // send message to renderer process
-    })
-
-    this._win.webContents.on('did-finish-load', () => {
-      this._win.webContents.send('main-process-message', new Date().toLocaleString())
+      this._win.show()
     })
 
     // Make all links open with the browser, not with the application
@@ -48,12 +53,11 @@ export class GameWindow {
       // if (url.startsWith('https:')) shell.openExternal(url)
       return { action: 'deny' }
     })
-
-    // this._win.show()
   }
 
-  private _close() {
+  private _close(event: Event) {
     this._win.removeAllListeners()
+    this.emit('close', event)
   }
 
   focus = () => this._win.focus()

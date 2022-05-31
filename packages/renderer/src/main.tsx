@@ -13,4 +13,4 @@ root.render(
   </StrictMode>
 )
 
-// window.removeLoading()
+window.removeLoading()
