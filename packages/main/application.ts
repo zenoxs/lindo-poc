@@ -1,5 +1,6 @@
 import { app, Menu } from 'electron'
 import { getAppMenu } from './menu'
+import { runUpdater } from './updater'
 import { GameWindow } from './windows'
 
 export class Application {
@@ -7,7 +8,9 @@ export class Application {
 
   private _gWindows: Array<GameWindow> = []
 
-  run() {
+  async run() {
+    await runUpdater()
+
     app.on('second-instance', () => {
       console.log('Application ->', 'second-instance')
       if (this._gWindows.length) {
@@ -26,8 +29,8 @@ export class Application {
       }
     })
 
-    Menu.setApplicationMenu(getAppMenu())
-    this.createGameWindow()
+    // Menu.setApplicationMenu(getAppMenu())
+    // this.createGameWindow()
   }
 
   createGameWindow() {

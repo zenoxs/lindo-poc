@@ -2,7 +2,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import React, { useEffect, useRef, useState } from 'react'
 import { RootStore, RootStoreProvider } from '@lindo/shared'
 import { setupRootStore } from './setup-root-store'
-import { MainScreen } from './screens/MainScreen/MainScreen'
+import { Navigator } from './navigation'
 
 export const App = () => {
   const didSetUpRootStoreRef = useRef(false)
@@ -23,7 +23,7 @@ export const App = () => {
   return (
     <RootStoreProvider value={rootStore}>
       <ThemeProvider theme={mdTheme}>
-        <MainScreen />
+        <Navigator />
       </ThemeProvider>
     </RootStoreProvider>
   )

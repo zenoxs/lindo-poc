@@ -2,43 +2,43 @@ import { app, BrowserWindow, shell } from 'electron'
 import { join } from 'path'
 import { EventEmitter } from 'stream'
 import TypedEmitter from 'typed-emitter'
+import { generateUserArgent } from '../utils'
 
-type GameWindowEvents = {
+type UpdaterWindowEvents = {
   close: (event: Event) => void
 }
 
-export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWindowEvents>) {
+export class UpdaterWindow extends (EventEmitter as new () => TypedEmitter<UpdaterWindowEvents>) {
   private readonly _win: BrowserWindow
 
-  get id() {
-    return this._win.id!
-  }
-
-  constructor() {
+  private constructor(userAgent: string) {
     super()
     this._win = new BrowserWindow({
       show: false,
-      resizable: false,
+      width: 700,
+      height: 190,
       webPreferences: {
-        preload: join(__dirname, '../preload/index.cjs')
+        preload: join(__dirname, '../preload/index.cjs'),
+        defaultFontSize: 13,
+        defaultEncoding: 'UTF-8',
+        backgroundThrottling: false
         // webSecurity: false
       }
     })
-
-    console.log(this._win.id)
+    this._win.webContents.setUserAgent(userAgent)
 
     this._win.on('close', (event) => {
-      console.log('GameWindow ->', 'close')
+      console.log('UpdaterWindow ->', 'close')
       this._close(event)
     })
 
     if (app.isPackaged) {
-      this._win.loadFile(join(__dirname, '../renderer/index.html'))
+      this._win.loadFile(join(__dirname, '../renderer/index.html#/updater'))
     } else {
       // 🚧 Use ['ENV_NAME'] avoid vite:define plugin
 
       // eslint-disable-next-line dot-notation
-      const url = `http://${process.env['VITE_DEV_SERVER_HOST']}:${process.env['VITE_DEV_SERVER_PORT']}`
+      const url = `http://${process.env['VITE_DEV_SERVER_HOST']}:${process.env['VITE_DEV_SERVER_PORT']}#/updater`
 
       this._win.loadURL(url)
       if (process.env.NODE_ENV === 'development') {
@@ -50,12 +50,11 @@ export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWind
     this._win.webContents.on('did-finish-load', () => {
       this._win.show()
     })
+  }
 
-    // Make all links open with the browser, not with the application
-    this._win.webContents.setWindowOpenHandler(({ url }) => {
-      // if (url.startsWith('https:')) shell.openExternal(url)
-      return { action: 'deny' }
-    })
+  static async init(): Promise<UpdaterWindow> {
+    const userAgent = await generateUserArgent()
+    return new UpdaterWindow(userAgent)
   }
 
   private _close(event: Event) {
