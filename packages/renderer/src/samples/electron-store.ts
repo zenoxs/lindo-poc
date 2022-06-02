@@ -9,7 +9,7 @@ const store = {
       return undefined
     }
   },
-  async set(key: string, value: any) {
+  async set(key: string, value: unknown) {
     const { invoke } = window.ipcRenderer
     let val = value
     try {

@@ -1,6 +1,5 @@
 import React from 'react'
-import { TestComponent } from '@/components/TestComponent'
-import { Box, CssBaseline, Drawer, Toolbar, List } from '@mui/material'
+import { Box, CssBaseline } from '@mui/material'
 import { SideBar } from './components/SideBar'
 
 export const MainScreen = () => {

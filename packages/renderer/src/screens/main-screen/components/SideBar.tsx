@@ -1,4 +1,4 @@
-import React, { DragEventHandler, useState } from 'react'
+import React, { useState } from 'react'
 import { styled } from '@mui/system'
 import {
   DndContext,

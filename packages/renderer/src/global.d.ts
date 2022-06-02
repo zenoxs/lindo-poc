@@ -1,10 +1,9 @@
 import { RootStoreSnapshot, IJsonPatch } from '@lindo/shared'
-import type { Observable } from 'rxjs'
-import type { ISerializedActionCall, IJsonPatch } from 'mobx-state-tree'
 
 export {}
 
 declare global {
+  // eslint-disable-next-line no-unused-vars
   interface Window {
     // Expose some Api through preload script
     fs: typeof import('fs')

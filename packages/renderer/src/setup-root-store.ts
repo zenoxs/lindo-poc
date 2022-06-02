@@ -1,6 +1,6 @@
-import { IPCEvents, RootStoreModel } from '@lindo/shared'
+import { RootStoreModel } from '@lindo/shared'
 import * as hash from 'object-hash'
-import { addMiddleware, applyPatch, IJsonPatch, Instance, onAction, onPatch, types } from 'mobx-state-tree'
+import { applyPatch, IJsonPatch, Instance, onPatch } from 'mobx-state-tree'
 /**
  * The key we'll be saving our state as within async storage.
  */

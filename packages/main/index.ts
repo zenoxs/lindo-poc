@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron'
+import { app } from 'electron'
 import { release } from 'os'
 import './samples/electron-store'
 import './samples/npm-esm-packages'

@@ -118,6 +118,7 @@ export {
   function builtinModulesExport(modules: string[]) {
     return modules
       .map((moduleId) => {
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
         const nodeModule = require(moduleId)
         const requireModule = `const M = require("${moduleId}");`
         const exportDefault = 'export default M;'

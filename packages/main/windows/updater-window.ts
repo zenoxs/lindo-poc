@@ -1,4 +1,4 @@
-import { app, BrowserWindow, shell } from 'electron'
+import { app, BrowserWindow } from 'electron'
 import { join } from 'path'
 import { EventEmitter } from 'stream'
 import TypedEmitter from 'typed-emitter'
@@ -17,6 +17,7 @@ export class UpdaterWindow extends (EventEmitter as new () => TypedEmitter<Updat
       show: false,
       width: 700,
       height: 190,
+      title: 'Updater',
       webPreferences: {
         preload: join(__dirname, '../preload/index.cjs'),
         defaultFontSize: 13,
@@ -29,7 +30,7 @@ export class UpdaterWindow extends (EventEmitter as new () => TypedEmitter<Updat
 
     this._win.on('close', (event) => {
       console.log('UpdaterWindow ->', 'close')
-      this._close(event)
+      this._handleClose(event)
     })
 
     if (app.isPackaged) {
@@ -57,9 +58,13 @@ export class UpdaterWindow extends (EventEmitter as new () => TypedEmitter<Updat
     return new UpdaterWindow(userAgent)
   }
 
-  private _close(event: Event) {
+  private _handleClose(event: Event) {
     this._win.removeAllListeners()
     this.emit('close', event)
+  }
+
+  close() {
+    this._win.close()
   }
 
   focus = () => this._win.focus()

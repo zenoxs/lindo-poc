@@ -1,5 +1,4 @@
-import { app, Menu } from 'electron'
-import { getAppMenu } from './menu'
+import { app } from 'electron'
 import { runUpdater } from './updater'
 import { GameWindow } from './windows'
 
