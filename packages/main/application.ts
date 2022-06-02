@@ -1,4 +1,5 @@
-import { app } from 'electron'
+import { app, Menu } from 'electron'
+import { getAppMenu } from './menu'
 import { runUpdater } from './updater'
 import { GameWindow } from './windows'
 
@@ -28,8 +29,8 @@ export class Application {
       }
     })
 
-    // Menu.setApplicationMenu(getAppMenu())
-    // this.createGameWindow()
+    Menu.setApplicationMenu(getAppMenu())
+    this.createGameWindow()
   }
 
   createGameWindow() {

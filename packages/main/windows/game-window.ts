@@ -24,8 +24,6 @@ export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWind
       }
     })
 
-    console.log(this._win.id)
-
     this._win.on('close', (event) => {
       console.log('GameWindow ->', 'close')
       this._close(event)
