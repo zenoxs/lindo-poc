@@ -6,6 +6,8 @@ import './store/store'
 import './menu'
 import { Application } from './application'
 
+app.commandLine.appendSwitch('disable-site-isolation-trials')
+
 // Disable GPU Acceleration for Windows 7
 if (release().startsWith('6.1')) app.disableHardwareAcceleration()
 

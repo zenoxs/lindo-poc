@@ -1,13 +1,16 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import React, { useEffect, useRef, useState } from 'react'
-import { RootStore, RootStoreProvider } from '@lindo/shared'
+import { GameContext, RootStore, RootStoreProvider } from '@lindo/shared'
 import { setupRootStore } from './setup-root-store'
 import { Navigator } from './navigation'
+import { GameContextProvider } from './providers'
 
 export const App = () => {
   const didSetUpRootStoreRef = useRef(false)
+  const didSetUpGameContextRef = useRef(false)
   const mdTheme = createTheme()
   const [rootStore, setRootStore] = useState<RootStore | undefined>(undefined)
+  const [gameContext, setGameContext] = useState<GameContext | undefined>(undefined)
 
   useEffect(() => {
     // prevents to setup root store multiple times
@@ -16,15 +19,21 @@ export const App = () => {
       didSetUpRootStoreRef.current = true
       setupRootStore().then(setRootStore)
     }
+    if (didSetUpGameContextRef.current === false) {
+      didSetUpGameContextRef.current = true
+      window.fetchGameContext().then(setGameContext)
+    }
   }, [])
 
-  if (!rootStore) return null
+  if (!rootStore || !gameContext) return null
 
   return (
     <RootStoreProvider value={rootStore}>
-      <ThemeProvider theme={mdTheme}>
-        <Navigator />
-      </ThemeProvider>
+      <GameContextProvider value={gameContext}>
+        <ThemeProvider theme={mdTheme}>
+          <Navigator />
+        </ThemeProvider>
+      </GameContextProvider>
     </RootStoreProvider>
   )
 }

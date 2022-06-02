@@ -1,4 +1,4 @@
-import { RootStoreSnapshot, IJsonPatch, UpdateProgress } from '@lindo/shared'
+import { RootStoreSnapshot, IJsonPatch, UpdateProgress, GameContext } from '@lindo/shared'
 
 declare global {
   // eslint-disable-next-line no-unused-vars
@@ -13,5 +13,7 @@ declare global {
     subscribeToIPCPatch: (callback: (patch: IJsonPatch) => void) => () => void
     // updater
     subscribeToUpdateProgress: (callback: (updateProgress: UpdateProgress) => void) => () => void
+    // context
+    fetchGameContext: () => Promise<GameContext>
   }
 }

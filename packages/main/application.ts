@@ -1,4 +1,6 @@
-import { app, Menu } from 'electron'
+import { GameContext, IPCEvents } from '@lindo/shared'
+import { app, ipcMain, Menu } from 'electron'
+import { GAME_PATH } from './constants'
 import { getAppMenu } from './menu'
 import { runUpdater } from './updater'
 import { GameWindow } from './windows'
@@ -27,6 +29,15 @@ export class Application {
       } else {
         this.createGameWindow()
       }
+    })
+
+    // handlers
+    ipcMain.handle(IPCEvents.GET_GAME_CONTEXT, (event) => {
+      const context: GameContext = {
+        gamePath: GAME_PATH,
+        windowId: event.sender.id
+      }
+      return JSON.stringify(context)
     })
 
     Menu.setApplicationMenu(getAppMenu())
