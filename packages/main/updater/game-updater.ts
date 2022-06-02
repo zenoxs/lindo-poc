@@ -1,12 +1,24 @@
 import axios, { AxiosInstance } from 'axios'
 import axiosRetry from 'axios-retry'
-import { app } from 'electron'
 import fs from 'fs-extra'
 import path from 'path'
 import * as beautify from 'js-beautify'
 import { UpdaterWindow } from '../windows/updater-window'
 import { Files, ItunesLookup, Manifest, RegexPatches } from './models'
 import { DiffManifest, retrieveManifests } from './updater-utils'
+import {
+  DOFUS_ITUNES_ORIGIN,
+  DOFUS_ORIGIN,
+  GAME_PATH,
+  LOCAL_ASSET_MAP_PATH,
+  LOCAL_DOFUS_MANIFEST_PATH,
+  LOCAL_LINDO_MANIFEST_PATH,
+  REMOTE_LINDO_MANIFEST_URL,
+  LOCAL_REGEX_PATH,
+  LOCAL_VERSIONS_PATH,
+  REMOTE_ASSET_MAP_URL,
+  REMOTE_DOFUS_MANIFEST_URL
+} from '../constants'
 
 interface GameVersion {
   buildVersion: string
@@ -15,26 +27,6 @@ interface GameVersion {
 
 export class GameUpdater {
   private readonly _updaterWindow: UpdaterWindow
-
-  // origins
-  private readonly _dofusOrigin = 'https://proxyconnection.touch.dofus.com/'
-  private readonly _dofusOriginItunes = 'https://itunes.apple.com/lookup?id=1041406978&t=' + new Date().getTime()
-
-  // paths
-  private readonly _gamePath = app.getPath('userData') + '/game/'
-
-  private readonly _localAssetMapPath = this._gamePath + 'assetMap.json'
-  private readonly _remoteAssetMapPath = this._dofusOrigin + 'assetMap.json'
-
-  private readonly _localLindoManifestPath = this._gamePath + 'lindoManifest.json'
-  private readonly _remoteLindoManifestPath =
-    'https://raw.githubusercontent.com/Clover-Lindo/lindo-game-base/master/manifest.json'
-
-  private readonly _localDofusManifestPath = this._gamePath + 'manifest.json'
-  private readonly _remoteDofusManifestPath = this._dofusOrigin + 'manifest.json'
-
-  private readonly _localVersionsPath = this._gamePath + 'versions.json'
-  private readonly _localRegexPath = this._gamePath + 'regex.json'
 
   private readonly _httpClient: AxiosInstance
 
@@ -51,25 +43,25 @@ export class GameUpdater {
 
   async run() {
     // create folder if missing
-    // fs.rmSync(this._gamePath, { recursive: true, force: true })
-    fs.mkdirSync(this._gamePath, { recursive: true })
-    fs.mkdirSync(this._gamePath + 'build', { recursive: true })
+    // fs.rmSync(GAME_PATH, { recursive: true, force: true })
+    fs.mkdirSync(GAME_PATH, { recursive: true })
+    fs.mkdirSync(GAME_PATH + 'build', { recursive: true })
 
     this._updaterWindow.sendProgress({ message: 'DOWNLOADING ALL MANIFESTS', percent: 0 })
 
     const [, remoteAssetManifest, assetDiffManifest] = await retrieveManifests({
-      localManifestPath: this._localAssetMapPath,
-      remoteManifestPath: this._remoteAssetMapPath,
+      localManifestPath: LOCAL_ASSET_MAP_PATH,
+      remoteManifestUrl: REMOTE_ASSET_MAP_URL,
       httpClient: this._httpClient
     })
     const [, remoteLindoManifest, lindoDiffManifest] = await retrieveManifests({
-      localManifestPath: this._localLindoManifestPath,
-      remoteManifestPath: this._remoteLindoManifestPath,
+      localManifestPath: LOCAL_LINDO_MANIFEST_PATH,
+      remoteManifestUrl: REMOTE_LINDO_MANIFEST_URL,
       httpClient: this._httpClient
     })
     const [, remoteDofusManifest, dofusDiffManifest] = await retrieveManifests({
-      localManifestPath: this._localDofusManifestPath,
-      remoteManifestPath: this._remoteDofusManifestPath,
+      localManifestPath: LOCAL_DOFUS_MANIFEST_PATH,
+      remoteManifestUrl: REMOTE_DOFUS_MANIFEST_URL,
       httpClient: this._httpClient
     })
 
@@ -100,10 +92,10 @@ export class GameUpdater {
 
     this._updaterWindow.sendProgress({ message: 'SAVING ALL JSON FILES TO DISK', percent: 100 })
     await Promise.all([
-      fs.writeFile(this._localAssetMapPath, JSON.stringify(remoteAssetManifest)),
-      fs.writeFile(this._localLindoManifestPath, JSON.stringify(remoteLindoManifest)),
-      fs.writeFile(this._localDofusManifestPath, JSON.stringify(remoteDofusManifest)),
-      fs.writeFile(this._localVersionsPath, JSON.stringify(localVersions))
+      fs.writeFile(LOCAL_ASSET_MAP_PATH, JSON.stringify(remoteAssetManifest)),
+      fs.writeFile(LOCAL_LINDO_MANIFEST_PATH, JSON.stringify(remoteLindoManifest)),
+      fs.writeFile(LOCAL_DOFUS_MANIFEST_PATH, JSON.stringify(remoteDofusManifest)),
+      fs.writeFile(LOCAL_VERSIONS_PATH, JSON.stringify(localVersions))
     ])
 
     console.log('UPDATE FINISH')
@@ -119,14 +111,14 @@ export class GameUpdater {
         fileContent = files[filename] as string
       }
 
-      fs.writeFileSync(this._gamePath + filename, fileContent)
+      fs.writeFileSync(GAME_PATH + filename, fileContent)
     }
   }
 
   private _removeOldAssets(differences: DiffManifest, manifest: Manifest) {
     for (const key in differences) {
       if (differences[key] === -1) {
-        const filePath = this._gamePath + manifest.files[key].filename
+        const filePath = GAME_PATH + manifest.files[key].filename
         const directoryPath = path.dirname(filePath)
 
         if (fs.existsSync(filePath)) {
@@ -145,7 +137,7 @@ export class GameUpdater {
     if (lindoDiffManifest['regex.json'] === 1) {
       regex = missingLindoFiles['regex.json'] as RegexPatches
     } else {
-      regex = fs.existsSync(this._localRegexPath) ? JSON.parse(fs.readFileSync(this._localRegexPath, 'utf-8')) : {}
+      regex = fs.existsSync(LOCAL_REGEX_PATH) ? JSON.parse(fs.readFileSync(LOCAL_REGEX_PATH, 'utf-8')) : {}
     }
 
     for (const filename in regex) {
@@ -169,8 +161,8 @@ export class GameUpdater {
   }
 
   private async _findingVersions(missingDofusFiles: Files): Promise<GameVersion> {
-    const localVersions: GameVersion = fs.existsSync(this._localVersionsPath)
-      ? JSON.parse(fs.readFileSync(this._localVersionsPath, 'utf-8'))
+    const localVersions: GameVersion = fs.existsSync(LOCAL_VERSIONS_PATH)
+      ? JSON.parse(fs.readFileSync(LOCAL_VERSIONS_PATH, 'utf-8'))
       : {}
 
     const buildScriptFile = missingDofusFiles['build/script.js']
@@ -178,7 +170,7 @@ export class GameUpdater {
       console.log('FETCH BUILD VERSION FROM script.js')
       localVersions.buildVersion = buildScriptFile.match(/window\.buildVersion\s?=\s?"(\d+\.\d+\.\d+(?:-\d+)?)"/)![1]
       localVersions.appVersion = await this._httpClient
-        .get<ItunesLookup>(this._dofusOriginItunes)
+        .get<ItunesLookup>(DOFUS_ITUNES_ORIGIN)
         .then((response) => response.data.results[0].version)
     }
 
@@ -210,7 +202,7 @@ export class GameUpdater {
     const dofusFiles: Files = {}
     for (const i in dofusDiff) {
       if (dofusDiff[i] === 1) {
-        dofusFiles[i] = await this._downloadFile(this._dofusOrigin + remoteDofus.files[i].filename)
+        dofusFiles[i] = await this._downloadFile(DOFUS_ORIGIN + remoteDofus.files[i].filename)
       }
     }
     return [lindoFiles, dofusFiles]
@@ -241,8 +233,8 @@ export class GameUpdater {
         if (diffManifest[i] === 1) {
           promises.push(
             new Promise((resolve) => {
-              const url = this._dofusOrigin + remoteAsset.files[i].filename
-              const filePath = this._gamePath + remoteAsset.files[i].filename
+              const url = DOFUS_ORIGIN + remoteAsset.files[i].filename
+              const filePath = GAME_PATH + remoteAsset.files[i].filename
 
               const directoryPath = path.dirname(filePath)
               if (!fs.existsSync(directoryPath)) {
@@ -268,8 +260,8 @@ export class GameUpdater {
     } else {
       for (const i in diffManifest) {
         if (diffManifest[i] === 1) {
-          const url = this._dofusOrigin + remoteAsset.files[i].filename
-          const filePath = this._gamePath + remoteAsset.files[i].filename
+          const url = DOFUS_ORIGIN + remoteAsset.files[i].filename
+          const filePath = GAME_PATH + remoteAsset.files[i].filename
 
           const directoryPath = path.dirname(filePath)
           if (!fs.existsSync(directoryPath)) {

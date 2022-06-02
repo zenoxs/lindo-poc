@@ -6,17 +6,17 @@ export type DiffManifest = Record<string, 1 | 0 | -1>
 
 export const retrieveManifests = async ({
   localManifestPath,
-  remoteManifestPath,
+  remoteManifestUrl,
   httpClient
 }: {
   localManifestPath: string
-  remoteManifestPath: string
+  remoteManifestUrl: string
   httpClient: AxiosInstance
 }): Promise<[Manifest, Manifest, DiffManifest]> => {
   const localManifest: Manifest = fs.existsSync(localManifestPath)
     ? JSON.parse(fs.readFileSync(localManifestPath, 'utf8'))
     : {}
-  const remoteManifest = await downloadJson<Manifest>(remoteManifestPath, httpClient)
+  const remoteManifest = await downloadJson<Manifest>(remoteManifestUrl, httpClient)
   const difference = diffManifest(localManifest, remoteManifest)
 
   return [localManifest, remoteManifest, difference]
