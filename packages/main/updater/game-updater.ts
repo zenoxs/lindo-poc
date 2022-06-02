@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios'
 import axiosRetry from 'axios-retry'
 import { app } from 'electron'
-import fs from 'fs'
+import fs from 'fs-extra'
 import path from 'path'
 import * as beautify from 'js-beautify'
 import { UpdaterWindow } from '../windows/updater-window'
@@ -50,9 +50,8 @@ export class GameUpdater {
   }
 
   async run() {
-    console.log(this._gamePath)
     // create folder if missing
-    fs.rmSync(this._gamePath, { recursive: true, force: true })
+    // fs.rmSync(this._gamePath, { recursive: true, force: true })
     fs.mkdirSync(this._gamePath, { recursive: true })
     fs.mkdirSync(this._gamePath + 'build', { recursive: true })
 
@@ -60,15 +59,18 @@ export class GameUpdater {
 
     const [, remoteAssetManifest, assetDiffManifest] = await retrieveManifests({
       localManifestPath: this._localAssetMapPath,
-      remoteManifestPath: this._remoteAssetMapPath
+      remoteManifestPath: this._remoteAssetMapPath,
+      httpClient: this._httpClient
     })
     const [, remoteLindoManifest, lindoDiffManifest] = await retrieveManifests({
       localManifestPath: this._localLindoManifestPath,
-      remoteManifestPath: this._remoteLindoManifestPath
+      remoteManifestPath: this._remoteLindoManifestPath,
+      httpClient: this._httpClient
     })
     const [, remoteDofusManifest, dofusDiffManifest] = await retrieveManifests({
       localManifestPath: this._localDofusManifestPath,
-      remoteManifestPath: this._remoteDofusManifestPath
+      remoteManifestPath: this._remoteDofusManifestPath,
+      httpClient: this._httpClient
     })
 
     console.log('DOWNLOAD MISSING ASSETS FILES ON DISK..')
@@ -83,7 +85,7 @@ export class GameUpdater {
     )
 
     console.log('FINDING VERSIONS..')
-    await this._findingVersions(missingDofusFiles)
+    const localVersions = await this._findingVersions(missingDofusFiles)
 
     console.log('APPLYING REGEX (LINDO OVERRIDE) ON DOFUS MISSING FILES')
     this._applyRegex(lindoDiffManifest, missingLindoFiles, missingDofusFiles)
@@ -95,6 +97,15 @@ export class GameUpdater {
     console.log('REMOVING OLD ASSETS AND DOFUS FILES..')
     this._removeOldAssets(dofusDiffManifest, remoteDofusManifest)
     this._removeOldAssets(lindoDiffManifest, remoteLindoManifest)
+
+    // TODO: write manifest
+    console.log('SAVING ALL JSON FILES TO DISK')
+    await Promise.all([
+      fs.writeFile(this._localAssetMapPath, JSON.stringify(remoteAssetManifest)),
+      fs.writeFile(this._localLindoManifestPath, JSON.stringify(remoteLindoManifest)),
+      fs.writeFile(this._localDofusManifestPath, JSON.stringify(remoteDofusManifest)),
+      fs.writeFile(this._localVersionsPath, JSON.stringify(localVersions))
+    ])
 
     console.log('FINISH')
     this._updaterWindow.close()
@@ -166,7 +177,7 @@ export class GameUpdater {
     const buildScriptFile = missingDofusFiles['build/script.js']
     if (buildScriptFile && typeof buildScriptFile === 'string') {
       console.log('FETCH BUILD VERSION FROM script.js')
-      localVersions.buildVersion = buildScriptFile.match(/window\.buildVersion\s?=\s?"(\d+\.\d+\.\d+(?:-\d+)?)"/)![0]
+      localVersions.buildVersion = buildScriptFile.match(/window\.buildVersion\s?=\s?"(\d+\.\d+\.\d+(?:-\d+)?)"/)![1]
       localVersions.appVersion = await this._httpClient
         .get<ItunesLookup>(this._dofusOriginItunes)
         .then((response) => response.data.results[0].version)

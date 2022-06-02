@@ -1,31 +1,30 @@
+import { AxiosInstance } from 'axios'
 import fs from 'fs'
-import fetch from 'node-fetch'
 import { Manifest } from './models'
 
 export type DiffManifest = Record<string, 1 | 0 | -1>
 
 export const retrieveManifests = async ({
   localManifestPath,
-  remoteManifestPath
+  remoteManifestPath,
+  httpClient
 }: {
   localManifestPath: string
   remoteManifestPath: string
+  httpClient: AxiosInstance
 }): Promise<[Manifest, Manifest, DiffManifest]> => {
   const localManifest: Manifest = fs.existsSync(localManifestPath)
     ? JSON.parse(fs.readFileSync(localManifestPath, 'utf8'))
     : {}
-  const remoteManifest = await downloadJson<Manifest>(remoteManifestPath)
+  const remoteManifest = await downloadJson<Manifest>(remoteManifestPath, httpClient)
   const difference = diffManifest(localManifest, remoteManifest)
 
   return [localManifest, remoteManifest, difference]
 }
 
-export const downloadJson = <T>(url: string): Promise<T> => {
-  console.log('Download JSON : ' + url)
-
-  return fetch(url).then((res) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return res.json() as any
+export const downloadJson = <T>(url: string, httpClient: AxiosInstance): Promise<T> => {
+  return httpClient.get(url).then((res) => {
+    return res.data
   })
 }
 
