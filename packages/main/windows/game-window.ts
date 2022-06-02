@@ -6,7 +6,6 @@ import TypedEmitter from 'typed-emitter'
 type GameWindowEvents = {
   close: (event: Event) => void
 }
-
 export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWindowEvents>) {
   private readonly _win: BrowserWindow
 

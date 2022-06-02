@@ -1,3 +1,4 @@
+import { IPCEvents, UpdateProgress } from '@lindo/shared'
 import { app, BrowserWindow } from 'electron'
 import { join } from 'path'
 import { EventEmitter } from 'stream'
@@ -56,6 +57,11 @@ export class UpdaterWindow extends (EventEmitter as new () => TypedEmitter<Updat
   static async init(): Promise<UpdaterWindow> {
     const userAgent = await generateUserArgent()
     return new UpdaterWindow(userAgent)
+  }
+
+  sendProgress(progress: UpdateProgress) {
+    console.log(progress.message)
+    this._win.webContents.send(IPCEvents.UPDATE_PROGRESS, progress)
   }
 
   private _handleClose(event: Event) {

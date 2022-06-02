@@ -55,7 +55,7 @@ export class GameUpdater {
     fs.mkdirSync(this._gamePath, { recursive: true })
     fs.mkdirSync(this._gamePath + 'build', { recursive: true })
 
-    console.log('GameUpdater -> DOWNLOADING ALL MANIFESTS')
+    this._updaterWindow.sendProgress({ message: 'DOWNLOADING ALL MANIFESTS', percent: 0 })
 
     const [, remoteAssetManifest, assetDiffManifest] = await retrieveManifests({
       localManifestPath: this._localAssetMapPath,
@@ -73,10 +73,10 @@ export class GameUpdater {
       httpClient: this._httpClient
     })
 
-    console.log('DOWNLOAD MISSING ASSETS FILES ON DISK..')
+    this._updaterWindow.sendProgress({ message: 'DOWNLOAD MISSING ASSETS FILES ON DISK..', percent: 10 })
     await this._downloadAssetsFiles(assetDiffManifest, remoteAssetManifest)
 
-    console.log('DOWNLOAD MISSING LINDO AND DOFUS FILES IN MEMORY..')
+    this._updaterWindow.sendProgress({ message: 'DOWNLOAD MISSING LINDO AND DOFUS FILES IN MEMORY..', percent: 40 })
     const [missingLindoFiles, missingDofusFiles] = await this._retrieveMissingLindoAndDofusFiles(
       lindoDiffManifest,
       remoteLindoManifest,
@@ -84,22 +84,21 @@ export class GameUpdater {
       remoteDofusManifest
     )
 
-    console.log('FINDING VERSIONS..')
+    this._updaterWindow.sendProgress({ message: 'FINDING VERSIONS..', percent: 60 })
     const localVersions = await this._findingVersions(missingDofusFiles)
 
-    console.log('APPLYING REGEX (LINDO OVERRIDE) ON DOFUS MISSING FILES')
+    this._updaterWindow.sendProgress({ message: 'APPLYING REGEX (LINDO OVERRIDE) ON DOFUS MISSING FILES', percent: 70 })
     this._applyRegex(lindoDiffManifest, missingLindoFiles, missingDofusFiles)
 
-    console.log('WRITING LINDO AND DOFUS MISSING FILES TO DISK')
+    this._updaterWindow.sendProgress({ message: 'WRITING LINDO AND DOFUS MISSING FILES TO DISK', percent: 80 })
     this._writeMissingFiles(missingLindoFiles)
     this._writeMissingFiles(missingDofusFiles)
 
-    console.log('REMOVING OLD ASSETS AND DOFUS FILES..')
+    this._updaterWindow.sendProgress({ message: 'REMOVING OLD ASSETS AND DOFUS FILES..', percent: 90 })
     this._removeOldAssets(dofusDiffManifest, remoteDofusManifest)
     this._removeOldAssets(lindoDiffManifest, remoteLindoManifest)
 
-    // TODO: write manifest
-    console.log('SAVING ALL JSON FILES TO DISK')
+    this._updaterWindow.sendProgress({ message: 'SAVING ALL JSON FILES TO DISK', percent: 100 })
     await Promise.all([
       fs.writeFile(this._localAssetMapPath, JSON.stringify(remoteAssetManifest)),
       fs.writeFile(this._localLindoManifestPath, JSON.stringify(remoteLindoManifest)),
@@ -107,7 +106,7 @@ export class GameUpdater {
       fs.writeFile(this._localVersionsPath, JSON.stringify(localVersions))
     ])
 
-    console.log('FINISH')
+    console.log('UPDATE FINISH')
     this._updaterWindow.close()
   }
 
@@ -218,9 +217,9 @@ export class GameUpdater {
   }
 
   private async _downloadAssetsFiles(diffManifest: DiffManifest, remoteAsset: Manifest, async: boolean = true) {
-    // const initialStatus = this.progressText
+    const initialStatus = 'Downloading Dofus files'
 
-    // const totalDownload = Object.keys(diffManifest).reduce((acc, key) => acc + (diffManifest[key] === 1 ? 1 : 0), 0)
+    const totalDownload = Object.keys(diffManifest).reduce((acc, key) => acc + (diffManifest[key] === 1 ? 1 : 0), 0)
     let currentDownload = 0
 
     if (async) {
@@ -254,7 +253,10 @@ export class GameUpdater {
                 response.data.pipe(fs.createWriteStream(filePath))
                 currentDownload++
 
-                // this.progressText = initialStatus + ' (' + currentDownload + '/' + totalDownload + ')'
+                this._updaterWindow.sendProgress({
+                  message: initialStatus + ' (' + currentDownload + '/' + totalDownload + ')',
+                  percent: 10 + (currentDownload / totalDownload) * 30
+                })
                 resolve(true)
               })
             })
@@ -280,7 +282,10 @@ export class GameUpdater {
           response.data.pipe(fileWriteStream)
 
           fileWriteStream.on('finish', () => {
-            // this.progressText = initialStatus + ' (' + currentDownload + '/' + totalDownload + ')'
+            this._updaterWindow.sendProgress({
+              message: initialStatus + ' (' + currentDownload + '/' + totalDownload + ')',
+              percent: 10 + (currentDownload / totalDownload) * 30
+            })
             currentDownload++
           })
         }

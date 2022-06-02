@@ -1,6 +1,4 @@
-import { RootStoreSnapshot, IJsonPatch } from '@lindo/shared'
-
-export {}
+import { RootStoreSnapshot, IJsonPatch, UpdateProgress } from '@lindo/shared'
 
 declare global {
   // eslint-disable-next-line no-unused-vars
@@ -9,8 +7,11 @@ declare global {
     fs: typeof import('fs')
     ipcRenderer: import('electron').IpcRenderer
     removeLoading: () => void
+    // mobx
     forwardPatchToMain: (patch: IJsonPatch) => void
     fetchInitialStateAsync: () => Promise<RootStoreSnapshot>
-    subscribeToIPCPatch: (callback: (patch: IJsonPatch) => void) => void
+    subscribeToIPCPatch: (callback: (patch: IJsonPatch) => void) => () => void
+    // updater
+    subscribeToUpdateProgress: (callback: (updateProgress: UpdateProgress) => void) => () => void
   }
 }

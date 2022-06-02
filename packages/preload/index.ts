@@ -1,9 +1,9 @@
 import fs from 'fs'
-import { contextBridge, ipcRenderer } from 'electron'
+import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron'
 import { domReady } from './utils'
 import { useLoading } from './loading'
 import { IJsonPatch } from 'mobx-state-tree'
-import { IPCEvents, RootStoreSnapshot } from '@lindo/shared'
+import { IPCEvents, RootStoreSnapshot, UpdateProgress } from '@lindo/shared'
 
 const { appendLoading, removeLoading } = useLoading()
 
@@ -18,7 +18,7 @@ contextBridge.exposeInMainWorld('fs', fs)
 contextBridge.exposeInMainWorld('removeLoading', removeLoading)
 contextBridge.exposeInMainWorld('ipcRenderer', withPrototype(ipcRenderer))
 
-// mobx
+// MOBX
 
 const forwardPatchToMain = (patch: IJsonPatch): void => {
   ipcRenderer.send(IPCEvents.PATCH, patch)
@@ -29,15 +29,35 @@ const fetchInitialStateAsync = async (): Promise<RootStoreSnapshot> => {
   return JSON.parse(data)
 }
 
-const subscribeToIPCPatch = (callback: (patch: IJsonPatch) => void): void => {
-  ipcRenderer.on(IPCEvents.PATCH, (_, patch: IJsonPatch) => {
+const subscribeToIPCPatch = (callback: (patch: IJsonPatch) => void): (() => void) => {
+  const listener = (_: IpcRendererEvent, patch: IJsonPatch) => {
     callback(patch)
-  })
+  }
+  ipcRenderer.on(IPCEvents.PATCH, listener)
+
+  return () => {
+    ipcRenderer.removeListener(IPCEvents.PATCH, listener)
+  }
 }
 
 contextBridge.exposeInMainWorld('forwardPatchToMain', forwardPatchToMain)
 contextBridge.exposeInMainWorld('fetchInitialStateAsync', fetchInitialStateAsync)
 contextBridge.exposeInMainWorld('subscribeToIPCPatch', subscribeToIPCPatch)
+
+// Updater
+
+const subscribeToUpdateProgress = (callback: (updateProgress: UpdateProgress) => void): (() => void) => {
+  const listener = (_: IpcRendererEvent, updateProgress: UpdateProgress) => {
+    callback(updateProgress)
+  }
+  ipcRenderer.on(IPCEvents.UPDATE_PROGRESS, listener)
+
+  return () => {
+    ipcRenderer.removeListener(IPCEvents.UPDATE_PROGRESS, listener)
+  }
+}
+
+contextBridge.exposeInMainWorld('subscribeToUpdateProgress', subscribeToUpdateProgress)
 
 // `exposeInMainWorld` can't detect attributes and methods of `prototype`, manually patching it.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

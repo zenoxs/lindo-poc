@@ -4,12 +4,12 @@ import { defineConfig } from 'vite'
 import esmodule from 'vite-plugin-esmodule'
 import pkg from '../../package.json'
 
-const esModules = ['execa', 'node-fetch']
+const esModules = ['execa']
 const nodeModules = Object.keys(pkg.dependencies || {}).filter((dep) => !esModules.includes(dep))
 
 export default defineConfig({
   root: __dirname,
-  plugins: [esmodule(['execa', 'node-fetch'])],
+  plugins: [esmodule(esModules)],
   build: {
     outDir: '../../dist/main',
     emptyOutDir: true,
