@@ -2,7 +2,7 @@ import React from 'react'
 import { Box, CssBaseline } from '@mui/material'
 import { SideBar } from './side-bar/SideBar'
 import { Observer } from 'mobx-react-lite'
-import { GameScreen } from './GameScreen'
+import { GameScreen } from './game-screen/GameScreen'
 import { useStores } from '@/store'
 
 export const MainScreen = () => {

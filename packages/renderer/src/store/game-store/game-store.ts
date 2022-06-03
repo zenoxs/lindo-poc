@@ -20,9 +20,20 @@ export const GameStoreModel = types
       const game = self.games.put({})
       self.selectedGame = game
     },
+    removeGame(game: Game) {
+      if (self.selectedGame === game) {
+        if (self.games.size > 1) {
+          self.selectedGame = self.gameList.reverse().find((g) => g !== game)
+        } else {
+          self.selectedGame = undefined
+        }
+      }
+      self.games.delete(game.id)
+    },
     selectGame(game: Game) {
-      console.log('selectGame', game)
-      self.selectedGame = game
+      if (self.games.has(game.id)) {
+        self.selectedGame = game
+      }
     }
   }))
   // lifecycle hooks

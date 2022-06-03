@@ -7,9 +7,22 @@ import { v4 as uuidv4 } from 'uuid'
 export const GameModel = types
   .model('Game')
   .props({
-    id: types.optional(types.identifier, () => uuidv4())
+    id: types.optional(types.identifier, () => uuidv4()),
+    characterName: types.maybe(types.string),
+    characterIcon: types.maybe(types.frozen<HTMLElement>())
   })
-  .actions((self) => ({}))
+  .actions((self) => ({
+    setCharacterName(name: string) {
+      self.characterName = name
+    },
+    setCharacterIcon(icon: HTMLElement) {
+      self.characterIcon = icon
+    },
+    disconnected() {
+      self.characterName = undefined
+      self.characterIcon = undefined
+    }
+  }))
 
 /**
  * Un-comment the following to omit model attributes from your snapshots (and from async storage).
