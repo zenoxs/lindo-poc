@@ -21,11 +21,7 @@ You need a basic understanding of `Electron` and `Vite` to get started. But that
 npm create electron-vite
 ```
 
-![electron-vite-react.gif](https://github.com/electron-vite/electron-vite-react/blob/main/packages/renderer/public/electron-vite-react.gif?raw=true)
-
 ## Debug
-
-![electron-vite-react-debug.gif](https://github.com/electron-vite/electron-vite-react/blob/main/packages/renderer/public/electron-vite-react-debug.gif?raw=true)
 
 <!--
 ```sh
