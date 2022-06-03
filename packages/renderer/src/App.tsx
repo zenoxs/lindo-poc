@@ -1,16 +1,20 @@
-import { createTheme, ThemeProvider } from '@mui/material/styles'
-import React, { useEffect, useRef, useState } from 'react'
+import { ThemeProvider } from '@mui/material/styles'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { setupRootStore, RootStore, RootStoreProvider } from './store'
 import { Navigator } from './navigation'
 import { GameContextProvider } from './providers'
 import { GameContext } from '@lindo/shared'
+import { useMediaQuery } from '@mui/material'
+import { darkTheme, lightTheme } from './themes'
 
 export const App = () => {
   const didSetUpRootStoreRef = useRef(false)
   const didSetUpGameContextRef = useRef(false)
-  const mdTheme = createTheme()
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
   const [rootStore, setRootStore] = useState<RootStore | undefined>(undefined)
   const [gameContext, setGameContext] = useState<GameContext | undefined>(undefined)
+
+  const theme = useMemo(() => (prefersDarkMode ? darkTheme : lightTheme), [prefersDarkMode])
 
   useEffect(() => {
     // prevents to setup root store multiple times
@@ -35,7 +39,7 @@ export const App = () => {
   return (
     <RootStoreProvider value={rootStore}>
       <GameContextProvider value={gameContext}>
-        <ThemeProvider theme={mdTheme}>
+        <ThemeProvider theme={theme}>
           <Navigator />
         </ThemeProvider>
       </GameContextProvider>
