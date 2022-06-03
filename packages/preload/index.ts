@@ -1,25 +1,12 @@
-import fs from 'fs'
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron'
 import { domReady } from './utils'
-import { useLoading } from './loading'
 import { IJsonPatch } from 'mobx-state-tree'
 import { GameContext, IPCEvents, RootStoreSnapshot, UpdateProgress } from '@lindo/shared'
-
-const { appendLoading, removeLoading } = useLoading()
-
 ;(async () => {
   await domReady()
-
-  appendLoading()
 })()
 
-// --------- Expose some API to the Renderer process. ---------
-contextBridge.exposeInMainWorld('fs', fs)
-contextBridge.exposeInMainWorld('removeLoading', removeLoading)
-contextBridge.exposeInMainWorld('ipcRenderer', withPrototype(ipcRenderer))
-
 // MOBX
-
 const forwardPatchToMain = (patch: IJsonPatch): void => {
   ipcRenderer.send(IPCEvents.PATCH, patch)
 }
