@@ -21,6 +21,7 @@ export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWind
       webPreferences: {
         preload: join(__dirname, '../preload/index.cjs'),
         allowRunningInsecureContent: true,
+        webviewTag: true,
         webSecurity: false // require to load dofus files
       }
     })

@@ -4,7 +4,7 @@ import { defineConfig } from 'vite'
 import esmodule from 'vite-plugin-esmodule'
 import pkg from '../../package.json'
 
-const esModules = ['execa']
+const esModules = ['execa', 'get-port']
 const nodeModules = Object.keys(pkg.dependencies || {}).filter((dep) => !esModules.includes(dep))
 
 export default defineConfig({

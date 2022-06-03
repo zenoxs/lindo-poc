@@ -1,26 +1,30 @@
 import { useGameContext } from '@/providers'
 import React, { useRef } from 'react'
 
+interface DofusIframeWindow extends Window {
+  initDofus: (callback: () => void) => void
+  openDatabase: unknown
+}
+
+interface HTMLIFrameElementWithDofus extends HTMLIFrameElement {
+  contentWindow: DofusIframeWindow
+}
+
 export const GameScreen = () => {
   const gameContext = useGameContext()
-  const iframeGameRef = useRef<HTMLIFrameElement>(null)
+  const iframeGameRef = useRef<HTMLIFrameElementWithDofus>(null)
   const handleLoad = () => {
-    console.log('iframe loaded')
     if (iframeGameRef.current) {
-      console.log('ifram ref ok')
-      const window = iframeGameRef.current.contentWindow as any
-      window.initDofus()
+      const gameWindow = iframeGameRef.current.contentWindow
+      // can't use SQL Database in modern iframe
+      gameWindow.openDatabase = undefined
+      gameWindow.initDofus(() => {
+        console.log('initDofus done')
+      })
     }
   }
 
-  console.log(gameContext)
-
   return (
-    <iframe
-      ref={iframeGameRef}
-      style={{ flex: 1, border: 'none' }}
-      onLoad={handleLoad}
-      src={'file://' + gameContext.gamePath + 'index.html?delayed=true'}
-    />
+    <iframe ref={iframeGameRef} onLoad={handleLoad} style={{ flex: 1, border: 'none' }} src={gameContext.gameSrc} />
   )
 }

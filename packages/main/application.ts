@@ -1,5 +1,9 @@
 import { GameContext, IPCEvents, RootStore } from '@lindo/shared'
 import { app, ipcMain, Menu } from 'electron'
+import express from 'express'
+import getPort from 'get-port'
+import { Server } from 'http'
+import { AddressInfo } from 'net'
 import { GAME_PATH } from './constants'
 import { getAppMenu } from './menu'
 import { runUpdater } from './updater'
@@ -8,11 +12,18 @@ import { GameWindow } from './windows'
 export class Application {
   private static _instance: Application
 
-  static init(rootStore: RootStore) {
+  static async init(rootStore: RootStore) {
     if (Application._instance) {
       throw new Error('Application already initialized')
     }
-    Application._instance = new Application(rootStore)
+
+    // create express server to serve game file
+    const serveGameServer = express()
+    serveGameServer.use('/', express.static(GAME_PATH))
+    const port = await getPort({ port: 3000 })
+    const server: Server = serveGameServer.listen(port)
+
+    Application._instance = new Application(rootStore, server)
   }
 
   static get instance(): Application {
@@ -24,7 +35,7 @@ export class Application {
 
   private _gWindows: Array<GameWindow> = []
 
-  private constructor(private _rootStore: RootStore) {}
+  private constructor(private _rootStore: RootStore, private _serveGameServer: Server) {}
 
   async run() {
     await runUpdater(this._rootStore)
@@ -49,8 +60,9 @@ export class Application {
 
     // handlers
     ipcMain.handle(IPCEvents.GET_GAME_CONTEXT, (event) => {
+      const serverAddress: AddressInfo = this._serveGameServer.address() as AddressInfo
       const context: GameContext = {
-        gamePath: GAME_PATH,
+        gameSrc: 'http://localhost:' + serverAddress.port + '/index.html?delayed=true',
         windowId: event.sender.id
       }
       return JSON.stringify(context)

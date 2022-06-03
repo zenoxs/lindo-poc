@@ -1,4 +1,4 @@
 export interface GameContext {
-  gamePath: string
+  gameSrc: string
   windowId: number
 }

@@ -19,7 +19,7 @@ if (!app.requestSingleInstanceLock()) {
 app.whenReady().then(async () => {
   console.log('App ->', 'whenReady')
   const store = await setupRootStore()
-  Application.init(store)
+  await Application.init(store)
   Application.instance.run()
 })
 
