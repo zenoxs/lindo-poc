@@ -1,5 +1,5 @@
 import { Instance, SnapshotOut, types } from 'mobx-state-tree'
-import { GameModel } from './game'
+import { Game, GameModel } from './game'
 
 /**
  * Model description here for TypeScript hints.
@@ -18,6 +18,10 @@ export const GameStoreModel = types
   .actions((self) => ({
     addGame() {
       const game = self.games.put({})
+      self.selectedGame = game
+    },
+    selectGame(game: Game) {
+      console.log('selectGame', game)
       self.selectedGame = game
     }
   }))

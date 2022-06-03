@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, CssBaseline } from '@mui/material'
-import { SideBar } from './components/SideBar'
+import { SideBar } from './side-bar/SideBar'
 import { Observer } from 'mobx-react-lite'
 import { GameScreen } from './GameScreen'
 import { useStores } from '@/store'

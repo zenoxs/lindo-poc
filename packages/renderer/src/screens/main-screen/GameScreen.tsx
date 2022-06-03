@@ -1,6 +1,6 @@
 import { useGameContext } from '@/providers'
 import { Game } from '@/store/game-store/game'
-import React, { memo, useMemo, useRef } from 'react'
+import React, { memo, useRef } from 'react'
 import { HTMLIFrameElementWithDofus } from './types'
 
 export interface GameScreenProps {
