@@ -1,6 +1,6 @@
-import { RootStoreModel } from '@lindo/shared'
 import * as hash from 'object-hash'
 import { applyPatch, IJsonPatch, Instance, onPatch } from 'mobx-state-tree'
+import { RootStoreModel } from './root-store'
 /**
  * The key we'll be saving our state as within async storage.
  */
@@ -35,6 +35,11 @@ export async function setupRootStore() {
 
   onPatch(rootStore, (patch) => {
     console.log('onPatch', patch)
+    // ignore local storage patches
+    if (patch.path.startsWith('/gameStore')) {
+      return
+    }
+
     const patchHash = hash(patch)
     if (patchesFromMain.includes(patchHash)) {
       console.log('patch already applied ', patchHash)

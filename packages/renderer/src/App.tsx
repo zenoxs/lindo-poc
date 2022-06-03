@@ -1,9 +1,9 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import React, { useEffect, useRef, useState } from 'react'
-import { GameContext, RootStore, RootStoreProvider } from '@lindo/shared'
-import { setupRootStore } from './setup-root-store'
+import { setupRootStore, RootStore, RootStoreProvider } from './store'
 import { Navigator } from './navigation'
 import { GameContextProvider } from './providers'
+import { GameContext } from '@lindo/shared'
 
 export const App = () => {
   const didSetUpRootStoreRef = useRef(false)

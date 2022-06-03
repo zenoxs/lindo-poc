@@ -1,16 +1,14 @@
 import { useGameContext } from '@/providers'
-import React, { useRef } from 'react'
+import { Game } from '@/store/game-store/game'
+import React, { memo, useMemo, useRef } from 'react'
+import { HTMLIFrameElementWithDofus } from './types'
 
-interface DofusIframeWindow extends Window {
-  initDofus: (callback: () => void) => void
-  openDatabase: unknown
+export interface GameScreenProps {
+  game: Game
 }
 
-interface HTMLIFrameElementWithDofus extends HTMLIFrameElement {
-  contentWindow: DofusIframeWindow
-}
-
-export const GameScreen = () => {
+// eslint-disable-next-line react/display-name
+export const GameScreen = memo(({ game }: GameScreenProps) => {
   const gameContext = useGameContext()
   const iframeGameRef = useRef<HTMLIFrameElementWithDofus>(null)
   const handleLoad = () => {
@@ -24,7 +22,9 @@ export const GameScreen = () => {
     }
   }
 
+  console.log('Mount GameScreen ' + game.id)
+
   return (
     <iframe ref={iframeGameRef} onLoad={handleLoad} style={{ flex: 1, border: 'none' }} src={gameContext.gameSrc} />
   )
-}
+})

@@ -19,6 +19,8 @@ import {
 } from '@dnd-kit/sortable'
 
 import { restrictToVerticalAxis, restrictToWindowEdges } from '@dnd-kit/modifiers'
+import { Observer } from 'mobx-react-lite'
+import { useStores } from '@/store'
 
 const SideBarContainer = styled('div')({
   color: 'darkslategray',
@@ -42,7 +44,7 @@ const TabStyled = styled('div')({
   }
 })
 
-const SortableItem = (props: { id: number }) => {
+const SortableItem = (props: { id: string }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: props.id })
 
   const style = {
@@ -57,7 +59,8 @@ const SortableItem = (props: { id: number }) => {
   )
 }
 export const SideBar = () => {
-  const [items, setItems] = useState([1, 2, 3])
+  // const [items, setItems] = useState([1, 2, 3])
+  const { gameStore } = useStores()
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -67,32 +70,35 @@ export const SideBar = () => {
 
   return (
     <SideBarContainer>
-      <DndContext
-        sensors={sensors}
-        modifiers={[restrictToVerticalAxis, restrictToWindowEdges]}
-        collisionDetection={closestCenter}
-        onDragEnd={handleDragEnd}
-      >
-        <SortableContext items={items} strategy={verticalListSortingStrategy}>
-          {items.map((id) => (
-            <SortableItem key={id} id={id} />
-          ))}
-        </SortableContext>
-      </DndContext>
-      <TabStyled>Add</TabStyled>
+      <Observer>
+        {() => (
+          <DndContext
+            sensors={sensors}
+            modifiers={[restrictToVerticalAxis, restrictToWindowEdges]}
+            collisionDetection={closestCenter}
+          >
+            <SortableContext items={gameStore.gameList} strategy={verticalListSortingStrategy}>
+              {gameStore.gameList.map((game) => (
+                <SortableItem key={game.id} id={game.id} />
+              ))}
+            </SortableContext>
+          </DndContext>
+        )}
+      </Observer>
+      <TabStyled onClick={() => gameStore.addGame()}>Add</TabStyled>
     </SideBarContainer>
   )
 
-  function handleDragEnd(event: DragEndEvent) {
-    const { active, over } = event
+  // function handleDragEnd(event: DragEndEvent) {
+  //   const { active, over } = event
 
-    if (active.id !== over?.id) {
-      setItems((items) => {
-        const oldIndex = items.indexOf(active.id as number)
-        const newIndex = items.indexOf(over!.id as number)
+  //   if (active.id !== over?.id) {
+  //     setItems((items) => {
+  //       const oldIndex = items.indexOf(active.id as number)
+  //       const newIndex = items.indexOf(over!.id as number)
 
-        return arrayMove(items, oldIndex, newIndex)
-      })
-    }
-  }
+  //       return arrayMove(items, oldIndex, newIndex)
+  //     })
+  //   }
+  // }
 }
