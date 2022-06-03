@@ -17,7 +17,12 @@ export const App = () => {
     // cf. React 18 https://github.com/reactwg/react-18/discussions/18
     if (didSetUpRootStoreRef.current === false) {
       didSetUpRootStoreRef.current = true
-      setupRootStore().then(setRootStore)
+      setupRootStore().then((rootStore) => {
+        window.appVersion = rootStore.appStore.appVersion
+        window.buildVersion = rootStore.appStore.buildVersion
+        window.lindoVersion = rootStore.appStore.lindoVersion
+        setRootStore(rootStore)
+      })
     }
     if (didSetUpGameContextRef.current === false) {
       didSetUpGameContextRef.current = true

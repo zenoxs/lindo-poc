@@ -1,4 +1,4 @@
-import { GameContext, IPCEvents } from '@lindo/shared'
+import { GameContext, IPCEvents, RootStore } from '@lindo/shared'
 import { app, ipcMain, Menu } from 'electron'
 import { GAME_PATH } from './constants'
 import { getAppMenu } from './menu'
@@ -6,12 +6,28 @@ import { runUpdater } from './updater'
 import { GameWindow } from './windows'
 
 export class Application {
-  static instance = new Application()
+  private static _instance: Application
+
+  static init(rootStore: RootStore) {
+    if (Application._instance) {
+      throw new Error('Application already initialized')
+    }
+    Application._instance = new Application(rootStore)
+  }
+
+  static get instance(): Application {
+    if (!Application._instance) {
+      throw new Error('Application not initialized')
+    }
+    return Application._instance
+  }
 
   private _gWindows: Array<GameWindow> = []
 
+  private constructor(private _rootStore: RootStore) {}
+
   async run() {
-    await runUpdater()
+    await runUpdater(this._rootStore)
 
     app.on('second-instance', () => {
       console.log('Application ->', 'second-instance')

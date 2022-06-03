@@ -1,10 +1,7 @@
 import { app } from 'electron'
 import { release } from 'os'
-import './samples/electron-store'
-import './samples/npm-esm-packages'
-import './store/store'
-import './menu'
 import { Application } from './application'
+import { setupRootStore } from './store'
 
 app.commandLine.appendSwitch('disable-site-isolation-trials')
 
@@ -19,10 +16,11 @@ if (!app.requestSingleInstanceLock()) {
   process.exit(0)
 }
 
-const application = Application.instance
-app.whenReady().then(() => {
-  console.log('Application ->', 'whenReady')
-  application.run()
+app.whenReady().then(async () => {
+  console.log('App ->', 'whenReady')
+  const store = await setupRootStore()
+  Application.init(store)
+  Application.instance.run()
 })
 
 app.on('window-all-closed', () => {

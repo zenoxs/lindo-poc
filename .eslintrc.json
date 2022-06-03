@@ -45,6 +45,8 @@
     "@typescript-eslint/no-var-requires": 1,
     "no-unused-expressions": "error",
     "@typescript-eslint/no-unused-expressions": ["error", { "enforceForJSX": true }],
-    "@typescript-eslint/no-non-null-asserted-optional-chain": "error"
+    "@typescript-eslint/no-non-null-asserted-optional-chain": "error",
+    "no-useless-constructor": "off",
+    "@typescript-eslint/no-useless-constructor": ["error"]
   }
 }

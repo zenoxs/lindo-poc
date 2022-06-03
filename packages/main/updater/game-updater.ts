@@ -19,6 +19,8 @@ import {
   REMOTE_ASSET_MAP_URL,
   REMOTE_DOFUS_MANIFEST_URL
 } from '../constants'
+import { RootStore } from '@lindo/shared'
+import { app } from 'electron'
 
 interface GameVersion {
   buildVersion: string
@@ -27,18 +29,19 @@ interface GameVersion {
 
 export class GameUpdater {
   private readonly _updaterWindow: UpdaterWindow
-
+  private readonly _rootStore: RootStore
   private readonly _httpClient: AxiosInstance
 
-  private constructor(updaterWindow: UpdaterWindow) {
+  private constructor(updaterWindow: UpdaterWindow, rootStore: RootStore) {
     this._updaterWindow = updaterWindow
+    this._rootStore = rootStore
     this._httpClient = axios.create()
     axiosRetry(this._httpClient, { retries: 5, retryDelay: () => 1000 })
   }
 
-  static async init(): Promise<GameUpdater> {
+  static async init(rootStore: RootStore): Promise<GameUpdater> {
     const updaterWindow = await UpdaterWindow.init()
-    return new GameUpdater(updaterWindow)
+    return new GameUpdater(updaterWindow, rootStore)
   }
 
   async run() {
@@ -97,6 +100,11 @@ export class GameUpdater {
       fs.writeFile(LOCAL_DOFUS_MANIFEST_PATH, JSON.stringify(remoteDofusManifest)),
       fs.writeFile(LOCAL_VERSIONS_PATH, JSON.stringify(localVersions))
     ])
+
+    // save to store
+    this._rootStore.appStore.setAppVersion(localVersions.appVersion)
+    this._rootStore.appStore.setBuildVersion(localVersions.buildVersion)
+    this._rootStore.appStore.setLindoVersion(app.getVersion())
 
     console.log('UPDATE FINISH')
     this._updaterWindow.close()
