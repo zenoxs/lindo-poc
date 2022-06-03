@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react'
 import styles from './tab.module.scss'
 import classNames from 'classnames'
-import { Icon, IconButton } from '@mui/material'
+import { Icon, IconButton, Tooltip } from '@mui/material'
 import { Game, useStores } from '@/store'
 import { Observer } from 'mobx-react-lite'
 import { IObjectDidChange, observe } from 'mobx'
@@ -20,18 +20,22 @@ export const TabGame = ({ game }: TabGameProps) => {
   }
 
   useEffect(() => {
+    const updateCharIcon = () => {
+      if (characterIconRef.current && game.characterIcon) {
+        characterIconRef.current.appendChild(game.characterIcon)
+        characterIconRef.current.style.display = 'block'
+      } else if (characterIconRef.current) {
+        characterIconRef.current.innerHTML = ''
+        characterIconRef.current.style.display = 'none'
+      }
+    }
     observe(game, (change: IObjectDidChange<Game>) => {
       if (change.name === 'characterIcon') {
         console.log('update character icon')
-        if (characterIconRef.current && game.characterIcon) {
-          characterIconRef.current.appendChild(game.characterIcon)
-          characterIconRef.current.style.display = 'block'
-        } else if (characterIconRef.current) {
-          characterIconRef.current.innerHTML = ''
-          characterIconRef.current.style.display = 'none'
-        }
+        updateCharIcon()
       }
     })
+    updateCharIcon()
   }, [game])
 
   return (
@@ -39,18 +43,20 @@ export const TabGame = ({ game }: TabGameProps) => {
       {() => {
         const active = gameStore.selectedGame === game
         return (
-          <div
-            onClick={() => gameStore.selectGame(game)}
-            className={classNames(styles.tab, styles['tab-game'], {
-              [styles.focus]: active
-            })}
-          >
-            <div className={styles['icon-char']} ref={characterIconRef} />
-            {!game.characterIcon && <Icon sx={{ fontSize: 24 }}>keyboard</Icon>}
-            <IconButton className={styles['tab-close']} onClick={handleClose}>
-              <Icon sx={{ fontSize: 15, position: 'absolute', top: 2, left: 2 }}>close</Icon>
-            </IconButton>
-          </div>
+          <Tooltip title={game.characterName ?? ''} placement='right'>
+            <div
+              onClick={() => gameStore.selectGame(game)}
+              className={classNames(styles.tab, styles['tab-game'], {
+                [styles.focus]: active
+              })}
+            >
+              <div className={styles['icon-char']} ref={characterIconRef} />
+              {!game.characterIcon && <Icon sx={{ fontSize: 24 }}>keyboard</Icon>}
+              <IconButton className={styles['tab-close']} onClick={handleClose}>
+                <Icon sx={{ fontSize: 15, position: 'absolute', top: 2, left: 2 }}>close</Icon>
+              </IconButton>
+            </div>
+          </Tooltip>
         )
       }}
     </Observer>
