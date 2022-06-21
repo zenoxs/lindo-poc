@@ -1,25 +1,24 @@
+import { WindowHotkey } from '@lindo/shared'
 import { app, Menu, MenuItemConstructorOptions } from 'electron'
 import { Application } from './application'
 
 const isMac = process.platform === 'darwin'
 
-export const getAppMenu = () => {
+export const getAppMenu = (windowHotkey: WindowHotkey) => {
   const template: MenuItemConstructorOptions[] = [
     {
       label: 'File',
       submenu: [
         {
           label: 'New Window',
-          accelerator: 'CmdOrCtrl+N',
-          // accelerator: ShortCuts.convert(settings.getSync('option.shortcuts.no_emu.new_window')),
+          accelerator: windowHotkey.newWindow,
           click() {
             Application.instance.createGameWindow()
           }
         },
         {
-          label: 'News Tab',
-          accelerator: 'CmdOrCtrl+T',
-          // accelerator: ShortCuts.convert(settings.getSync('option.shortcuts.no_emu.new_tab')),
+          label: 'New Tab',
+          accelerator: windowHotkey.newTab,
           click() {
             // focusedWindow.webContents.send('new-tab', {})
           }
@@ -29,7 +28,7 @@ export const getAppMenu = () => {
         },
         {
           label: 'Close Tab',
-          accelerator: 'CmdOrCtrl+W',
+          accelerator: windowHotkey.closeTab,
           click() {
             // focusedWindow.webContents.send('close-tab', {})
           }
@@ -91,14 +90,14 @@ export const getAppMenu = () => {
 
         {
           label: 'Prev Tab',
-          // accelerator: ShortCuts.convert(settings.getSync('option.shortcuts.no_emu.prev_tab')),
+          accelerator: windowHotkey.prevTab,
           click() {
             // focusedWindow.webContents.send('previous-tab', 'prev')
           }
         },
         {
           label: 'Next Tab',
-          // accelerator: ShortCuts.convert(settings.getSync('option.shortcuts.no_emu.next_tab')),
+          accelerator: windowHotkey.nextTab,
           click() {
             // focusedWindow.webContents.send('next-tab', 'next')
           }

@@ -1,20 +1,12 @@
 import { Instance, SnapshotOut, types } from 'mobx-state-tree'
-
-// TODO: remove later only for POC
+import { WindowHotkeyModel } from './window-hotkey'
 
 /**
  * Model description here for TypeScript hints.
  */
-export const ConfStoreModel = types
-  .model('ConfStore')
-  .props({
-    appName: types.optional(types.string, 'Demo')
-  })
-  .actions((self) => ({
-    setAppName(appName: string) {
-      self.appName = appName
-    }
-  }))
+export const HotkeyStoreModel = types.model('HotkeyStore').props({
+  window: types.optional(WindowHotkeyModel, {})
+})
 
 /**
  * Un-comment the following to omit model attributes from your snapshots (and from async storage).
@@ -24,10 +16,10 @@ export const ConfStoreModel = types
  *  .postProcessSnapshot(omit(["password", "socialSecurityNumber", "creditCardNumber"]))
  */
 
-type ConfStoreType = Instance<typeof ConfStoreModel>
+type HotkeyStoreType = Instance<typeof HotkeyStoreModel>
 
-export interface ConfStore extends ConfStoreType {}
+export interface HotkeyStore extends HotkeyStoreType {}
 
-type ConfStoreSnapshotType = SnapshotOut<typeof ConfStoreModel>
+type HotkeyStoreSnapshotType = SnapshotOut<typeof HotkeyStoreModel>
 
-export interface ConfStoreSnapshot extends ConfStoreSnapshotType {}
+export interface HotkeyStoreSnapshot extends HotkeyStoreSnapshotType {}
