@@ -98,12 +98,18 @@ const subscribeToUpdateProgress = (callback: (updateProgress: UpdateProgress) =>
 contextBridge.exposeInMainWorld('subscribeToUpdateProgress', subscribeToUpdateProgress)
 
 // Context
+
 const fetchGameContext = async (): Promise<GameContext> => {
   const data = await ipcRenderer.invoke(IPCEvents.GET_GAME_CONTEXT)
   return JSON.parse(data)
 }
-
 contextBridge.exposeInMainWorld('fetchGameContext', fetchGameContext)
+
+// Options
+const openOptionWindow = (): void => {
+  ipcRenderer.send(IPCEvents.OPEN_OPTION)
+}
+contextBridge.exposeInMainWorld('openOptionWindow', openOptionWindow)
 
 // `exposeInMainWorld` can't detect attributes and methods of `prototype`, manually patching it.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

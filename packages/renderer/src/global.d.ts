@@ -20,7 +20,8 @@ declare global {
     subscribeToUpdateProgress: (callback: (updateProgress: UpdateProgress) => void) => () => void
     // context
     fetchGameContext: () => Promise<GameContext>
-
+    // option
+    openOptionWindow: () => void
     // dofus
     buildVersion: string
     appVersion: string

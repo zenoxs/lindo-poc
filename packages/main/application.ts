@@ -8,7 +8,7 @@ import { AddressInfo } from 'net'
 import { GAME_PATH } from './constants'
 import { getAppMenu } from './menu'
 import { runUpdater } from './updater'
-import { GameWindow } from './windows'
+import { GameWindow, OptionWindow } from './windows'
 
 export class Application {
   private static _instance: Application
@@ -35,6 +35,7 @@ export class Application {
   }
 
   private _gWindows: Array<GameWindow> = []
+  private _optionWindow?: OptionWindow
 
   private constructor(private _rootStore: RootStore, private _serveGameServer: Server) {}
 
@@ -47,6 +48,10 @@ export class Application {
         windowId: event.sender.id
       }
       return JSON.stringify(context)
+    })
+
+    ipcMain.on(IPCEvents.OPEN_OPTION, (event) => {
+      this.openOptionWindow()
     })
 
     await runUpdater(this._rootStore)
@@ -88,5 +93,16 @@ export class Application {
       this._gWindows.splice(this._gWindows.indexOf(gWindow), 1)
     })
     this._gWindows.push(gWindow)
+  }
+
+  openOptionWindow() {
+    if (this._optionWindow) {
+      this._optionWindow.focus()
+      return
+    }
+    this._optionWindow = new OptionWindow()
+    this._optionWindow.on('close', () => {
+      this._optionWindow = undefined
+    })
   }
 }
