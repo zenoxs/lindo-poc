@@ -1,4 +1,4 @@
-import { WindowHotkey } from '@lindo/shared'
+import { IPCEvents, WindowHotkey } from '@lindo/shared'
 import { app, Menu, MenuItemConstructorOptions } from 'electron'
 import { Application } from './application'
 
@@ -19,8 +19,8 @@ export const getAppMenu = (windowHotkey: WindowHotkey) => {
         {
           label: 'New Tab',
           accelerator: windowHotkey.newTab,
-          click() {
-            // focusedWindow.webContents.send('new-tab', {})
+          click(_, focusedWindow) {
+            focusedWindow?.webContents.send(IPCEvents.NEW_TAB, {})
           }
         },
         {
@@ -29,8 +29,8 @@ export const getAppMenu = (windowHotkey: WindowHotkey) => {
         {
           label: 'Close Tab',
           accelerator: windowHotkey.closeTab,
-          click() {
-            // focusedWindow.webContents.send('close-tab', {})
+          click(_, focusedWindow) {
+            focusedWindow?.webContents.send(IPCEvents.CLOSE_TAB, {})
           }
         },
         {
@@ -91,15 +91,15 @@ export const getAppMenu = (windowHotkey: WindowHotkey) => {
         {
           label: 'Prev Tab',
           accelerator: windowHotkey.prevTab,
-          click() {
-            // focusedWindow.webContents.send('previous-tab', 'prev')
+          click(_, focusedWindow) {
+            focusedWindow?.webContents.send(IPCEvents.PREV_TAB, {})
           }
         },
         {
           label: 'Next Tab',
           accelerator: windowHotkey.nextTab,
-          click() {
-            // focusedWindow.webContents.send('next-tab', 'next')
+          click(_, focusedWindow) {
+            focusedWindow?.webContents.send(IPCEvents.NEXT_TAB, {})
           }
         },
         {

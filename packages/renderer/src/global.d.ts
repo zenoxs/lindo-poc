@@ -11,6 +11,11 @@ declare global {
     forwardPatchToMain: (patch: IJsonPatch) => void
     fetchInitialStateAsync: () => Promise<RootStoreSnapshot>
     subscribeToIPCPatch: (callback: (patch: IJsonPatch) => void) => () => void
+    // hotkeys
+    subscribeToNewTab: (callback: () => void) => () => void
+    subscribeToNextTab: (callback: () => void) => () => void
+    subscribeToPrevTab: (callback: () => void) => () => void
+    subscribeToCloseTab: (callback: () => void) => () => void
     // updater
     subscribeToUpdateProgress: (callback: (updateProgress: UpdateProgress) => void) => () => void
     // context

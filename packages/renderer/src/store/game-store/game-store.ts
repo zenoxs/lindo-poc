@@ -34,6 +34,30 @@ export const GameStoreModel = types
       if (self.games.has(game.id)) {
         self.selectedGame = game
       }
+    },
+    selectGameIndex(index: number) {
+      if (self.gameList[index]) {
+        self.selectedGame = self.gameList[index]
+      }
+    }
+  }))
+  .actions((self) => ({
+    selectNextGame() {
+      const index = self.gameList.indexOf(self.selectedGame!)
+      if (index !== -1) {
+        self.selectGameIndex(index + 1)
+      }
+    },
+    selectPreviousGame() {
+      const index = self.gameList.indexOf(self.selectedGame!)
+      if (index !== -1) {
+        self.selectGameIndex(index - 1)
+      }
+    },
+    removeSelectedGame() {
+      if (self.selectedGame) {
+        self.removeGame(self.selectedGame)
+      }
     }
   }))
   // lifecycle hooks

@@ -31,6 +31,57 @@ contextBridge.exposeInMainWorld('forwardPatchToMain', forwardPatchToMain)
 contextBridge.exposeInMainWorld('fetchInitialStateAsync', fetchInitialStateAsync)
 contextBridge.exposeInMainWorld('subscribeToIPCPatch', subscribeToIPCPatch)
 
+// Hotkeys
+
+const subscribeToNewTab = (callback: () => void): (() => void) => {
+  const listener = (_: IpcRendererEvent) => {
+    callback()
+  }
+  ipcRenderer.on(IPCEvents.NEW_TAB, listener)
+
+  return () => {
+    ipcRenderer.removeListener(IPCEvents.NEW_TAB, listener)
+  }
+}
+
+const subscribeToNextTab = (callback: () => void): (() => void) => {
+  const listener = (_: IpcRendererEvent) => {
+    callback()
+  }
+  ipcRenderer.on(IPCEvents.NEXT_TAB, listener)
+
+  return () => {
+    ipcRenderer.removeListener(IPCEvents.NEXT_TAB, listener)
+  }
+}
+
+const subscribeToPrevTab = (callback: () => void): (() => void) => {
+  const listener = (_: IpcRendererEvent) => {
+    callback()
+  }
+  ipcRenderer.on(IPCEvents.PREV_TAB, listener)
+
+  return () => {
+    ipcRenderer.removeListener(IPCEvents.PREV_TAB, listener)
+  }
+}
+
+const subscribeToCloseTab = (callback: () => void): (() => void) => {
+  const listener = (_: IpcRendererEvent) => {
+    callback()
+  }
+  ipcRenderer.on(IPCEvents.CLOSE_TAB, listener)
+
+  return () => {
+    ipcRenderer.removeListener(IPCEvents.CLOSE_TAB, listener)
+  }
+}
+
+contextBridge.exposeInMainWorld('subscribeToNewTab', subscribeToNewTab)
+contextBridge.exposeInMainWorld('subscribeToNextTab', subscribeToNextTab)
+contextBridge.exposeInMainWorld('subscribeToPrevTab', subscribeToPrevTab)
+contextBridge.exposeInMainWorld('subscribeToCloseTab', subscribeToCloseTab)
+
 // Updater
 
 const subscribeToUpdateProgress = (callback: (updateProgress: UpdateProgress) => void): (() => void) => {
