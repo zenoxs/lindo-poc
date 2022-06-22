@@ -17,6 +17,24 @@ export const WindowHotkeyModel = types
   .actions((self) => ({
     setNewTab(hotkey: string) {
       self.newTab = hotkey
+    },
+    setcloseTab(hotkey: string) {
+      self.closeTab = hotkey
+    },
+    setNewWindow(hotkey: string) {
+      self.newWindow = hotkey
+    },
+    setNextTab(hotkey: string) {
+      self.nextTab = hotkey
+    },
+    setPrevTab(hotkey: string) {
+      self.prevTab = hotkey
+    },
+    setActivTab(hotkey: string) {
+      self.activTab = hotkey
+    },
+    setTab(hotkey: string, index: number) {
+      self.tabs[index] = hotkey
     }
   }))
 

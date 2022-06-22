@@ -1,3 +1,4 @@
+import { RootStore } from '@lindo/shared'
 import { app, BrowserWindow } from 'electron'
 import { join } from 'path'
 import { EventEmitter } from 'stream'
@@ -8,13 +9,15 @@ type GameWindowEvents = {
 }
 export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWindowEvents>) {
   private readonly _win: BrowserWindow
+  private readonly _store: RootStore
 
   get id() {
     return this._win.id!
   }
 
-  constructor() {
+  constructor(store: RootStore) {
     super()
+    this._store = store
     this._win = new BrowserWindow({
       show: false,
       resizable: true,

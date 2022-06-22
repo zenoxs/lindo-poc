@@ -13,7 +13,7 @@ import {
 } from '@mui/material'
 import { LANGUAGES, RESOLUTIONS } from '@lindo/shared'
 
-export const General = () => {
+export const OptionGeneral = () => {
   return (
     <Box sx={{ p: 2, flexGrow: 1, flex: 1 }}>
       <Typography variant='h5' component='h2' gutterBottom>

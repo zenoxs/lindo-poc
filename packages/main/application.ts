@@ -1,4 +1,5 @@
-import { GameContext, IPCEvents, RootStore, WindowHotkey } from '@lindo/shared'
+import { RootStore } from '@/store'
+import { GameContext, IPCEvents, WindowHotkey } from '@lindo/shared'
 import { app, ipcMain, Menu } from 'electron'
 import express from 'express'
 import getPort from 'get-port'
@@ -88,7 +89,7 @@ export class Application {
 
   createGameWindow() {
     console.log('Application ->', '_createGameWindow')
-    const gWindow = new GameWindow()
+    const gWindow = new GameWindow(this._rootStore)
     gWindow.on('close', () => {
       this._gWindows.splice(this._gWindows.indexOf(gWindow), 1)
     })

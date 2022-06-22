@@ -14,7 +14,7 @@ import { restrictToVerticalAxis, restrictToWindowEdges } from '@dnd-kit/modifier
 import { Observer } from 'mobx-react-lite'
 import { Game, useStores } from '@/store'
 import { TabAdd, TabGame } from './tab'
-import { Box, IconButton } from '@mui/material'
+import { Box, IconButton, useTheme } from '@mui/material'
 
 const SideBarContainer = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -42,6 +42,7 @@ const SortableItem = ({ game }: { game: Game }) => {
 }
 export const SideBar = () => {
   const { gameStore } = useStores()
+  const theme = useTheme()
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -55,7 +56,6 @@ export const SideBar = () => {
   )
 
   const handleOpenOption = () => {
-    console.log('open option')
     window.openOptionWindow()
   }
 
@@ -78,7 +78,7 @@ export const SideBar = () => {
       </Observer>
       <TabAdd />
       <Box sx={{ flex: 1 }} />
-      <IconButton onClick={handleOpenOption} sx={{ color: 'white' }} aria-label='settings'>
+      <IconButton onClick={handleOpenOption} sx={{ color: theme.palette.text.primary, mb: 1 }} aria-label='settings'>
         <SettingsIcon />
       </IconButton>
     </SideBarContainer>

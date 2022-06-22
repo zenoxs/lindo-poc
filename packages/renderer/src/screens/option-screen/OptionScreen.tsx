@@ -1,17 +1,19 @@
-import { Box, Tab, Tabs } from '@mui/material'
+import { Box, Tab, Tabs, useTheme } from '@mui/material'
 import React, { useState } from 'react'
-import { General } from './general'
+import { OptionGeneral } from './general'
+import { OptionShortcuts } from './shortcuts'
 import { TabPanel } from './TabPanel'
 
 export const OptionScreen = () => {
   const [selectedTab, setSelectedTab] = useState(0)
+  const theme = useTheme()
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue)
   }
 
   return (
-    <Box sx={{ flexGrow: 1, display: 'flex', height: '100vh', width: '100vw' }}>
+    <Box sx={{ flexGrow: 1, width: '100vw', display: 'flex' }}>
       <Tabs
         orientation='vertical'
         variant='scrollable'
@@ -21,16 +23,25 @@ export const OptionScreen = () => {
         sx={{ borderRight: 1, borderColor: 'divider' }}
       >
         <Tab label='General' />
+        <Tab label='Shortcuts' />
         <Tab label='Features' />
         <Tab label='Notifications' />
         <Tab label='About' />
       </Tabs>
-      <Box sx={{ fisplay: 'flex', flex: 1, overflowY: 'scroll' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flex: 1,
+          flexDirection: 'column',
+          overflowY: 'scroll',
+          backgroundColor: theme.palette.background.paper
+        }}
+      >
         <TabPanel value={selectedTab} index={0}>
-          <General />
+          <OptionGeneral />
         </TabPanel>
         <TabPanel value={selectedTab} index={1}>
-          Item Two
+          <OptionShortcuts />
         </TabPanel>
         <TabPanel value={selectedTab} index={2}>
           Item Three
