@@ -1,5 +1,4 @@
-import { RootStore } from '@/store'
-import { GameContext, IPCEvents, WindowHotkey } from '@lindo/shared'
+import { GameContext, IPCEvents, RootStore, WindowHotkey } from '@lindo/shared'
 import { app, ipcMain, Menu } from 'electron'
 import express from 'express'
 import getPort from 'get-port'
