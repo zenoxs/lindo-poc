@@ -10,13 +10,12 @@ import { darkTheme, lightTheme } from './themes'
 export const App = () => {
   const didSetUpRootStoreRef = useRef(false)
   const didSetUpGameContextRef = useRef(false)
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
+  // TODO: fix lightTheme
+  const prefersDarkMode = true // useMediaQuery('(prefers-color-scheme: dark)')
   const [rootStore, setRootStore] = useState<RootStore | undefined>(undefined)
   const [gameContext, setGameContext] = useState<GameContext | undefined>(undefined)
 
-  // TODO: fix lightTheme
-  // const theme = useMemo(() => (prefersDarkMode ? darkTheme : lightTheme), [prefersDarkMode])
-  const theme = darkTheme
+  const theme = useMemo(() => (prefersDarkMode ? darkTheme : lightTheme), [prefersDarkMode])
 
   useEffect(() => {
     // prevents to setup root store multiple times

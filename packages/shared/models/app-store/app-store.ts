@@ -1,5 +1,8 @@
 import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 
+export const LANGUAGE_KEYS: ReadonlyArray<string> = <const>['fr', 'en', 'es', 'it', 'pt', 'pl', 'tr']
+export type LanguageKey = typeof LANGUAGE_KEYS[number]
+
 /**
  * Model description here for TypeScript hints.
  */
@@ -8,7 +11,8 @@ export const AppStoreModel = types
   .props({
     appVersion: types.optional(types.string, '1.0.0'),
     buildVersion: types.optional(types.string, '1.0.0'),
-    lindoVersion: types.optional(types.string, '1.0.0')
+    lindoVersion: types.optional(types.string, '1.0.0'),
+    language: types.optional(types.enumeration(LANGUAGE_KEYS as Array<string>), 'en')
   })
   .actions((self) => ({
     setAppVersion(appVersion: string) {
@@ -25,6 +29,9 @@ export const AppStoreModel = types
       if (self.lindoVersion !== lindoVersion) {
         self.lindoVersion = lindoVersion
       }
+    },
+    setLanguageKey(language: LanguageKey) {
+      self.language = language
     }
   }))
 

@@ -12,5 +12,3 @@ root.render(
     </HashRouter>
   </StrictMode>
 )
-
-window.removeLoading()

@@ -16,9 +16,14 @@ export const WindowOptionModel = types
       width: 1280,
       height: 720
     }),
-    soundOnFocus: types.optional(types.boolean, false),
+    soundOnFocus: types.optional(types.boolean, true),
     audioMuted: types.optional(types.boolean, false)
   })
+  .views((self) => ({
+    get humanizeResolution() {
+      return `${self.resolution.width}x${self.resolution.height}`
+    }
+  }))
   .actions((self) => ({
     setFullScreen(value: boolean) {
       self.fullScreen = value
@@ -31,6 +36,13 @@ export const WindowOptionModel = types
     },
     setAudioMutedd(value: boolean) {
       self.audioMuted = value
+    },
+    setResolutionFromString(value: string) {
+      const [width, height] = value.split('x').map(parseFloat)
+      self.resolution = {
+        width,
+        height
+      }
     }
   }))
 
