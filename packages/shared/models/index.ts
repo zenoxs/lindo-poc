@@ -1,3 +1,3 @@
 export * from './root-store'
-export * from './conf-store'
+export * from './option-store'
 export * from './hotkey-store'

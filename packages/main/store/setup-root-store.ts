@@ -1,4 +1,4 @@
-import { IPCEvents, RootStoreModel } from '@lindo/shared'
+import { IPCEvents, RootStoreModel, RootStore } from '@lindo/shared'
 import { ipcMain, webContents } from 'electron'
 import hash from 'object-hash'
 import { applyPatch, getSnapshot, IJsonPatch, Instance, onPatch } from 'mobx-state-tree'
@@ -11,7 +11,7 @@ import { applyPatch, getSnapshot, IJsonPatch, Instance, onPatch } from 'mobx-sta
 /**
  * Setup the root state.
  */
-export async function setupRootStore() {
+export async function setupRootStore(): Promise<RootStore> {
   // prepare the environment that will be associated with the RootStore.
   const env = await Promise.resolve({})
   // const optionsPlugin = await SystemJS.import("http://localhost:3001/dist/plugin-test.js");

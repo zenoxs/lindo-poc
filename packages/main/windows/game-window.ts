@@ -21,6 +21,9 @@ export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWind
     this._win = new BrowserWindow({
       show: false,
       resizable: true,
+      fullscreen: this._store.optionStore.window.fullScreen,
+      width: this._store.optionStore.window.resolution.width,
+      height: this._store.optionStore.window.resolution.height,
       titleBarStyle: 'hidden',
       webPreferences: {
         preload: join(__dirname, '../preload/index.cjs'),
@@ -30,9 +33,23 @@ export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWind
       }
     })
 
+    this._win.webContents.setAudioMuted(this._store.optionStore.window.audioMuted)
+
     this._win.on('close', (event) => {
       console.log('GameWindow ->', 'close')
       this._close(event)
+    })
+
+    this._win.on('focus', () => {
+      if (this._store.optionStore.window.soundOnFocus && !this._store.optionStore.window.audioMuted) {
+        this._win.webContents.setAudioMuted(false)
+      }
+    })
+
+    this._win.on('blur', () => {
+      if (this._store.optionStore.window.soundOnFocus && !this._store.optionStore.window.audioMuted) {
+        this._win.webContents.setAudioMuted(true)
+      }
     })
 
     if (app.isPackaged) {

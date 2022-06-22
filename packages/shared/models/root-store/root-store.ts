@@ -1,13 +1,13 @@
 import { SnapshotOut, types } from 'mobx-state-tree'
 import { AppStore, AppStoreModel } from '../app-store'
-import { ConfStore, ConfStoreModel } from '../conf-store'
+import { OptionStore, OptionStoreModel } from '../option-store'
 import { HotkeyStore, HotkeyStoreModel } from '../hotkey-store'
 
 /**
  * A RootStore model.
  */
 export const RootStoreModel = types.model('RootStore').props({
-  confStore: types.optional(ConfStoreModel, {}),
+  optionStore: types.optional(OptionStoreModel, {}),
   appStore: types.optional(AppStoreModel, {}),
   hotkeyStore: types.optional(HotkeyStoreModel, {})
 })
@@ -16,7 +16,7 @@ export const RootStoreModel = types.model('RootStore').props({
  * The RootStore instance.
  */
 export interface RootStore {
-  confStore: ConfStore
+  optionStore: OptionStore
   appStore: AppStore
   hotkeyStore: HotkeyStore
 }
