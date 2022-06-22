@@ -112,7 +112,7 @@ const openOptionWindow = (): void => {
 contextBridge.exposeInMainWorld('openOptionWindow', openOptionWindow)
 
 // `exposeInMainWorld` can't detect attributes and methods of `prototype`, manually patching it.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, no-unused-vars
 function withPrototype(obj: Record<string, any>) {
   const protos = Object.getPrototypeOf(obj)
 

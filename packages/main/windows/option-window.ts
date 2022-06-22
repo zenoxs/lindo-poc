@@ -15,9 +15,10 @@ export class OptionWindow extends (EventEmitter as new () => TypedEmitter<Option
     super()
     this._win = new BrowserWindow({
       show: false,
-      width: 700,
-      height: 700,
+      width: 820,
+      height: 600,
       title: 'Options',
+      titleBarStyle: 'hidden',
       webPreferences: {
         preload: join(__dirname, '../preload/index.cjs'),
         defaultEncoding: 'UTF-8'

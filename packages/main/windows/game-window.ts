@@ -18,6 +18,7 @@ export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWind
     this._win = new BrowserWindow({
       show: false,
       resizable: true,
+      titleBarStyle: 'hidden',
       webPreferences: {
         preload: join(__dirname, '../preload/index.cjs'),
         allowRunningInsecureContent: true,

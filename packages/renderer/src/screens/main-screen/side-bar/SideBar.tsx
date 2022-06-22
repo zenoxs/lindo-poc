@@ -16,15 +16,15 @@ import { Game, useStores } from '@/store'
 import { TabAdd, TabGame } from './tab'
 import { Box, IconButton } from '@mui/material'
 
-const SideBarContainer = styled('div')({
-  backgroundColor: '#353535',
+const SideBarContainer = styled('div')(({ theme }) => ({
+  backgroundColor: theme.palette.background.paper,
   overflowX: 'hidden',
   overflowY: 'auto',
   width: '71px',
   display: 'flex',
   alignItems: 'center',
   flexDirection: 'column'
-})
+}))
 
 const SortableItem = ({ game }: { game: Game }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: game.id })

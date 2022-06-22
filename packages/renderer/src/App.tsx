@@ -4,7 +4,7 @@ import { setupRootStore, RootStore, RootStoreProvider } from './store'
 import { Navigator } from './navigation'
 import { GameContextProvider } from './providers'
 import { GameContext } from '@lindo/shared'
-import { useMediaQuery } from '@mui/material'
+import { CssBaseline, useMediaQuery } from '@mui/material'
 import { darkTheme, lightTheme } from './themes'
 
 export const App = () => {
@@ -14,7 +14,9 @@ export const App = () => {
   const [rootStore, setRootStore] = useState<RootStore | undefined>(undefined)
   const [gameContext, setGameContext] = useState<GameContext | undefined>(undefined)
 
-  const theme = useMemo(() => (prefersDarkMode ? darkTheme : lightTheme), [prefersDarkMode])
+  // TODO: fix lightTheme
+  // const theme = useMemo(() => (prefersDarkMode ? darkTheme : lightTheme), [prefersDarkMode])
+  const theme = darkTheme
 
   useEffect(() => {
     // prevents to setup root store multiple times
@@ -40,6 +42,7 @@ export const App = () => {
     <RootStoreProvider value={rootStore}>
       <GameContextProvider value={gameContext}>
         <ThemeProvider theme={theme}>
+          <CssBaseline />
           <Navigator />
         </ThemeProvider>
       </GameContextProvider>

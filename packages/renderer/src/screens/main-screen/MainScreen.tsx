@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, CssBaseline } from '@mui/material'
+import { Box } from '@mui/material'
 import { SideBar } from './side-bar/SideBar'
 import { Observer } from 'mobx-react-lite'
 import { GameScreen } from './game-screen/GameScreen'
@@ -10,8 +10,7 @@ export const MainScreen = () => {
   const { gameStore } = useStores()
   return (
     <TabManager>
-      <Box sx={{ display: 'flex' }} height='100vh' width='100vw'>
-        <CssBaseline />
+      <Box sx={{ display: 'flex', flex: 1 }} height='100%' width='100vw'>
         <SideBar />
         <Observer>
           {() => (
