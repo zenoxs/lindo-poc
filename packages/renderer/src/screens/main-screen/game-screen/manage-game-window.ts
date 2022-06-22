@@ -1,7 +1,20 @@
-import { Game } from '@/store'
+import { Game, RootStore } from '@/store'
+import { MODS } from '@/mods'
+import { Mod } from '@/mods/mod'
 import { DofusWindow } from '../types'
 
-export const manageGameWindow = (dWindow: DofusWindow, game: Game) => {
+export const manageGameWindow = (dWindow: DofusWindow, game: Game, rootStore: RootStore) => {
+  const mods: Array<Mod> = []
+
+  const startMods = () => {
+    console.log(MODS)
+    for (const key in MODS) {
+      const mod: Mod = new MODS[key](dWindow, rootStore)
+      mod.startMod()
+      mods.push(mod)
+    }
+  }
+
   dWindow.onresize = () => {
     try {
       dWindow.gui._resizeUi()
@@ -24,6 +37,7 @@ export const manageGameWindow = (dWindow: DofusWindow, game: Game) => {
     char.rootElement.style.height = '100%'
 
     game.setCharacterIcon(char.rootElement)
+    startMods()
   }
 
   const handleDisconnect = () => {

@@ -1,4 +1,5 @@
 import { useGameContext } from '@/providers'
+import { useStores } from '@/store'
 import { Game } from '@/store/game-store/game'
 import React, { memo, useRef } from 'react'
 import { DofusWindow, HTMLIFrameElementWithDofus } from '../types'
@@ -11,6 +12,7 @@ export interface GameScreenProps {
 // eslint-disable-next-line react/display-name
 export const GameScreen = memo(({ game }: GameScreenProps) => {
   const gameContext = useGameContext()
+  const rootStore = useStores()
   const iframeGameRef = useRef<HTMLIFrameElementWithDofus>(null)
 
   const handleLoad = () => {
@@ -20,7 +22,7 @@ export const GameScreen = memo(({ game }: GameScreenProps) => {
       gameWindow.openDatabase = undefined
       gameWindow.initDofus(() => {
         console.log('initDofus done')
-        manageGameWindow(gameWindow, game)
+        manageGameWindow(gameWindow, game, rootStore)
       })
     }
   }

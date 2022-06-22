@@ -53,7 +53,6 @@ export const TabManager = ({ children }: TabManagerProps) => {
         hotkeyStore.window.tabs.map((tab, index) => ({
           shortcut: tab,
           handler: (event) => {
-            console.log(event)
             gameStore.selectGameIndex(index)
           }
         }))
@@ -61,7 +60,6 @@ export const TabManager = ({ children }: TabManagerProps) => {
     }
     setTabHotKeys()
     return observe(hotkeyStore.window.tabs, (change) => {
-      console.log(change)
       setTabHotKeys()
     })
   }, [hotkeyStore.window.tabs])
