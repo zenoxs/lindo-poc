@@ -51,7 +51,7 @@ export const TabGame = styled(({ game, className }: TabGameProps) => {
                 focus: active
               })}
             >
-              <div className={'icon-char'} ref={characterIconRef} />
+              <div className={styles['icon-char']} ref={characterIconRef} />
               {!game.characterIcon && <Icon sx={{ fontSize: 24 }}>keyboard</Icon>}
               <IconButton className={styles['tab-close']} onClick={handleClose}>
                 <Icon sx={{ fontSize: 15, position: 'absolute', top: 2, left: 2 }}>close</Icon>

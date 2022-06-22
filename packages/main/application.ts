@@ -86,9 +86,9 @@ export class Application {
     })
   }
 
-  createGameWindow() {
+  async createGameWindow() {
     console.log('Application ->', '_createGameWindow')
-    const gWindow = new GameWindow(this._rootStore)
+    const gWindow = await GameWindow.init(this._rootStore)
     gWindow.on('close', () => {
       this._gWindows.splice(this._gWindows.indexOf(gWindow), 1)
     })

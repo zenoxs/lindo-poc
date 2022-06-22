@@ -1,8 +1,9 @@
 import { RootStore } from '@lindo/shared'
-import { app, BrowserWindow } from 'electron'
+import { app, BeforeSendResponse, BrowserWindow } from 'electron'
 import { join } from 'path'
 import { EventEmitter } from 'stream'
 import TypedEmitter from 'typed-emitter'
+import { generateUserArgent } from '../utils'
 
 type GameWindowEvents = {
   close: (event: Event) => void
@@ -15,7 +16,7 @@ export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWind
     return this._win.id!
   }
 
-  constructor(store: RootStore) {
+  private constructor(userAgent: string, store: RootStore) {
     super()
     this._store = store
     this._win = new BrowserWindow({
@@ -32,6 +33,21 @@ export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWind
         webSecurity: false // require to load dofus files
       }
     })
+
+    // when Referer is send to the ankama server, the request can be blocked
+    this._win.webContents.session.webRequest.onBeforeSendHeaders(
+      {
+        urls: ['https://static.ankama.com/*']
+      },
+      (details, callback) => {
+        const requestHeaders = { ...(details.requestHeaders ?? {}) }
+        delete requestHeaders.Referer
+        const beforeSendResponse: BeforeSendResponse = { requestHeaders }
+        callback(beforeSendResponse)
+      }
+    )
+
+    this._win.webContents.setUserAgent(userAgent)
 
     this._win.webContents.setAudioMuted(this._store.optionStore.window.audioMuted)
 
@@ -76,6 +92,11 @@ export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWind
       // if (url.startsWith('https:')) shell.openExternal(url)
       return { action: 'deny' }
     })
+  }
+
+  static async init(store: RootStore): Promise<GameWindow> {
+    const userAgent = await generateUserArgent()
+    return new GameWindow(userAgent, store)
   }
 
   private _close(event: Event) {
