@@ -16,6 +16,7 @@ export const GameModel = types
       self.characterName = name
     },
     setCharacterIcon(icon: HTMLElement) {
+      console.log('setCharacterIcon')
       self.characterIcon = icon
     },
     disconnected() {

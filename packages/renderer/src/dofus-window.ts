@@ -25,6 +25,28 @@ export interface DofusWindow extends Window {
         entityLook: unknown
       }
     }
+    mainControls: {
+      buttonBox: {
+        _childrenList: {
+          tap: () => void
+        }[]
+      }
+    }
+    numberInputPad: {
+      isVisible: () => boolean
+    }
+    fightManager: {
+      fightState: number
+      finishTurn: () => void
+    }
+    timeline: {
+      fightControlButtons: {
+        toggleReadyForFight: () => void
+      }
+    }
+    chat: {
+      activate: () => void
+    }
   }
   CharacterDisplay: new (props: { scale: 'fitin' }) => CharacterDisplay
 }

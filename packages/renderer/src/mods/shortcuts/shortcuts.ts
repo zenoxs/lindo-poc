@@ -1,138 +1,116 @@
-import { RootStore } from '@/store'
-import { forEachOf } from 'async'
+import { IReactionDisposer, reaction } from 'mobx'
 import { Shortcuts } from 'shortcuts'
 import { Mod } from '../mod'
 // import { Mover } from './mover'
 
 export class ShortcutsMod extends Mod {
-  private readonly _shortcuts = new Shortcuts({ target: this.wGame })
+  private readonly _disposers: Array<IReactionDisposer> = []
+  private readonly _shortcuts = new Shortcuts({ target: this.wGame.document })
   // private mover: Mover
 
-  startMod(): void {
+  start(): void {
     // if (this.params.diver.active_open_menu) {
     //   Logger.info('- enable Open_menu')
     // }
     // this.mover = new Mover(this.wGame, this.settings, this.translate)
-    this.bindAll()
+    this._bindAll()
   }
 
-  private bindAll() {
+  private _addShortcut(shortcutProp: string, handler: (event: KeyboardEvent) => boolean | void) {
+    const addShortcut = (shortcut: string) => {
+      if (shortcut !== '') {
+        this._shortcuts.add({ shortcut, handler })
+      }
+    }
+    const disposer = reaction(
+      () => shortcutProp,
+      (shortcut, previousShortcut) => {
+        if (shortcut === '') {
+          this._shortcuts.remove({ shortcut: previousShortcut, handler })
+          addShortcut(shortcut)
+        } else {
+          this._shortcuts.remove({ shortcut: previousShortcut, handler })
+        }
+      }
+    )
+    this._disposers.push(disposer)
+    addShortcut(shortcutProp)
+  }
+
+  private _bindAll() {
     console.info('bindAll')
     const gameActionHotkey = this.rootStore.hotkeyStore.gameAction
 
     // End turn
-    if (gameActionHotkey.endTurn)
-      this._shortcuts.add([
-        {
-          shortcut: gameActionHotkey.endTurn,
-          handler: () => {
-            if (this.wGame.gui.fightManager.fightState === 0) {
-              this.wGame.gui.timeline.fightControlButtons.toggleReadyForFight()
-            } else if (this.wGame.gui.fightManager.fightState === 1) {
-              this.wGame.gui.fightManager.finishTurn()
-            }
-          }
-        }
-      ])
+    this._addShortcut(gameActionHotkey.endTurn, () => {
+      if (this.wGame.gui.fightManager.fightState === 0) {
+        this.wGame.gui.timeline.fightControlButtons.toggleReadyForFight()
+      } else if (this.wGame.gui.fightManager.fightState === 1) {
+        this.wGame.gui.fightManager.finishTurn()
+      }
+    })
 
     // go to top map
-    if (gameActionHotkey.goUp)
-      this._shortcuts.add([
-        {
-          shortcut: gameActionHotkey.goUp,
-          handler: () => {
-            // this.mover.move(
-            //   'top',
-            //   () => {
-            //     console.debug('Move to Up OK')
-            //   },
-            //   (reason: string = '') => {
-            //     console.debug('Move to Up Failed... (' + reason + ')')
-            //   }
-            // )
-          }
-        }
-      ])
+    this._addShortcut(gameActionHotkey.goUp, () => {
+      // this.mover.move(
+      //   'top',
+      //   () => {
+      //     console.debug('Move to Up OK')
+      //   },
+      //   (reason: string = '') => {
+      //     console.debug('Move to Up Failed... (' + reason + ')')
+      //   }
+      // )
+    })
 
     // go to bottom map
-    if (gameActionHotkey.goDown)
-      this._shortcuts.add([
-        {
-          shortcut: gameActionHotkey.goUp,
-          handler: () => {
-            console.log('go up')
-            // this.mover.move(
-            //   'bottom',
-            //   () => {
-            //     console.debug('Move to Bottom OK')
-            //   },
-            //   (reason: string = '') => {
-            //     console.debug('Move to Bottom Failed... (' + reason + ')')
-            //   }
-            // )
-          }
-        }
-      ])
+    this._addShortcut(gameActionHotkey.goDown, () => {
+      // this.mover.move(
+      //   'bottom',
+      //   () => {
+      //     console.debug('Move to Bottom OK')
+      //   },
+      //   (reason: string = '') => {
+      //     console.debug('Move to Bottom Failed... (' + reason + ')')
+      //   }
+      // )
+    })
 
-    if (gameActionHotkey.goLeft)
-      this._shortcuts.add([
-        {
-          shortcut: gameActionHotkey.goLeft,
-          handler: () => {
-            // this.mover.move(
-            //   'left',
-            //   () => {
-            //     console.debug('Move to Left OK')
-            //   },
-            //   (reason: string = '') => {
-            //     console.debug('Move to Left Failed... (' + reason + ')')
-            //   }
-            // )
-          }
-        }
-      ])
+    this._addShortcut(gameActionHotkey.goLeft, () => {
+      // this.mover.move(
+      //   'left',
+      //   () => {
+      //     console.debug('Move to Left OK')
+      //   },
+      //   (reason: string = '') => {
+      //     console.debug('Move to Left Failed... (' + reason + ')')
+      //   }
+      // )
+    })
 
-    if (gameActionHotkey.goRight)
-      this._shortcuts.add([
-        {
-          shortcut: gameActionHotkey.goRight,
-          handler: () => {
-            // this.mover.move(
-            //   'right',
-            //   () => {
-            //     console.debug('Move to Right OK')
-            //   },
-            //   (reason: string = '') => {
-            //     console.debug('Move to Right Failed... (' + reason + ')')
-            //   }
-            // )
-          }
-        }
-      ])
+    this._addShortcut(gameActionHotkey.goRight, () => {
+      // this.mover.move(
+      //   'right',
+      //   () => {
+      //     console.debug('Move to Right OK')
+      //   },
+      //   (reason: string = '') => {
+      //     console.debug('Move to Right Failed... (' + reason + ')')
+      //   }
+      // )
+    })
 
     // Open chat
-    if (gameActionHotkey.openChat)
-      this._shortcuts.add([
-        {
-          shortcut: gameActionHotkey.openChat,
-          handler: () => {
-            if (!this.wGame.gui.numberInputPad.isVisible()) {
-              this.wGame.gui.chat.activate()
-            }
-          }
-        }
-      ])
+    this._addShortcut(gameActionHotkey.openChat, () => {
+      if (!this.wGame.gui.numberInputPad.isVisible()) {
+        this.wGame.gui.chat.activate()
+      }
+    })
 
     // Open menu
-    if (gameActionHotkey.openMenu)
-      this._shortcuts.add([
-        {
-          shortcut: gameActionHotkey.openMenu,
-          handler: () => {
-            this.wGame.gui.mainControls.buttonBox._childrenList[15].tap()
-          }
-        }
-      ])
+    this._addShortcut(gameActionHotkey.openMenu, () => {
+      this.wGame.gui.mainControls.buttonBox._childrenList[15].tap()
+    })
 
     // // Spell
     // void forEachOf(this.params.spell, (shortcut: string, index: number) => {
@@ -211,9 +189,11 @@ export class ShortcutsMod extends Mod {
     console.log(this._shortcuts)
   }
 
-  public reset() {
-    super.reset()
+  close() {
     this._shortcuts.reset()
+    for (const disposer of this._disposers) {
+      disposer()
+    }
     // if (this.mover) {
     //   this.mover.reset()
     // }

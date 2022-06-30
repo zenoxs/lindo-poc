@@ -3,7 +3,7 @@ import { app, ipcMain, Menu } from 'electron'
 import express from 'express'
 import getPort from 'get-port'
 import { Server } from 'http'
-import { IObjectDidChange, observe } from 'mobx'
+import { IObjectDidChange, observe, reaction } from 'mobx'
 import { AddressInfo } from 'net'
 import { GAME_PATH } from './constants'
 import { getAppMenu } from './menu'
@@ -80,10 +80,13 @@ export class Application {
 
   private _setAppMenu() {
     Menu.setApplicationMenu(getAppMenu(this._rootStore.hotkeyStore.window))
-    observe(this._rootStore.hotkeyStore.window, (change: IObjectDidChange<WindowHotkey>) => {
-      console.log('Application ->', '_setAppMenu')
-      Menu.setApplicationMenu(getAppMenu(this._rootStore.hotkeyStore.window))
-    })
+    reaction(
+      () => this._rootStore.hotkeyStore.window,
+      (value) => {
+        console.log('Application ->', '_setAppMenu')
+        Menu.setApplicationMenu(getAppMenu(value))
+      }
+    )
   }
 
   async createGameWindow() {

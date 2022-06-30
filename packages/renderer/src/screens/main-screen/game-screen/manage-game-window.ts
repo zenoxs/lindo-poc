@@ -1,7 +1,7 @@
 import { Game, RootStore } from '@/store'
 import { MODS } from '@/mods'
 import { Mod } from '@/mods/mod'
-import { DofusWindow } from '../types'
+import { DofusWindow } from '@/dofus-window'
 
 export const manageGameWindow = (dWindow: DofusWindow, game: Game, rootStore: RootStore) => {
   const mods: Array<Mod> = []
@@ -10,7 +10,7 @@ export const manageGameWindow = (dWindow: DofusWindow, game: Game, rootStore: Ro
     console.log(MODS)
     for (const key in MODS) {
       const mod: Mod = new MODS[key](dWindow, rootStore)
-      mod.startMod()
+      mod.start()
       mods.push(mod)
     }
   }
@@ -42,6 +42,9 @@ export const manageGameWindow = (dWindow: DofusWindow, game: Game, rootStore: Ro
 
   const handleDisconnect = () => {
     game.disconnected()
+    for (const mod of mods) {
+      mod.close()
+    }
   }
 
   dWindow.gui.playerData.on('characterSelectedSuccess', handleCharacterSelectedSuccess)

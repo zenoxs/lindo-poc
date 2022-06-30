@@ -1,6 +1,6 @@
 import { useConst } from '@/hooks'
 import { useStores } from '@/store'
-import { observe } from 'mobx'
+import { reaction } from 'mobx'
 import React, { useEffect } from 'react'
 import { Shortcuts } from 'shortcuts'
 export interface TabManagerProps {
@@ -59,9 +59,12 @@ export const TabManager = ({ children }: TabManagerProps) => {
       )
     }
     setTabHotKeys()
-    return observe(hotkeyStore.window.tabs, (change) => {
-      setTabHotKeys()
-    })
+    return reaction(
+      () => hotkeyStore.window.tabs,
+      () => {
+        setTabHotKeys()
+      }
+    )
   }, [hotkeyStore.window.tabs])
 
   return <>{children}</>

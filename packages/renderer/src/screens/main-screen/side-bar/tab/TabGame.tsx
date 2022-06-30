@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import { darken, Icon, IconButton, lighten, styled, Tooltip } from '@mui/material'
 import { Game, useStores } from '@/store'
 import { Observer } from 'mobx-react-lite'
-import { IObjectDidChange, observe } from 'mobx'
+import { reaction } from 'mobx'
 
 export interface TabGameProps {
   game: Game
@@ -30,13 +30,16 @@ export const TabGame = styled(({ game, className }: TabGameProps) => {
         characterIconRef.current.style.display = 'none'
       }
     }
-    observe(game, (change: IObjectDidChange<Game>) => {
-      if (change.name === 'characterIcon') {
-        console.log('update character icon')
+    const disposer = reaction(
+      () => game.characterIcon,
+      (characterIcon) => {
+        console.log(characterIcon)
         updateCharIcon()
       }
-    })
+    )
     updateCharIcon()
+
+    return disposer
   }, [game])
 
   return (

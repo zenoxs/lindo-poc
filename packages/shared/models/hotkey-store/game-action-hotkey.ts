@@ -8,7 +8,7 @@ export const GameActionHotkeyModel = types
   .props({
     endTurn: types.optional(types.string, 'Backspace'),
     openChat: types.optional(types.string, 'Return'),
-    openMenu: types.optional(types.string, ''),
+    openMenu: types.optional(types.string, 'M'),
     goUp: types.optional(types.string, 'CmdOrCtrl+up'),
     goDown: types.optional(types.string, 'CmdOrCtrl+down'),
     goLeft: types.optional(types.string, 'CmdOrCtrl+left'),

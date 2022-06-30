@@ -1,8 +1,8 @@
+import { HTMLIFrameElementWithDofus } from '@/dofus-window'
 import { useGameContext } from '@/providers'
 import { useStores } from '@/store'
 import { Game } from '@/store/game-store/game'
 import React, { memo, useRef } from 'react'
-import { DofusWindow, HTMLIFrameElementWithDofus } from '../types'
 import { manageGameWindow } from './manage-game-window'
 
 export interface GameScreenProps {
@@ -18,6 +18,7 @@ export const GameScreen = memo(({ game }: GameScreenProps) => {
   const handleLoad = () => {
     if (iframeGameRef.current) {
       const gameWindow = iframeGameRef.current.contentWindow
+      console.log(gameWindow)
       // can't use SQL Database in modern iframe
       gameWindow.openDatabase = undefined
       gameWindow.initDofus(() => {
