@@ -1,47 +1,46 @@
 import { IconButton, InputAdornment, TextField } from '@mui/material'
-import React, { KeyboardEvent, useRef, useState } from 'react'
+import React, { KeyboardEvent, memo, useRef, useState } from 'react'
 import { Close } from '@mui/icons-material'
+import { Observer } from 'mobx-react-lite'
 
 export interface ShortcutInputProps {
   id: string
   label: string
   value: string
+  onChange?: (shortcut: string) => void
 }
 
-export const ShortcutInput = ({ id, label, value }: ShortcutInputProps) => {
-  const keys = useRef<Array<string>>(value.split('+'))
-  const [shortcut, setShortcut] = useState<string>(value)
-
+// eslint-disable-next-line react/display-name
+export const ShortcutInput = memo<ShortcutInputProps>(({ id, label, value, onChange }) => {
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     event.preventDefault()
-    console.log(event)
-    keys.current.forEach((key: string, index) => {
-      if (key === event.key) {
-        delete keys.current[index]
-      }
-    })
+    event.stopPropagation()
+    let key = ''
+    let prefix = ''
 
-    keys.current.push(event.key)
+    if (event.ctrlKey) {
+      prefix += 'Ctrl+'
+    }
 
-    let first = true
-    let shortcut = ''
+    if (event.shiftKey) {
+      prefix += 'Shift+'
+    }
 
-    keys.current.forEach((key) => {
-      if (keys.current.length > 1 && !first) {
-        shortcut += '+'
-      }
+    if (event.altKey) {
+      prefix += 'Alt+'
+    }
 
-      shortcut += key
+    if (event.metaKey) {
+      prefix += 'Meta+'
+    }
 
-      first = false
-    })
+    key = prefix + event.key.toUpperCase()
 
-    setShortcut(shortcut)
+    if (onChange) onChange(key)
   }
 
   const handleClear = () => {
-    keys.current = []
-    setShortcut('')
+    if (onChange) onChange('')
   }
 
   return (
@@ -49,8 +48,7 @@ export const ShortcutInput = ({ id, label, value }: ShortcutInputProps) => {
       id={id}
       label={label}
       onKeyDown={handleKeyDown}
-      value={shortcut}
-      onChange={() => null}
+      value={value}
       InputProps={{
         endAdornment: (
           <InputAdornment position='end'>
@@ -62,4 +60,4 @@ export const ShortcutInput = ({ id, label, value }: ShortcutInputProps) => {
       }}
     />
   )
-}
+})
