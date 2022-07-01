@@ -3,9 +3,9 @@
   "productName": "Lindo-POC",
   "private": true,
   "version": "1.0.0",
-  "description": "Vite React Electron boilerplate.",
+  "description": "Play Dofus Touch on Linux/OS X/Window",
   "author": "Zenoxs <amaury.civier@gmail.com>",
-  "license": "MIT",
+  "license": "GPL-3.0",
   "main": "dist/main/index.cjs",
   "scripts": {
     "lint": "eslint packages",
