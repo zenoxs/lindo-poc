@@ -3,8 +3,11 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
+      "@/*": [
+        "src/*"
+      ],
       "@lindo/shared": [
-        "packages/shared/index.ts"
+        "../shared/index.ts"
       ]
     }
   }

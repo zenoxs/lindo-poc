@@ -1,4 +1,3 @@
-import { Mod } from './mod'
 import { ShortcutsMod } from './shortcuts'
 
 export * from './shortcuts'
