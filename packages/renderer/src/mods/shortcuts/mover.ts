@@ -85,7 +85,7 @@ export class Mover {
   private getClosestCellToChangeMapRandomised(cells: Array<number>, direction: MapDirection): number | undefined {
     const occupiedCells = this.wGame.isoEngine.actorManager._occupiedCells
     const currentCellId = this.wGame.isoEngine.actorManager.userActor.cellId
-    if (occupiedCells === {} || currentCellId === null) {
+    if (currentCellId === null) {
       return undefined
     }
     const canMoveDiagonally = this.wGame.isoEngine.actorManager.userActor.canMoveDiagonally
