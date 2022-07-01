@@ -99,6 +99,7 @@ export class Application {
   }
 
   openOptionWindow() {
+    console.log('Application ->', 'openOptionWindow')
     if (this._optionWindow) {
       this._optionWindow.focus()
       return

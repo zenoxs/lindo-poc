@@ -1,4 +1,4 @@
-import * as hash from 'object-hash'
+import hash from 'object-hash'
 import { applyPatch, IJsonPatch, Instance, onPatch } from 'mobx-state-tree'
 import { RootStoreModel } from './root-store'
 /**

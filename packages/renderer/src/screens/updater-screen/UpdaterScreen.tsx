@@ -19,6 +19,7 @@ export const UpdaterScreen = () => {
         backgroundColor: theme.palette.background.default,
         height: '100vh',
         display: 'flex',
+        flex: 1,
         alignItems: 'stretch',
         justifyContent: 'center',
         flexDirection: 'column'

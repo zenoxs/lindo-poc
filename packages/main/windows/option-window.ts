@@ -32,7 +32,7 @@ export class OptionWindow extends (EventEmitter as new () => TypedEmitter<Option
     })
 
     if (app.isPackaged) {
-      this._win.loadFile(join(__dirname, '../renderer/index.html#/option'))
+      this._win.loadURL(`file://${join(__dirname, '../renderer/index.html#/option')}`)
     } else {
       // 🚧 Use ['ENV_NAME'] avoid vite:define plugin
 
