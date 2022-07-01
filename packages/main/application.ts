@@ -1,9 +1,9 @@
-import { GameContext, IPCEvents, RootStore, WindowHotkey } from '@lindo/shared'
+import { GameContext, IPCEvents, RootStore } from '@lindo/shared'
 import { app, ipcMain, Menu } from 'electron'
 import express from 'express'
 import getPort from 'get-port'
 import { Server } from 'http'
-import { IObjectDidChange, observe, reaction } from 'mobx'
+import { observe } from 'mobx'
 import { AddressInfo } from 'net'
 import { GAME_PATH } from './constants'
 import { getAppMenu } from './menu'
@@ -80,13 +80,13 @@ export class Application {
 
   private _setAppMenu() {
     Menu.setApplicationMenu(getAppMenu(this._rootStore.hotkeyStore.window))
-    reaction(
-      () => this._rootStore.hotkeyStore.window,
-      (value) => {
-        console.log('Application ->', '_setAppMenu')
-        Menu.setApplicationMenu(getAppMenu(value))
+    console.log('Application ->', '_setAppMenu')
+    observe(this._rootStore.hotkeyStore.window, (change) => {
+      console.log('Application ->', '_setAppMenu')
+      if (change.type === 'update') {
+        Menu.setApplicationMenu(getAppMenu(this._rootStore.hotkeyStore.window))
       }
-    )
+    })
   }
 
   async createGameWindow() {

@@ -1,12 +1,11 @@
 import { DofusWindow } from '@/dofus-window'
 import { RootStore } from '@/store'
-import { IReactionDisposer, reaction } from 'mobx'
+import { Lambda, observe } from 'mobx'
 import { Shortcuts } from 'shortcuts'
 import { Mod } from '../mod'
 import { Mover } from './mover'
-
 export class ShortcutsMod extends Mod {
-  private readonly _disposers: Array<IReactionDisposer> = []
+  private readonly _disposers: Array<Lambda> = []
   private readonly _shortcuts = new Shortcuts({ target: this.wGame.document })
   private readonly _mover: Mover
 
@@ -19,33 +18,38 @@ export class ShortcutsMod extends Mod {
     this._bindAll()
   }
 
-  private _addShortcut(shortcutProp: string, handler: (event: KeyboardEvent) => boolean | void) {
+  private _addShortcut<S extends object, K extends keyof S>(
+    store: S,
+    shortcutProp: K,
+    handler: (event: KeyboardEvent) => boolean | void
+  ) {
     const addShortcut = (shortcut: string) => {
       if (shortcut !== '') {
         this._shortcuts.add({ shortcut, handler })
       }
     }
-    const disposer = reaction(
-      () => shortcutProp,
-      (shortcut, previousShortcut) => {
-        if (shortcut === '') {
-          this._shortcuts.remove({ shortcut: previousShortcut, handler })
-          addShortcut(shortcut)
-        } else {
-          this._shortcuts.remove({ shortcut: previousShortcut, handler })
+    const disposer = observe(store, (change) => {
+      if (change.name !== shortcutProp) {
+        return
+      }
+      console.log(change)
+      if (change.type === 'update') {
+        const newShortcut = change.oldValue.value
+        this._shortcuts.remove({ shortcut: change.oldValue.value, handler })
+        if (newShortcut !== '') {
+          addShortcut(newShortcut)
         }
       }
-    )
+    })
     this._disposers.push(disposer)
-    addShortcut(shortcutProp)
+    addShortcut(store[shortcutProp] as never)
   }
 
   private _bindAll() {
-    console.info('bindAll')
     const gameActionHotkey = this.rootStore.hotkeyStore.gameAction
 
     // End turn
-    this._addShortcut(gameActionHotkey.endTurn, () => {
+    this._addShortcut(gameActionHotkey, 'endTurn', () => {
       if (this.wGame.gui.fightManager.fightState === 0) {
         this.wGame.gui.timeline.fightControlButtons.toggleReadyForFight()
       } else if (this.wGame.gui.fightManager.fightState === 1) {
@@ -54,7 +58,7 @@ export class ShortcutsMod extends Mod {
     })
 
     // go to top map
-    this._addShortcut(gameActionHotkey.goUp, () => {
+    this._addShortcut(gameActionHotkey, 'goUp', () => {
       this._mover.move(
         'top',
         () => {
@@ -67,7 +71,7 @@ export class ShortcutsMod extends Mod {
     })
 
     // go to bottom map
-    this._addShortcut(gameActionHotkey.goDown, () => {
+    this._addShortcut(gameActionHotkey, 'goDown', () => {
       this._mover.move(
         'bottom',
         () => {
@@ -79,7 +83,7 @@ export class ShortcutsMod extends Mod {
       )
     })
 
-    this._addShortcut(gameActionHotkey.goLeft, () => {
+    this._addShortcut(gameActionHotkey, 'goLeft', () => {
       this._mover.move(
         'left',
         () => {
@@ -91,7 +95,7 @@ export class ShortcutsMod extends Mod {
       )
     })
 
-    this._addShortcut(gameActionHotkey.goRight, () => {
+    this._addShortcut(gameActionHotkey, 'goRight', () => {
       this._mover.move(
         'right',
         () => {
@@ -104,14 +108,14 @@ export class ShortcutsMod extends Mod {
     })
 
     // Open chat
-    this._addShortcut(gameActionHotkey.openChat, () => {
+    this._addShortcut(gameActionHotkey, 'openChat', () => {
       if (!this.wGame.gui.numberInputPad.isVisible()) {
         this.wGame.gui.chat.activate()
       }
     })
 
     // Open menu
-    this._addShortcut(gameActionHotkey.openMenu, () => {
+    this._addShortcut(gameActionHotkey, 'openMenu', () => {
       this.wGame.gui.mainControls.buttonBox._childrenList[15].tap()
     })
 
