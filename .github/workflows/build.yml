@@ -1,0 +1,135 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  #TODO
+  #on tag, update package.json, create release then "push" the package.json updated
+  release-win:
+    name: "Release windows"
+    runs-on: windows-latest
+
+    steps:
+      - name: Build
+        uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16.15.1'
+      - run: yarn
+      - run: yarn build
+
+      - name: Extract version
+        id: extract_version
+        uses: Saionaro/extract-package-version@v1.0.6
+
+      - name: Create windows artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: win
+          path: |
+            releases/Lindo ${{ steps.extract_version.outputs.version }}.exe
+            releases/Lindo Setup ${{ steps.extract_version.outputs.version }}.exe
+            releases/Lindo-${{ steps.extract_version.outputs.version }}-win.zip
+            releases/Lindo-${{ steps.extract_version.outputs.version }}-ia32-win.zip
+
+  release-linux:
+    name: "Release linux"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Build
+        uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16.15.1'
+      - run: yarn
+      - run: yarn build
+
+      - name: Extract version
+        id: extract_version
+        uses: Saionaro/extract-package-version@v1.0.6
+
+      - name: Create linux artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: lin
+          path: |
+            releases/lindo-${{ steps.extract_version.outputs.version }}.tar.gz
+            releases/lindo_${{ steps.extract_version.outputs.version }}_amd64.deb
+
+  release-macOS:
+    name: "Release macOS"
+    runs-on: macos-latest
+
+    steps:
+      - name: Build
+        uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16.15.1'
+      - run: yarn
+      - run: yarn build
+      - name: release mac
+        run: |
+          npm run release:mac
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract version
+        id: extract_version
+        uses: Saionaro/extract-package-version@v1.0.6
+
+      - name: Create macOS artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: mac
+          path: |
+            releases/Lindo-${{ steps.extract_version.outputs.version }}.dmg
+            releases/Lindo-${{ steps.extract_version.outputs.version }}-mac.zip
+
+  upload-release:
+    name: "Upload Release"
+    runs-on: ubuntu-latest
+    needs: [release-win, release-linux, release-macOS]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16.15.1'
+      #update pachage.json?
+      - run: npm i
+      #on dowload tous les artifacts
+      - uses: actions/download-artifact@v2
+
+      - name: Extract version
+        id: extract_version
+        uses: Saionaro/extract-package-version@v1.0.6
+
+      - name: Automatic Release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          automatic_release_tag: "v${{ steps.extract_version.outputs.version }}"
+          title: "v${{ steps.extract_version.outputs.version }}"
+          files: |
+            win/Lindo ${{ steps.extract_version.outputs.version }}.exe
+            win/Lindo Setup ${{ steps.extract_version.outputs.version }}.exe
+            win/Lindo-${{ steps.extract_version.outputs.version }}-win.zip
+            win/Lindo-${{ steps.extract_version.outputs.version }}-ia32-win.zip
+            lin/lindo-${{ steps.extract_version.outputs.version }}.tar.gz
+            lin/lindo_${{ steps.extract_version.outputs.version }}_amd64.deb
+            mac/Lindo-${{ steps.extract_version.outputs.version }}.dmg
+            mac/Lindo-${{ steps.extract_version.outputs.version }}-mac.zip
+
