@@ -1,7 +1,7 @@
 {
-  "appId": "YourAppID",
-  "productName": "YourAppName",
-  "copyright": "Copyright © 2022 ${author}",
+  "appId": "com.lindo.app",
+  "productName": "Lindo",
+  "copyright": "Copyright © 2022 Zenox, Prixe",
   "asar": true,
   "directories": {
     "output": "release/${version}",
@@ -12,6 +12,8 @@
   ],
   "win": {
     "target": [
+      "zip",
+      "portable",
       {
         "target": "nsis",
         "arch": [
@@ -19,7 +21,7 @@
         ]
       }
     ],
-    "artifactName": "${productName}-${version}-Setup.${ext}"
+    "artifactName": "${productName}-${version}.${ext}"
   },
   "nsis": {
     "oneClick": false,
@@ -31,12 +33,22 @@
     "target": [
       "dmg"
     ],
-    "artifactName": "${productName}-${version}-Installer.${ext}"
+    "artifactName": "${productName}-${version}.${ext}",
+    "category": "public.app-category.games"
   },
   "linux": {
+    "executableName": "Lindo",
+    "description": "Lindo Client for Linux",
+    "icon": "resources/icon.png",
     "target": [
-      "AppImage"
+      "AppImage",
+      "tar.gz",
+      "deb"
     ],
-    "artifactName": "${productName}-${version}-Installer.${ext}"
+    "mimeTypes": [
+      "application/x-binary"
+    ],
+    "artifactName": "${productName}-${version}.${ext}",
+    "maintainer": "Prixe"
   }
 }
