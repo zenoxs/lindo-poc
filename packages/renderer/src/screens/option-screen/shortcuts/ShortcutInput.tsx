@@ -25,7 +25,7 @@ export const ShortcutInput = memo<ShortcutInputProps>(({ id, label, value, onCha
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     event.preventDefault()
     event.stopPropagation()
-    console.log(event)
+
     let key = ''
     let prefix = ''
 
