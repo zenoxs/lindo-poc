@@ -1,18 +1,21 @@
+import { DofusWindow } from '@/dofus-window'
+import { RootStore } from '@/store'
 import { IReactionDisposer, reaction } from 'mobx'
 import { Shortcuts } from 'shortcuts'
 import { Mod } from '../mod'
-// import { Mover } from './mover'
+import { Mover } from './mover'
 
 export class ShortcutsMod extends Mod {
   private readonly _disposers: Array<IReactionDisposer> = []
   private readonly _shortcuts = new Shortcuts({ target: this.wGame.document })
-  // private mover: Mover
+  private readonly _mover: Mover
+
+  constructor(wGame: DofusWindow, rootStore: RootStore) {
+    super(wGame, rootStore)
+    this._mover = new Mover(wGame)
+  }
 
   start(): void {
-    // if (this.params.diver.active_open_menu) {
-    //   Logger.info('- enable Open_menu')
-    // }
-    // this.mover = new Mover(this.wGame, this.settings, this.translate)
     this._bindAll()
   }
 
@@ -52,52 +55,52 @@ export class ShortcutsMod extends Mod {
 
     // go to top map
     this._addShortcut(gameActionHotkey.goUp, () => {
-      // this.mover.move(
-      //   'top',
-      //   () => {
-      //     console.debug('Move to Up OK')
-      //   },
-      //   (reason: string = '') => {
-      //     console.debug('Move to Up Failed... (' + reason + ')')
-      //   }
-      // )
+      this._mover.move(
+        'top',
+        () => {
+          console.debug('Move to Up OK')
+        },
+        (reason: string = '') => {
+          console.debug('Move to Up Failed... (' + reason + ')')
+        }
+      )
     })
 
     // go to bottom map
     this._addShortcut(gameActionHotkey.goDown, () => {
-      // this.mover.move(
-      //   'bottom',
-      //   () => {
-      //     console.debug('Move to Bottom OK')
-      //   },
-      //   (reason: string = '') => {
-      //     console.debug('Move to Bottom Failed... (' + reason + ')')
-      //   }
-      // )
+      this._mover.move(
+        'bottom',
+        () => {
+          console.debug('Move to Bottom OK')
+        },
+        (reason: string = '') => {
+          console.debug('Move to Bottom Failed... (' + reason + ')')
+        }
+      )
     })
 
     this._addShortcut(gameActionHotkey.goLeft, () => {
-      // this.mover.move(
-      //   'left',
-      //   () => {
-      //     console.debug('Move to Left OK')
-      //   },
-      //   (reason: string = '') => {
-      //     console.debug('Move to Left Failed... (' + reason + ')')
-      //   }
-      // )
+      this._mover.move(
+        'left',
+        () => {
+          console.debug('Move to Left OK')
+        },
+        (reason: string = '') => {
+          console.debug('Move to Left Failed... (' + reason + ')')
+        }
+      )
     })
 
     this._addShortcut(gameActionHotkey.goRight, () => {
-      // this.mover.move(
-      //   'right',
-      //   () => {
-      //     console.debug('Move to Right OK')
-      //   },
-      //   (reason: string = '') => {
-      //     console.debug('Move to Right Failed... (' + reason + ')')
-      //   }
-      // )
+      this._mover.move(
+        'right',
+        () => {
+          console.debug('Move to Right OK')
+        },
+        (reason: string = '') => {
+          console.debug('Move to Right Failed... (' + reason + ')')
+        }
+      )
     })
 
     // Open chat
@@ -185,8 +188,6 @@ export class ShortcutsMod extends Mod {
     // this.shortcutsHelper.bindVanilla('tab', (e: KeyboardEvent) => {
     //   e.preventDefault()
     // })
-
-    console.log(this._shortcuts)
   }
 
   close() {
@@ -194,9 +195,6 @@ export class ShortcutsMod extends Mod {
     for (const disposer of this._disposers) {
       disposer()
     }
-    // if (this.mover) {
-    //   this.mover.reset()
-    // }
-    // this.shortcutsHelper.unBindAll()
+    this._mover.close()
   }
 }
