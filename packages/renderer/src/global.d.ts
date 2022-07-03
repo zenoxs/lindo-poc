@@ -1,4 +1,5 @@
 import { RootStoreSnapshot, IJsonPatch, UpdateProgress, GameContext } from '@lindo/shared'
+import { Titlebar } from 'custom-electron-titlebar'
 
 declare global {
   // eslint-disable-next-line no-unused-vars
@@ -25,5 +26,8 @@ declare global {
     buildVersion: string
     appVersion: string
     lindoVersion: string
+    titleBar: {
+      updateTitle: (title: string) => void
+    }
   }
 }

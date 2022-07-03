@@ -2,9 +2,18 @@ import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron'
 import { domReady } from './utils'
 import { IJsonPatch } from 'mobx-state-tree'
 import { GameContext, IPCEvents, RootStoreSnapshot, UpdateProgress } from '@lindo/shared'
+import { Titlebar } from 'custom-electron-titlebar'
 ;(async () => {
   await domReady()
 })()
+
+window.addEventListener('DOMContentLoaded', () => {
+  // Title bar implemenation
+  const titleBar = new Titlebar()
+  contextBridge.exposeInMainWorld('titleBar', {
+    updateTitle: (title: string) => titleBar.updateTitle(title)
+  })
+})
 
 // MOBX
 const forwardPatchToMain = (patch: IJsonPatch): void => {
