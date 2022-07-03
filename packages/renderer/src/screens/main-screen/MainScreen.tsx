@@ -8,6 +8,7 @@ import { TabManager } from './tab-manager'
 
 export const MainScreen = () => {
   const { gameStore } = useStores()
+
   return (
     <TabManager>
       <Box sx={{ display: 'flex', flex: 1 }} height='100%' width='100vw'>

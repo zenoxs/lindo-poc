@@ -20,8 +20,7 @@
           "x64"
         ]
       }
-    ],
-    "artifactName": "${productName}-${version}.${ext}"
+    ]
   },
   "nsis": {
     "oneClick": false,
@@ -33,7 +32,6 @@
     "target": [
       "dmg"
     ],
-    "artifactName": "${productName}-${version}.${ext}",
     "category": "public.app-category.games"
   },
   "linux": {
@@ -48,7 +46,6 @@
     "mimeTypes": [
       "application/x-binary"
     ],
-    "artifactName": "${productName}-${version}.${ext}",
     "maintainer": "Prixe"
   }
 }

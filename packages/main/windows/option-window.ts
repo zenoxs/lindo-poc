@@ -18,8 +18,8 @@ export class OptionWindow extends (EventEmitter as new () => TypedEmitter<Option
       width: 820,
       height: 600,
       title: 'Options',
-      titleBarStyle: 'hidden',
       fullscreenable: false,
+      autoHideMenuBar: true,
       webPreferences: {
         preload: join(__dirname, '../preload/index.cjs'),
         defaultEncoding: 'UTF-8'

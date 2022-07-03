@@ -2,6 +2,7 @@ import { app } from 'electron'
 import { release } from 'os'
 import { Application } from './application'
 import { setupRootStore } from './store'
+import { setupTitlebar } from 'custom-electron-titlebar/main'
 
 app.commandLine.appendSwitch('disable-site-isolation-trials')
 
@@ -18,6 +19,7 @@ if (!app.requestSingleInstanceLock()) {
 
 app.whenReady().then(async () => {
   console.log('App ->', 'whenReady')
+  setupTitlebar()
   const store = await setupRootStore()
   await Application.init(store)
   Application.instance.run()

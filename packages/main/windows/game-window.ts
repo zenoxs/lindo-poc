@@ -1,5 +1,6 @@
 import { RootStore } from '@lindo/shared'
 import { app, BeforeSendResponse, BrowserWindow } from 'electron'
+import { attachTitlebarToWindow } from 'custom-electron-titlebar/main'
 import { join } from 'path'
 import { EventEmitter } from 'stream'
 import TypedEmitter from 'typed-emitter'
@@ -22,6 +23,7 @@ export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWind
     this._win = new BrowserWindow({
       show: false,
       resizable: true,
+      title: 'Lindo',
       fullscreen: this._store.optionStore.window.fullScreen,
       width: this._store.optionStore.window.resolution.width,
       height: this._store.optionStore.window.resolution.height,
@@ -92,6 +94,8 @@ export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWind
       // if (url.startsWith('https:')) shell.openExternal(url)
       return { action: 'deny' }
     })
+
+    attachTitlebarToWindow(this._win)
   }
 
   static async init(store: RootStore): Promise<GameWindow> {

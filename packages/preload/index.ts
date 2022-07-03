@@ -2,9 +2,23 @@ import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron'
 import { domReady } from './utils'
 import { IJsonPatch } from 'mobx-state-tree'
 import { GameContext, IPCEvents, RootStoreSnapshot, UpdateProgress } from '@lindo/shared'
+import { Titlebar, Color } from 'custom-electron-titlebar'
 ;(async () => {
   await domReady()
 })()
+
+window.addEventListener('DOMContentLoaded', () => {
+  // only display custom titlebar for main windows
+  if (window.location.hash !== '') {
+    return
+  }
+  const titleBar = new Titlebar({
+    backgroundColor: Color.fromHex('#121212')
+  })
+  contextBridge.exposeInMainWorld('titleBar', {
+    updateTitle: (title: string) => titleBar.updateTitle(title)
+  })
+})
 
 // MOBX
 const forwardPatchToMain = (patch: IJsonPatch): void => {
