@@ -48,7 +48,7 @@ jobs:
 
       - name: Upload Linux artifacts
         uses: actions/upload-artifact@v2
-        if: matrix.platform == 'linux-latest'
+        if: matrix.platform == 'ubuntu-latest'
         with:
           name: linux
           path: |
@@ -83,12 +83,11 @@ jobs:
           automatic_release_tag: "v${{ steps.extract_version.outputs.version }}"
           title: "v${{ steps.extract_version.outputs.version }}"
           files: |
-            win/Lindo ${{ steps.extract_version.outputs.version }}.exe
-            win/Lindo Setup ${{ steps.extract_version.outputs.version }}.exe
-            win/Lindo-${{ steps.extract_version.outputs.version }}-win.zip
-            win/Lindo-${{ steps.extract_version.outputs.version }}-ia32-win.zip
-            lin/lindo-${{ steps.extract_version.outputs.version }}.tar.gz
-            lin/lindo_${{ steps.extract_version.outputs.version }}_amd64.deb
-            mac/Lindo-${{ steps.extract_version.outputs.version }}.dmg
-            mac/Lindo-${{ steps.extract_version.outputs.version }}-mac.zip
+            windows/Lindo ${{ steps.extract_version.outputs.version }}.exe
+            windows/Lindo Setup ${{ steps.extract_version.outputs.version }}.exe
+            windows/Lindo-${{ steps.extract_version.outputs.version }}-win.zip
+            linux/Lindo-${{ steps.extract_version.outputs.version }}.AppImage
+            linux/lindo-${{ steps.extract_version.outputs.version }}.tar.gz
+            linux/lindo_${{ steps.extract_version.outputs.version }}_amd64.deb
+            macos/Lindo-${{ steps.extract_version.outputs.version }}.dmg
 
