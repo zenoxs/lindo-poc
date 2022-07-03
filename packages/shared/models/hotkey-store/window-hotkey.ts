@@ -6,13 +6,13 @@ import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 export const WindowHotkeyModel = types
   .model('WindowHotkey')
   .props({
-    newTab: types.optional(types.string, 'CmdOrCtrl+t'),
-    closeTab: types.optional(types.string, 'CmdOrCtrl+w'),
-    newWindow: types.optional(types.string, 'CmdOrCtrl+n'),
-    nextTab: types.optional(types.string, 'down'),
-    prevTab: types.optional(types.string, 'up'),
-    activTab: types.optional(types.string, 'CmdOrCtrl+tab'),
-    tabs: types.optional(types.array(types.string), ['f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8'])
+    newTab: types.optional(types.string, 'CmdOrCtrl+T'),
+    closeTab: types.optional(types.string, 'CmdOrCtrl+W'),
+    newWindow: types.optional(types.string, 'CmdOrCtrl+N'),
+    nextTab: types.optional(types.string, 'Down'),
+    prevTab: types.optional(types.string, 'Up'),
+    activTab: types.optional(types.string, 'CmdOrCtrl+Tab'),
+    tabs: types.optional(types.array(types.string), ['F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8'])
   })
   .actions((self) => ({
     setNewTab(hotkey: string) {

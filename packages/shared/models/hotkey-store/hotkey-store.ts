@@ -1,5 +1,6 @@
 import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 import { GameActionHotkeyModel } from './game-action-hotkey'
+import { GameInterfaceHotkeyModel } from './game-interface-hotkey'
 import { WindowHotkeyModel } from './window-hotkey'
 
 /**
@@ -7,7 +8,8 @@ import { WindowHotkeyModel } from './window-hotkey'
  */
 export const HotkeyStoreModel = types.model('HotkeyStore').props({
   window: types.optional(WindowHotkeyModel, {}),
-  gameAction: types.optional(GameActionHotkeyModel, {})
+  gameAction: types.optional(GameActionHotkeyModel, {}),
+  gameInterface: types.optional(GameInterfaceHotkeyModel, {})
 })
 
 /**
