@@ -1,5 +1,4 @@
 import { RootStoreSnapshot, IJsonPatch, UpdateProgress, GameContext } from '@lindo/shared'
-import { Titlebar } from 'custom-electron-titlebar'
 
 declare global {
   // eslint-disable-next-line no-unused-vars

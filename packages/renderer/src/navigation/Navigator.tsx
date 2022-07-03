@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { MainScreen, OptionScreen, UpdaterScreen } from '@/screens'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import { Box } from '@mui/material'
 
 export const Navigator = () => {
+  const location = useLocation()
+  const titleBarHeight = useMemo(() => (location.pathname === '/' ? '30px' : '0px'), [location])
+
   return (
     <>
       {/* <TitleBar /> */}
-      <Box sx={{ display: 'flex', height: 'calc(100vh - 30px)' }}>
+      <Box sx={{ display: 'flex', height: `calc(100vh - ${titleBarHeight})` }}>
         <Routes>
           <Route path='/' element={<MainScreen />} />
           <Route path='updater' element={<UpdaterScreen />} />

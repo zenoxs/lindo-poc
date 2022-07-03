@@ -3,7 +3,6 @@ import { app, BrowserWindow } from 'electron'
 import { join } from 'path'
 import { EventEmitter } from 'stream'
 import TypedEmitter from 'typed-emitter'
-import { TITLE_BAR_OPT } from './titler-bar-opt'
 
 type OptionWindowEvents = {
   close: (event: Event) => void
@@ -20,7 +19,7 @@ export class OptionWindow extends (EventEmitter as new () => TypedEmitter<Option
       height: 600,
       title: 'Options',
       fullscreenable: false,
-      ...TITLE_BAR_OPT,
+      autoHideMenuBar: true,
       webPreferences: {
         preload: join(__dirname, '../preload/index.cjs'),
         defaultEncoding: 'UTF-8'

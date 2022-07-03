@@ -4,7 +4,6 @@ import { join } from 'path'
 import { EventEmitter } from 'stream'
 import TypedEmitter from 'typed-emitter'
 import { generateUserArgent } from '../utils'
-import { TITLE_BAR_OPT } from './titler-bar-opt'
 
 type UpdaterWindowEvents = {
   close: (event: Event) => void
@@ -20,7 +19,7 @@ export class UpdaterWindow extends (EventEmitter as new () => TypedEmitter<Updat
       width: 700,
       height: 190,
       title: 'Updater',
-      ...TITLE_BAR_OPT,
+      autoHideMenuBar: true,
       webPreferences: {
         preload: join(__dirname, '../preload/index.cjs'),
         defaultEncoding: 'UTF-8'
