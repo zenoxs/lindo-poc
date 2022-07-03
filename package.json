@@ -1,6 +1,6 @@
 {
-  "name": "lindo-poc",
-  "productName": "Lindo-POC",
+  "name": "lindo",
+  "productName": "Lindo",
   "private": true,
   "version": "1.0.0",
   "description": "Vite React Electron boilerplate.",
