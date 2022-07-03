@@ -4,6 +4,7 @@ import { join } from 'path'
 import { EventEmitter } from 'stream'
 import TypedEmitter from 'typed-emitter'
 import { generateUserArgent } from '../utils'
+import { TITLE_BAR_OPT } from './titler-bar-opt'
 
 type GameWindowEvents = {
   close: (event: Event) => void
@@ -25,7 +26,7 @@ export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWind
       fullscreen: this._store.optionStore.window.fullScreen,
       width: this._store.optionStore.window.resolution.width,
       height: this._store.optionStore.window.resolution.height,
-      titleBarStyle: 'hidden',
+      ...TITLE_BAR_OPT,
       webPreferences: {
         preload: join(__dirname, '../preload/index.cjs'),
         allowRunningInsecureContent: true,
