@@ -14,7 +14,7 @@ export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWind
   private readonly _store: RootStore
 
   get id() {
-    return this._win.id!
+    return this._win.webContents.id!
   }
 
   private constructor(userAgent: string, store: RootStore) {
@@ -24,6 +24,7 @@ export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWind
       show: false,
       resizable: true,
       title: 'Lindo',
+      fullscreenable: true,
       fullscreen: this._store.optionStore.window.fullScreen,
       width: this._store.optionStore.window.resolution.width,
       height: this._store.optionStore.window.resolution.height,
@@ -112,4 +113,8 @@ export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWind
   focus = () => this._win.focus()
   isMinimized = () => this._win.isMinimized()
   restore = () => this._win.restore()
+
+  toggleMaximize() {
+    return this._win.isMaximized() ? this._win.unmaximize() : this._win.maximize()
+  }
 }

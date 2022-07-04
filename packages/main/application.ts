@@ -54,6 +54,14 @@ export class Application {
       this.openOptionWindow()
     })
 
+    ipcMain.on(IPCEvents.TOGGLE_MAXIMIZE_WINDOW, (event) => {
+      console.log('Application ->', 'TOGGLE_MAXIMIZE_WINDOW')
+      const gWindow = this._gWindows.find((gWindow) => gWindow.id === event.sender.id)
+      if (gWindow) {
+        gWindow.toggleMaximize()
+      }
+    })
+
     await runUpdater(this._rootStore)
 
     app.on('second-instance', () => {

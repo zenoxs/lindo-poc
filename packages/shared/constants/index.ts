@@ -9,7 +9,8 @@ export enum IPCEvents {
   NEW_TAB = 'NEW_TAB',
   CLOSE_TAB = 'CLOSE_TAB',
   PREV_TAB = 'PREV_TAB',
-  NEXT_TAB = 'NEXT_TAB'
+  NEXT_TAB = 'NEXT_TAB',
+  TOGGLE_MAXIMIZE_WINDOW = 'TOGGLE_MAXIMIZE_WINDOW'
 }
 
 export interface NameValue {

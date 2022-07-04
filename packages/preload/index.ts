@@ -15,11 +15,17 @@ window.addEventListener('DOMContentLoaded', () => {
   const titleBar = new Titlebar({
     backgroundColor: Color.fromHex('#121212')
   })
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const titlebarRef: HTMLDivElement = (titleBar as any).titlebar
+
+  titlebarRef.addEventListener('dblclick', () => {
+    ipcRenderer.send(IPCEvents.TOGGLE_MAXIMIZE_WINDOW)
+  })
+
   titleBar.updateTitle('Lindo')
   contextBridge.exposeInMainWorld('titleBar', {
     updateTitle: (title: string) => titleBar.updateTitle(title),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    height: (titleBar as any).titlebar.clientHeight + 'px'
+    height: titlebarRef.clientHeight + 'px'
   })
 })
 
