@@ -91,7 +91,150 @@ export const OptionShortcuts = () => {
               </Grid>
             </TabPanel>
             <TabPanel value={value} index={1}>
-              Item Two
+              <Grid component='form' noValidate autoComplete='off' container spacing={1} margin={0}>
+                <Grid item xs={3}>
+                  <Stack spacing={2}>
+                    <ShortcutInput
+                      id='character'
+                      label='Character'
+                      value={hotkeyStore.gameInterface.character}
+                      onChange={hotkeyStore.gameInterface.setCharacter}
+                    />
+                    <ShortcutInput
+                      id='spell'
+                      label='Spells'
+                      value={hotkeyStore.gameInterface.spell}
+                      onChange={hotkeyStore.gameInterface.setSpell}
+                    />
+                    <ShortcutInput
+                      id='inventory'
+                      label='Inventory'
+                      value={hotkeyStore.gameInterface.inventory}
+                      onChange={hotkeyStore.gameInterface.setInventory}
+                    />
+                    <ShortcutInput
+                      id='bidhouse'
+                      label='Bidhouse'
+                      value={hotkeyStore.gameInterface.bidhouse}
+                      onChange={hotkeyStore.gameInterface.setBidhouse}
+                    />
+                    <ShortcutInput
+                      id='map'
+                      label='Map'
+                      value={hotkeyStore.gameInterface.map}
+                      onChange={hotkeyStore.gameInterface.setMap}
+                    />
+                    <ShortcutInput
+                      id='friend'
+                      label='Friends'
+                      value={hotkeyStore.gameInterface.friend}
+                      onChange={hotkeyStore.gameInterface.setFriend}
+                    />
+                  </Stack>
+                </Grid>
+                <Grid item xs={3}>
+                  <Stack spacing={2}>
+                    <ShortcutInput
+                      id='book'
+                      label='Quests'
+                      value={hotkeyStore.gameInterface.book}
+                      onChange={hotkeyStore.gameInterface.setBook}
+                    />
+                    <ShortcutInput
+                      id='guild'
+                      label='Guilld'
+                      value={hotkeyStore.gameInterface.guild}
+                      onChange={hotkeyStore.gameInterface.setGuild}
+                    />
+                    <ShortcutInput
+                      id='conquest'
+                      label='Kolizeum'
+                      value={hotkeyStore.gameInterface.conquest}
+                      onChange={hotkeyStore.gameInterface.setConquest}
+                    />
+                    <ShortcutInput
+                      id='goultine'
+                      label='Shop'
+                      value={hotkeyStore.gameInterface.goultine}
+                      onChange={hotkeyStore.gameInterface.setGoultine}
+                    />
+                    <ShortcutInput
+                      id='job'
+                      label='Jobs'
+                      value={hotkeyStore.gameInterface.job}
+                      onChange={hotkeyStore.gameInterface.setJob}
+                    />
+                    <ShortcutInput
+                      id='alliance'
+                      label='Alliance'
+                      value={hotkeyStore.gameInterface.alliance}
+                      onChange={hotkeyStore.gameInterface.setAlliance}
+                    />
+                  </Stack>
+                </Grid>
+                <Grid item xs={3}>
+                  <Stack spacing={2}>
+                    <ShortcutInput
+                      id='mount'
+                      label='Mount'
+                      value={hotkeyStore.gameInterface.mount}
+                      onChange={hotkeyStore.gameInterface.setMount}
+                    />
+                    <ShortcutInput
+                      id='directory'
+                      label='List of Guilds'
+                      value={hotkeyStore.gameInterface.directory}
+                      onChange={hotkeyStore.gameInterface.setDirectory}
+                    />
+                    <ShortcutInput
+                      id='alignement'
+                      label='Alignement'
+                      value={hotkeyStore.gameInterface.alignement}
+                      onChange={hotkeyStore.gameInterface.setAlignement}
+                    />
+                    <ShortcutInput
+                      id='bestiary'
+                      label='Bestiary'
+                      value={hotkeyStore.gameInterface.bestiary}
+                      onChange={hotkeyStore.gameInterface.setBestiary}
+                    />
+                    <ShortcutInput
+                      id='title'
+                      label='Titles & Ornaments'
+                      value={hotkeyStore.gameInterface.title}
+                      onChange={hotkeyStore.gameInterface.setTitle}
+                    />
+                    <ShortcutInput
+                      id='achievement'
+                      label='Achievements'
+                      value={hotkeyStore.gameInterface.achievement}
+                      onChange={hotkeyStore.gameInterface.setAchievement}
+                    />
+                  </Stack>
+                </Grid>
+                <Grid item xs={3}>
+                  <Stack spacing={2}>
+                    <ShortcutInput
+                      id='daily-quest'
+                      label='Daily Quests'
+                      value={hotkeyStore.gameInterface.dailyQuest}
+                      onChange={hotkeyStore.gameInterface.setDailyQuest}
+                    />
+                    <ShortcutInput
+                      id='spouse'
+                      label='Spouse'
+                      value={hotkeyStore.gameInterface.spouse}
+                      onChange={hotkeyStore.gameInterface.setSpouse}
+                    />
+                    <ShortcutInput
+                      id='shop'
+                      label='Shopkeeper'
+                      value={hotkeyStore.gameInterface.shop}
+                      onChange={hotkeyStore.gameInterface.setShop}
+                    />
+                  </Stack>
+                </Grid>
+              </Grid>
             </TabPanel>
             <TabPanel value={value} index={2}>
               Item Three

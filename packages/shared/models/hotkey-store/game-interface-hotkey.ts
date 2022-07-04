@@ -6,9 +6,9 @@ import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 export const GameInterfaceHotkeyModel = types
   .model('GameActionHotkey')
   .props({
-    carac: types.optional(types.string, 'C'),
+    character: types.optional(types.string, 'C'),
     spell: types.optional(types.string, 'S'),
-    bag: types.optional(types.string, 'I'),
+    inventory: types.optional(types.string, 'I'),
     bidhouse: types.optional(types.string, 'H'),
     map: types.optional(types.string, 'M'),
     friend: types.optional(types.string, 'F'),
@@ -29,14 +29,14 @@ export const GameInterfaceHotkeyModel = types
     goultine: types.optional(types.string, 'R')
   })
   .actions((self) => ({
-    setCarac(hotkey: string) {
-      self.carac = hotkey
+    setCharacter(hotkey: string) {
+      self.character = hotkey
     },
     setSpell(hotkey: string) {
       self.spell = hotkey
     },
-    setBag(hotkey: string) {
-      self.bag = hotkey
+    setInventory(hotkey: string) {
+      self.inventory = hotkey
     },
     setBidhouse(hotkey: string) {
       self.bidhouse = hotkey
