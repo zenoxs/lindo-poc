@@ -5,6 +5,8 @@ import { setupRootStore } from './store'
 import { setupTitlebar } from 'custom-electron-titlebar/main'
 
 app.commandLine.appendSwitch('disable-site-isolation-trials')
+app.commandLine.appendSwitch('disable-renderer-backgrounding')
+app.commandLine.appendSwitch('disable-background-timer-throttling')
 
 // Disable GPU Acceleration for Windows 7
 if (release().startsWith('6.1')) app.disableHardwareAcceleration()

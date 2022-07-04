@@ -30,6 +30,7 @@ export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWind
       titleBarStyle: 'hidden',
       webPreferences: {
         preload: join(__dirname, '../preload/index.cjs'),
+        backgroundThrottling: false,
         allowRunningInsecureContent: true,
         webviewTag: true,
         webSecurity: false // require to load dofus files
