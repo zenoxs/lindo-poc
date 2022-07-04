@@ -36,6 +36,11 @@ export interface Slot extends TypedEmitter<SlotEvents> {
   tap: () => void
 }
 
+export interface ChildIcon {
+  tap: () => void
+  id: string
+}
+
 export interface Actor {
   moving: boolean
   canMoveDiagonally: boolean
@@ -59,6 +64,11 @@ export interface DofusWindow extends Window {
   gui: {
     on: (event: 'disconnect', callback: () => void) => void
     _resizeUi: () => void
+    menuBar: {
+      _icons: {
+        _childrenList: Array<ChildIcon>
+      }
+    }
     shortcutBar: {
       _panels: {
         spell: {

@@ -95,10 +95,10 @@ export const OptionShortcuts = () => {
                 <Grid item xs={3}>
                   <Stack spacing={2}>
                     <ShortcutInput
-                      id='character'
+                      id='carac'
                       label='Character'
-                      value={hotkeyStore.gameInterface.character}
-                      onChange={hotkeyStore.gameInterface.setCharacter}
+                      value={hotkeyStore.gameInterface.carac}
+                      onChange={hotkeyStore.gameInterface.setCarac}
                     />
                     <ShortcutInput
                       id='spell'
@@ -107,16 +107,16 @@ export const OptionShortcuts = () => {
                       onChange={hotkeyStore.gameInterface.setSpell}
                     />
                     <ShortcutInput
-                      id='inventory'
+                      id='bag'
                       label='Inventory'
-                      value={hotkeyStore.gameInterface.inventory}
-                      onChange={hotkeyStore.gameInterface.setInventory}
+                      value={hotkeyStore.gameInterface.bag}
+                      onChange={hotkeyStore.gameInterface.setbag}
                     />
                     <ShortcutInput
-                      id='bidhouse'
-                      label='Bidhouse'
-                      value={hotkeyStore.gameInterface.bidhouse}
-                      onChange={hotkeyStore.gameInterface.setBidhouse}
+                      id='bidHouse'
+                      label='BidHouse'
+                      value={hotkeyStore.gameInterface.bidHouse}
+                      onChange={hotkeyStore.gameInterface.setBidHouse}
                     />
                     <ShortcutInput
                       id='map'
@@ -187,10 +187,10 @@ export const OptionShortcuts = () => {
                       onChange={hotkeyStore.gameInterface.setDirectory}
                     />
                     <ShortcutInput
-                      id='alignement'
+                      id='alignment'
                       label='Alignement'
-                      value={hotkeyStore.gameInterface.alignement}
-                      onChange={hotkeyStore.gameInterface.setAlignement}
+                      value={hotkeyStore.gameInterface.alignment}
+                      onChange={hotkeyStore.gameInterface.setAlignment}
                     />
                     <ShortcutInput
                       id='bestiary'
@@ -225,12 +225,6 @@ export const OptionShortcuts = () => {
                       label='Spouse'
                       value={hotkeyStore.gameInterface.spouse}
                       onChange={hotkeyStore.gameInterface.setSpouse}
-                    />
-                    <ShortcutInput
-                      id='shop'
-                      label='Shopkeeper'
-                      value={hotkeyStore.gameInterface.shop}
-                      onChange={hotkeyStore.gameInterface.setShop}
                     />
                   </Stack>
                 </Grid>

@@ -4,29 +4,28 @@ import { Instance, SnapshotOut, types } from 'mobx-state-tree'
  * Model description here for TypeScript hints.
  */
 export const GameInterfaceHotkeyModel = types
-  .model('GameActionHotkey')
+  .model('GameInterfaceHotkey')
   .props({
-    character: types.optional(types.string, 'C'),
+    carac: types.optional(types.string, 'C'),
     spell: types.optional(types.string, 'S'),
-    inventory: types.optional(types.string, 'I'),
-    bidhouse: types.optional(types.string, 'H'),
+    bag: types.optional(types.string, 'I'),
+    bidHouse: types.optional(types.string, 'H'),
     map: types.optional(types.string, 'M'),
     friend: types.optional(types.string, 'F'),
     book: types.optional(types.string, 'Q'),
-    guild: types.optional(types.string, 'G'),
+    dailyQuest: types.optional(types.string, 'X'),
     conquest: types.optional(types.string, 'K'),
+    goultine: types.optional(types.string, 'R'),
     job: types.optional(types.string, 'J'),
-    alliance: types.optional(types.string, ''),
+    guild: types.optional(types.string, 'G'),
     mount: types.optional(types.string, 'N'),
     directory: types.optional(types.string, ''),
-    alignement: types.optional(types.string, ''),
+    alignment: types.optional(types.string, ''),
     bestiary: types.optional(types.string, 'B'),
     title: types.optional(types.string, 'T'),
     achievement: types.optional(types.string, 'U'),
-    dailyQuest: types.optional(types.string, 'X'),
+    alliance: types.optional(types.string, ''),
     spouse: types.optional(types.string, 'L'),
-    shop: types.optional(types.string, 'V'),
-    goultine: types.optional(types.string, 'R'),
     spells: types.optional(types.array(types.string), [
       '',
       ...Array.from({ length: 9 }, (_, i) => (i + 1).toString()),
@@ -40,17 +39,17 @@ export const GameInterfaceHotkeyModel = types
     ])
   })
   .actions((self) => ({
-    setCharacter(hotkey: string) {
-      self.character = hotkey
+    setCarac(hotkey: string) {
+      self.carac = hotkey
     },
     setSpell(hotkey: string) {
       self.spell = hotkey
     },
-    setInventory(hotkey: string) {
-      self.inventory = hotkey
+    setbag(hotkey: string) {
+      self.bag = hotkey
     },
-    setBidhouse(hotkey: string) {
-      self.bidhouse = hotkey
+    setBidHouse(hotkey: string) {
+      self.bidHouse = hotkey
     },
     setMap(hotkey: string) {
       self.map = hotkey
@@ -79,8 +78,8 @@ export const GameInterfaceHotkeyModel = types
     setDirectory(hotkey: string) {
       self.directory = hotkey
     },
-    setAlignement(hotkey: string) {
-      self.alignement = hotkey
+    setAlignment(hotkey: string) {
+      self.alignment = hotkey
     },
     setBestiary(hotkey: string) {
       self.bestiary = hotkey
@@ -96,9 +95,6 @@ export const GameInterfaceHotkeyModel = types
     },
     setSpouse(hotkey: string) {
       self.spouse = hotkey
-    },
-    setShop(hotkey: string) {
-      self.shop = hotkey
     },
     setGoultine(hotkey: string) {
       self.goultine = hotkey
@@ -119,10 +115,10 @@ export const GameInterfaceHotkeyModel = types
  *  .postProcessSnapshot(omit(["password", "socialSecurityNumber", "creditCardNumber"]))
  */
 
-type GameActionHotkeyType = Instance<typeof GameInterfaceHotkeyModel>
+type GameInterfaceHotkeyType = Instance<typeof GameInterfaceHotkeyModel>
 
-export interface GameActionHotkey extends GameActionHotkeyType {}
+export interface GameInterfaceHotkey extends GameInterfaceHotkeyType {}
 
-type GameActionHotkeySnapshotType = SnapshotOut<typeof GameInterfaceHotkeyModel>
+type GameInterfaceHotkeySnapshotType = SnapshotOut<typeof GameInterfaceHotkeyModel>
 
-export interface GameActionHotkeySnapshot extends GameActionHotkeySnapshotType {}
+export interface GameInterfaceHotkeySnapshot extends GameInterfaceHotkeySnapshotType {}

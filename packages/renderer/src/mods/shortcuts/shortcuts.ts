@@ -1,10 +1,15 @@
 import { DofusWindow } from '@/dofus-window'
 import { RootStore } from '@/store'
+import { GameInterfaceHotkey } from '@lindo/shared'
 import { IArrayDidChange, IObjectDidChange, Lambda, observe } from 'mobx'
 import { IAnyType, IMSTArray } from 'mobx-state-tree'
 import { Shortcuts } from 'shortcuts'
 import { Mod } from '../mod'
 import { Mover } from './mover'
+
+const lowerCaseFirstLetter = (value: string) => {
+  return value.charAt(0).toLowerCase() + value.slice(1)
+}
 
 interface ValueDidChange {
   value: string
@@ -35,12 +40,12 @@ export class ShortcutsMod extends Mod {
       }
     }
     const disposer = observe(store, (change: IObjectDidChange<ValueDidChange>) => {
-      console.log(change)
       if (change.name !== shortcutProp) {
         return
       }
+      console.log(change)
       if (change.type === 'update') {
-        const newShortcut = change.oldValue.value
+        const newShortcut = change.newValue.value
         this._shortcuts.remove({ shortcut: change.oldValue.value, handler })
         if (newShortcut !== '') {
           addShortcut(newShortcut)
@@ -197,6 +202,36 @@ export class ShortcutsMod extends Mod {
         return true
       })
     })
+
+    console.log(this.wGame.gui.shortcutBar._panels.spell.slotList)
+    console.log(this.wGame.gui.menuBar._icons._childrenList)
+
+    this.wGame.gui.menuBar._icons._childrenList.forEach((child, index) => {
+      const propName = lowerCaseFirstLetter(child.id)
+      const hasPropName = Object.hasOwn(gameInterfaceHotkey, propName)
+
+      if (hasPropName) {
+        this._addShortcut(gameInterfaceHotkey, propName as keyof GameInterfaceHotkey, () => {
+          console.log(propName)
+          this.wGame.gui.menuBar._icons._childrenList[index].tap()
+          return true
+        })
+      } else {
+        console.log('no hotkey for ' + propName)
+      }
+    })
+
+    // Interfaces
+    // gameInterfaceHotkey.interface.forEach((_, index) => {
+    //   const selectedItem = this.wGame.gui.shortcutBar._panels.item.slotList[index]
+
+    //   this._addShortcutFromArray(gameInterfaceHotkey.items, index, (e) => {
+    //     console.log('use item ' + index)
+    //     selectedItem.tap()
+    //     // return true to prevent spell cast multiple times
+    //     return true
+    //   })
+    // })
 
     // // Interfaces
     // void forEachOf(this.params.interface.getAll(), (inter: any) => {
