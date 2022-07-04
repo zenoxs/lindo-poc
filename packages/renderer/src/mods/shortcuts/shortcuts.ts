@@ -1,9 +1,15 @@
 import { DofusWindow } from '@/dofus-window'
 import { RootStore } from '@/store'
-import { Lambda, observe } from 'mobx'
+import { IArrayDidChange, IObjectDidChange, Lambda, observe } from 'mobx'
+import { IAnyType, IMSTArray } from 'mobx-state-tree'
 import { Shortcuts } from 'shortcuts'
 import { Mod } from '../mod'
 import { Mover } from './mover'
+
+interface ValueDidChange {
+  value: string
+  oldValue: string
+}
 export class ShortcutsMod extends Mod {
   private readonly _disposers: Array<Lambda> = []
   private readonly _shortcuts = new Shortcuts({ target: this.wGame.document })
@@ -28,11 +34,11 @@ export class ShortcutsMod extends Mod {
         this._shortcuts.add({ shortcut, handler })
       }
     }
-    const disposer = observe(store, (change) => {
+    const disposer = observe(store, (change: IObjectDidChange<ValueDidChange>) => {
+      console.log(change)
       if (change.name !== shortcutProp) {
         return
       }
-      console.log(change)
       if (change.type === 'update') {
         const newShortcut = change.oldValue.value
         this._shortcuts.remove({ shortcut: change.oldValue.value, handler })
@@ -43,6 +49,34 @@ export class ShortcutsMod extends Mod {
     })
     this._disposers.push(disposer)
     addShortcut(store[shortcutProp] as never)
+  }
+
+  private _addShortcutFromArray<S extends IAnyType>(
+    store: IMSTArray<S>,
+    index: number,
+    handler: (event: KeyboardEvent) => boolean | void
+  ) {
+    const addShortcut = (shortcut: string) => {
+      console.log({ shortcut, index })
+      if (shortcut !== '') {
+        this._shortcuts.add({ shortcut, handler })
+      }
+    }
+    const disposer = observe(store, (change: IArrayDidChange<ValueDidChange>) => {
+      if (change.index !== index) {
+        return
+      }
+      console.log(change)
+      if (change.type === 'update') {
+        const newShortcut = change.newValue.value
+        this._shortcuts.remove({ shortcut: change.oldValue.value, handler })
+        if (newShortcut !== '') {
+          addShortcut(newShortcut)
+        }
+      }
+    })
+    this._disposers.push(disposer)
+    addShortcut(store[index])
   }
 
   private _bindAll() {
@@ -110,6 +144,7 @@ export class ShortcutsMod extends Mod {
     // Open chat
     this._addShortcut(gameActionHotkey, 'openChat', () => {
       if (!this.wGame.gui.numberInputPad.isVisible()) {
+        console.log('open chat')
         this.wGame.gui.chat.activate()
       }
     })
@@ -119,37 +154,49 @@ export class ShortcutsMod extends Mod {
       this.wGame.gui.mainControls.buttonBox._childrenList[15].tap()
     })
 
-    // // Spell
-    // void forEachOf(this.params.spell, (shortcut: string, index: number) => {
-    //   const selectedSpell = this.wGame.gui.shortcutBar._panels.spell.slotList[index]
+    const gameInterfaceHotkey = this.rootStore.hotkeyStore.gameInterface
 
-    //   this.shortcutsHelper.bind(shortcut, () => {
-    //     selectedSpell.tap()
-    //     // this.tab.window.gui.shortcutBar.panels.spell.slotList[index].tap();
-    //   })
-    //   selectedSpell.on('doubletap', () => {
-    //     /* TODO (HoPollo) :
-    //           / Allow double shortcut tap to work as well (currently only mouseclick works)
-    //           */
-    //     if (this.wGame.gui.fightManager.fightState === 0) {
-    //       return
-    //     }
+    // Spells
+    gameInterfaceHotkey.spells.forEach((_, index) => {
+      const selectedSpell = this.wGame.gui.shortcutBar._panels.spell.slotList[index]
 
-    //     selectedSpell.tap()
+      this._addShortcutFromArray(gameInterfaceHotkey.spells, index, (e) => {
+        console.log('use spell ' + index)
+        selectedSpell.tap()
+        // return true to prevent spell cast multiple times
+        return true
+      })
 
-    //     setTimeout(() => {
-    //       this.wGame.isoEngine._castSpellImmediately(this.wGame.isoEngine.actorManager.userActor.cellId)
-    //     }, 150)
-    //   })
-    // })
+      const handleDoubleTap = () => {
+        // TODO:  (HoPollo) : Allow double shortcut tap to work as well (currently only mouseclick works)
+        if (this.wGame.gui.fightManager.fightState === 0) {
+          return
+        }
 
-    // // Item
-    // void forEachOf(this.params.item, (shortcut: string, index: number) => {
-    //   this.shortcutsHelper.bind(shortcut, () => {
-    //     // this.tab.window.gui.shortcutBar.panels.item.slotList[index].tap();
-    //     this.wGame.gui.shortcutBar._panels.item.slotList[index].tap()
-    //   })
-    // })
+        selectedSpell.tap()
+
+        setTimeout(() => {
+          this.wGame.isoEngine._castSpellImmediately(this.wGame.isoEngine.actorManager.userActor.cellId)
+        }, 150)
+      }
+
+      selectedSpell.on('doubletap', handleDoubleTap)
+      this._disposers.push(() => {
+        selectedSpell.removeListener('doubletap', handleDoubleTap)
+      })
+    })
+
+    // Skills
+    gameInterfaceHotkey.items.forEach((_, index) => {
+      const selectedItem = this.wGame.gui.shortcutBar._panels.item.slotList[index]
+
+      this._addShortcutFromArray(gameInterfaceHotkey.items, index, (e) => {
+        console.log('use item ' + index)
+        selectedItem.tap()
+        // return true to prevent spell cast multiple times
+        return true
+      })
+    })
 
     // // Interfaces
     // void forEachOf(this.params.interface.getAll(), (inter: any) => {
@@ -192,6 +239,7 @@ export class ShortcutsMod extends Mod {
     // this.shortcutsHelper.bindVanilla('tab', (e: KeyboardEvent) => {
     //   e.preventDefault()
     // })
+    console.log(this._shortcuts)
   }
 
   close() {

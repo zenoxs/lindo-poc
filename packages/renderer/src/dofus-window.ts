@@ -29,6 +29,13 @@ export type OccupiedCells = {
   }>
 }
 
+export type SlotEvents = {
+  doubletap: () => void
+}
+export interface Slot extends TypedEmitter<SlotEvents> {
+  tap: () => void
+}
+
 export interface Actor {
   moving: boolean
   canMoveDiagonally: boolean
@@ -52,6 +59,16 @@ export interface DofusWindow extends Window {
   gui: {
     on: (event: 'disconnect', callback: () => void) => void
     _resizeUi: () => void
+    shortcutBar: {
+      _panels: {
+        spell: {
+          slotList: Array<Slot>
+        }
+        item: {
+          slotList: Array<Slot>
+        }
+      }
+    }
     playerData: {
       on: (event: 'characterSelectedSuccess', callback: () => void) => void
       characterBaseInformations: {
@@ -83,6 +100,7 @@ export interface DofusWindow extends Window {
     }
   }
   isoEngine: {
+    _castSpellImmediately: (cellId: number) => void
     mapScene: {
       convertSceneToCanvasCoordinate: (
         x: number,

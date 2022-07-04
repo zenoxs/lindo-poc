@@ -31,6 +31,12 @@ export const GameScreen = memo(({ game }: GameScreenProps) => {
   console.log('Mount GameScreen ' + game.id)
 
   return (
-    <iframe ref={iframeGameRef} onLoad={handleLoad} style={{ flex: 1, border: 'none' }} src={gameContext.gameSrc} />
+    <iframe
+      id={`iframe-game-${game.id}`}
+      ref={iframeGameRef}
+      onLoad={handleLoad}
+      style={{ flex: 1, border: 'none' }}
+      src={gameContext.gameSrc}
+    />
   )
 })
