@@ -237,7 +237,23 @@ export const OptionShortcuts = () => {
               </Grid>
             </TabPanel>
             <TabPanel value={value} index={2}>
-              Item Three
+              <Grid component='form' noValidate autoComplete='off' container spacing={1} margin={0}>
+                {Array.from({ length: 4 }, (_, k) => k).map((i) => (
+                  <Grid item xs={3} key={'grid-spell-' + i}>
+                    <Stack spacing={2}>
+                      {Array.from({ length: 7 }, (_, k) => k + i * 8).map((j) => (
+                        <ShortcutInput
+                          key={'spell-' + j}
+                          id={'spell-' + j}
+                          label={'Spell ' + (j + 1)}
+                          value={hotkeyStore.gameInterface.spells[j]}
+                          onChange={(hotkey) => hotkeyStore.gameInterface.setSpells(j, hotkey)}
+                        />
+                      ))}
+                    </Stack>
+                  </Grid>
+                ))}
+              </Grid>
             </TabPanel>
             <TabPanel value={value} index={3}>
               Item Three
@@ -301,9 +317,9 @@ export const OptionShortcuts = () => {
               </Grid>
             </TabPanel>
           </Box>
-          <Typography>
-            You can use special keys CTRL, SHIFT, SPACE, ALT (CTRL = cmd on Mac OS X) You can specify your shortcut by
-            pressing the desired keys at the same time after selecting the input
+          <Typography marginTop={2}>
+            You can use special keys CTRL, SHIFT, SPACE, ALT/CMD You can specify your shortcut by pressing the desired
+            keys at the same time after selecting the input
           </Typography>
         </Box>
       )}

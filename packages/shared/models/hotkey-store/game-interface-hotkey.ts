@@ -26,7 +26,13 @@ export const GameInterfaceHotkeyModel = types
     dailyQuest: types.optional(types.string, 'X'),
     spouse: types.optional(types.string, 'L'),
     shop: types.optional(types.string, 'V'),
-    goultine: types.optional(types.string, 'R')
+    goultine: types.optional(types.string, 'R'),
+    spells: types.optional(types.array(types.string), [
+      '',
+      ...Array.from({ length: 9 }, (_, i) => (i + 1).toString()),
+      '0',
+      ...Array.from({ length: 20 }, () => '')
+    ])
   })
   .actions((self) => ({
     setCharacter(hotkey: string) {
@@ -91,6 +97,9 @@ export const GameInterfaceHotkeyModel = types
     },
     setGoultine(hotkey: string) {
       self.goultine = hotkey
+    },
+    setSpells(index: number, hotkey: string) {
+      self.spells[index] = hotkey
     }
   }))
 
