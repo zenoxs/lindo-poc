@@ -32,6 +32,11 @@ export const GameInterfaceHotkeyModel = types
       ...Array.from({ length: 9 }, (_, i) => (i + 1).toString()),
       '0',
       ...Array.from({ length: 20 }, () => '')
+    ]),
+    items: types.optional(types.array(types.string), [
+      ...Array.from({ length: 9 }, (_, i) => `CmdOrCtrl+${i + 1}`),
+      'CmdOrCtrl+0',
+      ...Array.from({ length: 21 }, () => '')
     ])
   })
   .actions((self) => ({
@@ -100,6 +105,9 @@ export const GameInterfaceHotkeyModel = types
     },
     setSpells(index: number, hotkey: string) {
       self.spells[index] = hotkey
+    },
+    setItems(index: number, hotkey: string) {
+      self.items[index] = hotkey
     }
   }))
 

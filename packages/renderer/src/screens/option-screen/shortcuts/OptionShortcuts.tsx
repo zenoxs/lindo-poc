@@ -256,7 +256,23 @@ export const OptionShortcuts = () => {
               </Grid>
             </TabPanel>
             <TabPanel value={value} index={3}>
-              Item Three
+              <Grid component='form' noValidate autoComplete='off' container spacing={1} margin={0}>
+                {Array.from({ length: 4 }, (_, k) => k).map((i) => (
+                  <Grid item xs={3} key={'grid-item-' + i}>
+                    <Stack spacing={2}>
+                      {Array.from({ length: 7 }, (_, k) => k + i * 8).map((j) => (
+                        <ShortcutInput
+                          key={'item-' + j}
+                          id={'item-' + j}
+                          label={'Item ' + (j + 1)}
+                          value={hotkeyStore.gameInterface.items[j]}
+                          onChange={(hotkey) => hotkeyStore.gameInterface.setItems(j, hotkey)}
+                        />
+                      ))}
+                    </Stack>
+                  </Grid>
+                ))}
+              </Grid>
             </TabPanel>
             <TabPanel value={value} index={4}>
               <Grid component='form' noValidate autoComplete='off' container spacing={1} margin={0}>
