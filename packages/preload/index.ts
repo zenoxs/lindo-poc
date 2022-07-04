@@ -15,8 +15,11 @@ window.addEventListener('DOMContentLoaded', () => {
   const titleBar = new Titlebar({
     backgroundColor: Color.fromHex('#121212')
   })
+  titleBar.updateTitle('Lindo')
   contextBridge.exposeInMainWorld('titleBar', {
-    updateTitle: (title: string) => titleBar.updateTitle(title)
+    updateTitle: (title: string) => titleBar.updateTitle(title),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    height: (titleBar as any).titlebar.clientHeight + 'px'
   })
 })
 

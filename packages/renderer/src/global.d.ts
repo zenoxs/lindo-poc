@@ -25,8 +25,9 @@ declare global {
     buildVersion: string
     appVersion: string
     lindoVersion: string
-    titleBar: {
+    titleBar?: {
       updateTitle: (title: string) => void
+      height: number
     }
   }
 }

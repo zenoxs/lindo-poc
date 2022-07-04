@@ -5,7 +5,7 @@ import { Box } from '@mui/material'
 
 export const Navigator = () => {
   const location = useLocation()
-  const titleBarHeight = useMemo(() => (location.pathname === '/' ? '30px' : '0px'), [location])
+  const titleBarHeight = useMemo(() => (location.pathname === '/' ? window.titleBar!.height : '0px'), [location])
 
   return (
     <>

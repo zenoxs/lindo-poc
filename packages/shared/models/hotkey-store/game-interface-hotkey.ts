@@ -19,7 +19,7 @@ export const GameInterfaceHotkeyModel = types
     alliance: types.optional(types.string, ''),
     mount: types.optional(types.string, 'N'),
     directory: types.optional(types.string, ''),
-    aignement: types.optional(types.string, ''),
+    alignement: types.optional(types.string, ''),
     bestiary: types.optional(types.string, 'B'),
     title: types.optional(types.string, 'T'),
     achievement: types.optional(types.string, 'U'),
@@ -31,6 +31,66 @@ export const GameInterfaceHotkeyModel = types
   .actions((self) => ({
     setCarac(hotkey: string) {
       self.carac = hotkey
+    },
+    setSpell(hotkey: string) {
+      self.spell = hotkey
+    },
+    setBag(hotkey: string) {
+      self.bag = hotkey
+    },
+    setBidhouse(hotkey: string) {
+      self.bidhouse = hotkey
+    },
+    setMap(hotkey: string) {
+      self.map = hotkey
+    },
+    setFriend(hotkey: string) {
+      self.friend = hotkey
+    },
+    setBook(hotkey: string) {
+      self.book = hotkey
+    },
+    setGuild(hotkey: string) {
+      self.guild = hotkey
+    },
+    setConquest(hotkey: string) {
+      self.conquest = hotkey
+    },
+    setJob(hotkey: string) {
+      self.job = hotkey
+    },
+    setAlliance(hotkey: string) {
+      self.alliance = hotkey
+    },
+    setMount(hotkey: string) {
+      self.mount = hotkey
+    },
+    setDirectory(hotkey: string) {
+      self.directory = hotkey
+    },
+    setAlignement(hotkey: string) {
+      self.alignement = hotkey
+    },
+    setBestiary(hotkey: string) {
+      self.bestiary = hotkey
+    },
+    setTitle(hotkey: string) {
+      self.title = hotkey
+    },
+    setAchievement(hotkey: string) {
+      self.achievement = hotkey
+    },
+    setDailyQuest(hotkey: string) {
+      self.dailyQuest = hotkey
+    },
+    setSpouse(hotkey: string) {
+      self.spouse = hotkey
+    },
+    setShop(hotkey: string) {
+      self.shop = hotkey
+    },
+    setGoultine(hotkey: string) {
+      self.goultine = hotkey
     }
   }))
 
