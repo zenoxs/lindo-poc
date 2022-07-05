@@ -3,7 +3,7 @@ import { Box, Checkbox, FormControl, FormControlLabel, Typography } from '@mui/m
 import { useStores } from '@/store'
 import { Observer } from 'mobx-react-lite'
 
-export const OptionNotification = () => {
+export const OptionNotifications = () => {
   const { optionStore } = useStores()
   return (
     <Observer>

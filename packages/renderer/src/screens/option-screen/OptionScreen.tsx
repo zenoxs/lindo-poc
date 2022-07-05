@@ -1,7 +1,8 @@
 import { Box, Tab, Tabs, useTheme } from '@mui/material'
 import React, { useState } from 'react'
+import { OptionFeatures } from './features'
 import { OptionGeneral } from './general'
-import { OptionNotification } from './notification'
+import { OptionNotifications } from './notifications'
 import { OptionShortcuts } from './shortcuts'
 import { TabPanel } from './TabPanel'
 
@@ -20,7 +21,7 @@ export const OptionScreen = () => {
         variant='scrollable'
         value={selectedTab}
         onChange={handleChange}
-        aria-label='Vertical tabs example'
+        aria-label='option-categories'
         sx={{ borderRight: 1, borderColor: 'divider' }}
       >
         <Tab label='General' />
@@ -45,10 +46,10 @@ export const OptionScreen = () => {
           <OptionShortcuts />
         </TabPanel>
         <TabPanel value={selectedTab} index={2}>
-          Item Three
+          <OptionFeatures />
         </TabPanel>
         <TabPanel value={selectedTab} index={3}>
-          <OptionNotification />
+          <OptionNotifications />
         </TabPanel>
       </Box>
     </Box>

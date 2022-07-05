@@ -18,7 +18,7 @@ export const OptionShortcuts = () => {
       {() => (
         <Box sx={{ p: 1, flexGrow: 1, flex: 1, display: 'flex', flexDirection: 'column' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs value={value} onChange={handleChange} aria-label='basic tabs example'>
+            <Tabs value={value} onChange={handleChange} aria-label='shortcuts-tabs'>
               <Tab label='Application' />
               <Tab label='Interface' />
               <Tab label='Spells' />
