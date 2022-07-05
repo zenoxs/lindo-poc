@@ -2,6 +2,7 @@ import { HTMLIFrameElementWithDofus } from '@/dofus-window'
 import { useGameContext } from '@/providers'
 import { useStores } from '@/store'
 import { Game } from '@/store/game-store/game'
+import { useI18nContext } from '@lindo/i18n'
 import React, { memo, useRef } from 'react'
 import { manageGameWindow } from './manage-game-window'
 
@@ -13,6 +14,7 @@ export interface GameScreenProps {
 export const GameScreen = memo(({ game }: GameScreenProps) => {
   const gameContext = useGameContext()
   const rootStore = useStores()
+  const { LL } = useI18nContext()
   const iframeGameRef = useRef<HTMLIFrameElementWithDofus>(null)
 
   const handleLoad = () => {
@@ -23,7 +25,7 @@ export const GameScreen = memo(({ game }: GameScreenProps) => {
       gameWindow.openDatabase = undefined
       gameWindow.initDofus(() => {
         console.log('initDofus done')
-        manageGameWindow(gameWindow, game, rootStore)
+        manageGameWindow({ dWindow: gameWindow, game, rootStore, LL })
       })
     }
   }

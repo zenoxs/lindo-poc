@@ -22,7 +22,7 @@ export class NotificationsMod extends Mod {
       if (msg.channel === 9) {
         this.eventEmitter.emit('newNotification')
 
-        const mpNotif = new Notification(`Incoming message from ${msg.senderName}`, {
+        const mpNotif = new Notification(this.LL.notifications.privateMessage({ senderName: msg.senderName }), {
           body: msg.content
         })
 
@@ -36,16 +36,13 @@ export class NotificationsMod extends Mod {
       if (this.rootStore.optionStore.gameNotification.fightTurn) {
         this.eventEmitter.emit('newNotification')
 
-        // const turnNotif = new Notification(
-        //   this.translate.instant('app.notifications.fight-turn', {
-        //     character: this.wGame.gui.playerData.characterBaseInformations.name
-        //   })
-        // )
+        const turnNotif = new Notification(
+          this.LL.notifications.fightTurn({
+            characterName: this.wGame.gui.playerData.characterBaseInformations.name
+          })
+        )
 
-        // turnNotif.onclick = () => {
-        //   electron.getCurrentWindow().focus()
-        //   this.eventEmitter.emit('focusTab')
-        // }
+        this._handleClickNotification(turnNotif)
       }
 
       if (this.rootStore.optionStore.gameFight.focusOnFightTurn) {

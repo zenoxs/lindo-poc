@@ -1,5 +1,6 @@
 import { DofusWindow } from '@/dofus-window'
 import { RootStore } from '@/store'
+import { TranslationFunctions } from '@lindo/i18n'
 import { GameInterfaceHotkey } from '@lindo/shared'
 import { IArrayDidChange, IObjectDidChange, Lambda, observe } from 'mobx'
 import { IAnyType, IMSTArray } from 'mobx-state-tree'
@@ -20,8 +21,8 @@ export class ShortcutsMod extends Mod {
   private readonly _shortcuts = new Shortcuts({ target: this.wGame.document })
   private readonly _mover: Mover
 
-  constructor(wGame: DofusWindow, rootStore: RootStore) {
-    super(wGame, rootStore)
+  constructor(wGame: DofusWindow, rootStore: RootStore, LL: TranslationFunctions) {
+    super(wGame, rootStore, LL)
     this._mover = new Mover(wGame)
   }
 

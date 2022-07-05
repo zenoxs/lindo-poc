@@ -17,13 +17,13 @@ const en: BaseTranslation = {
     }
   },
   notifications: {
-    'fight-turn': 'Starting turn for {{character}}',
-    'private-message': 'Incoming message from {{character}}',
-    'tax-collector': 'A tax collector is being attacked !',
+    fightTurn: 'Starting turn for {characterName: string}',
+    privateMessage: 'Incoming message from {senderName: string}',
+    taxCollector: 'A tax collector is being attacked !',
     kolizeum: 'A Kolizeum has been found !',
-    'party-invitation': "You are invited to join {{character}}'s group.",
+    partyInvitation: "You are invited to join {sendName: string}'s group.",
     aggression: 'You have been aggressed !',
-    'sale-message': 'Bank'
+    saleMessage: 'Bank'
   },
   window: {
     changelog: {
@@ -146,7 +146,7 @@ const en: BaseTranslation = {
             title: 'Setting the Password',
             confirm: 'Save',
             cancel: 'Cancel',
-            'min-lenght': 'The password must contain at least {{lenght}} characters',
+            'min-lenght': 'The password must contain at least lenght}} characters',
             'success-text': 'The password will now be used to start the application.'
           },
           'edit-master': {
@@ -155,7 +155,7 @@ const en: BaseTranslation = {
             'input-new-placeholder': 'New password',
             confirm: 'Save',
             cancel: 'Cancel',
-            'min-lenght': 'The new password must contain at least {{lenght}} characters',
+            'min-lenght': 'The new password must contain at least {lenght:number} characters',
             'incorrect-old': 'The old password is incorrect',
             'success-text': 'The password has been changed.'
           },
@@ -266,19 +266,19 @@ const en: BaseTranslation = {
       },
       items: {
         header: 'Items',
-        slot: 'Slot {{x}}'
+        slot: 'Slot {x:number}'
       },
       'no-emu': {
         header: 'Lindo',
         'new-window': 'New window',
         'new-tab': 'New tab',
-        tab: 'Tab {{x}}',
+        tab: 'Tab {x:number}',
         'next-tab': 'Next tab',
         'prev-tab': 'Previous tab'
       },
       spells: {
         header: 'Spells',
-        slot: 'Slot {{x}}'
+        slot: 'Slot {x:number}'
       },
       mods: {
         'show-resources': 'Show/hide map resources',
@@ -321,8 +321,8 @@ const en: BaseTranslation = {
       title: 'Notifications',
       description:
         'You can receive notifications from the game when the application is on the background. You will be notified:',
-      'fight-turn': 'When your turn starts (fight)',
-      'private-message': 'By incoming private messages',
+      fightTurn: 'When your turn starts (fight)',
+      privateMessage: 'By incoming private messages',
       'tax-collector': 'When a tax collector is attacked',
       kolizeum: 'When a kolizeum fight is found',
       'party-invitation': 'When someone invites you to join a group',
