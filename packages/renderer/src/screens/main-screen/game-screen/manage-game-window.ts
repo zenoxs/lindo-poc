@@ -7,7 +7,7 @@ export const manageGameWindow = (dWindow: DofusWindow, game: Game, rootStore: Ro
   const mods: Array<Mod> = []
 
   const startMods = () => {
-    console.log(MODS)
+    console.log(dWindow)
     for (const key in MODS) {
       const mod: Mod = new MODS[key](dWindow, rootStore)
       mod.start()

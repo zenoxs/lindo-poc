@@ -218,35 +218,38 @@ export class ShortcutsMod extends Mod {
       }
     })
 
-    // Close interfaces
-    this._shortcuts.add({
-      shortcut: 'ESCAPE',
-      handler: () => {
-        if (this.wGame.gui.chat.active) {
-          this.wGame.gui.chat.deactivate()
-        } else {
-          let winClosed = 0
-          for (let i = this.wGame.gui.windowsContainer._childrenList.length - 1; i >= 0; i--) {
-            const win = this.wGame.gui.windowsContainer._childrenList[i]
-            if (win.isVisible() && win.id !== 'recaptcha') {
-              win.close()
-              winClosed++
-              break
-            }
+    // Close window on escape
+    const escapeListener = (e: KeyboardEvent) => {
+      if (e.key.toLocaleLowerCase() !== 'escape') {
+        return
+      }
+      if (this.wGame.gui.chat.active) {
+        this.wGame.gui.chat.deactivate()
+      } else {
+        let winClosed = 0
+        for (let i = this.wGame.gui.windowsContainer._childrenList.length - 1; i >= 0; i--) {
+          const win = this.wGame.gui.windowsContainer._childrenList[i]
+          if (win.isVisible() && win.id !== 'recaptcha') {
+            win.close()
+            winClosed++
+            break
           }
-          // if (this.wGame.gui.notificationBar._elementIsVisible) {
-          //   const dialogName = this.wGame.gui.notificationBar.currentOpenedId
-          //   // If notifiaction is openened, allow to close it with ESC
-          //   this.wGame.gui.notificationBar.dialogs[dialogName]._childrenList[0]._childrenList[1].tap()
-          //   winClosed++
-          // }
-          // if (this.params.diver.active_open_menu && !winClosed) {
-          //   // If no window closed open menu
-          //   this.wGame.gui.mainControls.buttonBox._childrenList[15].tap()
-          // }
+        }
+        if (this.wGame.gui.notificationBar._elementIsVisible) {
+          const dialogName = this.wGame.gui.notificationBar.currentOpenedId
+          // If notifiaction is openened, allow to close it with ESC
+          this.wGame.gui.notificationBar.dialogs[dialogName]._childrenList[0]._childrenList[1].tap()
+          winClosed++
+        }
+        if (this.rootStore.optionStore.gameGeneral.activeOpenMenu && !winClosed) {
+          // If no window closed open menu
+          this.wGame.gui.mainControls.buttonBox._childrenList[15].tap()
         }
       }
-    })
+    }
+
+    this.wGame.addEventListener('keydown', escapeListener)
+    this._disposers.push(() => this.wGame.removeEventListener('keydown', escapeListener))
   }
 
   close() {

@@ -6,7 +6,7 @@ import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 export const GameGeneralOptionModel = types
   .model('GameGeneralOption')
   .props({
-    activeOpenMenu: types.optional(types.boolean, false),
+    activeOpenMenu: types.optional(types.boolean, true),
     hiddenShop: types.optional(types.boolean, false),
     preventInactivityDisconnect: types.optional(types.boolean, true)
   })

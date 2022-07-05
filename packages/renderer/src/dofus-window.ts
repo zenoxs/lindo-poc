@@ -36,15 +36,26 @@ export interface Slot extends TypedEmitter<SlotEvents> {
   tap: () => void
 }
 
-export interface ChildIcon {
+export interface ChildElement {
   tap: () => void
   id: string
+  _contentType: 'wui' | undefined
+  _childrenList: Array<ChildElement>
 }
 
-export interface ChildWinow {
+export interface ChildWUI extends ChildElement {
   id: string
   isVisible: () => boolean
   close: () => void
+  _childrenList: Array<ChildElement>
+  _contentType: 'wui'
+}
+
+export interface ChildDialog extends ChildElement {
+  id: string
+  isVisible: () => boolean
+  close: () => void
+  _childrenList: Array<ChildElement>
 }
 
 export interface Actor {
@@ -73,14 +84,14 @@ export interface DofusWindow extends Window {
     notificationBar: {
       _elementIsVisible: boolean
       currentOpenedId: string
-      dialogs: Record<string, unknown>
+      dialogs: Record<string, ChildDialog>
     }
     windowsContainer: {
-      _childrenList: Array<ChildWinow>
+      _childrenList: Array<ChildWUI>
     }
     menuBar: {
       _icons: {
-        _childrenList: Array<ChildIcon>
+        _childrenList: Array<ChildElement>
       }
     }
     shortcutBar: {
