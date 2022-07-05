@@ -1,6 +1,7 @@
 import { Box, Tab, Tabs, useTheme } from '@mui/material'
 import React, { useState } from 'react'
 import { OptionGeneral } from './general'
+import { OptionNotification } from './notification'
 import { OptionShortcuts } from './shortcuts'
 import { TabPanel } from './TabPanel'
 
@@ -47,7 +48,7 @@ export const OptionScreen = () => {
           Item Three
         </TabPanel>
         <TabPanel value={selectedTab} index={3}>
-          Item Four
+          <OptionNotification />
         </TabPanel>
       </Box>
     </Box>

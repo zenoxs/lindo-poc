@@ -11,7 +11,8 @@ export const GameNotificationOptionModel = types
     taxCollector: types.optional(types.boolean, true),
     kolizeum: types.optional(types.boolean, true),
     partyInvitation: types.optional(types.boolean, true),
-    agression: types.optional(types.boolean, true)
+    agression: types.optional(types.boolean, true),
+    itemSold: types.optional(types.boolean, false)
   })
   .actions((self) => ({
     setPrivateMessage(value: boolean) {
@@ -31,6 +32,9 @@ export const GameNotificationOptionModel = types
     },
     setAgression(value: boolean) {
       self.agression = value
+    },
+    setItemSold(value: boolean) {
+      self.itemSold = value
     }
   }))
 
