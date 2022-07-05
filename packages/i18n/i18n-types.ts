@@ -193,128 +193,6 @@ type RootTranslation = {
 					'confirm-body': string
 				}
 			}
-			features: {
-				/**
-				 * Features
-				 */
-				title: string
-				general: {
-					menu: {
-						/**
-						 * General
-						 */
-						general: string
-						/**
-						 * Fight
-						 */
-						fight: string
-						/**
-						 * Group
-						 */
-						group: string
-						/**
-						 * Job
-						 */
-						job: string
-					}
-					/**
-					 * General
-					 */
-					header: string
-					/**
-					 * Extend the delay before disconnection for inactivity
-					 */
-					'disable-inactivity': string
-					/**
-					 * Activate the display of the life bars below the fighters
-					 */
-					'health-bar': string
-					/**
-					 * Activate the display of the job xp need for leveling
-					 */
-					jobsxp: string
-					/**
-					 * Estimating spell damage in battle
-					 */
-					estimator: string
-					/**
-					 * Show combats chronometer
-					 */
-					fightchronometer: string
-					/**
-					 * Show zaap search filter
-					 */
-					zaapsearchfilter: string
-					/**
-					 * Show map resources
-					 */
-					'show-resources': string
-					/**
-					 * Activate the display of the remaining time below the ressources
-					 */
-					'harvest-indicator': string
-					/**
-					 * Add an indicator to know if the members of a group are on the same map
-					 */
-					'party-member-on-map': string
-					/**
-					 * Display monsters groups informations on the map
-					 */
-					'monster-tooltip': string
-					/**
-					 * Shortcut for show/hide monsters tooltip
-					 */
-					'monster-tooltip-shortcut': string
-					/**
-					 * Show fighters timeline vertically
-					 */
-					'vertical-timeline': string
-					/**
-					 * Show challenge XP/Drop bonus
-					 */
-					'chall-percent': string
-				}
-				groups: {
-					/**
-					 * Groups
-					 */
-					header: string
-				}
-				accounts: {
-					/**
-					 * Accounts
-					 */
-					header: string
-				}
-			}
-			about: {
-				/**
-				 * About
-				 */
-				title: string
-				links: {
-					/**
-					 * Website
-					 */
-					website: string
-					/**
-					 * Release notes
-					 */
-					changelog: string
-				}
-				/**
-				 * Lindo is an open-source software that allows you to play DOFUS Touch from your computer.
-				 */
-				text0: string
-				/**
-				 * Unlike an Android emulator, the code is directly interpreted by your computer, which makes it faster so you can play DOFUS Touch with the full performance of your computer !
-				 */
-				text1: string
-				/**
-				 * Originally known as DOFUS Touch No-Emu, this software developed by Daniel and Thomas was forced to close cause of an avertissement from Ankama.
-				 */
-				text2: string
-			}
 		}
 		shortcuts: {
 			/**
@@ -996,6 +874,100 @@ type RootTranslation = {
 				'monster-tooltip': string
 			}
 		}
+		features: {
+			/**
+			 * Features
+			 */
+			title: string
+			general: {
+				menu: {
+					/**
+					 * General
+					 */
+					general: string
+					/**
+					 * Fight
+					 */
+					fight: string
+					/**
+					 * Group
+					 */
+					group: string
+					/**
+					 * Job
+					 */
+					job: string
+				}
+				/**
+				 * General
+				 */
+				header: string
+				/**
+				 * Extend the delay before disconnection for inactivity
+				 */
+				'disable-inactivity': string
+				/**
+				 * Activate the display of the life bars below the fighters
+				 */
+				'health-bar': string
+				/**
+				 * Activate the display of the job xp need for leveling
+				 */
+				jobsxp: string
+				/**
+				 * Estimating spell damage in battle
+				 */
+				estimator: string
+				/**
+				 * Show combats chronometer
+				 */
+				fightchronometer: string
+				/**
+				 * Show zaap search filter
+				 */
+				zaapsearchfilter: string
+				/**
+				 * Show map resources
+				 */
+				'show-resources': string
+				/**
+				 * Activate the display of the remaining time below the ressources
+				 */
+				'harvest-indicator': string
+				/**
+				 * Add an indicator to know if the members of a group are on the same map
+				 */
+				'party-member-on-map': string
+				/**
+				 * Display monsters groups informations on the map
+				 */
+				'monster-tooltip': string
+				/**
+				 * Shortcut for show/hide monsters tooltip
+				 */
+				'monster-tooltip-shortcut': string
+				/**
+				 * Show fighters timeline vertically
+				 */
+				'vertical-timeline': string
+				/**
+				 * Show challenge XP/Drop bonus
+				 */
+				'chall-percent': string
+			}
+			groups: {
+				/**
+				 * Groups
+				 */
+				header: string
+			}
+			accounts: {
+				/**
+				 * Accounts
+				 */
+				header: string
+			}
+		}
 		notifications: {
 			/**
 			 * Notifications
@@ -1033,6 +1005,34 @@ type RootTranslation = {
 			 * When an item is sold
 			 */
 			'sale-message': string
+		}
+		about: {
+			/**
+			 * About
+			 */
+			title: string
+			links: {
+				/**
+				 * Website
+				 */
+				website: string
+				/**
+				 * Release notes
+				 */
+				changelog: string
+			}
+			/**
+			 * Lindo is an open-source software that allows you to play DOFUS Touch from your computer.
+			 */
+			text0: string
+			/**
+			 * Unlike an Android emulator, the code is directly interpreted by your computer, which makes it faster so you can play DOFUS Touch with the full performance of your computer !
+			 */
+			text1: string
+			/**
+			 * Originally known as DOFUS Touch No-Emu, this software developed by Daniel and Thomas was forced to close cause of an avertissement from Ankama.
+			 */
+			text2: string
 		}
 		/**
 		 * Reset
@@ -1271,128 +1271,6 @@ export type TranslationFunctions = {
 					 */
 					'confirm-body': () => LocalizedString
 				}
-			}
-			features: {
-				/**
-				 * Features
-				 */
-				title: () => LocalizedString
-				general: {
-					menu: {
-						/**
-						 * General
-						 */
-						general: () => LocalizedString
-						/**
-						 * Fight
-						 */
-						fight: () => LocalizedString
-						/**
-						 * Group
-						 */
-						group: () => LocalizedString
-						/**
-						 * Job
-						 */
-						job: () => LocalizedString
-					}
-					/**
-					 * General
-					 */
-					header: () => LocalizedString
-					/**
-					 * Extend the delay before disconnection for inactivity
-					 */
-					'disable-inactivity': () => LocalizedString
-					/**
-					 * Activate the display of the life bars below the fighters
-					 */
-					'health-bar': () => LocalizedString
-					/**
-					 * Activate the display of the job xp need for leveling
-					 */
-					jobsxp: () => LocalizedString
-					/**
-					 * Estimating spell damage in battle
-					 */
-					estimator: () => LocalizedString
-					/**
-					 * Show combats chronometer
-					 */
-					fightchronometer: () => LocalizedString
-					/**
-					 * Show zaap search filter
-					 */
-					zaapsearchfilter: () => LocalizedString
-					/**
-					 * Show map resources
-					 */
-					'show-resources': () => LocalizedString
-					/**
-					 * Activate the display of the remaining time below the ressources
-					 */
-					'harvest-indicator': () => LocalizedString
-					/**
-					 * Add an indicator to know if the members of a group are on the same map
-					 */
-					'party-member-on-map': () => LocalizedString
-					/**
-					 * Display monsters groups informations on the map
-					 */
-					'monster-tooltip': () => LocalizedString
-					/**
-					 * Shortcut for show/hide monsters tooltip
-					 */
-					'monster-tooltip-shortcut': () => LocalizedString
-					/**
-					 * Show fighters timeline vertically
-					 */
-					'vertical-timeline': () => LocalizedString
-					/**
-					 * Show challenge XP/Drop bonus
-					 */
-					'chall-percent': () => LocalizedString
-				}
-				groups: {
-					/**
-					 * Groups
-					 */
-					header: () => LocalizedString
-				}
-				accounts: {
-					/**
-					 * Accounts
-					 */
-					header: () => LocalizedString
-				}
-			}
-			about: {
-				/**
-				 * About
-				 */
-				title: () => LocalizedString
-				links: {
-					/**
-					 * Website
-					 */
-					website: () => LocalizedString
-					/**
-					 * Release notes
-					 */
-					changelog: () => LocalizedString
-				}
-				/**
-				 * Lindo is an open-source software that allows you to play DOFUS Touch from your computer.
-				 */
-				text0: () => LocalizedString
-				/**
-				 * Unlike an Android emulator, the code is directly interpreted by your computer, which makes it faster so you can play DOFUS Touch with the full performance of your computer !
-				 */
-				text1: () => LocalizedString
-				/**
-				 * Originally known as DOFUS Touch No-Emu, this software developed by Daniel and Thomas was forced to close cause of an avertissement from Ankama.
-				 */
-				text2: () => LocalizedString
 			}
 		}
 		shortcuts: {
@@ -2075,6 +1953,100 @@ export type TranslationFunctions = {
 				'monster-tooltip': () => LocalizedString
 			}
 		}
+		features: {
+			/**
+			 * Features
+			 */
+			title: () => LocalizedString
+			general: {
+				menu: {
+					/**
+					 * General
+					 */
+					general: () => LocalizedString
+					/**
+					 * Fight
+					 */
+					fight: () => LocalizedString
+					/**
+					 * Group
+					 */
+					group: () => LocalizedString
+					/**
+					 * Job
+					 */
+					job: () => LocalizedString
+				}
+				/**
+				 * General
+				 */
+				header: () => LocalizedString
+				/**
+				 * Extend the delay before disconnection for inactivity
+				 */
+				'disable-inactivity': () => LocalizedString
+				/**
+				 * Activate the display of the life bars below the fighters
+				 */
+				'health-bar': () => LocalizedString
+				/**
+				 * Activate the display of the job xp need for leveling
+				 */
+				jobsxp: () => LocalizedString
+				/**
+				 * Estimating spell damage in battle
+				 */
+				estimator: () => LocalizedString
+				/**
+				 * Show combats chronometer
+				 */
+				fightchronometer: () => LocalizedString
+				/**
+				 * Show zaap search filter
+				 */
+				zaapsearchfilter: () => LocalizedString
+				/**
+				 * Show map resources
+				 */
+				'show-resources': () => LocalizedString
+				/**
+				 * Activate the display of the remaining time below the ressources
+				 */
+				'harvest-indicator': () => LocalizedString
+				/**
+				 * Add an indicator to know if the members of a group are on the same map
+				 */
+				'party-member-on-map': () => LocalizedString
+				/**
+				 * Display monsters groups informations on the map
+				 */
+				'monster-tooltip': () => LocalizedString
+				/**
+				 * Shortcut for show/hide monsters tooltip
+				 */
+				'monster-tooltip-shortcut': () => LocalizedString
+				/**
+				 * Show fighters timeline vertically
+				 */
+				'vertical-timeline': () => LocalizedString
+				/**
+				 * Show challenge XP/Drop bonus
+				 */
+				'chall-percent': () => LocalizedString
+			}
+			groups: {
+				/**
+				 * Groups
+				 */
+				header: () => LocalizedString
+			}
+			accounts: {
+				/**
+				 * Accounts
+				 */
+				header: () => LocalizedString
+			}
+		}
 		notifications: {
 			/**
 			 * Notifications
@@ -2112,6 +2084,34 @@ export type TranslationFunctions = {
 			 * When an item is sold
 			 */
 			'sale-message': () => LocalizedString
+		}
+		about: {
+			/**
+			 * About
+			 */
+			title: () => LocalizedString
+			links: {
+				/**
+				 * Website
+				 */
+				website: () => LocalizedString
+				/**
+				 * Release notes
+				 */
+				changelog: () => LocalizedString
+			}
+			/**
+			 * Lindo is an open-source software that allows you to play DOFUS Touch from your computer.
+			 */
+			text0: () => LocalizedString
+			/**
+			 * Unlike an Android emulator, the code is directly interpreted by your computer, which makes it faster so you can play DOFUS Touch with the full performance of your computer !
+			 */
+			text1: () => LocalizedString
+			/**
+			 * Originally known as DOFUS Touch No-Emu, this software developed by Daniel and Thomas was forced to close cause of an avertissement from Ankama.
+			 */
+			text2: () => LocalizedString
 		}
 		/**
 		 * Reset

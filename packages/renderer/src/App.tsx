@@ -4,7 +4,8 @@ import { setupRootStore, RootStore, RootStoreProvider } from './store'
 import { Navigator } from './navigation'
 import { GameContextProvider } from './providers'
 import { GameContext } from '@lindo/shared'
-import { CssBaseline, useMediaQuery } from '@mui/material'
+import { TypesafeI18n } from '@lindo/i18n'
+import { CssBaseline } from '@mui/material'
 import { darkTheme, lightTheme } from './themes'
 
 export const App = () => {
@@ -38,13 +39,15 @@ export const App = () => {
   if (!rootStore || !gameContext) return null
 
   return (
-    <RootStoreProvider value={rootStore}>
-      <GameContextProvider value={gameContext}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Navigator />
-        </ThemeProvider>
-      </GameContextProvider>
-    </RootStoreProvider>
+    <TypesafeI18n locale='en'>
+      <RootStoreProvider value={rootStore}>
+        <GameContextProvider value={gameContext}>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Navigator />
+          </ThemeProvider>
+        </GameContextProvider>
+      </RootStoreProvider>
+    </TypesafeI18n>
   )
 }

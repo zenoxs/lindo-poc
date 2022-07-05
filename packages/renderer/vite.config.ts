@@ -57,6 +57,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@lindo/shared': join(__dirname, '../../packages/shared'),
+      '@lindo/i18n': join(__dirname, '../../packages/i18n'),
       '@': join(__dirname, 'src')
     }
   },

@@ -1,3 +1,4 @@
+import { useI18nContext } from '@lindo/i18n'
 import { Box, Tab, Tabs, useTheme } from '@mui/material'
 import React, { useState } from 'react'
 import { OptionFeatures } from './features'
@@ -8,6 +9,7 @@ import { TabPanel } from './TabPanel'
 
 export const OptionScreen = () => {
   const [selectedTab, setSelectedTab] = useState(0)
+  const { LL } = useI18nContext()
   const theme = useTheme()
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -24,11 +26,11 @@ export const OptionScreen = () => {
         aria-label='option-categories'
         sx={{ borderRight: 1, borderColor: 'divider' }}
       >
-        <Tab label='General' />
-        <Tab label='Shortcuts' />
-        <Tab label='Features' />
-        <Tab label='Notifications' />
-        <Tab label='About' />
+        <Tab label={LL.option.general.title()} />
+        <Tab label={LL.option.shortcuts.title()} />
+        <Tab label={LL.option.features.title()} />
+        <Tab label={LL.option.notifications.title()} />
+        <Tab label={LL.option.about.title()} />
       </Tabs>
       <Box
         sx={{

@@ -66,49 +66,6 @@ const en: BaseTranslation = {
         resolution: {
           'confirm-body': 'Does the current resolution suit you?<br/>Automatic reset within 10 seconds..'
         }
-      },
-      features: {
-        title: 'Features',
-        general: {
-          menu: {
-            general: 'General',
-            fight: 'Fight',
-            group: 'Group',
-            job: 'Job'
-          },
-          header: 'General',
-          'disable-inactivity': 'Extend the delay before disconnection for inactivity',
-          'health-bar': 'Activate the display of the life bars below the fighters',
-          jobsxp: 'Activate the display of the job xp need for leveling',
-          estimator: 'Estimating spell damage in battle',
-          fightchronometer: 'Show combats chronometer',
-          zaapsearchfilter: 'Show zaap search filter',
-          'show-resources': 'Show map resources',
-          'harvest-indicator': 'Activate the display of the remaining time below the ressources',
-          'party-member-on-map': 'Add an indicator to know if the members of a group are on the same map',
-          'monster-tooltip': 'Display monsters groups informations on the map',
-          'monster-tooltip-shortcut': 'Shortcut for show/hide monsters tooltip',
-          'vertical-timeline': 'Show fighters timeline vertically',
-          'chall-percent': 'Show challenge XP/Drop bonus'
-        },
-        groups: {
-          header: 'Groups'
-        },
-        accounts: {
-          header: 'Accounts'
-        }
-      },
-      about: {
-        title: 'About',
-        links: {
-          website: 'Website',
-          changelog: 'Release notes'
-        },
-        text0: 'Lindo is an open-source software that allows you to play DOFUS Touch from your computer.',
-        text1:
-          'Unlike an Android emulator, the code is directly interpreted by your computer, which makes it faster so you can play DOFUS Touch with the full performance of your computer !',
-        text2:
-          'Originally known as DOFUS Touch No-Emu, this software developed by Daniel and Thomas was forced to close cause of an avertissement from Ankama.'
       }
     },
     shortcuts: {
@@ -329,6 +286,37 @@ const en: BaseTranslation = {
         'monster-tooltip': 'Show/hide monsters tooltip'
       }
     },
+    features: {
+      title: 'Features',
+      general: {
+        menu: {
+          general: 'General',
+          fight: 'Fight',
+          group: 'Group',
+          job: 'Job'
+        },
+        header: 'General',
+        'disable-inactivity': 'Extend the delay before disconnection for inactivity',
+        'health-bar': 'Activate the display of the life bars below the fighters',
+        jobsxp: 'Activate the display of the job xp need for leveling',
+        estimator: 'Estimating spell damage in battle',
+        fightchronometer: 'Show combats chronometer',
+        zaapsearchfilter: 'Show zaap search filter',
+        'show-resources': 'Show map resources',
+        'harvest-indicator': 'Activate the display of the remaining time below the ressources',
+        'party-member-on-map': 'Add an indicator to know if the members of a group are on the same map',
+        'monster-tooltip': 'Display monsters groups informations on the map',
+        'monster-tooltip-shortcut': 'Shortcut for show/hide monsters tooltip',
+        'vertical-timeline': 'Show fighters timeline vertically',
+        'chall-percent': 'Show challenge XP/Drop bonus'
+      },
+      groups: {
+        header: 'Groups'
+      },
+      accounts: {
+        header: 'Accounts'
+      }
+    },
     notifications: {
       title: 'Notifications',
       description:
@@ -340,6 +328,18 @@ const en: BaseTranslation = {
       'party-invitation': 'When someone invites you to join a group',
       aggression: 'When someone aggresses you',
       'sale-message': 'When an item is sold'
+    },
+    about: {
+      title: 'About',
+      links: {
+        website: 'Website',
+        changelog: 'Release notes'
+      },
+      text0: 'Lindo is an open-source software that allows you to play DOFUS Touch from your computer.',
+      text1:
+        'Unlike an Android emulator, the code is directly interpreted by your computer, which makes it faster so you can play DOFUS Touch with the full performance of your computer !',
+      text2:
+        'Originally known as DOFUS Touch No-Emu, this software developed by Daniel and Thomas was forced to close cause of an avertissement from Ankama.'
     },
     reset: 'Reset',
     save: 'Apply',
