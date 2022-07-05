@@ -3,14 +3,18 @@ import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 /**
  * Model description here for TypeScript hints.
  */
-export const GameInterfaceOptionModel = types
-  .model('GameInterfaceOption')
+export const GameGroupOptionModel = types
+  .model('GameGroupOption')
   .props({
-    activeOpenMenu: types.optional(types.boolean, false)
+    activeOpenMenu: types.optional(types.boolean, false),
+    hiddenShop: types.optional(types.boolean, false)
   })
   .actions((self) => ({
     setActiveOpenMenu(value: boolean) {
       self.activeOpenMenu = value
+    },
+    setHiddenShop(value: boolean) {
+      self.hiddenShop = value
     }
   }))
 
@@ -22,10 +26,10 @@ export const GameInterfaceOptionModel = types
  *  .postProcessSnapshot(omit(["password", "socialSecurityNumber", "creditCardNumber"]))
  */
 
-type GameInterfaceOptionType = Instance<typeof GameInterfaceOptionModel>
+type GameGroupOptionType = Instance<typeof GameGroupOptionModel>
 
-export interface GameInterfaceOption extends GameInterfaceOptionType {}
+export interface GameGroupOption extends GameGroupOptionType {}
 
-type GameInterfaceOptionSnapshotType = SnapshotOut<typeof GameInterfaceOptionModel>
+type GameGroupOptionSnapshotType = SnapshotOut<typeof GameGroupOptionModel>
 
-export interface GameInterfaceOptionSnapshot extends GameInterfaceOptionSnapshotType {}
+export interface GameGroupOptionSnapshot extends GameGroupOptionSnapshotType {}

@@ -1,5 +1,9 @@
 import { Instance, SnapshotOut, types } from 'mobx-state-tree'
-import { GameInterfaceOptionModel } from './game-interface-option'
+import { GameFightOptionModel } from './game-fight-option'
+import { GameGeneralOptionModel } from './game-general-option'
+import { GameGroupOptionModel } from './game-group-option'
+import { GameJobOptionModel } from './game-job-option'
+import { GameNotificationOptionModel } from './game-notification-option'
 import { WindowOptionModel } from './window-option'
 
 // TODO: remove later only for POC
@@ -9,7 +13,11 @@ import { WindowOptionModel } from './window-option'
  */
 export const OptionStoreModel = types.model('OptionStore').props({
   window: types.optional(WindowOptionModel, {}),
-  gameInterface: types.optional(GameInterfaceOptionModel, {})
+  gameGeneral: types.optional(GameGeneralOptionModel, {}),
+  gameFight: types.optional(GameFightOptionModel, {}),
+  gameGroup: types.optional(GameGroupOptionModel, {}),
+  gameJob: types.optional(GameJobOptionModel, {}),
+  gameNotification: types.optional(GameNotificationOptionModel, {})
 })
 
 /**

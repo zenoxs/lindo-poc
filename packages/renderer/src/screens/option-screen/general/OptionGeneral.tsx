@@ -59,20 +59,27 @@ export const OptionGeneral = () => {
             </FormControl>
             <FormControl fullWidth>
               <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={optionStore.window.fullScreen}
-                    onChange={(event) => optionStore.window.setFullScreen(event.target.checked)}
-                  />
-                }
+                control={<Checkbox />}
                 label='Full Screen'
+                checked={optionStore.window.fullScreen}
+                onChange={(_, checked) => optionStore.window.setFullScreen(checked)}
               />
             </FormControl>
             <FormControl fullWidth>
-              <FormControlLabel control={<Checkbox />} label='Hide the shop button' />
+              <FormControlLabel
+                control={<Checkbox />}
+                label='Hide the shop button'
+                checked={optionStore.gameGeneral.hiddenShop}
+                onChange={(_, checked) => optionStore.gameGeneral.setHiddenShop(checked)}
+              />
             </FormControl>
             <FormControl fullWidth>
-              <FormControlLabel control={<Checkbox />} label='Open menu when no window is open (ECHAP)' />
+              <FormControlLabel
+                control={<Checkbox />}
+                label='Open menu when no window is open (ECHAP)'
+                checked={optionStore.gameGeneral.activeOpenMenu}
+                onChange={(_, checked) => optionStore.gameGeneral.setActiveOpenMenu(checked)}
+              />
             </FormControl>
             <FormControl fullWidth>
               <FormControlLabel control={<Checkbox />} label="Automatically switch to account when it's turn start" />
@@ -83,13 +90,10 @@ export const OptionGeneral = () => {
             </Typography>
             <FormControl fullWidth>
               <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={optionStore.window.soundOnFocus}
-                    onChange={(event) => optionStore.window.setSoundOnFocus(event.target.checked)}
-                  />
-                }
+                control={<Checkbox />}
                 label='Game sound only on foreground window'
+                checked={optionStore.window.soundOnFocus}
+                onChange={(_, checked) => optionStore.window.setSoundOnFocus(checked)}
               />
             </FormControl>
             <hr />
