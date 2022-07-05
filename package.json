@@ -8,7 +8,7 @@
   "license": "GPL-3.0",
   "main": "dist/main/index.cjs",
   "scripts": {
-    "lint": "eslint packages",
+    "lint": "tsc --noEmit -p packages/renderer/tsconfig.json && eslint packages",
     "dev": "node scripts/watch.mjs",
     "build": "tsc --noEmit -p packages/renderer/tsconfig.json && node scripts/build.mjs && electron-builder --publish never",
     "typesafe-i18n": "typesafe-i18n"

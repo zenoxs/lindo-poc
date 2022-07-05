@@ -1,12 +1,12 @@
-import { ConnectionManagerEvents, DofusWindow, MapDirection } from '@/dofus-window'
+import { DofusWindow, MapDirection } from '@/dofus-window'
 import { EventManager, PathFinder } from '../helpers'
 
 export class Mover {
   private pathFinder: PathFinder = new PathFinder()
-  private readonly eventManager: EventManager<ConnectionManagerEvents>
+  private readonly eventManager: EventManager
 
   constructor(private readonly wGame: DofusWindow) {
-    this.eventManager = new EventManager(this.wGame.dofus.connectionManager)
+    this.eventManager = new EventManager()
   }
 
   private static getTopCells(): Array<number> {
@@ -142,8 +142,16 @@ export class Mover {
       if (fail) fail('Map change timeout')
     }, 15000)
     const onChange = () => {
-      this.eventManager.removeListener('MapComplementaryInformationsWithCoordsMessage', onChange)
-      this.eventManager.removeListener('MapComplementaryInformationsDataMessage', onChange)
+      this.eventManager.removeListener(
+        this.wGame.dofus.connectionManager,
+        'MapComplementaryInformationsWithCoordsMessage',
+        onChange
+      )
+      this.eventManager.removeListener(
+        this.wGame.dofus.connectionManager,
+        'MapComplementaryInformationsDataMessage',
+        onChange
+      )
       clearTimeout(changeTimeout)
       const changeMapRetry = () => {
         if (
@@ -157,8 +165,12 @@ export class Mover {
       }
       setTimeout(changeMapRetry, 1200)
     }
-    this.eventManager.once('MapComplementaryInformationsWithCoordsMessage', onChange)
-    this.eventManager.once('MapComplementaryInformationsDataMessage', onChange)
+    this.eventManager.once(
+      this.wGame.dofus.connectionManager,
+      'MapComplementaryInformationsWithCoordsMessage',
+      onChange
+    )
+    this.eventManager.once(this.wGame.dofus.connectionManager, 'MapComplementaryInformationsDataMessage', onChange)
   }
 
   private isCellOnMap(cell: number): boolean {
