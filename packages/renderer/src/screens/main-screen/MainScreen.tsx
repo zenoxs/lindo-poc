@@ -16,7 +16,7 @@ export const MainScreen = () => {
         <Observer>
           {() => (
             <>
-              {gameStore.gameList.map((game) => (
+              {gameStore.games.map((game) => (
                 <div
                   style={{
                     flex: 1,

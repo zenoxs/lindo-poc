@@ -1,7 +1,15 @@
 import React from 'react'
 import { styled } from '@mui/system'
 import SettingsIcon from '@mui/icons-material/Settings'
-import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent
+} from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import {
   SortableContext,
@@ -59,17 +67,26 @@ export const SideBar = () => {
     window.lindoAPI.openOptionWindow()
   }
 
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event
+
+    if (active.id !== over?.id) {
+      gameStore.moveGame(active.id as string, over!.id as string)
+    }
+  }
+
   return (
     <SideBarContainer>
       <Observer>
         {() => (
           <DndContext
             sensors={sensors}
+            onDragEnd={handleDragEnd}
             modifiers={[restrictToVerticalAxis, restrictToWindowEdges]}
             collisionDetection={closestCenter}
           >
-            <SortableContext items={gameStore.gameList} strategy={verticalListSortingStrategy}>
-              {gameStore.gameList.map((game) => (
+            <SortableContext items={gameStore.gamesOrder.map((g) => g.id)} strategy={verticalListSortingStrategy}>
+              {gameStore.gamesOrder.map((game) => (
                 <SortableItem key={game.id} game={game} />
               ))}
             </SortableContext>
@@ -83,17 +100,4 @@ export const SideBar = () => {
       </IconButton>
     </SideBarContainer>
   )
-
-  // function handleDragEnd(event: DragEndEvent) {
-  //   const { active, over } = event
-
-  //   if (active.id !== over?.id) {
-  //     setItems((items) => {
-  //       const oldIndex = items.indexOf(active.id as number)
-  //       const newIndex = items.indexOf(over!.id as number)
-
-  //       return arrayMove(items, oldIndex, newIndex)
-  //     })
-  //   }
-  // }
 }

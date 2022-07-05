@@ -7,49 +7,50 @@ import { Game, GameModel } from './game'
 export const GameStoreModel = types
   .model('GameStore')
   .props({
-    games: types.map(GameModel),
+    _games: types.map(GameModel),
+    gamesOrder: types.array(types.safeReference(GameModel, { acceptsUndefined: false })),
     selectedGame: types.safeReference(GameModel)
   })
-  .views((self) => ({
-    get gameList() {
-      return Array.from(self.games.values())
-    }
-  }))
   .actions((self) => ({
     addGame() {
-      const game = self.games.put({})
+      const game = self._games.put({})
+      self.gamesOrder.push(game)
       self.selectedGame = game
     },
     removeGame(game: Game) {
       if (self.selectedGame === game) {
-        if (self.games.size > 1) {
-          self.selectedGame = self.gameList.reverse().find((g) => g !== game)
+        if (self._games.size > 1) {
+          if (self.gamesOrder.indexOf(game) === self.gamesOrder.length - 1) {
+            self.selectedGame = self.gamesOrder[self.gamesOrder.indexOf(game) - 1]
+          } else {
+            self.selectedGame = self.gamesOrder.reverse().find((g) => g !== game)
+          }
         } else {
           self.selectedGame = undefined
         }
       }
-      self.games.delete(game.id)
+      self._games.delete(game.id)
     },
     selectGame(game: Game) {
-      if (self.games.has(game.id)) {
+      if (self._games.has(game.id)) {
         self.selectedGame = game
       }
     },
     selectGameIndex(index: number) {
-      if (self.gameList[index]) {
-        self.selectedGame = self.gameList[index]
+      if (self.gamesOrder[index]) {
+        self.selectedGame = self.gamesOrder[index]
       }
     }
   }))
   .actions((self) => ({
     selectNextGame() {
-      const index = self.gameList.indexOf(self.selectedGame!)
+      const index = self.gamesOrder.indexOf(self.selectedGame!)
       if (index !== -1) {
         self.selectGameIndex(index + 1)
       }
     },
     selectPreviousGame() {
-      const index = self.gameList.indexOf(self.selectedGame!)
+      const index = self.gamesOrder.indexOf(self.selectedGame!)
       if (index !== -1) {
         self.selectGameIndex(index - 1)
       }
@@ -58,6 +59,23 @@ export const GameStoreModel = types
       if (self.selectedGame) {
         self.removeGame(self.selectedGame)
       }
+    },
+    moveGame(srcGameId: string, targetGameId: string) {
+      const srcGame = self._games.get(srcGameId)!
+      const oldIndex = self.gamesOrder.indexOf(srcGame)
+      const newIndex = self.gamesOrder.findIndex((g) => g.id === targetGameId)
+      if (oldIndex !== -1) {
+        self.gamesOrder.splice(oldIndex, 1)
+      }
+      self.gamesOrder.splice(newIndex, 0, srcGame)
+    }
+  }))
+  .views((self) => ({
+    /**
+     * Get all games non ordonned.
+     */
+    get games() {
+      return Array.from(self._games.values())
     }
   }))
   // lifecycle hooks
