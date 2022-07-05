@@ -1,4 +1,5 @@
 import { Instance, SnapshotOut, types } from 'mobx-state-tree'
+import { GameInterfaceOptionModel } from './game-interface-option'
 import { WindowOptionModel } from './window-option'
 
 // TODO: remove later only for POC
@@ -7,7 +8,8 @@ import { WindowOptionModel } from './window-option'
  * Model description here for TypeScript hints.
  */
 export const OptionStoreModel = types.model('OptionStore').props({
-  window: types.optional(WindowOptionModel, {})
+  window: types.optional(WindowOptionModel, {}),
+  gameInterface: types.optional(GameInterfaceOptionModel, {})
 })
 
 /**

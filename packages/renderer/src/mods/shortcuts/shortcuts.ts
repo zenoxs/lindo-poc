@@ -203,9 +203,6 @@ export class ShortcutsMod extends Mod {
       })
     })
 
-    console.log(this.wGame.gui.shortcutBar._panels.spell.slotList)
-    console.log(this.wGame.gui.menuBar._icons._childrenList)
-
     this.wGame.gui.menuBar._icons._childrenList.forEach((child, index) => {
       const propName = lowerCaseFirstLetter(child.id)
       const hasPropName = Object.hasOwn(gameInterfaceHotkey, propName)
@@ -221,60 +218,35 @@ export class ShortcutsMod extends Mod {
       }
     })
 
-    // Interfaces
-    // gameInterfaceHotkey.interface.forEach((_, index) => {
-    //   const selectedItem = this.wGame.gui.shortcutBar._panels.item.slotList[index]
-
-    //   this._addShortcutFromArray(gameInterfaceHotkey.items, index, (e) => {
-    //     console.log('use item ' + index)
-    //     selectedItem.tap()
-    //     // return true to prevent spell cast multiple times
-    //     return true
-    //   })
-    // })
-
-    // // Interfaces
-    // void forEachOf(this.params.interface.getAll(), (inter: any) => {
-    //   this.wGame.gui.menuBar._icons._childrenList.forEach((element: any, index: number) => {
-    //     if (element.id.toUpperCase() == inter.key.toUpperCase()) {
-    //       this.shortcutsHelper.bind(inter.value, () => {
-    //         this.wGame.gui.menuBar._icons._childrenList[index].tap()
-    //       })
-    //     }
-    //   })
-    // })
-
-    // // Close interfaces
-    // this.shortcutsHelper.bindVanilla('escape', () => {
-    //   if (this.wGame.gui.chat.active) {
-    //     this.wGame.gui.chat.deactivate()
-    //   } else {
-    //     let winClosed = 0
-    //     for (let i = this.wGame.gui.windowsContainer._childrenList.length - 1; i >= 0; i--) {
-    //       const win = this.wGame.gui.windowsContainer._childrenList[i]
-    //       if (win.isVisible() && win.id !== 'recaptcha') {
-    //         win.close()
-    //         winClosed++
-    //         break
-    //       }
-    //     }
-    //     if (this.wGame.gui.notificationBar._elementIsVisible) {
-    //       const dialogName = this.wGame.gui.notificationBar.currentOpenedId
-    //       // If notifiaction is openened, allow to close it with ESC
-    //       this.wGame.gui.notificationBar.dialogs[dialogName]._childrenList[0]._childrenList[1].tap()
-    //       winClosed++
-    //     }
-    //     if (this.params.diver.active_open_menu && !winClosed) {
-    //       // If no window closed open menu
-    //       this.wGame.gui.mainControls.buttonBox._childrenList[15].tap()
-    //     }
-    //   }
-    // })
-    // // Prevent using tab key
-    // this.shortcutsHelper.bindVanilla('tab', (e: KeyboardEvent) => {
-    //   e.preventDefault()
-    // })
-    console.log(this._shortcuts)
+    // Close interfaces
+    this._shortcuts.add({
+      shortcut: 'ESCAPE',
+      handler: () => {
+        if (this.wGame.gui.chat.active) {
+          this.wGame.gui.chat.deactivate()
+        } else {
+          let winClosed = 0
+          for (let i = this.wGame.gui.windowsContainer._childrenList.length - 1; i >= 0; i--) {
+            const win = this.wGame.gui.windowsContainer._childrenList[i]
+            if (win.isVisible() && win.id !== 'recaptcha') {
+              win.close()
+              winClosed++
+              break
+            }
+          }
+          // if (this.wGame.gui.notificationBar._elementIsVisible) {
+          //   const dialogName = this.wGame.gui.notificationBar.currentOpenedId
+          //   // If notifiaction is openened, allow to close it with ESC
+          //   this.wGame.gui.notificationBar.dialogs[dialogName]._childrenList[0]._childrenList[1].tap()
+          //   winClosed++
+          // }
+          // if (this.params.diver.active_open_menu && !winClosed) {
+          //   // If no window closed open menu
+          //   this.wGame.gui.mainControls.buttonBox._childrenList[15].tap()
+          // }
+        }
+      }
+    })
   }
 
   close() {

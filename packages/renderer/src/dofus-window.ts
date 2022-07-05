@@ -41,6 +41,12 @@ export interface ChildIcon {
   id: string
 }
 
+export interface ChildWinow {
+  id: string
+  isVisible: () => boolean
+  close: () => void
+}
+
 export interface Actor {
   moving: boolean
   canMoveDiagonally: boolean
@@ -64,6 +70,14 @@ export interface DofusWindow extends Window {
   gui: {
     on: (event: 'disconnect', callback: () => void) => void
     _resizeUi: () => void
+    notificationBar: {
+      _elementIsVisible: boolean
+      currentOpenedId: string
+      dialogs: Record<string, unknown>
+    }
+    windowsContainer: {
+      _childrenList: Array<ChildWinow>
+    }
     menuBar: {
       _icons: {
         _childrenList: Array<ChildIcon>
@@ -106,7 +120,9 @@ export interface DofusWindow extends Window {
       }
     }
     chat: {
+      active: boolean
       activate: () => void
+      deactivate: () => void
     }
   }
   isoEngine: {
