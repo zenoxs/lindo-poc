@@ -77,6 +77,18 @@ export interface ChatMessage {
   content: string
 }
 
+export interface PartyInvitationMessage {
+  fromName: string
+}
+export interface GameRolePlayAggressionMessage {
+  defenderId: string
+}
+
+export interface TextInformationMessage {
+  msgId: number
+  parameters: Array<string>
+}
+
 export interface TaxMessage {
   guild: Guild
   worldX: number
@@ -93,6 +105,10 @@ export type ConnectionManagerEvents = {
   MapComplementaryInformationsDataMessage: () => void
   ChatServerMessage: (msg: ChatMessage) => void
   TaxCollectorAttackedMessage: (tax: TaxMessage) => void
+  GameRolePlayArenaFightPropositionMessage: (e: unknown) => void
+  PartyInvitationMessage: (msg: PartyInvitationMessage) => void
+  GameRolePlayAggressionMessage: (msg: GameRolePlayAggressionMessage) => void
+  TextInformationMessage: (msg: TextInformationMessage) => void
 }
 
 export interface ConnectionManager extends TypedEmitter<ConnectionManagerEvents> {}

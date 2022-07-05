@@ -21,7 +21,7 @@ const en: BaseTranslation = {
     privateMessage: 'Incoming message from {senderName: string}',
     taxCollector: 'A tax collector is being attacked !',
     kolizeum: 'A Kolizeum has been found !',
-    partyInvitation: "You are invited to join {sendName: string}'s group.",
+    partyInvitation: "You are invited to join {senderName: string}'s group.",
     aggression: 'You have been aggressed !',
     saleMessage: 'Bank'
   },

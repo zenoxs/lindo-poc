@@ -114,9 +114,13 @@ const fetchGameContext = async (): Promise<GameContext> => {
   return JSON.parse(data)
 }
 
-// Options
+// Window
 const openOptionWindow = (): void => {
   ipcRenderer.send(IPCEvents.OPEN_OPTION)
+}
+
+const focusCurrentWindow = (): void => {
+  ipcRenderer.send(IPCEvents.FOCUS_WINDOW)
 }
 
 const lindoApi: LindoAPI = {
@@ -129,6 +133,7 @@ const lindoApi: LindoAPI = {
   subscribeToCloseTab,
   subscribeToUpdateProgress,
   fetchGameContext,
-  openOptionWindow
+  openOptionWindow,
+  focusCurrentWindow
 }
 contextBridge.exposeInMainWorld('lindoAPI', lindoApi)

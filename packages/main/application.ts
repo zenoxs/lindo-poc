@@ -40,27 +40,7 @@ export class Application {
   private constructor(private _rootStore: RootStore, private _serveGameServer: Server) {}
 
   async run() {
-    // handlers
-    ipcMain.handle(IPCEvents.GET_GAME_CONTEXT, (event) => {
-      const serverAddress: AddressInfo = this._serveGameServer.address() as AddressInfo
-      const context: GameContext = {
-        gameSrc: 'http://localhost:' + serverAddress.port + '/index.html?delayed=true',
-        windowId: event.sender.id
-      }
-      return JSON.stringify(context)
-    })
-
-    ipcMain.on(IPCEvents.OPEN_OPTION, (event) => {
-      this.openOptionWindow()
-    })
-
-    ipcMain.on(IPCEvents.TOGGLE_MAXIMIZE_WINDOW, (event) => {
-      console.log('Application ->', 'TOGGLE_MAXIMIZE_WINDOW')
-      const gWindow = this._gWindows.find((gWindow) => gWindow.id === event.sender.id)
-      if (gWindow) {
-        gWindow.toggleMaximize()
-      }
-    })
+    this._setupIPCHandlers()
 
     await runUpdater(this._rootStore)
 
@@ -115,6 +95,38 @@ export class Application {
     this._optionWindow = new OptionWindow()
     this._optionWindow.on('close', () => {
       this._optionWindow = undefined
+    })
+  }
+
+  private _setupIPCHandlers() {
+    // handlers
+    ipcMain.handle(IPCEvents.GET_GAME_CONTEXT, (event) => {
+      const serverAddress: AddressInfo = this._serveGameServer.address() as AddressInfo
+      const context: GameContext = {
+        gameSrc: 'http://localhost:' + serverAddress.port + '/index.html?delayed=true',
+        windowId: event.sender.id
+      }
+      return JSON.stringify(context)
+    })
+
+    ipcMain.on(IPCEvents.OPEN_OPTION, (event) => {
+      this.openOptionWindow()
+    })
+
+    ipcMain.on(IPCEvents.TOGGLE_MAXIMIZE_WINDOW, (event) => {
+      console.log('Application ->', 'TOGGLE_MAXIMIZE_WINDOW')
+      const gWindow = this._gWindows.find((gWindow) => gWindow.id === event.sender.id)
+      if (gWindow) {
+        gWindow.toggleMaximize()
+      }
+    })
+
+    ipcMain.on(IPCEvents.FOCUS_WINDOW, (event) => {
+      console.log('Application ->', 'FOCUS_WINDOW')
+      const gWindow = this._gWindows.find((gWindow) => gWindow.id === event.sender.id)
+      if (gWindow) {
+        gWindow.focus()
+      }
     })
   }
 }

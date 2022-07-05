@@ -58,8 +58,8 @@ export const OptionNotifications = () => {
               <FormControlLabel
                 control={<Checkbox />}
                 label='When someone aggresses you'
-                checked={optionStore.gameNotification.agression}
-                onChange={(_, checked) => optionStore.gameNotification.setAgression(checked)}
+                checked={optionStore.gameNotification.aggression}
+                onChange={(_, checked) => optionStore.gameNotification.setAggression(checked)}
               />
             </FormControl>
             <FormControl fullWidth>

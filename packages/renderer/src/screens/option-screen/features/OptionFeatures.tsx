@@ -1,12 +1,10 @@
 import React from 'react'
 import { Box, Tab, Tabs } from '@mui/material'
 import { TabPanel } from '../TabPanel'
-import { useStores } from '@/store'
 import { Observer } from 'mobx-react-lite'
 
 export const OptionFeatures = () => {
   const [value, setValue] = React.useState(0)
-  const { hotkeyStore } = useStores()
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)

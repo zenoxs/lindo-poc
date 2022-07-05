@@ -63,10 +63,10 @@ type RootTranslation = {
 		 */
 		kolizeum: string
 		/**
-		 * You are invited to join {sendName}'s group.
-		 * @param {string} sendName
+		 * You are invited to join {senderName}'s group.
+		 * @param {string} senderName
 		 */
-		partyInvitation: RequiredParams<'sendName'>
+		partyInvitation: RequiredParams<'senderName'>
 		/**
 		 * You have been aggressed !
 		 */
@@ -1147,9 +1147,9 @@ export type TranslationFunctions = {
 		 */
 		kolizeum: () => LocalizedString
 		/**
-		 * You are invited to join {sendName}'s group.
+		 * You are invited to join {senderName}'s group.
 		 */
-		partyInvitation: (arg: { sendName: string }) => LocalizedString
+		partyInvitation: (arg: { senderName: string }) => LocalizedString
 		/**
 		 * You have been aggressed !
 		 */
