@@ -7,7 +7,8 @@ export const GameGeneralOptionModel = types
   .model('GameGeneralOption')
   .props({
     activeOpenMenu: types.optional(types.boolean, false),
-    hiddenShop: types.optional(types.boolean, false)
+    hiddenShop: types.optional(types.boolean, false),
+    preventInactivityDisconnect: types.optional(types.boolean, true)
   })
   .actions((self) => ({
     setActiveOpenMenu(value: boolean) {
@@ -15,6 +16,9 @@ export const GameGeneralOptionModel = types
     },
     setHiddenShop(value: boolean) {
       self.hiddenShop = value
+    },
+    setPreventInactivityDisconnect(value: boolean) {
+      self.preventInactivityDisconnect = value
     }
   }))
 

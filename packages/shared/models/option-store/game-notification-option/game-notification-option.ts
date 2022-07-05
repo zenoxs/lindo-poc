@@ -6,15 +6,31 @@ import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 export const GameNotificationOptionModel = types
   .model('GameNotificationOption')
   .props({
-    activeOpenMenu: types.optional(types.boolean, false),
-    hiddenShop: types.optional(types.boolean, false)
+    privateMessage: types.optional(types.boolean, true),
+    fightTurn: types.optional(types.boolean, true),
+    taxCollector: types.optional(types.boolean, true),
+    kolizeum: types.optional(types.boolean, true),
+    partyInvitation: types.optional(types.boolean, true),
+    agression: types.optional(types.boolean, true)
   })
   .actions((self) => ({
-    setActiveOpenMenu(value: boolean) {
-      self.activeOpenMenu = value
+    setPrivateMessage(value: boolean) {
+      self.privateMessage = value
     },
-    setHiddenShop(value: boolean) {
-      self.hiddenShop = value
+    setFightTurn(value: boolean) {
+      self.fightTurn = value
+    },
+    setTaxCollector(value: boolean) {
+      self.taxCollector = value
+    },
+    setKolizeum(value: boolean) {
+      self.kolizeum = value
+    },
+    setPartyInvitation(value: boolean) {
+      self.partyInvitation = value
+    },
+    setAgression(value: boolean) {
+      self.agression = value
     }
   }))
 

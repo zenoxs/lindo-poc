@@ -6,15 +6,17 @@ import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 export const GameFightOptionModel = types
   .model('GameFightOption')
   .props({
-    activeOpenMenu: types.optional(types.boolean, false),
-    hiddenShop: types.optional(types.boolean, false)
+    healthBar: types.optional(types.boolean, true),
+    dammageEstimator: types.optional(types.boolean, true),
+    verticalTimeline: types.optional(types.boolean, false),
+    challengeBonus: types.optional(types.boolean, false),
+    focusOnFightTurn: types.optional(types.boolean, true),
+    fightChronometer: types.optional(types.boolean, true),
+    monsterTooltip: types.optional(types.boolean, true)
   })
   .actions((self) => ({
-    setActiveOpenMenu(value: boolean) {
-      self.activeOpenMenu = value
-    },
-    setHiddenShop(value: boolean) {
-      self.hiddenShop = value
+    setFocusOnFightTurn(value: boolean) {
+      self.focusOnFightTurn = value
     }
   }))
 
