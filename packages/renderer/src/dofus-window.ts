@@ -59,18 +59,90 @@ export interface ChildDialog extends ChildElement {
 }
 
 export interface Actor {
+  id: string
   moving: boolean
   canMoveDiagonally: boolean
   cellId: number
   cancelMovement: (callback: () => void) => void
 }
 
+export interface ChatMessage {
+  channel: number
+  senderName: string
+  content: string
+}
+
 export type ConnectionManagerEvents = {
   MapComplementaryInformationsWithCoordsMessage: () => void
   MapComplementaryInformationsDataMessage: () => void
+  ChatServerMessage: (msg: ChatMessage) => void
 }
 
 export interface ConnectionManager extends TypedEmitter<ConnectionManagerEvents> {}
+
+export type GUIEvents = {
+  disconnect: () => void
+  GameFightTurnStartMessage: (actor: Actor) => void
+}
+
+export interface GUI extends TypedEmitter<GUIEvents> {
+  _resizeUi: () => void
+  notificationBar: {
+    _elementIsVisible: boolean
+    currentOpenedId: string
+    dialogs: Record<string, ChildDialog>
+  }
+  windowsContainer: {
+    _childrenList: Array<ChildWUI>
+  }
+  menuBar: {
+    _icons: {
+      _childrenList: Array<ChildElement>
+    }
+  }
+  shortcutBar: {
+    _panels: {
+      spell: {
+        slotList: Array<Slot>
+      }
+      item: {
+        slotList: Array<Slot>
+      }
+    }
+  }
+  playerData: {
+    on: (event: 'characterSelectedSuccess', callback: () => void) => void
+    characterBaseInformations: {
+      id: string
+      name: string
+      entityLook: unknown
+    }
+  }
+  mainControls: {
+    buttonBox: {
+      _childrenList: {
+        tap: () => void
+      }[]
+    }
+  }
+  numberInputPad: {
+    isVisible: () => boolean
+  }
+  fightManager: {
+    fightState: number
+    finishTurn: () => void
+  }
+  timeline: {
+    fightControlButtons: {
+      toggleReadyForFight: () => void
+    }
+  }
+  chat: {
+    active: boolean
+    activate: () => void
+    deactivate: () => void
+  }
+}
 
 export interface DofusWindow extends Window {
   initDofus: (callback: () => void) => void
@@ -78,64 +150,7 @@ export interface DofusWindow extends Window {
   dofus: {
     connectionManager: ConnectionManager
   }
-  gui: {
-    on: (event: 'disconnect', callback: () => void) => void
-    _resizeUi: () => void
-    notificationBar: {
-      _elementIsVisible: boolean
-      currentOpenedId: string
-      dialogs: Record<string, ChildDialog>
-    }
-    windowsContainer: {
-      _childrenList: Array<ChildWUI>
-    }
-    menuBar: {
-      _icons: {
-        _childrenList: Array<ChildElement>
-      }
-    }
-    shortcutBar: {
-      _panels: {
-        spell: {
-          slotList: Array<Slot>
-        }
-        item: {
-          slotList: Array<Slot>
-        }
-      }
-    }
-    playerData: {
-      on: (event: 'characterSelectedSuccess', callback: () => void) => void
-      characterBaseInformations: {
-        name: string
-        entityLook: unknown
-      }
-    }
-    mainControls: {
-      buttonBox: {
-        _childrenList: {
-          tap: () => void
-        }[]
-      }
-    }
-    numberInputPad: {
-      isVisible: () => boolean
-    }
-    fightManager: {
-      fightState: number
-      finishTurn: () => void
-    }
-    timeline: {
-      fightControlButtons: {
-        toggleReadyForFight: () => void
-      }
-    }
-    chat: {
-      active: boolean
-      activate: () => void
-      deactivate: () => void
-    }
-  }
+  gui: GUI
   isoEngine: {
     _castSpellImmediately: (cellId: number) => void
     mapScene: {
