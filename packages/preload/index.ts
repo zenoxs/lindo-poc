@@ -1,7 +1,7 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron'
 import { domReady } from './utils'
 import { IJsonPatch } from 'mobx-state-tree'
-import { GameContext, IPCEvents, RootStoreSnapshot, UpdateProgress } from '@lindo/shared'
+import { GameContext, IPCEvents, LindoAPI, LindoTitleBar, RootStoreSnapshot, UpdateProgress } from '@lindo/shared'
 import { Titlebar, Color } from 'custom-electron-titlebar'
 ;(async () => {
   await domReady()
@@ -23,10 +23,11 @@ window.addEventListener('DOMContentLoaded', () => {
   })
 
   titleBar.updateTitle('Lindo')
-  contextBridge.exposeInMainWorld('titleBar', {
+  const lindoTitleBar: LindoTitleBar = {
     updateTitle: (title: string) => titleBar.updateTitle(title),
     height: titlebarRef.clientHeight + 'px'
-  })
+  }
+  contextBridge.exposeInMainWorld('titleBar', lindoTitleBar)
 })
 
 // MOBX
@@ -50,12 +51,7 @@ const subscribeToIPCPatch = (callback: (patch: IJsonPatch) => void): (() => void
   }
 }
 
-contextBridge.exposeInMainWorld('forwardPatchToMain', forwardPatchToMain)
-contextBridge.exposeInMainWorld('fetchInitialStateAsync', fetchInitialStateAsync)
-contextBridge.exposeInMainWorld('subscribeToIPCPatch', subscribeToIPCPatch)
-
 // Hotkeys
-
 const subscribeToNewTab = (callback: () => void): (() => void) => {
   const listener = (_: IpcRendererEvent) => {
     callback()
@@ -100,13 +96,7 @@ const subscribeToCloseTab = (callback: () => void): (() => void) => {
   }
 }
 
-contextBridge.exposeInMainWorld('subscribeToNewTab', subscribeToNewTab)
-contextBridge.exposeInMainWorld('subscribeToNextTab', subscribeToNextTab)
-contextBridge.exposeInMainWorld('subscribeToPrevTab', subscribeToPrevTab)
-contextBridge.exposeInMainWorld('subscribeToCloseTab', subscribeToCloseTab)
-
 // Updater
-
 const subscribeToUpdateProgress = (callback: (updateProgress: UpdateProgress) => void): (() => void) => {
   const listener = (_: IpcRendererEvent, updateProgress: UpdateProgress) => {
     callback(updateProgress)
@@ -118,38 +108,27 @@ const subscribeToUpdateProgress = (callback: (updateProgress: UpdateProgress) =>
   }
 }
 
-contextBridge.exposeInMainWorld('subscribeToUpdateProgress', subscribeToUpdateProgress)
-
 // Context
-
 const fetchGameContext = async (): Promise<GameContext> => {
   const data = await ipcRenderer.invoke(IPCEvents.GET_GAME_CONTEXT)
   return JSON.parse(data)
 }
-contextBridge.exposeInMainWorld('fetchGameContext', fetchGameContext)
 
 // Options
 const openOptionWindow = (): void => {
   ipcRenderer.send(IPCEvents.OPEN_OPTION)
 }
-contextBridge.exposeInMainWorld('openOptionWindow', openOptionWindow)
 
-// `exposeInMainWorld` can't detect attributes and methods of `prototype`, manually patching it.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any, no-unused-vars
-function withPrototype(obj: Record<string, any>) {
-  const protos = Object.getPrototypeOf(obj)
-
-  for (const [key, value] of Object.entries(protos)) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) continue
-
-    if (typeof value === 'function') {
-      // Some native APIs, like `NodeJS.EventEmitter['on']`, don't work in the Renderer process. Wrapping them into a function.
-      obj[key] = function (...args: Array<unknown>) {
-        return value.call(obj, ...args)
-      }
-    } else {
-      obj[key] = value
-    }
-  }
-  return obj
+const lindoApi: LindoAPI = {
+  fetchInitialStateAsync,
+  forwardPatchToMain,
+  subscribeToIPCPatch,
+  subscribeToNewTab,
+  subscribeToNextTab,
+  subscribeToPrevTab,
+  subscribeToCloseTab,
+  subscribeToUpdateProgress,
+  fetchGameContext,
+  openOptionWindow
 }
+contextBridge.exposeInMainWorld('lindoAPI', lindoApi)

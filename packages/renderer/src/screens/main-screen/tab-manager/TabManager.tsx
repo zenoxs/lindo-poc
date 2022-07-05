@@ -16,7 +16,7 @@ export const TabManager = ({ children }: TabManagerProps) => {
 
   useEffect(
     () =>
-      window.subscribeToNewTab(() => {
+      window.lindoAPI.subscribeToNewTab(() => {
         gameStore.addGame()
       }),
     []
@@ -24,7 +24,7 @@ export const TabManager = ({ children }: TabManagerProps) => {
 
   useEffect(
     () =>
-      window.subscribeToNextTab(() => {
+      window.lindoAPI.subscribeToNextTab(() => {
         gameStore.selectNextGame()
       }),
     []
@@ -32,7 +32,7 @@ export const TabManager = ({ children }: TabManagerProps) => {
 
   useEffect(
     () =>
-      window.subscribeToPrevTab(() => {
+      window.lindoAPI.subscribeToPrevTab(() => {
         gameStore.selectPreviousGame()
       }),
     []
@@ -40,7 +40,7 @@ export const TabManager = ({ children }: TabManagerProps) => {
 
   useEffect(
     () =>
-      window.subscribeToCloseTab(() => {
+      window.lindoAPI.subscribeToCloseTab(() => {
         gameStore.removeSelectedGame()
       }),
     []

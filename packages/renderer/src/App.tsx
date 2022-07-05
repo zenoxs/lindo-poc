@@ -32,7 +32,7 @@ export const App = () => {
     }
     if (didSetUpGameContextRef.current === false) {
       didSetUpGameContextRef.current = true
-      window.fetchGameContext().then(setGameContext)
+      window.lindoAPI.fetchGameContext().then(setGameContext)
     }
   }, [])
 

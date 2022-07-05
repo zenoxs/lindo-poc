@@ -14,7 +14,7 @@ export async function setupRootStore() {
   // prepare the environment that will be associated with the RootStore.
   const env = await Promise.resolve({})
 
-  const state = await window.fetchInitialStateAsync()
+  const state = await window.lindoAPI.fetchInitialStateAsync()
   console.log('Got initial state: ', state)
 
   // const optionsPlugin = await SystemJS.import("http://localhost:3001/dist/plugin-test.js");
@@ -27,7 +27,7 @@ export async function setupRootStore() {
 
   const patchesFromMain: Array<string> = []
 
-  window.subscribeToIPCPatch((patch: IJsonPatch) => {
+  window.window.lindoAPI.subscribeToIPCPatch((patch: IJsonPatch) => {
     console.log({ patch })
     patchesFromMain.push(hash(patch))
     applyPatch(rootStore, patch)
@@ -46,7 +46,7 @@ export async function setupRootStore() {
       patchesFromMain.splice(patchesFromMain.indexOf(patchHash), 1)
       return
     }
-    window.forwardPatchToMain(patch)
+    window.lindoAPI.forwardPatchToMain(patch)
   })
 
   return rootStore

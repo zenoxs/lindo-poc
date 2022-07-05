@@ -56,7 +56,7 @@ export const SideBar = () => {
   )
 
   const handleOpenOption = () => {
-    window.openOptionWindow()
+    window.lindoAPI.openOptionWindow()
   }
 
   return (

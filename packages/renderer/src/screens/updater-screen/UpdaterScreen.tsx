@@ -9,7 +9,7 @@ export const UpdaterScreen = () => {
   useEffect(() => {
     document.title = 'Updater'
 
-    return window.subscribeToUpdateProgress((progress) => {
+    return window.lindoAPI.subscribeToUpdateProgress((progress) => {
       setProgress(progress)
     })
   }, [])
