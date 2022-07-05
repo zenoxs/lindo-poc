@@ -9,7 +9,7 @@ import {
   TextInformationMessage
 } from '@/dofus-window'
 import TypedEmitter from 'typed-emitter'
-import EventEmitter from 'events'
+import EventEmitter from 'eventemitter3'
 import { EventManager } from '../helpers'
 import { Mod } from '../mod'
 import axios from 'axios'

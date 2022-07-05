@@ -51,7 +51,8 @@ export const TabGame = styled(({ game, className }: TabGameProps) => {
             <div
               onClick={() => gameStore.selectGame(game)}
               className={classNames(styles.tab, styles['tab-game'], className, {
-                focus: active
+                focus: active,
+                notification: game.hasNotification
               })}
             >
               <div className={styles['icon-char']} ref={characterIconRef} />
@@ -83,6 +84,18 @@ export const TabGame = styled(({ game, className }: TabGameProps) => {
       color: white;
       border-width: 2px;
       border-color: ${darken(theme.palette.primary.main, 0.2)};
+    }
+
+    @keyframes blink {
+      0% {
+        border-color: #fffc89;
+      }
+      50% {
+        border-color: #ff8d5f;
+      }
+      100% {
+        border-color: #fffc89;
+      }
     }
 `
 )

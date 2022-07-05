@@ -1,5 +1,5 @@
 import { Game, RootStore } from '@/store'
-import { MODS } from '@/mods'
+import { MODS, NotificationsMod } from '@/mods'
 import { Mod } from '@/mods/mod'
 import { DofusWindow } from '@/dofus-window'
 import { TranslationFunctions } from '@lindo/i18n'
@@ -18,6 +18,14 @@ export const manageGameWindow = ({ dWindow, rootStore, game, LL }: ManageGameWin
     console.log(dWindow)
     for (const key in MODS) {
       const mod: Mod = new MODS[key](dWindow, rootStore, LL)
+      if (mod instanceof NotificationsMod) {
+        mod.eventEmitter.on('notification', () => {
+          game.setHasNotification(true)
+        })
+        mod.eventEmitter.on('focusTabRequest', () => {
+          rootStore.gameStore.selectGame(game)
+        })
+      }
       mod.start()
       mods.push(mod)
     }

@@ -34,6 +34,7 @@ export const GameStoreModel = types
     selectGame(game: Game) {
       if (self._games.has(game.id)) {
         self.selectedGame = game
+        self.selectedGame.setHasNotification(false)
       }
     },
     selectGameIndex(index: number) {

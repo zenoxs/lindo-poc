@@ -9,9 +9,13 @@ export const GameModel = types
   .props({
     id: types.optional(types.identifier, () => uuidv4()),
     characterName: types.maybe(types.string),
-    characterIcon: types.maybe(types.frozen<HTMLElement>())
+    characterIcon: types.maybe(types.frozen<HTMLElement>()),
+    hasNotification: types.optional(types.boolean, false)
   })
   .actions((self) => ({
+    setHasNotification: (hasNotification: boolean) => {
+      self.hasNotification = hasNotification
+    },
     setCharacterName(name: string) {
       self.characterName = name
     },
@@ -22,6 +26,7 @@ export const GameModel = types
     disconnected() {
       self.characterName = undefined
       self.characterIcon = undefined
+      self.hasNotification = false
     }
   }))
 
