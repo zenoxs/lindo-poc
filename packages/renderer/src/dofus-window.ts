@@ -66,16 +66,33 @@ export interface Actor {
   cancelMovement: (callback: () => void) => void
 }
 
+export interface Guild {
+  id: string
+  guildName: string
+}
+
 export interface ChatMessage {
   channel: number
   senderName: string
   content: string
 }
 
+export interface TaxMessage {
+  guild: Guild
+  worldX: number
+  worldY: number
+  enrichData: {
+    subAreaName: string
+    firstName: string
+    lastName: string
+  }
+}
+
 export type ConnectionManagerEvents = {
   MapComplementaryInformationsWithCoordsMessage: () => void
   MapComplementaryInformationsDataMessage: () => void
   ChatServerMessage: (msg: ChatMessage) => void
+  TaxCollectorAttackedMessage: (tax: TaxMessage) => void
 }
 
 export interface ConnectionManager extends TypedEmitter<ConnectionManagerEvents> {}

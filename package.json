@@ -10,7 +10,8 @@
   "scripts": {
     "lint": "eslint packages",
     "dev": "node scripts/watch.mjs",
-    "build": "tsc --noEmit -p packages/renderer/tsconfig.json && node scripts/build.mjs && electron-builder --publish never"
+    "build": "tsc --noEmit -p packages/renderer/tsconfig.json && node scripts/build.mjs && electron-builder --publish never",
+    "typesafe-i18n": "typesafe-i18n"
   },
   "engines": {
     "node": ">=14.17.0"
@@ -30,6 +31,7 @@
     "mobx-state-tree": "^5.1.5",
     "object-hash": "^3.0.0",
     "rxjs": "^7.5.5",
+    "typesafe-i18n": "^5.5.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
