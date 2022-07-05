@@ -40,7 +40,7 @@ export class EventManager {
 
   close() {
     for (const event of this._events) {
-      event.emitter.removeListener(event.event, event.listener)
+      this.removeListener(event.emitter, event.event, event.listener)
     }
   }
 }
