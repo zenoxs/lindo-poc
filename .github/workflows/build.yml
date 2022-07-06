@@ -45,6 +45,7 @@ jobs:
           name: macos
           path: |
             release/${{ steps.extract_version.outputs.version }}/Lindo-${{ steps.extract_version.outputs.version }}.dmg
+            release/${{ steps.extract_version.outputs.version }}/Lindo-${{ steps.extract_version.outputs.version }}-arm64.dmg
 
       - name: Upload Linux artifacts
         uses: actions/upload-artifact@v2
@@ -90,4 +91,5 @@ jobs:
             linux/lindo-${{ steps.extract_version.outputs.version }}.tar.gz
             linux/lindo_${{ steps.extract_version.outputs.version }}_amd64.deb
             macos/Lindo-${{ steps.extract_version.outputs.version }}.dmg
+            macos/Lindo-${{ steps.extract_version.outputs.version }}-arm64.dmg
 
