@@ -52,7 +52,7 @@ export const TabManager = ({ children }: TabManagerProps) => {
       shortcuts.add(
         hotkeyStore.window.tabs.map((tab, index) => ({
           shortcut: tab,
-          handler: (event) => {
+          handler: () => {
             gameStore.selectGameIndex(index)
           }
         }))

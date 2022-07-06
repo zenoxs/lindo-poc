@@ -92,7 +92,7 @@ export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWind
     })
 
     // Make all links open with the browser, not with the application
-    this._win.webContents.setWindowOpenHandler(({ url }) => {
+    this._win.webContents.setWindowOpenHandler(() => {
       // if (url.startsWith('https:')) shell.openExternal(url)
       return { action: 'deny' }
     })

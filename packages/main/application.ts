@@ -109,7 +109,7 @@ export class Application {
       return JSON.stringify(context)
     })
 
-    ipcMain.on(IPCEvents.OPEN_OPTION, (event) => {
+    ipcMain.on(IPCEvents.OPEN_OPTION, () => {
       this.openOptionWindow()
     })
 

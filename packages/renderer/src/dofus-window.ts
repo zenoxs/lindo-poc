@@ -16,6 +16,107 @@ export interface CharacterDisplay {
 
 export type MapDirection = 'left' | 'right' | 'top' | 'bottom'
 
+export enum EffectCategory {
+  undefined = -1,
+  miscellaneous = 0,
+  resistance = 1,
+  damage = 2,
+  special = 3
+}
+
+export interface EffectInstance {
+  effect: {
+    category: EffectCategory
+    characteristic: number
+  }
+  effectId: number
+  min: number
+  max: number
+}
+
+export interface SpellEffect {
+  trigger: boolean
+  effectId: number
+  diceNum: number
+  diceSide: number
+  value: number
+  description: string
+  effect: {
+    category: EffectCategory
+    characteristic: number
+  }
+}
+
+export interface SpellBuff {
+  source: number
+  duration: number
+  stack: Array<SpellBuff>
+  effect: SpellEffect
+  castingSpell: {
+    spell: Spell
+  }
+}
+export interface Spell {
+  id: number
+  isItem: boolean
+  spellLevel: {
+    effects: Array<SpellEffect>
+    criticalEffect: Array<SpellEffect | undefined>
+  }
+  effectInstances: Record<string, EffectInstance>
+  _item: {
+    item: {
+      criticalHitBonus: number
+    }
+  }
+}
+
+export interface CharacterStats {
+  maxLifePoints: number
+  lifePoints: number
+  pushDamageFixedResist: number
+  waterElementReduction: number
+  criticalDamageFixedResist: number
+  neutralElementReduction: number
+  earthElementReduction: number
+  airElementReduction: number
+  fireElementReduction: number
+  waterElementResistPercent: number
+  neutralElementResistPercent: number
+  earthElementResistPercent: number
+  airElementResistPercent: number
+  fireElementResistPercent: number
+  waterDamageBonus: number
+  neutralDamageBonus: number
+  earthDamageBonus: number
+  airDamageBonus: number
+  fireDamageBonus: number
+  damagesBonusPercent: number
+  allDamagesBonus: number
+  criticalDamageBonus: number
+  pushDamageBonus: number
+  vitality: number
+  healBonus: number
+  chance: number
+  strength: number
+  agility: number
+  intelligence: number
+}
+
+export interface Fighter {
+  id: number
+  isCreature: boolean
+  buffs: Array<SpellBuff>
+  level: number
+  data: {
+    alive: boolean
+    disposition: {
+      cellId: number
+    }
+    stats: CharacterStats
+  }
+}
+
 export interface MapCell {
   z: number
   f: number
@@ -59,7 +160,7 @@ export interface ChildDialog extends ChildElement {
 }
 
 export interface Actor {
-  id: string
+  id: number
   moving: boolean
   canMoveDiagonally: boolean
   cellId: number
@@ -81,7 +182,7 @@ export interface PartyInvitationMessage {
   fromName: string
 }
 export interface GameRolePlayAggressionMessage {
-  defenderId: string
+  defenderId: number
 }
 
 export interface TextInformationMessage {
@@ -101,6 +202,7 @@ export interface TaxMessage {
 }
 
 export type ConnectionManagerEvents = {
+  GameFightEndMessage: () => void
   MapComplementaryInformationsWithCoordsMessage: () => void
   MapComplementaryInformationsDataMessage: () => void
   ChatServerMessage: (msg: ChatMessage) => void
@@ -115,6 +217,9 @@ export interface ConnectionManager extends TypedEmitter<ConnectionManagerEvents>
 
 export type GUIEvents = {
   disconnect: () => void
+  spellSlotSelected: (spellId: number) => void
+  spellSlotDeselected: () => void
+  GameActionFightDeathMessage: (event: { targetId: number }) => void
   GameFightTurnStartMessage: (actor: Actor) => void
 }
 
@@ -144,9 +249,24 @@ export interface GUI extends TypedEmitter<GUIEvents> {
     }
   }
   playerData: {
+    id: number
     on: (event: 'characterSelectedSuccess', callback: () => void) => void
+    characters: {
+      mainCharacterId: number
+      mainCharacter: {
+        spellData: {
+          spells: Record<number, Spell>
+        }
+        characteristics: Record<
+          keyof CharacterStats,
+          {
+            getTotalStat: () => number
+          }
+        >
+      }
+    }
     characterBaseInformations: {
-      id: string
+      id: number
       name: string
       entityLook: unknown
     }
@@ -164,6 +284,8 @@ export interface GUI extends TypedEmitter<GUIEvents> {
   fightManager: {
     fightState: number
     finishTurn: () => void
+    getFighters: () => Array<number>
+    getFighter: (actorId: number) => Fighter
   }
   timeline: {
     fightControlButtons: {
@@ -183,6 +305,9 @@ export interface DofusWindow extends Window {
   dofus: {
     connectionManager: ConnectionManager
   }
+  foreground: {
+    rootElement: HTMLDivElement
+  }
   gui: GUI
   isoEngine: {
     _castSpellImmediately: (cellId: number) => void
@@ -197,6 +322,7 @@ export interface DofusWindow extends Window {
     }
     gotoNeighbourMap: (direction: MapDirection, cell: number, x: number, y: number) => void
     mapRenderer: {
+      isFightMode: boolean
       mapId: number
       isWalkable: (cell: number) => boolean
       getChangeMapFlags: (cell: number) => Record<MapDirection, boolean>
@@ -206,6 +332,12 @@ export interface DofusWindow extends Window {
       }
       map: {
         cells: MapCell[]
+      }
+      grid: {
+        getCoordinateGridFromCellId: (cellId: number) => {
+          i: number // x
+          j: number // y
+        }
       }
     }
     actorManager: {

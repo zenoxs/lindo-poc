@@ -53,7 +53,7 @@ const subscribeToIPCPatch = (callback: (patch: IJsonPatch) => void): (() => void
 
 // Hotkeys
 const subscribeToNewTab = (callback: () => void): (() => void) => {
-  const listener = (_: IpcRendererEvent) => {
+  const listener = () => {
     callback()
   }
   ipcRenderer.on(IPCEvents.NEW_TAB, listener)
@@ -64,7 +64,7 @@ const subscribeToNewTab = (callback: () => void): (() => void) => {
 }
 
 const subscribeToNextTab = (callback: () => void): (() => void) => {
-  const listener = (_: IpcRendererEvent) => {
+  const listener = () => {
     callback()
   }
   ipcRenderer.on(IPCEvents.NEXT_TAB, listener)
@@ -75,7 +75,7 @@ const subscribeToNextTab = (callback: () => void): (() => void) => {
 }
 
 const subscribeToPrevTab = (callback: () => void): (() => void) => {
-  const listener = (_: IpcRendererEvent) => {
+  const listener = () => {
     callback()
   }
   ipcRenderer.on(IPCEvents.PREV_TAB, listener)
@@ -86,7 +86,7 @@ const subscribeToPrevTab = (callback: () => void): (() => void) => {
 }
 
 const subscribeToCloseTab = (callback: () => void): (() => void) => {
-  const listener = (_: IpcRendererEvent) => {
+  const listener = () => {
     callback()
   }
   ipcRenderer.on(IPCEvents.CLOSE_TAB, listener)

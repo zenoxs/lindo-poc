@@ -166,7 +166,7 @@ export class ShortcutsMod extends Mod {
     gameInterfaceHotkey.spells.forEach((_, index) => {
       const selectedSpell = this.wGame.gui.shortcutBar._panels.spell.slotList[index]
 
-      this._addShortcutFromArray(gameInterfaceHotkey.spells, index, (e) => {
+      this._addShortcutFromArray(gameInterfaceHotkey.spells, index, () => {
         console.log('use spell ' + index)
         selectedSpell.tap()
         // return true to prevent spell cast multiple times
@@ -196,7 +196,7 @@ export class ShortcutsMod extends Mod {
     gameInterfaceHotkey.items.forEach((_, index) => {
       const selectedItem = this.wGame.gui.shortcutBar._panels.item.slotList[index]
 
-      this._addShortcutFromArray(gameInterfaceHotkey.items, index, (e) => {
+      this._addShortcutFromArray(gameInterfaceHotkey.items, index, () => {
         console.log('use item ' + index)
         selectedItem.tap()
         // return true to prevent spell cast multiple times
