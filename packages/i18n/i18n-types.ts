@@ -172,72 +172,8 @@ type RootTranslation = {
 				 */
 				close: string
 			}
-			general: {
-				/**
-				 * Re-download game data
-				 */
-				'reset-game': string
-				/**
-				 * Reset
-				 */
-				'reset-all': string
-				/**
-				 * Configure
-				 */
-				shortcuts: string
-				/**
-				 * Clear cache
-				 */
-				'clear-cache': string
-				resolution: {
-					/**
-					 * Does the current resolution suit you?<br/>Automatic reset within 10 seconds..
-					 */
-					'confirm-body': string
-				}
-			}
 		}
-		shortcuts: {
-			/**
-			 * Shortcuts
-			 */
-			title: string
-			/**
-			 * You can use special keys CTRL, SHIFT, SPACE, ALT (CTRL = cmd on Mac OS X)
-			 */
-			description1: string
-			/**
-			 * You can specify your shortcut by pressing the desired keys at the same time after selecting the input
-			 */
-			description2: string
-			tab: {
-				/**
-				 * Application
-				 */
-				application: string
-				/**
-				 * Interface
-				 */
-				'interface': string
-				/**
-				 * Spells
-				 */
-				spell: string
-				/**
-				 * Inventory
-				 */
-				inventory: string
-				/**
-				 * Various
-				 */
-				other: string
-				/**
-				 * Mods
-				 */
-				mod: string
-			}
-		}
-		'bug-report': {
+		bugReport: {
 			/**
 			 * Report a bug
 			 */
@@ -552,13 +488,9 @@ type RootTranslation = {
 			 */
 			sound: string
 			/**
-			 * Keyboard shortcuts
-			 */
-			shortcuts: string
-			/**
 			 * Game data
 			 */
-			gamedata: string
+			gameData: string
 			/**
 			 * Language
 			 */
@@ -591,6 +523,14 @@ type RootTranslation = {
 			 * Apply and restart
 			 */
 			restart: string
+			/**
+			 * Re-download game data
+			 */
+			resetGame: string
+			/**
+			 * Clear cache
+			 */
+			clearCache: string
 		}
 		shortcuts: {
 			/**
@@ -621,7 +561,7 @@ type RootTranslation = {
 				/**
 				 * Go to Lower Map
 				 */
-				goBottom: string
+				goDown: string
 				/**
 				 * Go to Left Map
 				 */
@@ -732,19 +672,19 @@ type RootTranslation = {
 				 */
 				slot: RequiredParams<'x'>
 			}
-			'no-emu': {
+			application: {
 				/**
-				 * Lindo
+				 * Application
 				 */
 				header: string
 				/**
 				 * New window
 				 */
-				'new-window': string
+				newWindow: string
 				/**
 				 * New tab
 				 */
-				'new-tab': string
+				newTab: string
 				/**
 				 * Tab {x}
 				 * @param {number} x
@@ -753,11 +693,11 @@ type RootTranslation = {
 				/**
 				 * Next tab
 				 */
-				'next-tab': string
+				nextTab: string
 				/**
 				 * Previous tab
 				 */
-				'prev-tab': string
+				prevTab: string
 			}
 			spells: {
 				/**
@@ -772,6 +712,10 @@ type RootTranslation = {
 			}
 			mods: {
 				/**
+				 * Mods
+				 */
+				header: string
+				/**
 				 * Show/hide map resources
 				 */
 				'show-resources': string
@@ -784,6 +728,10 @@ type RootTranslation = {
 				 */
 				'monster-tooltip': string
 			}
+			/**
+			 * You can use special keys CTRL, SHIFT, SPACE, ALT/CMD You can specify your shortcut by pressing the desired keys at the same time after selecting the input
+			 */
+			informations: string
 		}
 		features: {
 			/**
@@ -951,6 +899,12 @@ type RootTranslation = {
 					 */
 					pvpWarning: string
 				}
+			}
+			job: {
+				/**
+				 * Job
+				 */
+				header: string
 			}
 			accounts: {
 				/**
@@ -1239,72 +1193,8 @@ export type TranslationFunctions = {
 				 */
 				close: () => LocalizedString
 			}
-			general: {
-				/**
-				 * Re-download game data
-				 */
-				'reset-game': () => LocalizedString
-				/**
-				 * Reset
-				 */
-				'reset-all': () => LocalizedString
-				/**
-				 * Configure
-				 */
-				shortcuts: () => LocalizedString
-				/**
-				 * Clear cache
-				 */
-				'clear-cache': () => LocalizedString
-				resolution: {
-					/**
-					 * Does the current resolution suit you?<br/>Automatic reset within 10 seconds..
-					 */
-					'confirm-body': () => LocalizedString
-				}
-			}
 		}
-		shortcuts: {
-			/**
-			 * Shortcuts
-			 */
-			title: () => LocalizedString
-			/**
-			 * You can use special keys CTRL, SHIFT, SPACE, ALT (CTRL = cmd on Mac OS X)
-			 */
-			description1: () => LocalizedString
-			/**
-			 * You can specify your shortcut by pressing the desired keys at the same time after selecting the input
-			 */
-			description2: () => LocalizedString
-			tab: {
-				/**
-				 * Application
-				 */
-				application: () => LocalizedString
-				/**
-				 * Interface
-				 */
-				'interface': () => LocalizedString
-				/**
-				 * Spells
-				 */
-				spell: () => LocalizedString
-				/**
-				 * Inventory
-				 */
-				inventory: () => LocalizedString
-				/**
-				 * Various
-				 */
-				other: () => LocalizedString
-				/**
-				 * Mods
-				 */
-				mod: () => LocalizedString
-			}
-		}
-		'bug-report': {
+		bugReport: {
 			/**
 			 * Report a bug
 			 */
@@ -1618,13 +1508,9 @@ export type TranslationFunctions = {
 			 */
 			sound: () => LocalizedString
 			/**
-			 * Keyboard shortcuts
-			 */
-			shortcuts: () => LocalizedString
-			/**
 			 * Game data
 			 */
-			gamedata: () => LocalizedString
+			gameData: () => LocalizedString
 			/**
 			 * Language
 			 */
@@ -1657,6 +1543,14 @@ export type TranslationFunctions = {
 			 * Apply and restart
 			 */
 			restart: () => LocalizedString
+			/**
+			 * Re-download game data
+			 */
+			resetGame: () => LocalizedString
+			/**
+			 * Clear cache
+			 */
+			clearCache: () => LocalizedString
 		}
 		shortcuts: {
 			/**
@@ -1687,7 +1581,7 @@ export type TranslationFunctions = {
 				/**
 				 * Go to Lower Map
 				 */
-				goBottom: () => LocalizedString
+				goDown: () => LocalizedString
 				/**
 				 * Go to Left Map
 				 */
@@ -1797,19 +1691,19 @@ export type TranslationFunctions = {
 				 */
 				slot: (arg: { x: number }) => LocalizedString
 			}
-			'no-emu': {
+			application: {
 				/**
-				 * Lindo
+				 * Application
 				 */
 				header: () => LocalizedString
 				/**
 				 * New window
 				 */
-				'new-window': () => LocalizedString
+				newWindow: () => LocalizedString
 				/**
 				 * New tab
 				 */
-				'new-tab': () => LocalizedString
+				newTab: () => LocalizedString
 				/**
 				 * Tab {x}
 				 */
@@ -1817,11 +1711,11 @@ export type TranslationFunctions = {
 				/**
 				 * Next tab
 				 */
-				'next-tab': () => LocalizedString
+				nextTab: () => LocalizedString
 				/**
 				 * Previous tab
 				 */
-				'prev-tab': () => LocalizedString
+				prevTab: () => LocalizedString
 			}
 			spells: {
 				/**
@@ -1835,6 +1729,10 @@ export type TranslationFunctions = {
 			}
 			mods: {
 				/**
+				 * Mods
+				 */
+				header: () => LocalizedString
+				/**
 				 * Show/hide map resources
 				 */
 				'show-resources': () => LocalizedString
@@ -1847,6 +1745,10 @@ export type TranslationFunctions = {
 				 */
 				'monster-tooltip': () => LocalizedString
 			}
+			/**
+			 * You can use special keys CTRL, SHIFT, SPACE, ALT/CMD You can specify your shortcut by pressing the desired keys at the same time after selecting the input
+			 */
+			informations: () => LocalizedString
 		}
 		features: {
 			/**
@@ -2014,6 +1916,12 @@ export type TranslationFunctions = {
 					 */
 					pvpWarning: () => LocalizedString
 				}
+			}
+			job: {
+				/**
+				 * Job
+				 */
+				header: () => LocalizedString
 			}
 			accounts: {
 				/**

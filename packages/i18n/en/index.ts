@@ -57,32 +57,9 @@ const en: BaseTranslation = {
       title: 'Options',
       button: {
         close: 'Completed'
-      },
-      general: {
-        'reset-game': 'Re-download game data',
-        'reset-all': 'Reset',
-        shortcuts: 'Configure',
-        'clear-cache': 'Clear cache',
-        resolution: {
-          'confirm-body': 'Does the current resolution suit you?<br/>Automatic reset within 10 seconds..'
-        }
       }
     },
-    shortcuts: {
-      title: 'Shortcuts',
-      description1: 'You can use special keys CTRL, SHIFT, SPACE, ALT (CTRL = cmd on Mac OS X)',
-      description2:
-        'You can specify your shortcut by pressing the desired keys at the same time after selecting the input',
-      tab: {
-        application: 'Application',
-        interface: 'Interface',
-        spell: 'Spells',
-        inventory: 'Inventory',
-        other: 'Various',
-        mod: 'Mods'
-      }
-    },
-    'bug-report': {
+    bugReport: {
       title: 'Report a bug',
       description: "If you've observed an unexpected behavior on Lindo, you can report it by describing it below.",
       instructions: 'Please provide at least these information:',
@@ -187,8 +164,7 @@ const en: BaseTranslation = {
       title: 'General',
       interface: 'Interface',
       sound: 'Sound',
-      shortcuts: 'Keyboard shortcuts',
-      gamedata: 'Game data',
+      gameData: 'Game data',
       language: 'Language',
       resolution: 'Resolution',
       fullScreen: 'Full screen',
@@ -196,7 +172,9 @@ const en: BaseTranslation = {
       localContent: 'Enable local map download (beta)',
       soundFocus: 'Game sound only on foreground window',
       early: 'Play on Dofus Touch Early',
-      restart: 'Apply and restart'
+      restart: 'Apply and restart',
+      resetGame: 'Re-download game data',
+      clearCache: 'Clear cache'
     },
     shortcuts: {
       title: 'Shortcuts',
@@ -206,7 +184,7 @@ const en: BaseTranslation = {
         openChat: 'Open the chat',
         openMenu: 'Open the menu',
         goUp: 'Go to Upper Map',
-        goBottom: 'Go to Lower Map',
+        goDown: 'Go to Lower Map',
         goLeft: 'Go to Left Map',
         goRight: 'Go to Right Map'
       },
@@ -238,23 +216,26 @@ const en: BaseTranslation = {
         header: 'Items',
         slot: 'Slot {x:number}'
       },
-      'no-emu': {
-        header: 'Lindo',
-        'new-window': 'New window',
-        'new-tab': 'New tab',
+      application: {
+        header: 'Application',
+        newWindow: 'New window',
+        newTab: 'New tab',
         tab: 'Tab {x:number}',
-        'next-tab': 'Next tab',
-        'prev-tab': 'Previous tab'
+        nextTab: 'Next tab',
+        prevTab: 'Previous tab'
       },
       spells: {
         header: 'Spells',
         slot: 'Slot {x:number}'
       },
       mods: {
+        header: 'Mods',
         'show-resources': 'Show/hide map resources',
         'health-bar': 'Show/hide life bars',
         'monster-tooltip': 'Show/hide monsters tooltip'
-      }
+      },
+      informations:
+        'You can use special keys CTRL, SHIFT, SPACE, ALT/CMD You can specify your shortcut by pressing the desired keys at the same time after selecting the input'
     },
     features: {
       title: 'Features',
@@ -308,6 +289,9 @@ const en: BaseTranslation = {
           strictMove: 'Move on the same cell the leader moves',
           pvpWarning: "You can't join a PvP fight automatically"
         }
+      },
+      job: {
+        header: 'Job'
       },
       accounts: {
         header: 'Accounts'

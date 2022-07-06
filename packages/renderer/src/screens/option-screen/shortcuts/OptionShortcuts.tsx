@@ -4,9 +4,11 @@ import { TabPanel } from '../TabPanel'
 import { ShortcutInput } from './ShortcutInput'
 import { useStores } from '@/store'
 import { Observer } from 'mobx-react-lite'
+import { useI18nContext } from '@lindo/i18n'
 
 export const OptionShortcuts = () => {
   const [value, setValue] = React.useState(0)
+  const { LL } = useI18nContext()
   const { hotkeyStore } = useStores()
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -19,12 +21,12 @@ export const OptionShortcuts = () => {
         <Box sx={{ p: 1, flexGrow: 1, flex: 1, display: 'flex', flexDirection: 'column' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={value} onChange={handleChange} aria-label='shortcuts-tabs'>
-              <Tab label='Application' />
-              <Tab label='Interface' />
-              <Tab label='Spells' />
-              <Tab label='Inventory' />
-              <Tab label='Various' />
-              <Tab label='Mods' />
+              <Tab label={LL.option.shortcuts.application.header()} />
+              <Tab label={LL.option.shortcuts.interfaces.header()} />
+              <Tab label={LL.option.shortcuts.spells.header()} />
+              <Tab label={LL.option.shortcuts.items.header()} />
+              <Tab label={LL.option.shortcuts.diver.header()} />
+              <Tab label={LL.option.shortcuts.mods.header()} />
             </Tabs>
           </Box>
           <Box sx={{ flex: 1, flexGrow: 1 }}>
@@ -34,13 +36,13 @@ export const OptionShortcuts = () => {
                   <Stack spacing={2}>
                     <ShortcutInput
                       id='new-window'
-                      label='New window'
+                      label={LL.option.shortcuts.application.newWindow()}
                       value={hotkeyStore.window.newWindow}
                       onChange={hotkeyStore.window.setNewWindow}
                     />
                     <ShortcutInput
                       id='new-tab'
-                      label='New tab'
+                      label={LL.option.shortcuts.application.newTab()}
                       value={hotkeyStore.window.newTab}
                       onChange={hotkeyStore.window.setNewTab}
                     />
@@ -50,13 +52,13 @@ export const OptionShortcuts = () => {
                   <Stack spacing={2}>
                     <ShortcutInput
                       id='next-tab'
-                      label='Next tab'
+                      label={LL.option.shortcuts.application.nextTab()}
                       value={hotkeyStore.window.nextTab}
                       onChange={hotkeyStore.window.setNextTab}
                     />
                     <ShortcutInput
                       id='previous-tab'
-                      label='Previous tab'
+                      label={LL.option.shortcuts.application.prevTab()}
                       value={hotkeyStore.window.prevTab}
                       onChange={hotkeyStore.window.setPrevTab}
                     />
@@ -68,7 +70,7 @@ export const OptionShortcuts = () => {
                       <ShortcutInput
                         id={'tab-' + i}
                         key={'tab-' + i}
-                        label={'Tab ' + (i + 1)}
+                        label={LL.option.shortcuts.application.tab({ x: i + 1 })}
                         value={hotkeyStore.window.tabs[i]}
                         onChange={(shortcut) => hotkeyStore.window.setTab(shortcut, i)}
                       />
@@ -81,7 +83,7 @@ export const OptionShortcuts = () => {
                       <ShortcutInput
                         id={'tab-' + i}
                         key={'tab-' + i}
-                        label={'Tab ' + (i + 1)}
+                        label={LL.option.shortcuts.application.tab({ x: i + 1 })}
                         value={hotkeyStore.window.tabs[i]}
                         onChange={(shortcut) => hotkeyStore.window.setTab(shortcut, i)}
                       />
@@ -96,37 +98,37 @@ export const OptionShortcuts = () => {
                   <Stack spacing={2}>
                     <ShortcutInput
                       id='carac'
-                      label='Character'
+                      label={LL.option.shortcuts.interfaces.carac()}
                       value={hotkeyStore.gameInterface.carac}
                       onChange={hotkeyStore.gameInterface.setCarac}
                     />
                     <ShortcutInput
                       id='spell'
-                      label='Spells'
+                      label={LL.option.shortcuts.interfaces.spell()}
                       value={hotkeyStore.gameInterface.spell}
                       onChange={hotkeyStore.gameInterface.setSpell}
                     />
                     <ShortcutInput
                       id='bag'
-                      label='Inventory'
+                      label={LL.option.shortcuts.interfaces.bag()}
                       value={hotkeyStore.gameInterface.bag}
                       onChange={hotkeyStore.gameInterface.setbag}
                     />
                     <ShortcutInput
                       id='bidHouse'
-                      label='BidHouse'
+                      label={LL.option.shortcuts.interfaces.bidhouse()}
                       value={hotkeyStore.gameInterface.bidHouse}
                       onChange={hotkeyStore.gameInterface.setBidHouse}
                     />
                     <ShortcutInput
                       id='map'
-                      label='Map'
+                      label={LL.option.shortcuts.interfaces.map()}
                       value={hotkeyStore.gameInterface.map}
                       onChange={hotkeyStore.gameInterface.setMap}
                     />
                     <ShortcutInput
                       id='friend'
-                      label='Friends'
+                      label={LL.option.shortcuts.interfaces.friend()}
                       value={hotkeyStore.gameInterface.friend}
                       onChange={hotkeyStore.gameInterface.setFriend}
                     />
@@ -136,37 +138,37 @@ export const OptionShortcuts = () => {
                   <Stack spacing={2}>
                     <ShortcutInput
                       id='book'
-                      label='Quests'
+                      label={LL.option.shortcuts.interfaces.book()}
                       value={hotkeyStore.gameInterface.book}
                       onChange={hotkeyStore.gameInterface.setBook}
                     />
                     <ShortcutInput
                       id='guild'
-                      label='Guilld'
+                      label={LL.option.shortcuts.interfaces.guild()}
                       value={hotkeyStore.gameInterface.guild}
                       onChange={hotkeyStore.gameInterface.setGuild}
                     />
                     <ShortcutInput
                       id='conquest'
-                      label='Kolizeum'
+                      label={LL.option.shortcuts.interfaces.conquest()}
                       value={hotkeyStore.gameInterface.conquest}
                       onChange={hotkeyStore.gameInterface.setConquest}
                     />
                     <ShortcutInput
                       id='goultine'
-                      label='Shop'
+                      label={LL.option.shortcuts.interfaces.goultine()}
                       value={hotkeyStore.gameInterface.goultine}
                       onChange={hotkeyStore.gameInterface.setGoultine}
                     />
                     <ShortcutInput
                       id='job'
-                      label='Jobs'
+                      label={LL.option.shortcuts.interfaces.job()}
                       value={hotkeyStore.gameInterface.job}
                       onChange={hotkeyStore.gameInterface.setJob}
                     />
                     <ShortcutInput
                       id='alliance'
-                      label='Alliance'
+                      label={LL.option.shortcuts.interfaces.alliance()}
                       value={hotkeyStore.gameInterface.alliance}
                       onChange={hotkeyStore.gameInterface.setAlliance}
                     />
@@ -176,37 +178,37 @@ export const OptionShortcuts = () => {
                   <Stack spacing={2}>
                     <ShortcutInput
                       id='mount'
-                      label='Mount'
+                      label={LL.option.shortcuts.interfaces.mount()}
                       value={hotkeyStore.gameInterface.mount}
                       onChange={hotkeyStore.gameInterface.setMount}
                     />
                     <ShortcutInput
                       id='directory'
-                      label='List of Guilds'
+                      label={LL.option.shortcuts.interfaces.directory()}
                       value={hotkeyStore.gameInterface.directory}
                       onChange={hotkeyStore.gameInterface.setDirectory}
                     />
                     <ShortcutInput
                       id='alignment'
-                      label='Alignement'
+                      label={LL.option.shortcuts.interfaces.alignement()}
                       value={hotkeyStore.gameInterface.alignment}
                       onChange={hotkeyStore.gameInterface.setAlignment}
                     />
                     <ShortcutInput
                       id='bestiary'
-                      label='Bestiary'
+                      label={LL.option.shortcuts.interfaces.bestiary()}
                       value={hotkeyStore.gameInterface.bestiary}
                       onChange={hotkeyStore.gameInterface.setBestiary}
                     />
                     <ShortcutInput
                       id='title'
-                      label='Titles & Ornaments'
+                      label={LL.option.shortcuts.interfaces.title()}
                       value={hotkeyStore.gameInterface.title}
                       onChange={hotkeyStore.gameInterface.setTitle}
                     />
                     <ShortcutInput
                       id='achievement'
-                      label='Achievements'
+                      label={LL.option.shortcuts.interfaces.achievement()}
                       value={hotkeyStore.gameInterface.achievement}
                       onChange={hotkeyStore.gameInterface.setAchievement}
                     />
@@ -216,13 +218,13 @@ export const OptionShortcuts = () => {
                   <Stack spacing={2}>
                     <ShortcutInput
                       id='daily-quest'
-                      label='Daily Quests'
+                      label={LL.option.shortcuts.interfaces.dailyQuest()}
                       value={hotkeyStore.gameInterface.dailyQuest}
                       onChange={hotkeyStore.gameInterface.setDailyQuest}
                     />
                     <ShortcutInput
                       id='spouse'
-                      label='Spouse'
+                      label={LL.option.shortcuts.interfaces.spouse()}
                       value={hotkeyStore.gameInterface.spouse}
                       onChange={hotkeyStore.gameInterface.setSpouse}
                     />
@@ -239,7 +241,7 @@ export const OptionShortcuts = () => {
                         <ShortcutInput
                           key={'spell-' + j}
                           id={'spell-' + j}
-                          label={'Spell ' + (j + 1)}
+                          label={LL.option.shortcuts.spells.slot({ x: j + 1 })}
                           value={hotkeyStore.gameInterface.spells[j]}
                           onChange={(hotkey) => hotkeyStore.gameInterface.setSpells(j, hotkey)}
                         />
@@ -258,7 +260,7 @@ export const OptionShortcuts = () => {
                         <ShortcutInput
                           key={'item-' + j}
                           id={'item-' + j}
-                          label={'Item ' + (j + 1)}
+                          label={LL.option.shortcuts.items.slot({ x: j + 1 })}
                           value={hotkeyStore.gameInterface.items[j]}
                           onChange={(hotkey) => hotkeyStore.gameInterface.setItems(j, hotkey)}
                         />
@@ -274,31 +276,31 @@ export const OptionShortcuts = () => {
                   <Stack spacing={2}>
                     <ShortcutInput
                       id='en-turn'
-                      label='End your / Ready (fight)'
+                      label={LL.option.shortcuts.diver.endTurn()}
                       value={hotkeyStore.gameAction.endTurn}
                       onChange={hotkeyStore.gameAction.setEndTurn}
                     />
                     <ShortcutInput
                       id='go-up'
-                      label='Go to upper map'
+                      label={LL.option.shortcuts.diver.goUp()}
                       value={hotkeyStore.gameAction.goUp}
                       onChange={hotkeyStore.gameAction.setGoUp}
                     />
                     <ShortcutInput
                       id='go-down'
-                      label='Go to lower map'
+                      label={LL.option.shortcuts.diver.goDown()}
                       value={hotkeyStore.gameAction.goDown}
                       onChange={hotkeyStore.gameAction.setGoDown}
                     />
                     <ShortcutInput
                       id='go-left'
-                      label='Go to left map'
+                      label={LL.option.shortcuts.diver.goLeft()}
                       value={hotkeyStore.gameAction.goLeft}
                       onChange={hotkeyStore.gameAction.setGoLeft}
                     />
                     <ShortcutInput
                       id='go-right'
-                      label='Go to right map'
+                      label={LL.option.shortcuts.diver.goRight()}
                       value={hotkeyStore.gameAction.goRight}
                       onChange={hotkeyStore.gameAction.setGoRight}
                     />
@@ -308,7 +310,7 @@ export const OptionShortcuts = () => {
                   <Stack spacing={2}>
                     <ShortcutInput
                       id='open-chat'
-                      label='Open chat'
+                      label={LL.option.shortcuts.diver.openChat()}
                       value={hotkeyStore.gameAction.openChat}
                       onChange={hotkeyStore.gameAction.setOpenChat}
                     />
@@ -318,7 +320,7 @@ export const OptionShortcuts = () => {
                   <Stack spacing={2}>
                     <ShortcutInput
                       id='open-menu'
-                      label='Open menu'
+                      label={LL.option.shortcuts.diver.openMenu()}
                       value={hotkeyStore.gameAction.openMenu}
                       onChange={hotkeyStore.gameAction.setOpenMenu}
                     />
@@ -327,10 +329,7 @@ export const OptionShortcuts = () => {
               </Grid>
             </TabPanel>
           </Box>
-          <Typography marginTop={2}>
-            You can use special keys CTRL, SHIFT, SPACE, ALT/CMD You can specify your shortcut by pressing the desired
-            keys at the same time after selecting the input
-          </Typography>
+          <Typography marginTop={2}>{LL.option.shortcuts.informations()}</Typography>
         </Box>
       )}
     </Observer>
