@@ -24,7 +24,7 @@ export const OptionFightFeatures = () => {
             <FormControl fullWidth>
               <FormControlLabel
                 control={<Checkbox />}
-                label={LL.option.features.fight.challPercent()}
+                label={LL.option.features.fight.challengePercent()}
                 checked={optionStore.gameFight.challengeBonus}
                 onChange={(_, checked) => optionStore.gameFight.setChallengeBonus(checked)}
               />
@@ -40,7 +40,7 @@ export const OptionFightFeatures = () => {
             <FormControl fullWidth>
               <FormControlLabel
                 control={<Checkbox />}
-                label={LL.option.features.fight.fightchronometer()}
+                label={LL.option.features.fight.fightChronometer()}
                 checked={optionStore.gameFight.fightChronometer}
                 onChange={(_, checked) => optionStore.gameFight.setFightChronometer(checked)}
               />
@@ -49,8 +49,8 @@ export const OptionFightFeatures = () => {
               <FormControlLabel
                 control={<Checkbox />}
                 label={LL.option.features.fight.estimator()}
-                checked={optionStore.gameFight.dammageEstimator}
-                onChange={(_, checked) => optionStore.gameFight.setDammageEstimator(checked)}
+                checked={optionStore.gameFight.damageEstimator}
+                onChange={(_, checked) => optionStore.gameFight.setDamageEstimator(checked)}
               />
             </FormControl>
             <FormControl fullWidth>

@@ -40,9 +40,9 @@ export const OptionGeneralFeatures = () => {
             <FormControl fullWidth>
               <FormControlLabel
                 control={<Checkbox />}
-                label={LL.option.features.general.zaapsearchfilter()}
-                checked={optionStore.gameGeneral.zaapSearchFiter}
-                onChange={(_, checked) => optionStore.gameGeneral.setZaapSearchFiter(checked)}
+                label={LL.option.features.general.zaapSearchFilter()}
+                checked={optionStore.gameGeneral.zaapSearchFilter}
+                onChange={(_, checked) => optionStore.gameGeneral.setZaapSearchFilter(checked)}
               />
             </FormControl>
           </Box>

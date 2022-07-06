@@ -7,7 +7,7 @@ export const GameFightOptionModel = types
   .model('GameFightOption')
   .props({
     healthBar: types.optional(types.boolean, true),
-    dammageEstimator: types.optional(types.boolean, true),
+    damageEstimator: types.optional(types.boolean, true),
     verticalTimeline: types.optional(types.boolean, false),
     challengeBonus: types.optional(types.boolean, false),
     focusOnFightTurn: types.optional(types.boolean, true),
@@ -18,8 +18,8 @@ export const GameFightOptionModel = types
     setHealthBar(value: boolean) {
       self.healthBar = value
     },
-    setDammageEstimator(value: boolean) {
-      self.dammageEstimator = value
+    setDamageEstimator(value: boolean) {
+      self.damageEstimator = value
     },
     setVerticalTimeline(value: boolean) {
       self.verticalTimeline = value

@@ -9,7 +9,7 @@ export const GameGeneralOptionModel = types
     activeOpenMenu: types.optional(types.boolean, true),
     hiddenShop: types.optional(types.boolean, false),
     preventInactivityDisconnect: types.optional(types.boolean, true),
-    zaapSearchFiter: types.optional(types.boolean, true)
+    zaapSearchFilter: types.optional(types.boolean, true)
   })
   .actions((self) => ({
     setActiveOpenMenu(value: boolean) {
@@ -21,8 +21,8 @@ export const GameGeneralOptionModel = types
     setPreventInactivityDisconnect(value: boolean) {
       self.preventInactivityDisconnect = value
     },
-    setZaapSearchFiter(value: boolean) {
-      self.zaapSearchFiter = value
+    setZaapSearchFilter(value: boolean) {
+      self.zaapSearchFilter = value
     }
   }))
 
