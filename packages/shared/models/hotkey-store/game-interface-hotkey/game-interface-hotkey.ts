@@ -45,7 +45,7 @@ export const GameInterfaceHotkeyModel = types
     setSpell(hotkey: string) {
       self.spell = hotkey
     },
-    setbag(hotkey: string) {
+    setBag(hotkey: string) {
       self.bag = hotkey
     },
     setBidHouse(hotkey: string) {

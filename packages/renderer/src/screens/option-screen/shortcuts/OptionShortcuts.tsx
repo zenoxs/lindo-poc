@@ -112,11 +112,11 @@ export const OptionShortcuts = () => {
                       id='bag'
                       label={LL.option.shortcuts.interfaces.bag()}
                       value={hotkeyStore.gameInterface.bag}
-                      onChange={hotkeyStore.gameInterface.setbag}
+                      onChange={hotkeyStore.gameInterface.setBag}
                     />
                     <ShortcutInput
                       id='bidHouse'
-                      label={LL.option.shortcuts.interfaces.bidhouse()}
+                      label={LL.option.shortcuts.interfaces.bidHouse()}
                       value={hotkeyStore.gameInterface.bidHouse}
                       onChange={hotkeyStore.gameInterface.setBidHouse}
                     />
@@ -190,7 +190,7 @@ export const OptionShortcuts = () => {
                     />
                     <ShortcutInput
                       id='alignment'
-                      label={LL.option.shortcuts.interfaces.alignement()}
+                      label={LL.option.shortcuts.interfaces.alignment()}
                       value={hotkeyStore.gameInterface.alignment}
                       onChange={hotkeyStore.gameInterface.setAlignment}
                     />
@@ -329,7 +329,7 @@ export const OptionShortcuts = () => {
               </Grid>
             </TabPanel>
           </Box>
-          <Typography marginTop={2}>{LL.option.shortcuts.informations()}</Typography>
+          <Typography marginTop={2}>{LL.option.shortcuts.information()}</Typography>
         </Box>
       )}
     </Observer>

@@ -28,7 +28,7 @@ const en: BaseTranslation = {
   window: {
     changelog: {
       title: 'Release notes',
-      prefixe: 'Release'
+      prefix: 'Release'
     },
     'master-password': {
       continue: 'Continue',
@@ -36,7 +36,7 @@ const en: BaseTranslation = {
       'password-label': 'Enter the master password',
       'password-bad': 'The password is incorrect'
     },
-    'update-dofus': {
+    updateGame: {
       title: 'Lindo update',
       step0: 'Preparing update..',
       step1: 'Step 1 : Downloading Dofus files',
@@ -101,7 +101,7 @@ const en: BaseTranslation = {
             title: 'Setting the Password',
             confirm: 'Save',
             cancel: 'Cancel',
-            'min-lenght': 'The password must contain at least lenght}} characters',
+            'min-length': 'The password must contain at least length}} characters',
             'success-text': 'The password will now be used to start the application.'
           },
           'edit-master': {
@@ -110,7 +110,7 @@ const en: BaseTranslation = {
             'input-new-placeholder': 'New password',
             confirm: 'Save',
             cancel: 'Cancel',
-            'min-lenght': 'The new password must contain at least {lenght:number} characters',
+            'min-length': 'The new password must contain at least {length:number} characters',
             'incorrect-old': 'The old password is incorrect',
             'success-text': 'The password has been changed.'
           },
@@ -133,8 +133,8 @@ const en: BaseTranslation = {
             'input-password-placeholder': 'Password',
             confirm: 'Save',
             cancel: 'Cancel',
-            'min-lenght-login': 'The username must contain at least 1 character',
-            'min-lenght-password': 'The password must contain at least 1 character'
+            'min-length-login': 'The username must contain at least 1 character',
+            'min-length-password': 'The password must contain at least 1 character'
           },
           'edit-account': {
             title: 'Changing an account',
@@ -142,20 +142,20 @@ const en: BaseTranslation = {
             'input-password-placeholder': 'Password',
             confirm: 'Save',
             cancel: 'Cancel',
-            'min-lenght-login': 'The username must contain at least 1 character',
-            'min-lenght-password': 'The password must contain at least 1 character'
+            'min-length-login': 'The username must contain at least 1 character',
+            'min-length-password': 'The password must contain at least 1 character'
           }
         }
       },
-      zaapsearchfilter: {
+      zaapSearchFilter: {
         placeholder: 'Search a zaap',
         placeholderZaapi: 'Search a zaapi',
         placeholderPrisme: 'Search a prisme'
       },
-      jobsxp: {
+      jobsXp: {
         text: ' XP missing<br>before level '
       },
-      monstertooltip: {
+      monsterTooltip: {
         level: 'Level',
         group: 'Group'
       }
@@ -193,7 +193,7 @@ const en: BaseTranslation = {
         carac: 'Character',
         spell: 'Spells',
         bag: 'Inventory',
-        bidhouse: 'Market place',
+        bidHouse: 'Market place',
         map: 'Map',
         friend: 'Friends',
         book: 'Quests',
@@ -204,7 +204,7 @@ const en: BaseTranslation = {
         alliance: 'Alliance',
         mount: 'Mount',
         directory: 'List of Guilds and Alliances',
-        alignement: 'Alignment',
+        alignment: 'Alignment',
         bestiary: 'Bestiary',
         title: 'Titles and Ornaments',
         achievement: 'Achievements',
@@ -234,7 +234,7 @@ const en: BaseTranslation = {
         'health-bar': 'Show/hide life bars',
         'monster-tooltip': 'Show/hide monsters tooltip'
       },
-      informations:
+      information:
         'You can use special keys CTRL, SHIFT, SPACE, ALT/CMD You can specify your shortcut by pressing the desired keys at the same time after selecting the input'
     },
     features: {
@@ -242,23 +242,23 @@ const en: BaseTranslation = {
       general: {
         header: 'General',
         hideShop: 'Hide the Shop button',
-        activeOpenMenu: 'Open menu when no window is open (ECHAP)',
+        activeOpenMenu: 'Open menu when no window is open (ESC)',
         disableInactivity: 'Extend the delay before disconnection for inactivity',
-        jobsxp: 'Activate the display of the job xp need for leveling',
-        zaapsearchfilter: 'Show zaap search filter',
+        jobsXp: 'Activate the display of the job xp need for leveling',
+        zaapSearchFilter: 'Show zaap search filter',
         showResources: 'Show map resources',
-        harvestIndicator: 'Activate the display of the remaining time below the ressources'
+        harvestIndicator: 'Activate the display of the remaining time below the resources'
       },
       fight: {
         header: 'Fight',
         healthBar: 'Activate the display of the life bars below the fighters',
         focusFightTurn: 'Automatically switch to an account when its turn starts',
         estimator: 'Estimating spell damage in battle',
-        fightchronometer: 'Show combats chronometer',
-        monsterTooltip: 'Display monsters groups informations on the map',
-        mmonsterTooltipShortcut: 'Shortcut for show/hide monsters tooltip',
+        fightChronometer: 'Show combats chronometer',
+        monsterTooltip: 'Display monsters groups information on the map',
+        monsterTooltipShortcut: 'Shortcut for show/hide monsters tooltip',
         verticalTimeline: 'Show fighters timeline vertically',
-        challPercent: 'Show challenge XP/Drop bonus'
+        challengePercent: 'Show challenge XP/Drop bonus'
       },
       group: {
         header: 'Group',
@@ -272,7 +272,7 @@ const en: BaseTranslation = {
           active: 'Enable automatic grouping',
           warning:
             'Beware, following the group leader can be considered as boting for other players, use it with caution and in unpopulated areas.',
-          warningtimer:
+          warningTimer:
             'Beware, This feature can be considered as boting for other players, use it with caution and in unpopulated areas.',
           explanation1:
             'The characters in the group must be friends with the leader so that the invitation is automatic.',
@@ -319,7 +319,7 @@ const en: BaseTranslation = {
       text1:
         'Unlike an Android emulator, the code is directly interpreted by your computer, which makes it faster so you can play DOFUS Touch with the full performance of your computer !',
       text2:
-        'Originally known as DOFUS Touch No-Emu, this software developed by Daniel and Thomas was forced to close cause of an avertissement from Ankama.'
+        'Originally known as DOFUS Touch No-Emu, this software developed by Daniel and Thomas was forced to close cause of an advertisement from Ankama.'
     },
     reset: 'Reset',
     save: 'Apply',

@@ -6,15 +6,19 @@ import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 export const GameJobOptionModel = types
   .model('GameJobOption')
   .props({
-    activeOpenMenu: types.optional(types.boolean, false),
-    hiddenShop: types.optional(types.boolean, false)
+    xpRemainingBeforeLevelUp: types.optional(types.boolean, false),
+    harvestTimeIndicator: types.optional(types.boolean, true),
+    mapResources: types.optional(types.boolean, false)
   })
   .actions((self) => ({
-    setActiveOpenMenu(value: boolean) {
-      self.activeOpenMenu = value
+    setXpRemainingBeforeLevelUp(value: boolean) {
+      self.xpRemainingBeforeLevelUp = value
     },
-    setHiddenShop(value: boolean) {
-      self.hiddenShop = value
+    setHarvestTimeIndicator(value: boolean) {
+      self.harvestTimeIndicator = value
+    },
+    setMapResources(value: boolean) {
+      self.mapResources = value
     }
   }))
 

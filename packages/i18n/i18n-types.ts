@@ -85,7 +85,7 @@ type RootTranslation = {
 			/**
 			 * Release
 			 */
-			prefixe: string
+			prefix: string
 		}
 		'master-password': {
 			/**
@@ -105,7 +105,7 @@ type RootTranslation = {
 			 */
 			'password-bad': string
 		}
-		'update-dofus': {
+		updateGame: {
 			/**
 			 * Lindo update
 			 */
@@ -298,9 +298,9 @@ type RootTranslation = {
 						 */
 						cancel: string
 						/**
-						 * The password must contain at least lenght}} characters
+						 * The password must contain at least length}} characters
 						 */
-						'min-lenght': string
+						'min-length': string
 						/**
 						 * The password will now be used to start the application.
 						 */
@@ -328,10 +328,10 @@ type RootTranslation = {
 						 */
 						cancel: string
 						/**
-						 * The new password must contain at least {lenght} characters
-						 * @param {number} lenght
+						 * The new password must contain at least {length} characters
+						 * @param {number} length
 						 */
-						'min-lenght': RequiredParams<'lenght'>
+						'min-length': RequiredParams<'length'>
 						/**
 						 * The old password is incorrect
 						 */
@@ -405,11 +405,11 @@ type RootTranslation = {
 						/**
 						 * The username must contain at least 1 character
 						 */
-						'min-lenght-login': string
+						'min-length-login': string
 						/**
 						 * The password must contain at least 1 character
 						 */
-						'min-lenght-password': string
+						'min-length-password': string
 					}
 					'edit-account': {
 						/**
@@ -435,15 +435,15 @@ type RootTranslation = {
 						/**
 						 * The username must contain at least 1 character
 						 */
-						'min-lenght-login': string
+						'min-length-login': string
 						/**
 						 * The password must contain at least 1 character
 						 */
-						'min-lenght-password': string
+						'min-length-password': string
 					}
 				}
 			}
-			zaapsearchfilter: {
+			zaapSearchFilter: {
 				/**
 				 * Search a zaap
 				 */
@@ -457,13 +457,13 @@ type RootTranslation = {
 				 */
 				placeholderPrisme: string
 			}
-			jobsxp: {
+			jobsXp: {
 				/**
 				 *  XP missing<br>before level 
 				 */
 				text: string
 			}
-			monstertooltip: {
+			monsterTooltip: {
 				/**
 				 * Level
 				 */
@@ -591,7 +591,7 @@ type RootTranslation = {
 				/**
 				 * Market place
 				 */
-				bidhouse: string
+				bidHouse: string
 				/**
 				 * Map
 				 */
@@ -635,7 +635,7 @@ type RootTranslation = {
 				/**
 				 * Alignment
 				 */
-				alignement: string
+				alignment: string
 				/**
 				 * Bestiary
 				 */
@@ -731,7 +731,7 @@ type RootTranslation = {
 			/**
 			 * You can use special keys CTRL, SHIFT, SPACE, ALT/CMD You can specify your shortcut by pressing the desired keys at the same time after selecting the input
 			 */
-			informations: string
+			information: string
 		}
 		features: {
 			/**
@@ -748,7 +748,7 @@ type RootTranslation = {
 				 */
 				hideShop: string
 				/**
-				 * Open menu when no window is open (ECHAP)
+				 * Open menu when no window is open (ESC)
 				 */
 				activeOpenMenu: string
 				/**
@@ -758,17 +758,17 @@ type RootTranslation = {
 				/**
 				 * Activate the display of the job xp need for leveling
 				 */
-				jobsxp: string
+				jobsXp: string
 				/**
 				 * Show zaap search filter
 				 */
-				zaapsearchfilter: string
+				zaapSearchFilter: string
 				/**
 				 * Show map resources
 				 */
 				showResources: string
 				/**
-				 * Activate the display of the remaining time below the ressources
+				 * Activate the display of the remaining time below the resources
 				 */
 				harvestIndicator: string
 			}
@@ -792,15 +792,15 @@ type RootTranslation = {
 				/**
 				 * Show combats chronometer
 				 */
-				fightchronometer: string
+				fightChronometer: string
 				/**
-				 * Display monsters groups informations on the map
+				 * Display monsters groups information on the map
 				 */
 				monsterTooltip: string
 				/**
 				 * Shortcut for show/hide monsters tooltip
 				 */
-				mmonsterTooltipShortcut: string
+				monsterTooltipShortcut: string
 				/**
 				 * Show fighters timeline vertically
 				 */
@@ -808,7 +808,7 @@ type RootTranslation = {
 				/**
 				 * Show challenge XP/Drop bonus
 				 */
-				challPercent: string
+				challengePercent: string
 			}
 			group: {
 				/**
@@ -845,7 +845,7 @@ type RootTranslation = {
 					/**
 					 * Beware, This feature can be considered as boting for other players, use it with caution and in unpopulated areas.
 					 */
-					warningtimer: string
+					warningTimer: string
 					/**
 					 * The characters in the group must be friends with the leader so that the invitation is automatic.
 					 */
@@ -975,7 +975,7 @@ type RootTranslation = {
 			 */
 			text1: string
 			/**
-			 * Originally known as DOFUS Touch No-Emu, this software developed by Daniel and Thomas was forced to close cause of an avertissement from Ankama.
+			 * Originally known as DOFUS Touch No-Emu, this software developed by Daniel and Thomas was forced to close cause of an advertisement from Ankama.
 			 */
 			text2: string
 		}
@@ -1106,7 +1106,7 @@ export type TranslationFunctions = {
 			/**
 			 * Release
 			 */
-			prefixe: () => LocalizedString
+			prefix: () => LocalizedString
 		}
 		'master-password': {
 			/**
@@ -1126,7 +1126,7 @@ export type TranslationFunctions = {
 			 */
 			'password-bad': () => LocalizedString
 		}
-		'update-dofus': {
+		updateGame: {
 			/**
 			 * Lindo update
 			 */
@@ -1319,9 +1319,9 @@ export type TranslationFunctions = {
 						 */
 						cancel: () => LocalizedString
 						/**
-						 * The password must contain at least lenght}} characters
+						 * The password must contain at least length}} characters
 						 */
-						'min-lenght': () => LocalizedString
+						'min-length': () => LocalizedString
 						/**
 						 * The password will now be used to start the application.
 						 */
@@ -1349,9 +1349,9 @@ export type TranslationFunctions = {
 						 */
 						cancel: () => LocalizedString
 						/**
-						 * The new password must contain at least {lenght} characters
+						 * The new password must contain at least {length} characters
 						 */
-						'min-lenght': (arg: { lenght: number }) => LocalizedString
+						'min-length': (arg: { length: number }) => LocalizedString
 						/**
 						 * The old password is incorrect
 						 */
@@ -1425,11 +1425,11 @@ export type TranslationFunctions = {
 						/**
 						 * The username must contain at least 1 character
 						 */
-						'min-lenght-login': () => LocalizedString
+						'min-length-login': () => LocalizedString
 						/**
 						 * The password must contain at least 1 character
 						 */
-						'min-lenght-password': () => LocalizedString
+						'min-length-password': () => LocalizedString
 					}
 					'edit-account': {
 						/**
@@ -1455,15 +1455,15 @@ export type TranslationFunctions = {
 						/**
 						 * The username must contain at least 1 character
 						 */
-						'min-lenght-login': () => LocalizedString
+						'min-length-login': () => LocalizedString
 						/**
 						 * The password must contain at least 1 character
 						 */
-						'min-lenght-password': () => LocalizedString
+						'min-length-password': () => LocalizedString
 					}
 				}
 			}
-			zaapsearchfilter: {
+			zaapSearchFilter: {
 				/**
 				 * Search a zaap
 				 */
@@ -1477,13 +1477,13 @@ export type TranslationFunctions = {
 				 */
 				placeholderPrisme: () => LocalizedString
 			}
-			jobsxp: {
+			jobsXp: {
 				/**
 				 *  XP missing<br>before level 
 				 */
 				text: () => LocalizedString
 			}
-			monstertooltip: {
+			monsterTooltip: {
 				/**
 				 * Level
 				 */
@@ -1611,7 +1611,7 @@ export type TranslationFunctions = {
 				/**
 				 * Market place
 				 */
-				bidhouse: () => LocalizedString
+				bidHouse: () => LocalizedString
 				/**
 				 * Map
 				 */
@@ -1655,7 +1655,7 @@ export type TranslationFunctions = {
 				/**
 				 * Alignment
 				 */
-				alignement: () => LocalizedString
+				alignment: () => LocalizedString
 				/**
 				 * Bestiary
 				 */
@@ -1748,7 +1748,7 @@ export type TranslationFunctions = {
 			/**
 			 * You can use special keys CTRL, SHIFT, SPACE, ALT/CMD You can specify your shortcut by pressing the desired keys at the same time after selecting the input
 			 */
-			informations: () => LocalizedString
+			information: () => LocalizedString
 		}
 		features: {
 			/**
@@ -1765,7 +1765,7 @@ export type TranslationFunctions = {
 				 */
 				hideShop: () => LocalizedString
 				/**
-				 * Open menu when no window is open (ECHAP)
+				 * Open menu when no window is open (ESC)
 				 */
 				activeOpenMenu: () => LocalizedString
 				/**
@@ -1775,17 +1775,17 @@ export type TranslationFunctions = {
 				/**
 				 * Activate the display of the job xp need for leveling
 				 */
-				jobsxp: () => LocalizedString
+				jobsXp: () => LocalizedString
 				/**
 				 * Show zaap search filter
 				 */
-				zaapsearchfilter: () => LocalizedString
+				zaapSearchFilter: () => LocalizedString
 				/**
 				 * Show map resources
 				 */
 				showResources: () => LocalizedString
 				/**
-				 * Activate the display of the remaining time below the ressources
+				 * Activate the display of the remaining time below the resources
 				 */
 				harvestIndicator: () => LocalizedString
 			}
@@ -1809,15 +1809,15 @@ export type TranslationFunctions = {
 				/**
 				 * Show combats chronometer
 				 */
-				fightchronometer: () => LocalizedString
+				fightChronometer: () => LocalizedString
 				/**
-				 * Display monsters groups informations on the map
+				 * Display monsters groups information on the map
 				 */
 				monsterTooltip: () => LocalizedString
 				/**
 				 * Shortcut for show/hide monsters tooltip
 				 */
-				mmonsterTooltipShortcut: () => LocalizedString
+				monsterTooltipShortcut: () => LocalizedString
 				/**
 				 * Show fighters timeline vertically
 				 */
@@ -1825,7 +1825,7 @@ export type TranslationFunctions = {
 				/**
 				 * Show challenge XP/Drop bonus
 				 */
-				challPercent: () => LocalizedString
+				challengePercent: () => LocalizedString
 			}
 			group: {
 				/**
@@ -1862,7 +1862,7 @@ export type TranslationFunctions = {
 					/**
 					 * Beware, This feature can be considered as boting for other players, use it with caution and in unpopulated areas.
 					 */
-					warningtimer: () => LocalizedString
+					warningTimer: () => LocalizedString
 					/**
 					 * The characters in the group must be friends with the leader so that the invitation is automatic.
 					 */
@@ -1992,7 +1992,7 @@ export type TranslationFunctions = {
 			 */
 			text1: () => LocalizedString
 			/**
-			 * Originally known as DOFUS Touch No-Emu, this software developed by Daniel and Thomas was forced to close cause of an avertissement from Ankama.
+			 * Originally known as DOFUS Touch No-Emu, this software developed by Daniel and Thomas was forced to close cause of an advertisement from Ankama.
 			 */
 			text2: () => LocalizedString
 		}
