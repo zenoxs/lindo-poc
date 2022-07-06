@@ -276,76 +276,6 @@ type RootTranslation = {
 	}
 	option: {
 		vip: {
-			'auto-group': {
-				/**
-				 * Group
-				 */
-				header: string
-				/**
-				 * Enable automatic grouping
-				 */
-				active: string
-				/**
-				 * Beware, following the group leader can be considered as boting for other players, use it with caution and in unpopulated areas.
-				 */
-				warning: string
-				/**
-				 * Beware, This feature can be considered as boting for other players, use it with caution and in unpopulated areas.
-				 */
-				warningtimer: string
-				/**
-				 * The characters in the group must be friends with the leader so that the invitation is automatic.
-				 */
-				'explanation-1': string
-				/**
-				 * The members follow the leader if the latter is on the same map.
-				 */
-				'explanation-2': string
-				/**
-				 * Name of leader
-				 */
-				leader: string
-				/**
-				 * Names of characters
-				 */
-				members: string
-				/**
-				 * Add a character
-				 */
-				'members-add': string
-				/**
-				 * Follow the group leader
-				 */
-				'follow-leader': string
-				/**
-				 * Disable the Timer for the auto group
-				 */
-				'disable-timer': string
-				/**
-				 * Skip "ready" automatically
-				 */
-				ready: string
-				/**
-				 * Enter combat automatically
-				 */
-				fight: string
-				/**
-				 * Time to follow (in seconds)
-				 */
-				delay: string
-				/**
-				 * Follow the leader on a map
-				 */
-				'follow-on-map': string
-				/**
-				 * Move on the same cell the leader moves
-				 */
-				'strict-move': string
-				/**
-				 * You can't join a PvP fight automatically
-				 */
-				'pvp-warning': string
-			}
 			'multi-account': {
 				/**
 				 * To use this feature, a password must be configured. It will be used to start Lindo with multi-account automation.
@@ -591,20 +521,6 @@ type RootTranslation = {
 				 */
 				placeholderPrisme: string
 			}
-			'party-info': {
-				/**
-				 * Show party's level
-				 */
-				'header-lvl': string
-				/**
-				 * Show party's prospecting
-				 */
-				'header-pp': string
-				/**
-				 * Lvl.
-				 */
-				level: string
-			}
 			jobsxp: {
 				/**
 				 *  XP missing<br>before level 
@@ -642,7 +558,7 @@ type RootTranslation = {
 			/**
 			 * Game data
 			 */
-			'game-data': string
+			gamedata: string
 			/**
 			 * Language
 			 */
@@ -652,29 +568,21 @@ type RootTranslation = {
 			 */
 			resolution: string
 			/**
-			 * Hide the Shop button
-			 */
-			'hide-shop': string
-			/**
 			 * Full screen
 			 */
-			'full-screen': string
+			fullScreen: string
 			/**
 			 * Hide the multi-account tab bar
 			 */
-			'hide-tab': string
-			/**
-			 * Automatically switch to an account when its turn starts
-			 */
-			'focus-fight-turn': string
+			hideTab: string
 			/**
 			 * Enable local map download (beta)
 			 */
-			'local-content': string
+			localContent: string
 			/**
 			 * Game sound only on foreground window
 			 */
-			'sound-focus': string
+			soundFocus: string
 			/**
 			 * Play on Dofus Touch Early
 			 */
@@ -697,35 +605,31 @@ type RootTranslation = {
 				/**
 				 * End your turn / Ready (fight)
 				 */
-				'end-turn': string
+				endTurn: string
 				/**
 				 * Open the chat
 				 */
-				'open-chat': string
-				/**
-				 * Open menu when no window is open (ECHAP)
-				 */
-				'active-open-menu': string
+				openChat: string
 				/**
 				 * Open the menu
 				 */
-				'open-menu': string
+				openMenu: string
 				/**
 				 * Go to Upper Map
 				 */
-				go_up: string
+				goUp: string
 				/**
 				 * Go to Lower Map
 				 */
-				go_bottom: string
+				goBottom: string
 				/**
 				 * Go to Left Map
 				 */
-				go_left: string
+				goLeft: string
 				/**
 				 * Go to Right Map
 				 */
-				go_right: string
+				goRight: string
 			}
 			interfaces: {
 				/**
@@ -887,40 +791,52 @@ type RootTranslation = {
 			 */
 			title: string
 			general: {
-				menu: {
-					/**
-					 * General
-					 */
-					general: string
-					/**
-					 * Fight
-					 */
-					fight: string
-					/**
-					 * Group
-					 */
-					group: string
-					/**
-					 * Job
-					 */
-					job: string
-				}
 				/**
 				 * General
 				 */
 				header: string
 				/**
+				 * Hide the Shop button
+				 */
+				hideShop: string
+				/**
+				 * Open menu when no window is open (ECHAP)
+				 */
+				activeOpenMenu: string
+				/**
 				 * Extend the delay before disconnection for inactivity
 				 */
-				'disable-inactivity': string
-				/**
-				 * Activate the display of the life bars below the fighters
-				 */
-				'health-bar': string
+				disableInactivity: string
 				/**
 				 * Activate the display of the job xp need for leveling
 				 */
 				jobsxp: string
+				/**
+				 * Show zaap search filter
+				 */
+				zaapsearchfilter: string
+				/**
+				 * Show map resources
+				 */
+				showResources: string
+				/**
+				 * Activate the display of the remaining time below the ressources
+				 */
+				harvestIndicator: string
+			}
+			fight: {
+				/**
+				 * Fight
+				 */
+				header: string
+				/**
+				 * Activate the display of the life bars below the fighters
+				 */
+				healthBar: string
+				/**
+				 * Automatically switch to an account when its turn starts
+				 */
+				focusFightTurn: string
 				/**
 				 * Estimating spell damage in battle
 				 */
@@ -930,43 +846,111 @@ type RootTranslation = {
 				 */
 				fightchronometer: string
 				/**
-				 * Show zaap search filter
-				 */
-				zaapsearchfilter: string
-				/**
-				 * Show map resources
-				 */
-				'show-resources': string
-				/**
-				 * Activate the display of the remaining time below the ressources
-				 */
-				'harvest-indicator': string
-				/**
-				 * Add an indicator to know if the members of a group are on the same map
-				 */
-				'party-member-on-map': string
-				/**
 				 * Display monsters groups informations on the map
 				 */
-				'monster-tooltip': string
+				monsterTooltip: string
 				/**
 				 * Shortcut for show/hide monsters tooltip
 				 */
-				'monster-tooltip-shortcut': string
+				mmonsterTooltipShortcut: string
 				/**
 				 * Show fighters timeline vertically
 				 */
-				'vertical-timeline': string
+				verticalTimeline: string
 				/**
 				 * Show challenge XP/Drop bonus
 				 */
-				'chall-percent': string
+				challPercent: string
 			}
-			groups: {
+			group: {
 				/**
-				 * Groups
+				 * Group
 				 */
 				header: string
+				/**
+				 * Add an indicator to know if the members of a group are on the same map
+				 */
+				partyMemberOnMap: string
+				partyInfo: {
+					/**
+					 * Show party's level
+					 */
+					level: string
+					/**
+					 * Show party's prospecting
+					 */
+					prospecting: string
+				}
+				autoGroup: {
+					/**
+					 * Auto Group
+					 */
+					header: string
+					/**
+					 * Enable automatic grouping
+					 */
+					active: string
+					/**
+					 * Beware, following the group leader can be considered as boting for other players, use it with caution and in unpopulated areas.
+					 */
+					warning: string
+					/**
+					 * Beware, This feature can be considered as boting for other players, use it with caution and in unpopulated areas.
+					 */
+					warningtimer: string
+					/**
+					 * The characters in the group must be friends with the leader so that the invitation is automatic.
+					 */
+					explanation1: string
+					/**
+					 * The members follow the leader if the latter is on the same map.
+					 */
+					explanation2: string
+					/**
+					 * Name of leader
+					 */
+					leader: string
+					/**
+					 * Names of characters
+					 */
+					members: string
+					/**
+					 * Add a character
+					 */
+					addMember: string
+					/**
+					 * Follow the group leader
+					 */
+					followLeader: string
+					/**
+					 * Disable the Timer for the auto group
+					 */
+					disableTimer: string
+					/**
+					 * Skip "ready" automatically
+					 */
+					ready: string
+					/**
+					 * Enter combat automatically
+					 */
+					fight: string
+					/**
+					 * Time to follow (in seconds)
+					 */
+					delay: string
+					/**
+					 * Follow the leader on a map
+					 */
+					followOnMap: string
+					/**
+					 * Move on the same cell the leader moves
+					 */
+					strictMove: string
+					/**
+					 * You can't join a PvP fight automatically
+					 */
+					pvpWarning: string
+				}
 			}
 			accounts: {
 				/**
@@ -1359,76 +1343,6 @@ export type TranslationFunctions = {
 	}
 	option: {
 		vip: {
-			'auto-group': {
-				/**
-				 * Group
-				 */
-				header: () => LocalizedString
-				/**
-				 * Enable automatic grouping
-				 */
-				active: () => LocalizedString
-				/**
-				 * Beware, following the group leader can be considered as boting for other players, use it with caution and in unpopulated areas.
-				 */
-				warning: () => LocalizedString
-				/**
-				 * Beware, This feature can be considered as boting for other players, use it with caution and in unpopulated areas.
-				 */
-				warningtimer: () => LocalizedString
-				/**
-				 * The characters in the group must be friends with the leader so that the invitation is automatic.
-				 */
-				'explanation-1': () => LocalizedString
-				/**
-				 * The members follow the leader if the latter is on the same map.
-				 */
-				'explanation-2': () => LocalizedString
-				/**
-				 * Name of leader
-				 */
-				leader: () => LocalizedString
-				/**
-				 * Names of characters
-				 */
-				members: () => LocalizedString
-				/**
-				 * Add a character
-				 */
-				'members-add': () => LocalizedString
-				/**
-				 * Follow the group leader
-				 */
-				'follow-leader': () => LocalizedString
-				/**
-				 * Disable the Timer for the auto group
-				 */
-				'disable-timer': () => LocalizedString
-				/**
-				 * Skip "ready" automatically
-				 */
-				ready: () => LocalizedString
-				/**
-				 * Enter combat automatically
-				 */
-				fight: () => LocalizedString
-				/**
-				 * Time to follow (in seconds)
-				 */
-				delay: () => LocalizedString
-				/**
-				 * Follow the leader on a map
-				 */
-				'follow-on-map': () => LocalizedString
-				/**
-				 * Move on the same cell the leader moves
-				 */
-				'strict-move': () => LocalizedString
-				/**
-				 * You can't join a PvP fight automatically
-				 */
-				'pvp-warning': () => LocalizedString
-			}
 			'multi-account': {
 				/**
 				 * To use this feature, a password must be configured. It will be used to start Lindo with multi-account automation.
@@ -1673,20 +1587,6 @@ export type TranslationFunctions = {
 				 */
 				placeholderPrisme: () => LocalizedString
 			}
-			'party-info': {
-				/**
-				 * Show party's level
-				 */
-				'header-lvl': () => LocalizedString
-				/**
-				 * Show party's prospecting
-				 */
-				'header-pp': () => LocalizedString
-				/**
-				 * Lvl.
-				 */
-				level: () => LocalizedString
-			}
 			jobsxp: {
 				/**
 				 *  XP missing<br>before level 
@@ -1724,7 +1624,7 @@ export type TranslationFunctions = {
 			/**
 			 * Game data
 			 */
-			'game-data': () => LocalizedString
+			gamedata: () => LocalizedString
 			/**
 			 * Language
 			 */
@@ -1734,29 +1634,21 @@ export type TranslationFunctions = {
 			 */
 			resolution: () => LocalizedString
 			/**
-			 * Hide the Shop button
-			 */
-			'hide-shop': () => LocalizedString
-			/**
 			 * Full screen
 			 */
-			'full-screen': () => LocalizedString
+			fullScreen: () => LocalizedString
 			/**
 			 * Hide the multi-account tab bar
 			 */
-			'hide-tab': () => LocalizedString
-			/**
-			 * Automatically switch to an account when its turn starts
-			 */
-			'focus-fight-turn': () => LocalizedString
+			hideTab: () => LocalizedString
 			/**
 			 * Enable local map download (beta)
 			 */
-			'local-content': () => LocalizedString
+			localContent: () => LocalizedString
 			/**
 			 * Game sound only on foreground window
 			 */
-			'sound-focus': () => LocalizedString
+			soundFocus: () => LocalizedString
 			/**
 			 * Play on Dofus Touch Early
 			 */
@@ -1779,35 +1671,31 @@ export type TranslationFunctions = {
 				/**
 				 * End your turn / Ready (fight)
 				 */
-				'end-turn': () => LocalizedString
+				endTurn: () => LocalizedString
 				/**
 				 * Open the chat
 				 */
-				'open-chat': () => LocalizedString
-				/**
-				 * Open menu when no window is open (ECHAP)
-				 */
-				'active-open-menu': () => LocalizedString
+				openChat: () => LocalizedString
 				/**
 				 * Open the menu
 				 */
-				'open-menu': () => LocalizedString
+				openMenu: () => LocalizedString
 				/**
 				 * Go to Upper Map
 				 */
-				go_up: () => LocalizedString
+				goUp: () => LocalizedString
 				/**
 				 * Go to Lower Map
 				 */
-				go_bottom: () => LocalizedString
+				goBottom: () => LocalizedString
 				/**
 				 * Go to Left Map
 				 */
-				go_left: () => LocalizedString
+				goLeft: () => LocalizedString
 				/**
 				 * Go to Right Map
 				 */
-				go_right: () => LocalizedString
+				goRight: () => LocalizedString
 			}
 			interfaces: {
 				/**
@@ -1966,40 +1854,52 @@ export type TranslationFunctions = {
 			 */
 			title: () => LocalizedString
 			general: {
-				menu: {
-					/**
-					 * General
-					 */
-					general: () => LocalizedString
-					/**
-					 * Fight
-					 */
-					fight: () => LocalizedString
-					/**
-					 * Group
-					 */
-					group: () => LocalizedString
-					/**
-					 * Job
-					 */
-					job: () => LocalizedString
-				}
 				/**
 				 * General
 				 */
 				header: () => LocalizedString
 				/**
+				 * Hide the Shop button
+				 */
+				hideShop: () => LocalizedString
+				/**
+				 * Open menu when no window is open (ECHAP)
+				 */
+				activeOpenMenu: () => LocalizedString
+				/**
 				 * Extend the delay before disconnection for inactivity
 				 */
-				'disable-inactivity': () => LocalizedString
-				/**
-				 * Activate the display of the life bars below the fighters
-				 */
-				'health-bar': () => LocalizedString
+				disableInactivity: () => LocalizedString
 				/**
 				 * Activate the display of the job xp need for leveling
 				 */
 				jobsxp: () => LocalizedString
+				/**
+				 * Show zaap search filter
+				 */
+				zaapsearchfilter: () => LocalizedString
+				/**
+				 * Show map resources
+				 */
+				showResources: () => LocalizedString
+				/**
+				 * Activate the display of the remaining time below the ressources
+				 */
+				harvestIndicator: () => LocalizedString
+			}
+			fight: {
+				/**
+				 * Fight
+				 */
+				header: () => LocalizedString
+				/**
+				 * Activate the display of the life bars below the fighters
+				 */
+				healthBar: () => LocalizedString
+				/**
+				 * Automatically switch to an account when its turn starts
+				 */
+				focusFightTurn: () => LocalizedString
 				/**
 				 * Estimating spell damage in battle
 				 */
@@ -2009,43 +1909,111 @@ export type TranslationFunctions = {
 				 */
 				fightchronometer: () => LocalizedString
 				/**
-				 * Show zaap search filter
-				 */
-				zaapsearchfilter: () => LocalizedString
-				/**
-				 * Show map resources
-				 */
-				'show-resources': () => LocalizedString
-				/**
-				 * Activate the display of the remaining time below the ressources
-				 */
-				'harvest-indicator': () => LocalizedString
-				/**
-				 * Add an indicator to know if the members of a group are on the same map
-				 */
-				'party-member-on-map': () => LocalizedString
-				/**
 				 * Display monsters groups informations on the map
 				 */
-				'monster-tooltip': () => LocalizedString
+				monsterTooltip: () => LocalizedString
 				/**
 				 * Shortcut for show/hide monsters tooltip
 				 */
-				'monster-tooltip-shortcut': () => LocalizedString
+				mmonsterTooltipShortcut: () => LocalizedString
 				/**
 				 * Show fighters timeline vertically
 				 */
-				'vertical-timeline': () => LocalizedString
+				verticalTimeline: () => LocalizedString
 				/**
 				 * Show challenge XP/Drop bonus
 				 */
-				'chall-percent': () => LocalizedString
+				challPercent: () => LocalizedString
 			}
-			groups: {
+			group: {
 				/**
-				 * Groups
+				 * Group
 				 */
 				header: () => LocalizedString
+				/**
+				 * Add an indicator to know if the members of a group are on the same map
+				 */
+				partyMemberOnMap: () => LocalizedString
+				partyInfo: {
+					/**
+					 * Show party's level
+					 */
+					level: () => LocalizedString
+					/**
+					 * Show party's prospecting
+					 */
+					prospecting: () => LocalizedString
+				}
+				autoGroup: {
+					/**
+					 * Auto Group
+					 */
+					header: () => LocalizedString
+					/**
+					 * Enable automatic grouping
+					 */
+					active: () => LocalizedString
+					/**
+					 * Beware, following the group leader can be considered as boting for other players, use it with caution and in unpopulated areas.
+					 */
+					warning: () => LocalizedString
+					/**
+					 * Beware, This feature can be considered as boting for other players, use it with caution and in unpopulated areas.
+					 */
+					warningtimer: () => LocalizedString
+					/**
+					 * The characters in the group must be friends with the leader so that the invitation is automatic.
+					 */
+					explanation1: () => LocalizedString
+					/**
+					 * The members follow the leader if the latter is on the same map.
+					 */
+					explanation2: () => LocalizedString
+					/**
+					 * Name of leader
+					 */
+					leader: () => LocalizedString
+					/**
+					 * Names of characters
+					 */
+					members: () => LocalizedString
+					/**
+					 * Add a character
+					 */
+					addMember: () => LocalizedString
+					/**
+					 * Follow the group leader
+					 */
+					followLeader: () => LocalizedString
+					/**
+					 * Disable the Timer for the auto group
+					 */
+					disableTimer: () => LocalizedString
+					/**
+					 * Skip "ready" automatically
+					 */
+					ready: () => LocalizedString
+					/**
+					 * Enter combat automatically
+					 */
+					fight: () => LocalizedString
+					/**
+					 * Time to follow (in seconds)
+					 */
+					delay: () => LocalizedString
+					/**
+					 * Follow the leader on a map
+					 */
+					followOnMap: () => LocalizedString
+					/**
+					 * Move on the same cell the leader moves
+					 */
+					strictMove: () => LocalizedString
+					/**
+					 * You can't join a PvP fight automatically
+					 */
+					pvpWarning: () => LocalizedString
+				}
 			}
 			accounts: {
 				/**

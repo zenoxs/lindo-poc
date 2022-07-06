@@ -2,6 +2,9 @@ import React from 'react'
 import { Box, Tab, Tabs } from '@mui/material'
 import { TabPanel } from '../TabPanel'
 import { Observer } from 'mobx-react-lite'
+import { OptionGeneralFeatures } from './OptionGeneralFeatures'
+import { OptionFightFeatures } from './OptionFightFeatures'
+import { OptionGroupFeatures } from './option-group-features'
 
 export const OptionFeatures = () => {
   const [value, setValue] = React.useState(0)
@@ -23,7 +26,15 @@ export const OptionFeatures = () => {
             </Tabs>
           </Box>
           <Box sx={{ flex: 1, flexGrow: 1 }}>
-            <TabPanel value={value} index={0}></TabPanel>
+            <TabPanel value={value} index={0}>
+              <OptionGeneralFeatures />
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+              <OptionFightFeatures />
+            </TabPanel>
+            <TabPanel value={value} index={2}>
+              <OptionGroupFeatures />
+            </TabPanel>
           </Box>
         </Box>
       )}

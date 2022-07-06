@@ -6,15 +6,55 @@ import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 export const GameGroupOptionModel = types
   .model('GameGroupOption')
   .props({
-    activeOpenMenu: types.optional(types.boolean, false),
-    hiddenShop: types.optional(types.boolean, false)
+    groupProspecting: types.optional(types.boolean, true),
+    groupLevel: types.optional(types.boolean, true),
+    partyMemberOnMap: types.optional(types.boolean, true),
+    enterGroupFight: types.optional(types.boolean, false),
+    skipReadyInFight: types.optional(types.boolean, false),
+    followLeader: types.optional(types.boolean, false),
+    followLeaderOnMap: types.optional(types.boolean, false),
+    followStrictMove: types.optional(types.boolean, false),
+    autoGrouping: types.optional(types.boolean, false),
+    autoGroupLeaderName: types.optional(types.string, ''),
+    autoGroupMembersName: types.array(types.string),
+    disableTimer: types.optional(types.boolean, false)
   })
   .actions((self) => ({
-    setActiveOpenMenu(value: boolean) {
-      self.activeOpenMenu = value
+    setGroupProspecting(value: boolean) {
+      self.groupProspecting = value
     },
-    setHiddenShop(value: boolean) {
-      self.hiddenShop = value
+    setGroupLevel(value: boolean) {
+      self.groupLevel = value
+    },
+    setPartyMemberOnMap(value: boolean) {
+      self.partyMemberOnMap = value
+    },
+    setEnterGroupFight(value: boolean) {
+      self.enterGroupFight = value
+    },
+    setSkipReadyInFight(value: boolean) {
+      self.skipReadyInFight = value
+    },
+    setFollowLeader(value: boolean) {
+      self.followLeader = value
+    },
+    setFollowLeaderOnMap(value: boolean) {
+      self.followLeaderOnMap = value
+    },
+    setFollowStrictMove(value: boolean) {
+      self.followStrictMove = value
+    },
+    setAutoGrouping(value: boolean) {
+      self.autoGrouping = value
+    },
+    setAutoGroupLeaderName(value: string) {
+      self.autoGroupLeaderName = value
+    },
+    setAutoGroupMembersName(value: string[]) {
+      self.autoGroupMembersName.replace(value)
+    },
+    setDisableTimer(value: boolean) {
+      self.disableTimer = value
     }
   }))
 

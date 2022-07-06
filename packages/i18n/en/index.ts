@@ -97,28 +97,6 @@ const en: BaseTranslation = {
   },
   option: {
     vip: {
-      'auto-group': {
-        header: 'Group',
-        active: 'Enable automatic grouping',
-        warning:
-          'Beware, following the group leader can be considered as boting for other players, use it with caution and in unpopulated areas.',
-        warningtimer:
-          'Beware, This feature can be considered as boting for other players, use it with caution and in unpopulated areas.',
-        'explanation-1':
-          'The characters in the group must be friends with the leader so that the invitation is automatic.',
-        'explanation-2': 'The members follow the leader if the latter is on the same map.',
-        leader: 'Name of leader',
-        members: 'Names of characters',
-        'members-add': 'Add a character',
-        'follow-leader': 'Follow the group leader',
-        'disable-timer': 'Disable the Timer for the auto group',
-        ready: 'Skip "ready" automatically',
-        fight: 'Enter combat automatically',
-        delay: 'Time to follow (in seconds)',
-        'follow-on-map': 'Follow the leader on a map',
-        'strict-move': 'Move on the same cell the leader moves',
-        'pvp-warning': "You can't join a PvP fight automatically"
-      },
       'multi-account': {
         'home-no-master':
           'To use this feature, a password must be configured. It will be used to start Lindo with multi-account automation.',
@@ -197,11 +175,6 @@ const en: BaseTranslation = {
         placeholderZaapi: 'Search a zaapi',
         placeholderPrisme: 'Search a prisme'
       },
-      'party-info': {
-        'header-lvl': "Show party's level",
-        'header-pp': "Show party's prospecting",
-        level: 'Lvl.'
-      },
       jobsxp: {
         text: ' XP missing<br>before level '
       },
@@ -215,15 +188,13 @@ const en: BaseTranslation = {
       interface: 'Interface',
       sound: 'Sound',
       shortcuts: 'Keyboard shortcuts',
-      'game-data': 'Game data',
+      gamedata: 'Game data',
       language: 'Language',
       resolution: 'Resolution',
-      'hide-shop': 'Hide the Shop button',
-      'full-screen': 'Full screen',
-      'hide-tab': 'Hide the multi-account tab bar',
-      'focus-fight-turn': 'Automatically switch to an account when its turn starts',
-      'local-content': 'Enable local map download (beta)',
-      'sound-focus': 'Game sound only on foreground window',
+      fullScreen: 'Full screen',
+      hideTab: 'Hide the multi-account tab bar',
+      localContent: 'Enable local map download (beta)',
+      soundFocus: 'Game sound only on foreground window',
       early: 'Play on Dofus Touch Early',
       restart: 'Apply and restart'
     },
@@ -231,14 +202,13 @@ const en: BaseTranslation = {
       title: 'Shortcuts',
       diver: {
         header: 'Miscellaneous',
-        'end-turn': 'End your turn / Ready (fight)',
-        'open-chat': 'Open the chat',
-        'active-open-menu': 'Open menu when no window is open (ECHAP)',
-        'open-menu': 'Open the menu',
-        go_up: 'Go to Upper Map',
-        go_bottom: 'Go to Lower Map',
-        go_left: 'Go to Left Map',
-        go_right: 'Go to Right Map'
+        endTurn: 'End your turn / Ready (fight)',
+        openChat: 'Open the chat',
+        openMenu: 'Open the menu',
+        goUp: 'Go to Upper Map',
+        goBottom: 'Go to Lower Map',
+        goLeft: 'Go to Left Map',
+        goRight: 'Go to Right Map'
       },
       interfaces: {
         header: 'Interfaces',
@@ -289,29 +259,55 @@ const en: BaseTranslation = {
     features: {
       title: 'Features',
       general: {
-        menu: {
-          general: 'General',
-          fight: 'Fight',
-          group: 'Group',
-          job: 'Job'
-        },
         header: 'General',
-        'disable-inactivity': 'Extend the delay before disconnection for inactivity',
-        'health-bar': 'Activate the display of the life bars below the fighters',
+        hideShop: 'Hide the Shop button',
+        activeOpenMenu: 'Open menu when no window is open (ECHAP)',
+        disableInactivity: 'Extend the delay before disconnection for inactivity',
         jobsxp: 'Activate the display of the job xp need for leveling',
+        zaapsearchfilter: 'Show zaap search filter',
+        showResources: 'Show map resources',
+        harvestIndicator: 'Activate the display of the remaining time below the ressources'
+      },
+      fight: {
+        header: 'Fight',
+        healthBar: 'Activate the display of the life bars below the fighters',
+        focusFightTurn: 'Automatically switch to an account when its turn starts',
         estimator: 'Estimating spell damage in battle',
         fightchronometer: 'Show combats chronometer',
-        zaapsearchfilter: 'Show zaap search filter',
-        'show-resources': 'Show map resources',
-        'harvest-indicator': 'Activate the display of the remaining time below the ressources',
-        'party-member-on-map': 'Add an indicator to know if the members of a group are on the same map',
-        'monster-tooltip': 'Display monsters groups informations on the map',
-        'monster-tooltip-shortcut': 'Shortcut for show/hide monsters tooltip',
-        'vertical-timeline': 'Show fighters timeline vertically',
-        'chall-percent': 'Show challenge XP/Drop bonus'
+        monsterTooltip: 'Display monsters groups informations on the map',
+        mmonsterTooltipShortcut: 'Shortcut for show/hide monsters tooltip',
+        verticalTimeline: 'Show fighters timeline vertically',
+        challPercent: 'Show challenge XP/Drop bonus'
       },
-      groups: {
-        header: 'Groups'
+      group: {
+        header: 'Group',
+        partyMemberOnMap: 'Add an indicator to know if the members of a group are on the same map',
+        partyInfo: {
+          level: "Show party's level",
+          prospecting: "Show party's prospecting"
+        },
+        autoGroup: {
+          header: 'Auto Group',
+          active: 'Enable automatic grouping',
+          warning:
+            'Beware, following the group leader can be considered as boting for other players, use it with caution and in unpopulated areas.',
+          warningtimer:
+            'Beware, This feature can be considered as boting for other players, use it with caution and in unpopulated areas.',
+          explanation1:
+            'The characters in the group must be friends with the leader so that the invitation is automatic.',
+          explanation2: 'The members follow the leader if the latter is on the same map.',
+          leader: 'Name of leader',
+          members: 'Names of characters',
+          addMember: 'Add a character',
+          followLeader: 'Follow the group leader',
+          disableTimer: 'Disable the Timer for the auto group',
+          ready: 'Skip "ready" automatically',
+          fight: 'Enter combat automatically',
+          delay: 'Time to follow (in seconds)',
+          followOnMap: 'Follow the leader on a map',
+          strictMove: 'Move on the same cell the leader moves',
+          pvpWarning: "You can't join a PvP fight automatically"
+        }
       },
       accounts: {
         header: 'Accounts'

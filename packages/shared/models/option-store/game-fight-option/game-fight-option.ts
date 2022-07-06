@@ -15,8 +15,26 @@ export const GameFightOptionModel = types
     monsterTooltip: types.optional(types.boolean, true)
   })
   .actions((self) => ({
+    setHealthBar(value: boolean) {
+      self.healthBar = value
+    },
+    setDammageEstimator(value: boolean) {
+      self.dammageEstimator = value
+    },
+    setVerticalTimeline(value: boolean) {
+      self.verticalTimeline = value
+    },
+    setChallengeBonus(value: boolean) {
+      self.challengeBonus = value
+    },
     setFocusOnFightTurn(value: boolean) {
       self.focusOnFightTurn = value
+    },
+    setFightChronometer(value: boolean) {
+      self.fightChronometer = value
+    },
+    setMonsterTooltip(value: boolean) {
+      self.monsterTooltip = value
     }
   }))
 
