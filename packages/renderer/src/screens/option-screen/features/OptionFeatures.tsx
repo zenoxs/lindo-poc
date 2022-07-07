@@ -6,6 +6,7 @@ import { OptionGeneralFeatures } from './OptionGeneralFeatures'
 import { OptionFightFeatures } from './OptionFightFeatures'
 import { OptionGroupFeatures } from './option-group-features'
 import { useI18nContext } from '@lindo/i18n'
+import { OptionJobFeatures } from './OptionJobFeatures'
 
 export const OptionFeatures = () => {
   const [value, setValue] = React.useState(0)
@@ -37,6 +38,9 @@ export const OptionFeatures = () => {
             </TabPanel>
             <TabPanel value={value} index={2}>
               <OptionGroupFeatures />
+            </TabPanel>
+            <TabPanel value={value} index={3}>
+              <OptionJobFeatures />
             </TabPanel>
           </Box>
         </Box>
