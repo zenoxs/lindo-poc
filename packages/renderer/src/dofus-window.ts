@@ -201,7 +201,13 @@ export interface TaxMessage {
   }
 }
 
+export interface ChallengeInfoMessage {
+  xpBonus: number
+  challengeId: number
+}
+
 export type ConnectionManagerEvents = {
+  ChallengeInfoMessage: (msg: ChallengeInfoMessage) => void
   GameFightEndMessage: () => void
   MapComplementaryInformationsWithCoordsMessage: () => void
   MapComplementaryInformationsDataMessage: () => void
@@ -223,6 +229,18 @@ export type GUIEvents = {
   GameFightTurnStartMessage: (actor: Actor) => void
 }
 
+export interface ChallengeIcon {
+  description: string
+  details: unknown
+  icon: {
+    rootElement: HTMLDivElement
+  }
+  iconUrl: string
+  name: string
+  points: number
+  xpBonus: number
+}
+
 export interface GUI extends TypedEmitter<GUIEvents> {
   _resizeUi: () => void
   notificationBar: {
@@ -236,6 +254,15 @@ export interface GUI extends TypedEmitter<GUIEvents> {
   menuBar: {
     _icons: {
       _childrenList: Array<ChildElement>
+    }
+  }
+  challengeIndicator: {
+    iconDetailsListByChallengeId: Record<number, ChallengeIcon>
+    rootElement: {
+      classList: {
+        add: (className: string) => void
+        remove: (className: string) => void
+      }
     }
   }
   shortcutBar: {
