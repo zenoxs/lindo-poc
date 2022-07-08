@@ -1,4 +1,5 @@
 import { ConnectionManagerEvents, GUIEvents } from '@/dofus-window'
+import { observe } from 'mobx'
 import { EventManager } from '../helpers'
 import { Mod } from '../mod'
 import { Bar } from './bar'
@@ -6,11 +7,20 @@ import { Bar } from './bar'
 export class HealthBarMod extends Mod {
   private bars: { [fighterId: number]: Bar } = {}
   private rendered: boolean = true
-  private _disposers: Array<Function> = []
+  private _disposers: Array<() => void> = []
   private _eventManager = new EventManager()
 
   start(): void {
-    if (this.rootStore.optionStore.gameFight.healthBar) this.enableHealthBars()
+    const disposer = observe(
+      this.rootStore.optionStore.gameFight,
+      'healthBar',
+      () => {
+        if (this.rootStore.optionStore.gameFight.healthBar) this.enableHealthBars()
+        else this.destroyHealthBars()
+      },
+      true
+    )
+    this._disposers.push(disposer)
   }
 
   /**
