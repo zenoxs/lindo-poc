@@ -13,7 +13,5 @@ export abstract class Mod {
     this.LL = LL
   }
 
-  abstract start(): void
-
-  abstract close(): void
+  abstract destroy(): void
 }

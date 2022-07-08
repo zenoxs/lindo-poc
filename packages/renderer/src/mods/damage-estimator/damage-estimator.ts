@@ -1,6 +1,7 @@
 import { ConnectionManagerEvents, DofusWindow, GUIEvents } from '@/dofus-window'
 import { RootStore } from '@/store'
 import { TranslationFunctions } from '@lindo/i18n'
+import { observe } from 'mobx'
 import { EventManager } from '../helpers'
 import { Mod } from '../mod'
 import { DamageContainer } from './damage-container'
@@ -8,24 +9,33 @@ import { DamageContainer } from './damage-container'
 export class DamageEstimatorMod extends Mod {
   private readonly damageContainer: DamageContainer
   private readonly _eventManager = new EventManager()
+  private settingDisposer: () => void
 
   constructor(wGame: DofusWindow, rootStore: RootStore, LL: TranslationFunctions) {
     super(wGame, rootStore, LL)
     this.damageContainer = new DamageContainer(this.wGame)
+
+    this.settingDisposer = observe(
+      this.rootStore.optionStore.gameFight,
+      'damageEstimator',
+      () => {
+        if (this.rootStore.optionStore.gameFight.damageEstimator) {
+          this.start()
+        } else {
+          this.stop()
+        }
+      },
+      true
+    )
   }
 
-  start(): void {
-    // this.params = this.settings.option.vip.general.estimator
-    // if (this.params) {
+  private start(): void {
     console.info('- enable Damage-Estimator')
-
     // this.removeOnDeath();
     this.setSpellSelected()
     this.setSpellSlotDeselected()
     // this.stopOnFightEnd();
-
     this.damageContainer.toggle()
-    // }
   }
 
   private removeOnDeath(): void {
@@ -58,7 +68,7 @@ export class DamageEstimatorMod extends Mod {
       try {
         console.info('onSpellSelected')
         const spell = this.wGame.gui.playerData.characters.mainCharacter.spellData.spells[spellId]
-        this.damageContainer.display(spell)
+        if (this.rootStore.optionStore.gameFight.damageEstimator) this.damageContainer.display(spell)
       } catch (ex) {
         console.error(ex)
       }
@@ -79,11 +89,14 @@ export class DamageEstimatorMod extends Mod {
     )
   }
 
-  public close() {
+  private stop() {
     this.damageContainer.destroy()
-    // if (this.params) {
-    // this.shortcutsHelper.unBindAll()
     this.damageContainer.destroy()
-    // }
+    this._eventManager.close()
+  }
+
+  public destroy() {
+    this.stop()
+    this.settingDisposer()
   }
 }

@@ -2,6 +2,7 @@ import {
   Actor,
   ChatMessage,
   ConnectionManagerEvents,
+  DofusWindow,
   GameRolePlayAggressionMessage,
   GUIEvents,
   PartyInvitationMessage,
@@ -13,6 +14,8 @@ import EventEmitter from 'eventemitter3'
 import { EventManager } from '../helpers'
 import { Mod } from '../mod'
 import axios from 'axios'
+import { RootStore } from '@/store'
+import { TranslationFunctions } from '@lindo/i18n'
 
 export type NotificationsModEvents = {
   notification: () => void
@@ -24,7 +27,12 @@ export class NotificationsMod extends Mod {
   private readonly _eventManager = new EventManager()
   private _ressourcesKnow: Record<string, string> = {}
 
-  start(): void {
+  constructor(wGame: DofusWindow, rootStore: RootStore, LL: TranslationFunctions) {
+    super(wGame, rootStore, LL)
+    this.start()
+  }
+
+  private start(): void {
     this._eventManager.on<ConnectionManagerEvents, 'ChatServerMessage'>(
       this.wGame.dofus.connectionManager,
       'ChatServerMessage',
@@ -202,7 +210,7 @@ export class NotificationsMod extends Mod {
     }
   }
 
-  close() {
+  destroy() {
     this.eventEmitter.removeAllListeners()
     this._eventManager.close()
   }

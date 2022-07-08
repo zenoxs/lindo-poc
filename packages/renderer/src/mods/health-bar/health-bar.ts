@@ -1,4 +1,6 @@
-import { ConnectionManagerEvents, GUIEvents } from '@/dofus-window'
+import { ConnectionManagerEvents, DofusWindow, GUIEvents } from '@/dofus-window'
+import { RootStore } from '@/store'
+import { TranslationFunctions } from '@lindo/i18n'
 import { observe } from 'mobx'
 import { EventManager } from '../helpers'
 import { Mod } from '../mod'
@@ -7,11 +9,13 @@ import { Bar } from './bar'
 export class HealthBarMod extends Mod {
   private bars: { [fighterId: number]: Bar } = {}
   private rendered: boolean = true
+  private settingDisposer: () => void
   private _disposers: Array<() => void> = []
   private _eventManager = new EventManager()
 
-  start(): void {
-    const disposer = observe(
+  constructor(wGame: DofusWindow, rootStore: RootStore, LL: TranslationFunctions) {
+    super(wGame, rootStore, LL)
+    this.settingDisposer = observe(
       this.rootStore.optionStore.gameFight,
       'healthBar',
       () => {
@@ -20,7 +24,6 @@ export class HealthBarMod extends Mod {
       },
       true
     )
-    this._disposers.push(disposer)
   }
 
   /**
@@ -248,12 +251,17 @@ export class HealthBarMod extends Mod {
     })
   }
 
-  public close() {
+  private stop() {
     for (const disposer of this._disposers) {
       disposer()
     }
     this._disposers = []
     this._eventManager.close()
     this.destroyHealthBars()
+  }
+
+  public destroy() {
+    this.stop()
+    this.settingDisposer()
   }
 }

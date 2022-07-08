@@ -26,7 +26,6 @@ export const manageGameWindow = ({ dWindow, rootStore, game, LL }: ManageGameWin
           rootStore.gameStore.selectGame(game)
         })
       }
-      mod.start()
       mods.push(mod)
     }
   }
@@ -59,7 +58,7 @@ export const manageGameWindow = ({ dWindow, rootStore, game, LL }: ManageGameWin
   const handleDisconnect = () => {
     game.disconnected()
     for (const mod of mods) {
-      mod.close()
+      mod.destroy()
     }
   }
 

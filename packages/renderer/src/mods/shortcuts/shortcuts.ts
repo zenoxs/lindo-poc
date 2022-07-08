@@ -24,9 +24,6 @@ export class ShortcutsMod extends Mod {
   constructor(wGame: DofusWindow, rootStore: RootStore, LL: TranslationFunctions) {
     super(wGame, rootStore, LL)
     this._mover = new Mover(wGame)
-  }
-
-  start(): void {
     this._bindAll()
   }
 
@@ -63,7 +60,6 @@ export class ShortcutsMod extends Mod {
     handler: (event: KeyboardEvent) => boolean | void
   ) {
     const addShortcut = (shortcut: string) => {
-      console.log({ shortcut, index })
       if (shortcut !== '') {
         this._shortcuts.add({ shortcut, handler })
       }
@@ -72,7 +68,6 @@ export class ShortcutsMod extends Mod {
       if (change.index !== index) {
         return
       }
-      console.log(change)
       if (change.type === 'update') {
         const newShortcut = change.newValue.value
         this._shortcuts.remove({ shortcut: change.oldValue.value, handler })
@@ -253,7 +248,7 @@ export class ShortcutsMod extends Mod {
     this._disposers.push(() => this.wGame.removeEventListener('keydown', escapeListener))
   }
 
-  close() {
+  destroy() {
     this._shortcuts.reset()
     for (const disposer of this._disposers) {
       disposer()
