@@ -72,6 +72,7 @@ export interface Spell {
 }
 
 export interface CharacterStats {
+  shieldPoints: number
   maxLifePoints: number
   lifePoints: number
   pushDamageFixedResist: number
@@ -109,6 +110,7 @@ export interface Fighter {
   buffs: Array<SpellBuff>
   level: number
   data: {
+    teamId: number
     alive: boolean
     disposition: {
       cellId: number
@@ -217,16 +219,24 @@ export type ConnectionManagerEvents = {
   PartyInvitationMessage: (msg: PartyInvitationMessage) => void
   GameRolePlayAggressionMessage: (msg: GameRolePlayAggressionMessage) => void
   TextInformationMessage: (msg: TextInformationMessage) => void
+  GameFightTurnStartMessage: () => void
+  GameFightTurnEndMessage: () => void
+  GameActionFightLifePointsGainMessage: () => void
 }
 
 export interface ConnectionManager extends TypedEmitter<ConnectionManagerEvents> {}
 
 export type GUIEvents = {
   disconnect: () => void
+  resize: () => void
   spellSlotSelected: (spellId: number) => void
   spellSlotDeselected: () => void
   GameActionFightDeathMessage: (event: { targetId: number }) => void
   GameFightTurnStartMessage: (actor: Actor) => void
+  GameFightOptionStateUpdateMessage: () => void
+  GameActionFightLifePointsLostMessage: () => void
+  GameActionFightLifeAndShieldPointsLostMessage: () => void
+  GameActionFightPointsVariationMessage: () => void
 }
 
 export interface ChallengeIcon {
@@ -310,8 +320,10 @@ export interface GUI extends TypedEmitter<GUIEvents> {
   }
   fightManager: {
     fightState: number
+    isInBattle: () => boolean
     finishTurn: () => void
     getFighters: () => Array<number>
+    isFighterOnUsersTeam: (fighterId: number) => boolean
     getFighter: (actorId: number) => Fighter
   }
   timeline: {
