@@ -24,18 +24,18 @@ type RootTranslation = {
 			/**
 			 * Enable sound
 			 */
-			'toggle-audio-on': string
+			toggleAudioOn: string
 			/**
 			 * Mute
 			 */
-			'toggle-audio-off': string
+			toggleAudioOff: string
 			/**
 			 * Open a new window
 			 */
-			'new-window': string
+			newWindow: string
 		}
 		prompt: {
-			'tabs-overflow': {
+			tabsOverflow: {
 				/**
 				 * Lindo doesn't support more than 6 tab per window, above that it can be laggy and buggy. But you can open a new window and it will be working just fine.
 				 */
@@ -87,7 +87,7 @@ type RootTranslation = {
 			 */
 			prefix: string
 		}
-		'master-password': {
+		masterPassword: {
 			/**
 			 * Continue
 			 */
@@ -99,11 +99,11 @@ type RootTranslation = {
 			/**
 			 * Enter the master password
 			 */
-			'password-label': string
+			passwordLabel: string
 			/**
 			 * The password is incorrect
 			 */
-			'password-bad': string
+			wrongPassword: string
 		}
 		updateGame: {
 			/**
@@ -1048,18 +1048,18 @@ export type TranslationFunctions = {
 			/**
 			 * Enable sound
 			 */
-			'toggle-audio-on': () => LocalizedString
+			toggleAudioOn: () => LocalizedString
 			/**
 			 * Mute
 			 */
-			'toggle-audio-off': () => LocalizedString
+			toggleAudioOff: () => LocalizedString
 			/**
 			 * Open a new window
 			 */
-			'new-window': () => LocalizedString
+			newWindow: () => LocalizedString
 		}
 		prompt: {
-			'tabs-overflow': {
+			tabsOverflow: {
 				/**
 				 * Lindo doesn't support more than 6 tab per window, above that it can be laggy and buggy. But you can open a new window and it will be working just fine.
 				 */
@@ -1108,7 +1108,7 @@ export type TranslationFunctions = {
 			 */
 			prefix: () => LocalizedString
 		}
-		'master-password': {
+		masterPassword: {
 			/**
 			 * Continue
 			 */
@@ -1120,11 +1120,11 @@ export type TranslationFunctions = {
 			/**
 			 * Enter the master password
 			 */
-			'password-label': () => LocalizedString
+			passwordLabel: () => LocalizedString
 			/**
 			 * The password is incorrect
 			 */
-			'password-bad': () => LocalizedString
+			wrongPassword: () => LocalizedString
 		}
 		updateGame: {
 			/**

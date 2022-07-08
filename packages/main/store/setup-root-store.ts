@@ -1,7 +1,9 @@
-import { IPCEvents, RootStoreModel, RootStore } from '@lindo/shared'
+import { IPCEvents, RootStoreModel, RootStore, RootStoreSnapshot } from '@lindo/shared'
 import { ipcMain, webContents } from 'electron'
 import hash from 'object-hash'
 import { applyPatch, getSnapshot, IJsonPatch, Instance, onPatch } from 'mobx-state-tree'
+import ElectronStore from 'electron-store'
+import persist from './root-store-persist'
 
 /**
  * The key we'll be saving our state as within async storage.
@@ -21,6 +23,10 @@ export async function setupRootStore(): Promise<RootStore> {
   // })
 
   const rootStore: Instance<typeof RootStoreModel> = RootStoreModel.create({}, env)
+  const storage = new ElectronStore<{ rootStore: RootStoreSnapshot }>()
+
+  await persist('rootStore', rootStore, { storage })
+  console.log('RootStore -> restored')
 
   const patchesFromRenderer: Array<string> = []
 
