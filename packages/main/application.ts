@@ -113,6 +113,16 @@ export class Application {
       this.openOptionWindow()
     })
 
+    ipcMain.on(IPCEvents.CLOSE_OPTION, () => {
+      if (this._optionWindow) {
+        this._optionWindow.close()
+      }
+    })
+
+    ipcMain.on(IPCEvents.RESET_STORE, () => {
+      this._rootStore.reset()
+    })
+
     ipcMain.on(IPCEvents.TOGGLE_MAXIMIZE_WINDOW, (event) => {
       console.log('Application ->', 'TOGGLE_MAXIMIZE_WINDOW')
       const gWindow = this._gWindows.find((gWindow) => gWindow.id === event.sender.id)

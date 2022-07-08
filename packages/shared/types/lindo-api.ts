@@ -13,6 +13,7 @@ export interface LindoAPI {
   forwardPatchToMain: (patch: IJsonPatch) => void
   fetchInitialStateAsync: () => Promise<RootStoreSnapshot>
   subscribeToIPCPatch: (callback: (patch: IJsonPatch) => void) => () => void
+  resetStore: () => void
   // hotkeys
   subscribeToNewTab: (callback: () => void) => () => void
   subscribeToNextTab: (callback: () => void) => () => void
@@ -25,4 +26,5 @@ export interface LindoAPI {
   // window
   openOptionWindow: () => void
   focusCurrentWindow: () => void
+  closeOptionWindow: () => void
 }

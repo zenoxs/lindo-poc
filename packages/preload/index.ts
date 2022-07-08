@@ -51,6 +51,10 @@ const subscribeToIPCPatch = (callback: (patch: IJsonPatch) => void): (() => void
   }
 }
 
+const resetStore = (): void => {
+  ipcRenderer.send(IPCEvents.RESET_STORE)
+}
+
 // Hotkeys
 const subscribeToNewTab = (callback: () => void): (() => void) => {
   const listener = () => {
@@ -123,8 +127,13 @@ const focusCurrentWindow = (): void => {
   ipcRenderer.send(IPCEvents.FOCUS_WINDOW)
 }
 
+const closeOptionWindow = (): void => {
+  ipcRenderer.send(IPCEvents.CLOSE_OPTION)
+}
+
 const lindoApi: LindoAPI = {
   fetchInitialStateAsync,
+  resetStore,
   forwardPatchToMain,
   subscribeToIPCPatch,
   subscribeToNewTab,
@@ -134,6 +143,7 @@ const lindoApi: LindoAPI = {
   subscribeToUpdateProgress,
   fetchGameContext,
   openOptionWindow,
-  focusCurrentWindow
+  focusCurrentWindow,
+  closeOptionWindow
 }
 contextBridge.exposeInMainWorld('lindoAPI', lindoApi)
