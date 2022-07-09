@@ -211,6 +211,8 @@ export interface ChallengeInfoMessage {
 export type ConnectionManagerEvents = {
   ChallengeInfoMessage: (msg: ChallengeInfoMessage) => void
   GameFightEndMessage: () => void
+  GameFightStartMessage: () => void
+  GameFightLeaveMessage: () => void
   MapComplementaryInformationsWithCoordsMessage: () => void
   MapComplementaryInformationsDataMessage: () => void
   ChatServerMessage: (msg: ChatMessage) => void

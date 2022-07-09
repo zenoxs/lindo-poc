@@ -38,9 +38,13 @@ export class EventManager {
     )
   }
 
+  /**
+   * Remove all listener
+   */
   close() {
     for (const event of this._events) {
       this.removeListener(event.emitter, event.event, event.listener)
     }
+    this._events = []
   }
 }
