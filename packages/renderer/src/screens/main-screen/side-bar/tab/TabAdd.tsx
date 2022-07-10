@@ -3,6 +3,7 @@ import styles from './tab.module.scss'
 import classNames from 'classnames'
 import { darken, Icon, lighten, styled } from '@mui/material'
 import { useStores } from '@/store'
+import { useI18nContext } from '@lindo/i18n'
 
 interface TabAddProps {
   className?: string
@@ -10,8 +11,18 @@ interface TabAddProps {
 
 export const TabAdd = styled((props: TabAddProps) => {
   const { gameStore } = useStores()
+  const { LL } = useI18nContext()
+
+  const handleAddGame = () => {
+    if (gameStore.games.length < 6) {
+      gameStore.addGame()
+    } else {
+      alert(LL.main.prompt.tabsOverflow.text())
+    }
+  }
+
   return (
-    <div onClick={() => gameStore.addGame()} className={classNames(styles.tab, props.className)}>
+    <div onClick={handleAddGame} className={classNames(styles.tab, props.className)}>
       <Icon sx={{ fontSize: 24 }}>add</Icon>
     </div>
   )

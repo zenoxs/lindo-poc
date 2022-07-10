@@ -6,12 +6,12 @@ const en: BaseTranslation = {
       add: 'Add a game'
     },
     head: {
-      'toggle-audio-on': 'Enable sound',
-      'toggle-audio-off': 'Mute',
-      'new-window': 'Open a new window'
+      toggleAudioOn: 'Enable sound',
+      toggleAudioOff: 'Mute',
+      newWindow: 'Open a new window'
     },
     prompt: {
-      'tabs-overflow': {
+      tabsOverflow: {
         text: "Lindo doesn't support more than 6 tab per window, above that it can be laggy and buggy. But you can open a new window and it will be working just fine."
       }
     }
@@ -30,11 +30,11 @@ const en: BaseTranslation = {
       title: 'Release notes',
       prefix: 'Release'
     },
-    'master-password': {
+    masterPassword: {
       continue: 'Continue',
       skip: 'Skip this step',
-      'password-label': 'Enter the master password',
-      'password-bad': 'The password is incorrect'
+      passwordLabel: 'Enter the master password',
+      wrongPassword: 'The password is incorrect'
     },
     updateGame: {
       title: 'Lindo update',

@@ -13,6 +13,9 @@ export const GameStoreModel = types
   })
   .actions((self) => ({
     addGame() {
+      if (self._games.size > 5) {
+        throw new Error('More than 6 game tabs are not supported')
+      }
       const game = self._games.put({})
       self.gamesOrder.push(game)
       self.selectedGame = game

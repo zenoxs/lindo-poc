@@ -19,8 +19,8 @@ export const OptionFeatures = () => {
   return (
     <Observer>
       {() => (
-        <Box sx={{ p: 1, flexGrow: 1, flex: 1, display: 'flex', flexDirection: 'column' }}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Box sx={{ flexGrow: 1, flex: 1, display: 'flex', flexDirection: 'column' }}>
+          <Box sx={{ p: 1, borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={value} onChange={handleChange} aria-label='features-tabs'>
               <Tab label={LL.option.features.general.header()} />
               <Tab label={LL.option.features.fight.header()} />
@@ -29,7 +29,7 @@ export const OptionFeatures = () => {
               <Tab label={LL.option.features.accounts.header()} />
             </Tabs>
           </Box>
-          <Box sx={{ flex: 1, flexGrow: 1 }}>
+          <Box sx={{ p: 1, flexGrow: 1, overflowY: 'scroll', maxHeight: 'calc(100vh - 120px)' }}>
             <TabPanel value={value} index={0}>
               <OptionGeneralFeatures />
             </TabPanel>
