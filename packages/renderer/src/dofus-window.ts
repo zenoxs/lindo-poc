@@ -119,6 +119,19 @@ export interface Fighter {
   }
 }
 
+export type FightManagerEvents = {
+  fightEnd: () => void
+}
+
+export interface FightManager extends TypedEmitter<FightManagerEvents> {
+  fightState: number
+  isInBattle: () => boolean
+  finishTurn: () => void
+  getFighters: () => Array<number>
+  isFighterOnUsersTeam: (fighterId: number) => boolean
+  getFighter: (actorId: number) => Fighter
+}
+
 export interface MapCell {
   z: number
   f: number
@@ -147,7 +160,6 @@ export interface ChildElement {
 }
 
 export interface ChildWUI extends ChildElement {
-  id: string
   isVisible: () => boolean
   close: () => void
   _childrenList: Array<ChildElement>
@@ -155,10 +167,24 @@ export interface ChildWUI extends ChildElement {
 }
 
 export interface ChildDialog extends ChildElement {
-  id: string
   isVisible: () => boolean
   close: () => void
   _childrenList: Array<ChildElement>
+}
+
+export interface WindowOpenEvent {
+  id: string
+  tabId: string
+  itemData: {
+    _type: string
+  }
+  _messageType: string
+}
+export type ChildWindowEvents = {
+  open: (event: WindowOpenEvent) => void
+}
+export interface ChildWindow extends ChildElement, TypedEmitter<ChildWindowEvents> {
+  id: 'itemRecipes' | 'bidHouseShop' | 'grimoire' | 'social'
 }
 
 export interface Actor {
@@ -274,8 +300,16 @@ export interface Scroller {
   }
 }
 
+export interface ChatEntry {
+  message: string
+}
+
 export interface GUI extends TypedEmitter<GUIEvents> {
   _resizeUi: () => void
+  shopFloatingToolbar: {
+    hide: () => void
+    show: () => void
+  }
   notificationBar: {
     _elementIsVisible: boolean
     currentOpenedId: string
@@ -283,6 +317,7 @@ export interface GUI extends TypedEmitter<GUIEvents> {
   }
   windowsContainer: {
     _childrenList: Array<ChildWUI>
+    getChildren: () => Array<ChildWindow>
   }
   menuBar: {
     _icons: {
@@ -341,14 +376,7 @@ export interface GUI extends TypedEmitter<GUIEvents> {
   numberInputPad: {
     isVisible: () => boolean
   }
-  fightManager: {
-    fightState: number
-    isInBattle: () => boolean
-    finishTurn: () => void
-    getFighters: () => Array<number>
-    isFighterOnUsersTeam: (fighterId: number) => boolean
-    getFighter: (actorId: number) => Fighter
-  }
+  fightManager: FightManager
   timeline: {
     fightControlButtons: {
       toggleReadyForFight: () => void
@@ -362,6 +390,16 @@ export interface GUI extends TypedEmitter<GUIEvents> {
     active: boolean
     activate: () => void
     deactivate: () => void
+    chatInput: {
+      sentMessageHistory: {
+        goBack: () => void
+        goForward: () => void
+        getCurrentEntry: () => ChatEntry
+      }
+      inputChat: {
+        setValue: (value: string) => void
+      }
+    }
   }
 }
 
