@@ -3,6 +3,7 @@ import { Actor } from '../iso-engine'
 import { CharacterStats } from './character-stats'
 import { Chat } from './chat'
 import { FightManager } from './fight-manager'
+import { PlayerData } from './player-data'
 import { Scroller } from './scroller'
 import { Spell } from './spell'
 
@@ -13,6 +14,7 @@ export interface GUIElement {
   id: string
   _contentType: 'wui' | undefined
   _childrenList: Array<GUIElement>
+  rootElement: HTMLDivElement
 }
 
 export interface WUIElement extends GUIElement {
@@ -91,6 +93,7 @@ export type GUIEvents = {
 
 export interface GUI extends TypedEmitter<GUIEvents> {
   _resizeUi: () => void
+  isConnected: boolean
   shopFloatingToolbar: {
     hide: () => void
     show: () => void
@@ -128,33 +131,7 @@ export interface GUI extends TypedEmitter<GUIEvents> {
       }
     }
   }
-  playerData: {
-    id: number
-    on: (event: 'characterSelectedSuccess', callback: () => void) => void
-    inventory: {
-      maxWeight: number
-      weight: number
-    }
-    characters: {
-      mainCharacterId: number
-      mainCharacter: {
-        spellData: {
-          spells: Record<number, Spell>
-        }
-        characteristics: Record<
-          keyof CharacterStats,
-          {
-            getTotalStat: () => number
-          }
-        >
-      }
-    }
-    characterBaseInformations: {
-      id: number
-      name: string
-      entityLook: unknown
-    }
-  }
+  playerData: PlayerData
   mainControls: {
     buttonBox: {
       _childrenList: {

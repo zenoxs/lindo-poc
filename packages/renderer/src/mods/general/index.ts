@@ -14,7 +14,7 @@ export * from './js-fixes'
 export * from './keyboard-input-pad'
 export * from './show-pods'
 
-export const GENERALS_MOD = [
+export const GENERAL_MODS = [
   AutoFocusMod,
   ChatHistoryMod,
   CssOverloadMod,
