@@ -143,7 +143,10 @@ export interface GUI extends TypedEmitter<GUIEvents> {
     }
   }
   numberInputPad: {
+    _doDigit: (value: number) => void
     isVisible: () => boolean
+    _doBackspace: () => void
+    _doEnter: () => void
   }
   fightManager: FightManager
   timeline: {
