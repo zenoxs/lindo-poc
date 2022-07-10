@@ -4,6 +4,7 @@ import { CssOverloadMod } from './css-overload'
 import { InactivityMod } from './inactivity'
 import { JsFixesMod } from './js-fixes'
 import { KeyboardInputPadMod } from './keyboard-input-pad'
+import { ShowPodsMod } from './show-pods'
 
 export * from './auto-focus'
 export * from './chat-history'
@@ -11,6 +12,7 @@ export * from './css-overload'
 export * from './inactivity'
 export * from './js-fixes'
 export * from './keyboard-input-pad'
+export * from './show-pods'
 
 export const GENERALS_MOD = [
   AutoFocusMod,
@@ -18,5 +20,6 @@ export const GENERALS_MOD = [
   CssOverloadMod,
   InactivityMod,
   JsFixesMod,
-  KeyboardInputPadMod
+  KeyboardInputPadMod,
+  ShowPodsMod
 ] as const

@@ -6,24 +6,26 @@ import { FightManager } from './fight-manager'
 import { Scroller } from './scroller'
 import { Spell } from './spell'
 
-export interface ChildElement {
+export interface GUIElement {
   tap: () => void
+  hasClassName: (className: string) => boolean
+  setText: (text: string) => boolean
   id: string
   _contentType: 'wui' | undefined
-  _childrenList: Array<ChildElement>
+  _childrenList: Array<GUIElement>
 }
 
-export interface ChildWUI extends ChildElement {
+export interface WUIElement extends GUIElement {
   isVisible: () => boolean
   close: () => void
-  _childrenList: Array<ChildElement>
+  _childrenList: Array<GUIElement>
   _contentType: 'wui'
 }
 
-export interface ChildDialog extends ChildElement {
+export interface GUIDialog extends GUIElement {
   isVisible: () => boolean
   close: () => void
-  _childrenList: Array<ChildElement>
+  _childrenList: Array<GUIElement>
 }
 
 export interface WindowOpenEvent {
@@ -34,12 +36,26 @@ export interface WindowOpenEvent {
   }
   _messageType: string
 }
-export type ChildWindowEvents = {
+export type GUIWindowEvents = {
   open: (event: WindowOpenEvent) => void
+  opened: () => void
 }
-export interface ChildWindow extends ChildElement, TypedEmitter<ChildWindowEvents> {
+export interface GUIWindowSchema extends GUIElement, TypedEmitter<GUIWindowEvents> {
+  id: 'itemRecipes' | 'bidHouseShop' | 'grimoire' | 'social' | 'equipment'
+  openState: boolean
+}
+
+export interface GenericWindow extends GUIWindowSchema {
   id: 'itemRecipes' | 'bidHouseShop' | 'grimoire' | 'social'
+  storageBox: {}
 }
+
+export interface EquipmentWindow extends GUIWindowSchema {
+  id: 'equipment'
+  storageBox: GUIElement
+}
+
+export type GUIWindow = EquipmentWindow | GenericWindow
 
 export interface ChallengeIcon {
   description: string
@@ -82,15 +98,15 @@ export interface GUI extends TypedEmitter<GUIEvents> {
   notificationBar: {
     _elementIsVisible: boolean
     currentOpenedId: string
-    dialogs: Record<string, ChildDialog>
+    dialogs: Record<string, GUIDialog>
   }
   windowsContainer: {
-    _childrenList: Array<ChildWUI>
-    getChildren: () => Array<ChildWindow>
+    _childrenList: Array<WUIElement>
+    getChildren: () => Array<GUIWindow>
   }
   menuBar: {
     _icons: {
-      _childrenList: Array<ChildElement>
+      _childrenList: Array<GUIElement>
     }
   }
   challengeIndicator: {
@@ -115,6 +131,10 @@ export interface GUI extends TypedEmitter<GUIEvents> {
   playerData: {
     id: number
     on: (event: 'characterSelectedSuccess', callback: () => void) => void
+    inventory: {
+      maxWeight: number
+      weight: number
+    }
     characters: {
       mainCharacterId: number
       mainCharacter: {

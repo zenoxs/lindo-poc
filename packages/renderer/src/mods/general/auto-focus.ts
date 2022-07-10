@@ -1,4 +1,4 @@
-import { ChildWindow, ChildWindowEvents, DofusWindow, WindowOpenEvent } from '@/dofus-window'
+import { GUIWindow, GUIWindowEvents, DofusWindow, WindowOpenEvent } from '@/dofus-window'
 import { RootStore } from '@/store'
 import { TranslationFunctions } from '@lindo/i18n'
 import { EventManager } from '../helpers'
@@ -36,11 +36,11 @@ export class AutoFocusMod extends Mod {
     this._onOpen(social, (e) => this._focusInput(e.tabId))
   }
 
-  private _onOpen(window: ChildWindow, listener: (e: WindowOpenEvent) => void) {
-    this.eventManager.on<ChildWindowEvents, 'open'>(window, 'open', listener)
+  private _onOpen(window: GUIWindow, listener: (e: WindowOpenEvent) => void) {
+    this.eventManager.on<GUIWindowEvents, 'open'>(window, 'open', listener)
   }
 
-  private _getWindowById(id: ChildWindow['id']) {
+  private _getWindowById(id: GUIWindow['id']) {
     const window = this.wGame.gui.windowsContainer.getChildren().find((e) => e.id === id)
     if (!window) {
       throw new Error("Can't find the window id " + id)

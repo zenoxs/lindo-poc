@@ -39,6 +39,11 @@ export interface ChallengeInfoMessage {
   challengeId: number
 }
 
+export interface InventoryWeightMessage {
+  weightMax: number
+  weight: number
+}
+
 export type ConnectionManagerEvents = {
   ChallengeInfoMessage: (msg: ChallengeInfoMessage) => void
   GameFightEndMessage: () => void
@@ -55,6 +60,7 @@ export type ConnectionManagerEvents = {
   GameFightTurnStartMessage: () => void
   GameFightTurnEndMessage: () => void
   GameActionFightLifePointsGainMessage: () => void
+  InventoryWeightMessage: (msg: InventoryWeightMessage) => void
 }
 
 export interface ConnectionManager extends TypedEmitter<ConnectionManagerEvents> {}
