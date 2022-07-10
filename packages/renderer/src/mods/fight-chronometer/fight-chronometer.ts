@@ -13,7 +13,7 @@ export class FightChronometerMod extends Mod {
   private chronometerInitialized: boolean = false
   private eventManager = new EventManager()
   private settingDisposer: () => void
-  private chronometerInterval?: NodeJS.Timeout
+  private chronometerInterval?: number
   private chronometerContainer?: HTMLDivElement
 
   constructor(wGame: DofusWindow, rootStore: RootStore, LL: TranslationFunctions) {
@@ -96,9 +96,9 @@ export class FightChronometerMod extends Mod {
      * & to allow chronometer to count if activated mid game (missing start event)
      * */
     try {
-      this.chronometerInterval = setInterval(() => {
+      this.chronometerInterval = window.setInterval(() => {
         if (this.wGame.gui.fightManager.fightState !== 1) {
-          return clearInterval(this.chronometerInterval)
+          return window.clearInterval(this.chronometerInterval)
         }
 
         if (this.chronometerContainer)
@@ -111,7 +111,7 @@ export class FightChronometerMod extends Mod {
 
   private clear() {
     try {
-      clearInterval(this.chronometerInterval)
+      window.clearInterval(this.chronometerInterval)
       if (this.chronometerContainer) this.chronometerContainer.innerHTML = '00:00:00'
     } catch (ex) {
       console.error(ex)
