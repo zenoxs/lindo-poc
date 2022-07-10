@@ -5,7 +5,7 @@ import { observe } from 'mobx'
 import { EventManager } from '../helpers'
 import { Mod } from '../mod'
 
-export class ChallPercentMod extends Mod {
+export class ChallengePercentMod extends Mod {
   private stylesheet?: HTMLStyleElement
   private eventManager = new EventManager()
   private settingDisposer: () => void
@@ -28,7 +28,7 @@ export class ChallPercentMod extends Mod {
   }
 
   private start(): void {
-    console.info('- enable challPercent')
+    console.info('- enable challengePercent')
     this.stylesheet = window.document.createElement('style')
     this.stylesheet.id = 'ChallPercent'
     this.stylesheet.innerHTML = `
