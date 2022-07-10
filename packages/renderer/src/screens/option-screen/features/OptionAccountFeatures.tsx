@@ -1,12 +1,12 @@
 import React from 'react'
-import { Box, Checkbox, FormControl, FormControlLabel } from '@mui/material'
+import { Box } from '@mui/material'
 import { Observer } from 'mobx-react-lite'
-import { useI18nContext } from '@lindo/i18n'
-import { useStores } from '@/store'
+// import { useI18nContext } from '@lindo/i18n'
+// import { useStores } from '@/store'
 
 export const OptionAccountFeatures = () => {
-  const { LL } = useI18nContext()
-  const { optionStore } = useStores()
+  // const { LL } = useI18nContext()
+  // const { optionStore } = useStores()
 
   return (
     <Observer>
