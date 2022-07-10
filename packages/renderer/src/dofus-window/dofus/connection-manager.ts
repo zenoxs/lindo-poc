@@ -44,6 +44,19 @@ export interface InventoryWeightMessage {
   weight: number
 }
 
+export interface StatedElementUpdatedMessage {
+  statedElement: {
+    elementId: number
+    elementCellId: number
+  }
+}
+
+export interface InteractiveUsedMessage {
+  elemId: number
+  entityId: number
+  duration: number
+}
+
 export type ConnectionManagerEvents = {
   ChallengeInfoMessage: (msg: ChallengeInfoMessage) => void
   GameFightEndMessage: () => void
@@ -61,6 +74,9 @@ export type ConnectionManagerEvents = {
   GameFightTurnEndMessage: () => void
   GameActionFightLifePointsGainMessage: () => void
   InventoryWeightMessage: (msg: InventoryWeightMessage) => void
+  StatedElementUpdatedMessage: (msg: StatedElementUpdatedMessage) => void
+  InteractiveUsedMessage: (msg: InteractiveUsedMessage) => void
+  InteractiveUseEndedMessage: () => void
 }
 
 export interface ConnectionManager extends TypedEmitter<ConnectionManagerEvents> {}

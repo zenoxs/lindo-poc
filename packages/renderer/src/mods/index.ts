@@ -3,6 +3,7 @@ import { DamageEstimatorMod } from './damage-estimator'
 import { FightChronometerMod } from './fight-chronometer'
 import { GENERAL_MODS } from './general'
 import { GripPositionSaveMod } from './grip-position-save'
+import { HarvestBarMod } from './harvest-bar'
 import { HealthBarMod } from './health-bar'
 import { NotificationsMod } from './notifications'
 import { ShortcutsMod } from './shortcuts'
@@ -17,6 +18,7 @@ export * from './fight-chronometer'
 export * from './vertical-timeline'
 export * from './general'
 export * from './grip-position-save'
+export * from './harvest-bar'
 
 export const MODS = [
   ShortcutsMod,
@@ -27,5 +29,6 @@ export const MODS = [
   FightChronometerMod,
   VerticalTimelineMod,
   GripPositionSaveMod,
+  HarvestBarMod,
   ...GENERAL_MODS
 ] as const

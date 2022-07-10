@@ -26,4 +26,9 @@ export interface PlayerData extends TypedEmitter<PlayerDataEvents> {
       >
     }
   }
+  characterBaseInformations: {
+    id: number
+    name: string
+    entityLook: unknown
+  }
 }

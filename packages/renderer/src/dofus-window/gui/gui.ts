@@ -1,11 +1,9 @@
 import TypedEmitter from 'typed-emitter'
 import { Actor } from '../iso-engine'
-import { CharacterStats } from './character-stats'
 import { Chat } from './chat'
 import { FightManager } from './fight-manager'
 import { PlayerData } from './player-data'
 import { Scroller } from './scroller'
-import { Spell } from './spell'
 
 export interface GUIElement {
   tap: () => void
