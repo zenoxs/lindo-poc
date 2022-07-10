@@ -28,7 +28,7 @@ export class ChallPercentMod extends Mod {
   }
 
   private start(): void {
-    console.info('- enable ChallPercent')
+    console.info('- enable challPercent')
     this.stylesheet = window.document.createElement('style')
     this.stylesheet.id = 'ChallPercent'
     this.stylesheet.innerHTML = `

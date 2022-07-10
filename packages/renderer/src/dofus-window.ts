@@ -253,6 +253,27 @@ export interface ChallengeIcon {
   xpBonus: number
 }
 
+export interface ScrollerOption {
+  scrollX: boolean
+  scrollY: boolean
+}
+
+export interface ScrollerIndicator {
+  options: {
+    listenY: boolean
+    listenX: boolean
+  }
+  wrapper: HTMLDivElement
+}
+
+export interface Scroller {
+  iScroll: {
+    options: ScrollerOption
+    indicators: Array<ScrollerIndicator>
+    refresh: () => void
+  }
+}
+
 export interface GUI extends TypedEmitter<GUIEvents> {
   _resizeUi: () => void
   notificationBar: {
@@ -332,6 +353,10 @@ export interface GUI extends TypedEmitter<GUIEvents> {
     fightControlButtons: {
       toggleReadyForFight: () => void
     }
+    fighterList: {
+      rootElement: HTMLDivElement
+    }
+    fighterListScroller: Scroller
   }
   chat: {
     active: boolean

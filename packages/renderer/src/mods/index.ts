@@ -4,6 +4,7 @@ import { FightChronometerMod } from './fight-chronometer'
 import { HealthBarMod } from './health-bar'
 import { NotificationsMod } from './notifications'
 import { ShortcutsMod } from './shortcuts'
+import { VerticalTimelineMod } from './vertical-timeline'
 
 export * from './shortcuts'
 export * from './notifications'
@@ -11,6 +12,7 @@ export * from './damage-estimator'
 export * from './chall-percent'
 export * from './health-bar'
 export * from './fight-chronometer'
+export * from './vertical-timeline'
 
 export const MODS = [
   ShortcutsMod,
@@ -18,5 +20,6 @@ export const MODS = [
   DamageEstimatorMod,
   ChallPercentMod,
   HealthBarMod,
-  FightChronometerMod
+  FightChronometerMod,
+  VerticalTimelineMod
 ] as const
