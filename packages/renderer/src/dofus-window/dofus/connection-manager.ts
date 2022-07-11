@@ -1,11 +1,6 @@
 import TypedEmitter from 'typed-emitter'
 import { GameRolePlayActor } from '../iso-engine'
 
-export interface Guild {
-  id: string
-  guildName: string
-}
-
 export interface ChatMessage {
   channel: number
   senderName: string
@@ -25,7 +20,10 @@ export interface TextInformationMessage {
 }
 
 export interface TaxMessage {
-  guild: Guild
+  guild: {
+    id: string
+    guildName: string
+  }
   worldX: number
   worldY: number
   enrichData: {
