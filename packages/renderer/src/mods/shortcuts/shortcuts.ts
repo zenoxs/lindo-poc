@@ -18,7 +18,18 @@ interface ValueDidChange {
 }
 export class ShortcutsMod extends Mod {
   private readonly _disposers: Array<Lambda> = []
-  private readonly _shortcuts = new Shortcuts({ target: this.wGame.document })
+  private readonly _shortcuts = new Shortcuts({
+    target: this.wGame.document,
+    shouldHandleEvent: (event) => {
+      // don't apply the shortcut if the user is on a input (like chat)
+      const target = event.target as HTMLElement
+      if (target.nodeName.toLocaleLowerCase() === 'input') {
+        return false
+      }
+      return !event.defaultPrevented
+    }
+  })
+
   private readonly _mover: Mover
 
   constructor(wGame: DofusWindow, rootStore: RootStore, LL: TranslationFunctions) {
