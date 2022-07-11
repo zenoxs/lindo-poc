@@ -2,7 +2,8 @@ import { ConnectionManagerEvents, DofusWindow, GUIEvents } from '@/dofus-window'
 import { RootStore } from '@/store'
 import { TranslationFunctions } from '@lindo/i18n'
 import { observe } from 'mobx'
-import { EventManager } from '../helpers'
+import { Shortcuts } from 'shortcuts'
+import { EventManager, ignoreKeyboardEvent } from '../helpers'
 import { Mod } from '../mod'
 import { Bar } from './bar'
 
@@ -10,6 +11,17 @@ export class HealthBarMod extends Mod {
   private bars: { [fighterId: number]: Bar } = {}
   private rendered: boolean = true
   private settingDisposer: () => void
+  private readonly _shortcuts = new Shortcuts({
+    target: this.wGame.document,
+    shouldHandleEvent: (event) => {
+      // don't apply the shortcut if the user is on a input (like chat)
+      if (ignoreKeyboardEvent(event)) {
+        return false
+      }
+      return !event.defaultPrevented
+    }
+  })
+
   private _disposers: Array<() => void> = []
   private _eventManager = new EventManager()
 
@@ -39,7 +51,23 @@ export class HealthBarMod extends Mod {
 
     this.updateHealthBars()
 
-    // this.shortcutsHelper.bind(this.settings.option.vip.general.health_bar_shortcut, () => this.toggleRendering())
+    const shortcutDisposer = observe(
+      this.rootStore.hotkeyStore.gameMod,
+      'toggleHealthBar',
+      () => {
+        this._shortcuts.reset()
+        this._shortcuts.add({
+          shortcut: this.rootStore.hotkeyStore.gameMod.toggleHealthBar,
+          handler: (e) => {
+            e.preventDefault()
+            this.toggleRendering()
+            return true
+          }
+        })
+      },
+      true
+    )
+    this._disposers.push(shortcutDisposer)
   }
 
   /**
