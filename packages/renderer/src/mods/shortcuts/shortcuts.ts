@@ -23,7 +23,8 @@ export class ShortcutsMod extends Mod {
     shouldHandleEvent: (event) => {
       // don't apply the shortcut if the user is on a input (like chat)
       const target = event.target as HTMLElement
-      if (target.nodeName.toLocaleLowerCase() === 'input') {
+      const tagName = target.tagName
+      if (tagName === 'INPUT' || tagName === 'SELECT' || tagName === 'TEXTAREA') {
         return false
       }
       return !event.defaultPrevented
