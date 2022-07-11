@@ -7,6 +7,7 @@ import { HarvestBarMod } from './harvest-bar'
 import { HealthBarMod } from './health-bar'
 import { JobXPMod } from './job-xp'
 import { MerchantMod } from './merchant'
+import { MonsterTooltipMod } from './monster-tooltip'
 import { NotificationsMod } from './notifications'
 import { ShortcutsMod } from './shortcuts'
 import { VerticalTimelineMod } from './vertical-timeline'
@@ -23,6 +24,7 @@ export * from './grip-position-save'
 export * from './harvest-bar'
 export * from './job-xp'
 export * from './merchant'
+export * from './monster-tooltip'
 
 export const MODS = [
   ShortcutsMod,
@@ -36,5 +38,6 @@ export const MODS = [
   HarvestBarMod,
   JobXPMod,
   MerchantMod,
+  MonsterTooltipMod,
   ...GENERAL_MODS
 ] as const

@@ -10,7 +10,7 @@ import {
 import { RootStore } from '@/store'
 import { TranslationFunctions } from '@lindo/i18n'
 import { observe } from 'mobx'
-import { EventManager } from '../helpers'
+import { EventManager, ignoreKeyboardEvent } from '../helpers'
 import { Mod } from '../mod'
 
 type TooltipData = {
@@ -43,8 +43,8 @@ const toInt = (e: number) => {
 export class MonsterTooltipMod extends Mod {
   private visible = false
   private monsterGroups: Array<GameRolePlayGroupMonsterInformations> = []
-
   private settingDisposer: () => void
+  private shortcutDisposer?: () => void
   private eventManager = new EventManager()
 
   private static partySizeModifier = {
@@ -85,8 +85,17 @@ export class MonsterTooltipMod extends Mod {
   private start(): void {
     console.info('- Enabled MonsterTooltip')
 
-    // this.wGame.addEventListener('keydown', (e) => this.onKeyEvent(e))
-    // this.wGame.addEventListener('keyup', (e) => this.onKeyEvent(e))
+    const onKeyEvent = (event: KeyboardEvent) => {
+      this.onKeyEvent(event)
+    }
+
+    this.wGame.addEventListener('keydown', onKeyEvent)
+    this.wGame.addEventListener('keyup', onKeyEvent)
+
+    this.shortcutDisposer = () => {
+      this.wGame.removeEventListener('keydown', onKeyEvent)
+      this.wGame.removeEventListener('keyup', onKeyEvent)
+    }
 
     const monsterTooltipCss = document.createElement('style')
     monsterTooltipCss.id = 'monsterTooltipCss'
@@ -412,12 +421,16 @@ export class MonsterTooltipMod extends Mod {
     this.show()
   }
 
-  //   private onKeyEvent(event: any) {
-  //     if (event.key == this.params.monster_tooltip_shortcut) {
-  //       if (event.type === 'keydown') this.show()
-  //       else if (event.type === 'keyup') this.hide()
-  //     }
-  //   }
+  private onKeyEvent(event: KeyboardEvent) {
+    if (ignoreKeyboardEvent(event)) {
+      return
+    }
+    // TODO use shortcut settings
+    if (event.key.toUpperCase() === 'P') {
+      if (event.type === 'keydown') this.show()
+      else if (event.type === 'keyup') this.hide()
+    }
+  }
 
   private formatNumber(n: number): string {
     return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
@@ -425,11 +438,11 @@ export class MonsterTooltipMod extends Mod {
 
   private stop() {
     this.hide()
+    if (this.shortcutDisposer) this.shortcutDisposer()
   }
 
   public destroy() {
-    // this.wGame.removeEventListener('keydown', this.onKeyEvent)
-    // this.wGame.removeEventListener('keyup', this.onKeyEvent)
     this.stop()
+    this.settingDisposer()
   }
 }

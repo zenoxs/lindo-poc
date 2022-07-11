@@ -5,6 +5,7 @@ import { GameInterfaceHotkey } from '@lindo/shared'
 import { IArrayDidChange, IObjectDidChange, Lambda, observe } from 'mobx'
 import { IAnyType, IMSTArray } from 'mobx-state-tree'
 import { Shortcuts } from 'shortcuts'
+import { ignoreKeyboardEvent } from '../helpers'
 import { Mod } from '../mod'
 import { Mover } from './mover'
 
@@ -22,9 +23,7 @@ export class ShortcutsMod extends Mod {
     target: this.wGame.document,
     shouldHandleEvent: (event) => {
       // don't apply the shortcut if the user is on a input (like chat)
-      const target = event.target as HTMLElement
-      const tagName = target.tagName
-      if (tagName === 'INPUT' || tagName === 'SELECT' || tagName === 'TEXTAREA') {
+      if (ignoreKeyboardEvent(event)) {
         return false
       }
       return !event.defaultPrevented
