@@ -756,21 +756,9 @@ type RootTranslation = {
 				 */
 				disableInactivity: string
 				/**
-				 * Activate the display of the job xp need for leveling
-				 */
-				jobsXp: string
-				/**
 				 * Show zaap search filter
 				 */
 				zaapSearchFilter: string
-				/**
-				 * Show map resources
-				 */
-				showResources: string
-				/**
-				 * Activate the display of the remaining time below the resources
-				 */
-				harvestIndicator: string
 			}
 			fight: {
 				/**
@@ -905,6 +893,18 @@ type RootTranslation = {
 				 * Job
 				 */
 				header: string
+				/**
+				 * Show map resources
+				 */
+				showResources: string
+				/**
+				 * Activate the display of the remaining time below the resources
+				 */
+				harvestIndicator: string
+				/**
+				 * Activate the display of the job xp need for leveling
+				 */
+				jobsXp: string
 			}
 			accounts: {
 				/**
@@ -933,7 +933,7 @@ type RootTranslation = {
 			/**
 			 * When a tax collector is attacked
 			 */
-			'tax-collector': string
+			taxCollector: string
 			/**
 			 * When a kolizeum fight is found
 			 */
@@ -941,7 +941,7 @@ type RootTranslation = {
 			/**
 			 * When someone invites you to join a group
 			 */
-			'party-invitation': string
+			partyInvitation: string
 			/**
 			 * When someone aggresses you
 			 */
@@ -949,7 +949,7 @@ type RootTranslation = {
 			/**
 			 * When an item is sold
 			 */
-			'sale-message': string
+			saleMessage: string
 		}
 		about: {
 			/**
@@ -1773,21 +1773,9 @@ export type TranslationFunctions = {
 				 */
 				disableInactivity: () => LocalizedString
 				/**
-				 * Activate the display of the job xp need for leveling
-				 */
-				jobsXp: () => LocalizedString
-				/**
 				 * Show zaap search filter
 				 */
 				zaapSearchFilter: () => LocalizedString
-				/**
-				 * Show map resources
-				 */
-				showResources: () => LocalizedString
-				/**
-				 * Activate the display of the remaining time below the resources
-				 */
-				harvestIndicator: () => LocalizedString
 			}
 			fight: {
 				/**
@@ -1922,6 +1910,18 @@ export type TranslationFunctions = {
 				 * Job
 				 */
 				header: () => LocalizedString
+				/**
+				 * Show map resources
+				 */
+				showResources: () => LocalizedString
+				/**
+				 * Activate the display of the remaining time below the resources
+				 */
+				harvestIndicator: () => LocalizedString
+				/**
+				 * Activate the display of the job xp need for leveling
+				 */
+				jobsXp: () => LocalizedString
 			}
 			accounts: {
 				/**
@@ -1950,7 +1950,7 @@ export type TranslationFunctions = {
 			/**
 			 * When a tax collector is attacked
 			 */
-			'tax-collector': () => LocalizedString
+			taxCollector: () => LocalizedString
 			/**
 			 * When a kolizeum fight is found
 			 */
@@ -1958,7 +1958,7 @@ export type TranslationFunctions = {
 			/**
 			 * When someone invites you to join a group
 			 */
-			'party-invitation': () => LocalizedString
+			partyInvitation: () => LocalizedString
 			/**
 			 * When someone aggresses you
 			 */
@@ -1966,7 +1966,7 @@ export type TranslationFunctions = {
 			/**
 			 * When an item is sold
 			 */
-			'sale-message': () => LocalizedString
+			saleMessage: () => LocalizedString
 		}
 		about: {
 			/**

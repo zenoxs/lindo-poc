@@ -244,10 +244,7 @@ const en: BaseTranslation = {
         hideShop: 'Hide the Shop button',
         activeOpenMenu: 'Open menu when no window is open (ESC)',
         disableInactivity: 'Extend the delay before disconnection for inactivity',
-        jobsXp: 'Activate the display of the job xp need for leveling',
-        zaapSearchFilter: 'Show zaap search filter',
-        showResources: 'Show map resources',
-        harvestIndicator: 'Activate the display of the remaining time below the resources'
+        zaapSearchFilter: 'Show zaap search filter'
       },
       fight: {
         header: 'Fight',
@@ -291,7 +288,10 @@ const en: BaseTranslation = {
         }
       },
       job: {
-        header: 'Job'
+        header: 'Job',
+        showResources: 'Show map resources',
+        harvestIndicator: 'Activate the display of the remaining time below the resources',
+        jobsXp: 'Activate the display of the job xp need for leveling'
       },
       accounts: {
         header: 'Accounts'
@@ -303,11 +303,11 @@ const en: BaseTranslation = {
         'You can receive notifications from the game when the application is on the background. You will be notified:',
       fightTurn: 'When your turn starts (fight)',
       privateMessage: 'By incoming private messages',
-      'tax-collector': 'When a tax collector is attacked',
+      taxCollector: 'When a tax collector is attacked',
       kolizeum: 'When a kolizeum fight is found',
-      'party-invitation': 'When someone invites you to join a group',
+      partyInvitation: 'When someone invites you to join a group',
       aggression: 'When someone aggresses you',
-      'sale-message': 'When an item is sold'
+      saleMessage: 'When an item is sold'
     },
     about: {
       title: 'About',
