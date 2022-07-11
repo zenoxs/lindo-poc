@@ -329,6 +329,40 @@ export const OptionShortcuts = () => {
                   </Grid>
                 </Grid>
               </TabPanel>
+              <TabPanel value={value} index={5}>
+                <Grid component='form' noValidate autoComplete='off' container spacing={1} margin={0}>
+                  <Grid item xs={4}>
+                    <Stack spacing={2}>
+                      <ShortcutInput
+                        id='monster-tooltip-hotkey'
+                        label={LL.option.shortcuts.mods.monsterTooltip()}
+                        value={hotkeyStore.gameMod.monsterTooltip}
+                        onChange={hotkeyStore.gameMod.setMonsterTooltip}
+                      />
+                    </Stack>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Stack spacing={2}>
+                      <ShortcutInput
+                        id='map-resources-hotkey'
+                        label={LL.option.shortcuts.mods.mapResources()}
+                        value={hotkeyStore.gameMod.mapResources}
+                        onChange={hotkeyStore.gameMod.setMapResources}
+                      />
+                    </Stack>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Stack spacing={2}>
+                      <ShortcutInput
+                        id='health-bar-hotkey'
+                        label={LL.option.shortcuts.mods.healthBar()}
+                        value={hotkeyStore.gameMod.toggleHealthBar}
+                        onChange={hotkeyStore.gameMod.setToggleHealthBar}
+                      />
+                    </Stack>
+                  </Grid>
+                </Grid>
+              </TabPanel>
             </Box>
             <Typography marginTop={2}>{LL.option.shortcuts.information()}</Typography>
           </Box>

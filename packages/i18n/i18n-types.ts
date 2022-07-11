@@ -718,15 +718,15 @@ type RootTranslation = {
 				/**
 				 * Show/hide map resources
 				 */
-				'show-resources': string
+				mapResources: string
 				/**
 				 * Show/hide life bars
 				 */
-				'health-bar': string
+				healthBar: string
 				/**
 				 * Show/hide monsters tooltip
 				 */
-				'monster-tooltip': string
+				monsterTooltip: string
 			}
 			/**
 			 * You can use special keys CTRL, SHIFT, SPACE, ALT/CMD You can specify your shortcut by pressing the desired keys at the same time after selecting the input
@@ -1755,15 +1755,15 @@ export type TranslationFunctions = {
 				/**
 				 * Show/hide map resources
 				 */
-				'show-resources': () => LocalizedString
+				mapResources: () => LocalizedString
 				/**
 				 * Show/hide life bars
 				 */
-				'health-bar': () => LocalizedString
+				healthBar: () => LocalizedString
 				/**
 				 * Show/hide monsters tooltip
 				 */
-				'monster-tooltip': () => LocalizedString
+				monsterTooltip: () => LocalizedString
 			}
 			/**
 			 * You can use special keys CTRL, SHIFT, SPACE, ALT/CMD You can specify your shortcut by pressing the desired keys at the same time after selecting the input

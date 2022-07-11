@@ -425,8 +425,7 @@ export class MonsterTooltipMod extends Mod {
     if (ignoreKeyboardEvent(event)) {
       return
     }
-    // TODO use shortcut settings
-    if (event.key.toUpperCase() === 'P') {
+    if (event.key.toUpperCase() === this.rootStore.hotkeyStore.gameMod.monsterTooltip.toUpperCase()) {
       if (event.type === 'keydown') this.show()
       else if (event.type === 'keyup') this.hide()
     }
