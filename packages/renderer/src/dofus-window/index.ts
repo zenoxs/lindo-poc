@@ -2,7 +2,7 @@ import { CharacterDisplayClass } from './character-display'
 import { Config } from './config'
 import { Dofus } from './dofus'
 import { GUI } from './gui'
-import { IsoEngine } from './iso-engine'
+import { ActorManager, IsoEngine } from './iso-engine'
 
 export * from './dofus'
 export * from './gui'
@@ -21,6 +21,7 @@ export interface DofusWindow extends Window {
   }
   gui: GUI
   isoEngine: IsoEngine
+  actorManager: ActorManager
   CharacterDisplay: CharacterDisplayClass
   Config: Config
 }

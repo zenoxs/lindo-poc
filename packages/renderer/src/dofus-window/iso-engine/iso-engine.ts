@@ -1,5 +1,5 @@
-import { Actor } from './actor'
-import { MapCell, MapDirection, OccupiedCells } from './map'
+import { ActorManager } from './actor-manager'
+import { MapCell, MapDirection } from './map'
 
 export interface IsoEngine {
   background: {
@@ -39,10 +39,5 @@ export interface IsoEngine {
       }
     }
   }
-  actorManager: {
-    getActor: (userId: number) => Actor
-    userId: number
-    userActor: Actor
-    _occupiedCells: OccupiedCells
-  }
+  actorManager: ActorManager
 }

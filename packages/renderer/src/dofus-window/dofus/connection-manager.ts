@@ -1,4 +1,5 @@
 import TypedEmitter from 'typed-emitter'
+import { Actor } from '../iso-engine'
 
 export interface Guild {
   id: string
@@ -63,13 +64,27 @@ export interface JobExperienceUpdateMessage {
   }
 }
 
+export interface MapComplementaryInformationsDataMessage {
+  actors: Array<Actor>
+}
+
+export interface ExchangeStartOkHumanVendorMessage {
+  sellerId: number
+}
+
+export interface GameRolePlayShowActorMessage {
+  informations: {
+    _type: string
+  }
+}
+
 export type ConnectionManagerEvents = {
   ChallengeInfoMessage: (msg: ChallengeInfoMessage) => void
   GameFightEndMessage: () => void
   GameFightStartMessage: () => void
   GameFightLeaveMessage: () => void
   MapComplementaryInformationsWithCoordsMessage: () => void
-  MapComplementaryInformationsDataMessage: () => void
+  MapComplementaryInformationsDataMessage: (msg: MapComplementaryInformationsDataMessage) => void
   ChatServerMessage: (msg: ChatMessage) => void
   TaxCollectorAttackedMessage: (tax: TaxMessage) => void
   GameRolePlayArenaFightPropositionMessage: (e: unknown) => void
@@ -85,6 +100,9 @@ export type ConnectionManagerEvents = {
   InteractiveUseEndedMessage: () => void
   GameFightStartingMessage: () => void
   JobExperienceUpdateMessage: (msg: JobExperienceUpdateMessage) => void
+  ExchangeStartOkHumanVendorMessage: (msg: ExchangeStartOkHumanVendorMessage) => void
+  ExchangeLeaveMessage: () => void
+  GameRolePlayShowActorMessage: (msg: GameRolePlayShowActorMessage) => void
 }
 
 export interface ConnectionManager extends TypedEmitter<ConnectionManagerEvents> {}
