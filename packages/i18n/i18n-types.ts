@@ -1034,6 +1034,16 @@ type RootTranslation = {
 			close: string
 		}
 	}
+	mod: {
+		jobXP: {
+			/**
+			 * {nextLevel} XP missing<br>before level {xp}
+			 * @param {number} nextLevel
+			 * @param {number} xp
+			 */
+			xpMissing: RequiredParams<'nextLevel' | 'xp'>
+		}
+	}
 }
 
 export type TranslationFunctions = {
@@ -2049,6 +2059,14 @@ export type TranslationFunctions = {
 			 * Close
 			 */
 			close: () => LocalizedString
+		}
+	}
+	mod: {
+		jobXP: {
+			/**
+			 * {nextLevel} XP missing<br>before level {xp}
+			 */
+			xpMissing: (arg: { nextLevel: number, xp: number }) => LocalizedString
 		}
 	}
 }

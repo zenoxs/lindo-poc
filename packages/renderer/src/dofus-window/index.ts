@@ -1,4 +1,5 @@
 import { CharacterDisplayClass } from './character-display'
+import { Config } from './config'
 import { Dofus } from './dofus'
 import { GUI } from './gui'
 import { IsoEngine } from './iso-engine'
@@ -21,6 +22,7 @@ export interface DofusWindow extends Window {
   gui: GUI
   isoEngine: IsoEngine
   CharacterDisplay: CharacterDisplayClass
+  Config: Config
 }
 
 export interface HTMLIFrameElementWithDofus extends HTMLIFrameElement {

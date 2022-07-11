@@ -342,6 +342,12 @@ const en: BaseTranslation = {
       confirm: 'I confirm',
       close: 'Close'
     }
+  },
+  // MODS Texts
+  mod: {
+    jobXP: {
+      xpMissing: '{nextLevel: number} XP missing<br>before level {xp: number}'
+    }
   }
 }
 

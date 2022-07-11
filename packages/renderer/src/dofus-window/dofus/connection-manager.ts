@@ -57,6 +57,12 @@ export interface InteractiveUsedMessage {
   duration: number
 }
 
+export interface JobExperienceUpdateMessage {
+  experiencesUpdate: {
+    jobXpNextLevelFloor: number
+  }
+}
+
 export type ConnectionManagerEvents = {
   ChallengeInfoMessage: (msg: ChallengeInfoMessage) => void
   GameFightEndMessage: () => void
@@ -77,6 +83,8 @@ export type ConnectionManagerEvents = {
   StatedElementUpdatedMessage: (msg: StatedElementUpdatedMessage) => void
   InteractiveUsedMessage: (msg: InteractiveUsedMessage) => void
   InteractiveUseEndedMessage: () => void
+  GameFightStartingMessage: () => void
+  JobExperienceUpdateMessage: (msg: JobExperienceUpdateMessage) => void
 }
 
 export interface ConnectionManager extends TypedEmitter<ConnectionManagerEvents> {}
