@@ -1,5 +1,4 @@
 import TypedEmitter from 'typed-emitter'
-import { Actor } from '../iso-engine'
 import { Chat } from './chat'
 import { FightManager } from './fight-manager'
 import { PlayerData } from './player-data'
@@ -76,13 +75,20 @@ export interface Slot extends TypedEmitter<SlotEvents> {
   tap: () => void
 }
 
+export interface GameFightTurnStartMessage {
+  id: number
+  waitTime: number
+  _isInitialized: false
+  _messageType: 'GameFightTurnStartMessage'
+}
+
 export type GUIEvents = {
   disconnect: () => void
   resize: () => void
   spellSlotSelected: (spellId: number) => void
   spellSlotDeselected: () => void
   GameActionFightDeathMessage: (event: { targetId: number }) => void
-  GameFightTurnStartMessage: (actor: Actor) => void
+  GameFightTurnStartMessage: (msg: GameFightTurnStartMessage) => void
   GameFightOptionStateUpdateMessage: () => void
   GameActionFightLifePointsLostMessage: () => void
   GameActionFightLifeAndShieldPointsLostMessage: () => void

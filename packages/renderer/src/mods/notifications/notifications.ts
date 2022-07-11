@@ -1,8 +1,8 @@
 import {
-  Actor,
   ChatMessage,
   ConnectionManagerEvents,
   DofusWindow,
+  GameFightTurnStartMessage,
   GameRolePlayAggressionMessage,
   GUIEvents,
   PartyInvitationMessage,
@@ -44,8 +44,8 @@ export class NotificationsMod extends Mod {
     this._eventManager.on<GUIEvents, 'GameFightTurnStartMessage'>(
       this.wGame.gui,
       'GameFightTurnStartMessage',
-      (actor) => {
-        this._sendFightTurnNotif(actor)
+      (msg) => {
+        this._sendFightTurnNotif(msg)
       }
     )
 
@@ -104,8 +104,8 @@ export class NotificationsMod extends Mod {
     }
   }
 
-  private _sendFightTurnNotif(actor: Actor) {
-    if (!this.wGame.document.hasFocus() && this.wGame.gui.playerData.characterBaseInformations.id === actor.id) {
+  private _sendFightTurnNotif(msg: GameFightTurnStartMessage) {
+    if (!this.wGame.document.hasFocus() && this.wGame.gui.playerData.characterBaseInformations.id === msg.id) {
       if (this.rootStore.optionStore.gameNotification.fightTurn) {
         this.eventEmitter.emit('notification')
 

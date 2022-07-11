@@ -1043,6 +1043,16 @@ type RootTranslation = {
 			 */
 			xpMissing: RequiredParams<'nextLevel' | 'xp'>
 		}
+		monsterTooltip: {
+			/**
+			 * Level
+			 */
+			level: string
+			/**
+			 * Group
+			 */
+			group: string
+		}
 	}
 }
 
@@ -2067,6 +2077,16 @@ export type TranslationFunctions = {
 			 * {nextLevel} XP missing<br>before level {xp}
 			 */
 			xpMissing: (arg: { nextLevel: number, xp: number }) => LocalizedString
+		}
+		monsterTooltip: {
+			/**
+			 * Level
+			 */
+			level: () => LocalizedString
+			/**
+			 * Group
+			 */
+			group: () => LocalizedString
 		}
 	}
 }

@@ -1,3 +1,4 @@
+import { EntityDispositionInformations } from '@/dofus-window/iso-engine/actor'
 import TypedEmitter from 'typed-emitter'
 import { CharacterStats } from '../character-stats'
 import { SpellBuff } from '../spell'
@@ -10,9 +11,7 @@ export interface Fighter {
   data: {
     teamId: number
     alive: boolean
-    disposition: {
-      cellId: number
-    }
+    disposition: EntityDispositionInformations
     stats: CharacterStats
   }
 }

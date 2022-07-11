@@ -1,5 +1,5 @@
 import TypedEmitter from 'typed-emitter'
-import { Actor } from '../iso-engine'
+import { GameRolePlayActor } from '../iso-engine'
 
 export interface Guild {
   id: string
@@ -65,7 +65,7 @@ export interface JobExperienceUpdateMessage {
 }
 
 export interface MapComplementaryInformationsDataMessage {
-  actors: Array<Actor>
+  actors: Array<GameRolePlayActor>
 }
 
 export interface ExchangeStartOkHumanVendorMessage {
@@ -73,9 +73,16 @@ export interface ExchangeStartOkHumanVendorMessage {
 }
 
 export interface GameRolePlayShowActorMessage {
-  informations: {
-    _type: string
-  }
+  informations: GameRolePlayActor
+}
+
+export interface GameMapMovementMessage {
+  actorId: number
+  keyMovements: Array<number>
+}
+
+export interface GameContextRemoveElementMessage {
+  id: number
 }
 
 export type ConnectionManagerEvents = {
@@ -103,6 +110,8 @@ export type ConnectionManagerEvents = {
   ExchangeStartOkHumanVendorMessage: (msg: ExchangeStartOkHumanVendorMessage) => void
   ExchangeLeaveMessage: () => void
   GameRolePlayShowActorMessage: (msg: GameRolePlayShowActorMessage) => void
+  GameMapMovementMessage: (msg: GameMapMovementMessage) => void
+  GameContextRemoveElementMessage: (msg: GameContextRemoveElementMessage) => void
 }
 
 export interface ConnectionManager extends TypedEmitter<ConnectionManagerEvents> {}

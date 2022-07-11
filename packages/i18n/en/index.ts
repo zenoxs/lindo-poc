@@ -347,6 +347,10 @@ const en: BaseTranslation = {
   mod: {
     jobXP: {
       xpMissing: '{nextLevel: number} XP missing<br>before level {xp: number}'
+    },
+    monsterTooltip: {
+      level: 'Level',
+      group: 'Group'
     }
   }
 }

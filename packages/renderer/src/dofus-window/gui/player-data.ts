@@ -55,6 +55,7 @@ export interface PlayerData extends TypedEmitter<PlayerDataEvents> {
     maxWeight: number
     weight: number
   }
+  partyData: {}
   characters: {
     mainCharacterId: number
     mainCharacter: {
