@@ -1,4 +1,12 @@
-import { Actor, ConnectionManagerEvents, DofusWindow, MonsterActor } from '@/dofus-window'
+import {
+  ConnectionManagerEvents,
+  DofusWindow,
+  GameRolePlayGroupMonsterInformations,
+  MonsterInGroupAlternativeInformations,
+  MonsterInGroupInformations,
+  MonsterInGroupLightInformations,
+  PartyFrom
+} from '@/dofus-window'
 import { RootStore } from '@/store'
 import { TranslationFunctions } from '@lindo/i18n'
 import { observe } from 'mobx'
@@ -13,7 +21,7 @@ type TooltipData = {
   soloXp: number
   partyXp: number
   bonusPackActive: boolean
-  monsters: any[]
+  monsters: Array<MonsterInGroupInformations | MonsterInGroupLightInformations>
 }
 
 export interface Monster {
@@ -34,7 +42,7 @@ const toInt = (e: number) => {
 
 export class MonsterTooltipMod extends Mod {
   private visible = false
-  private monsterGroups: Array<MonsterActor> = []
+  private monsterGroups: Array<GameRolePlayGroupMonsterInformations> = []
 
   private settingDisposer: () => void
   private eventManager = new EventManager()
@@ -104,7 +112,7 @@ export class MonsterTooltipMod extends Mod {
       ({ actors }) => {
         this.monsterGroups = actors.filter(
           (actor) => actor._type === 'GameRolePlayGroupMonsterInformations'
-        ) as Array<MonsterActor>
+        ) as Array<GameRolePlayGroupMonsterInformations>
         this.update()
       }
     )
@@ -233,7 +241,9 @@ export class MonsterTooltipMod extends Mod {
     return this.wGame.document.getElementById(`lindo__TooltipBox${data.id}`)!
   }
 
-  private getReduceAndSortMonsters(monsters: Array<MonsterActor>): Monster[] {
+  private getReduceAndSortMonsters(
+    monsters: Array<MonsterInGroupInformations | MonsterInGroupLightInformations>
+  ): Monster[] {
     const result: Monster[] = []
 
     monsters.forEach((monster) => {
@@ -255,34 +265,35 @@ export class MonsterTooltipMod extends Mod {
   }
 
   // FIXME Problems with formula
-  private getTooltipData(group: MonsterActor): TooltipData {
+  private getTooltipData(group: GameRolePlayGroupMonsterInformations): TooltipData {
     // General data
     const { partyData, characterBaseInformations } = this.wGame.gui.playerData
-    const allMonsters: any[] = [group.staticInfos.mainCreatureLightInfos, ...group.staticInfos.underlings]
+    const allMonsters = [group.staticInfos.mainCreatureLightInfos, ...group.staticInfos.underlings]
     const starsCount = Math.min(Math.round(group.ageBonus / 20), 10)
     const redStarsCount = Math.max(starsCount - 5, 0)
     const yellowStarsCount = Math.min(starsCount, 5) - redStarsCount
-    const alternatives: Map<number, any> = new Map()
-    let monsters: any[] = []
+    const alternatives: Map<number, MonsterInGroupAlternativeInformations> = new Map()
+    let monsters: Array<MonsterInGroupInformations | MonsterInGroupLightInformations> = []
     let playerCount: number = 1
     // Party data
-    let party, partyLevels, partyLevel, highestPartyLevel, partySizeExcludingLowLevels, partySizeModifier
+    let party: PartyFrom
+    let partyLevels, partyLevel, partySizeExcludingLowLevels, partySizeModifier
     let partyXp = -1
 
     // Update party data if player has party
-    if (Object.keys(partyData._partyFromId).length > 0) {
+    if (partyData && Object.keys(partyData._partyFromId).length > 0) {
       party = partyData._partyFromId[Object.keys(partyData._partyFromId)[0]]
       partyLevels = [
         characterBaseInformations.level,
         ...Object.keys(party._members).map((id) => party._members[id].level)
       ]
       partyLevel = partyLevels.reduce((total, level) => total + level)
-      highestPartyLevel = partyLevels
+      const highestPartyLevel: number = partyLevels
         .slice()
         .sort((a, b) => (a < b ? -1 : 1))
-        .pop()
+        .pop()!
       partySizeExcludingLowLevels = partyLevels.filter((level) => level >= highestPartyLevel / 3).length
-      partySizeModifier = MonsterTooltip.partySizeModifier[partySizeExcludingLowLevels]
+      partySizeModifier = MonsterTooltipMod.partySizeModifier[partySizeExcludingLowLevels as never]
       playerCount = partyLevels.length
     }
 
@@ -290,9 +301,11 @@ export class MonsterTooltipMod extends Mod {
     if (group.staticInfos.alternatives != null) {
       group.staticInfos.alternatives.forEach((alternative) => alternatives.set(alternative.playerCount, alternative))
 
-      const alternativesMonster: any[] = alternatives.get(MonsterTooltip.alternativeModifier[playerCount]).monsters
+      const alternativesMonster = alternatives.get(
+        MonsterTooltipMod.alternativeModifier[playerCount as never]
+      )!.monsters
       alternativesMonster.forEach((monster) => {
-        const tempMonster = allMonsters.find((m) => m.creatureGenericId == monster.creatureGenericId)
+        const tempMonster = allMonsters.find((m) => m.creatureGenericId === monster.creatureGenericId)!
         allMonsters.splice(allMonsters.indexOf(tempMonster), 1)
         monsters.push(tempMonster)
       })
@@ -302,10 +315,12 @@ export class MonsterTooltipMod extends Mod {
 
     const groupLevel = monsters.reduce((level, monster) => level + monster.staticInfos.level, 0)
     const monstersXp = monsters.reduce((xp, monster) => xp + monster.staticInfos.xp, 0)
-    const highestMonsterLevel = monsters
-      .slice()
-      .sort((a, b) => a.staticInfos.level - b.staticInfos.level)
-      .pop()
+
+    // const highestMonsterLevel = monsters
+    //   .slice()
+    //   .sort((a, b) => a.staticInfos.level - b.staticInfos.level)
+    //   .pop()!
+
     // Get mount, alliance and guild xp modifiers
     const {
       playerData: { guild, id, alliance, position, ...rest }
@@ -315,13 +330,12 @@ export class MonsterTooltipMod extends Mod {
     const xpRatioMount = rest.isRiding ? rest.mountXpRatio || 0 : 0
     const xpGuildGivenPercent = guildInformation.experienceGivenPercent || 0
 
-    if (Object.keys(partyData._partyFromId).length > 0) {
+    if (partyData && Object.keys(partyData._partyFromId).length > 0) {
       partyXp = this.calculateXp(
         monstersXp,
         characterBaseInformations.level,
         partyLevel,
         groupLevel,
-        highestMonsterLevel,
         group.ageBonus,
         partySizeModifier,
         xpAlliancePrismBonusPercent,
@@ -335,7 +349,6 @@ export class MonsterTooltipMod extends Mod {
       characterBaseInformations.level,
       characterBaseInformations.level,
       groupLevel,
-      highestMonsterLevel,
       group.ageBonus,
       1,
       xpAlliancePrismBonusPercent,
@@ -343,7 +356,7 @@ export class MonsterTooltipMod extends Mod {
       xpGuildGivenPercent
     )
 
-    const bonusPackActive = this.wGame.gui.playerData.identification.subscriptionEndDate > Date.now()
+    const bonusPackActive = (this.wGame.gui.playerData.identification.subscriptionEndDate ?? 0) > Date.now()
     return {
       id: group.contextualId,
       monsters,
@@ -359,9 +372,8 @@ export class MonsterTooltipMod extends Mod {
   private calculateXp(
     monstersXp: number,
     playerLevel: number,
-    partyLevel: number,
+    partyLevel: number = 0,
     groupLevel: number,
-    highestMonsterLevel: number,
     ageBonus: number,
     partySizeModifier: number = 1,
     xpAlliancePrismBonusPercent: number = 0,

@@ -29,4 +29,5 @@ export interface CharacterStats {
   strength: number
   agility: number
   intelligence: number
+  wisdom: number
 }

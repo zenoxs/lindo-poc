@@ -39,6 +39,19 @@ export interface MonsterInGroupInformations {
   _type: 'MonsterInGroupInformations'
 }
 
+export interface MonsterInGroupAlternativeInformations {
+  playerCount: number
+  monsters: Array<MonsterInGroupInformations>
+  _type: unknown
+}
+
+export interface GroupMonsterStaticInformations {
+  mainCreatureLightInfos: MonsterInGroupLightInformations
+  underlings: Array<MonsterInGroupInformations>
+  alternatives?: Array<MonsterInGroupAlternativeInformations>
+  _type: 'GroupMonsterStaticInformations'
+}
+
 export interface ActorSchema {
   contextualId: number
   disposition: EntityDispositionInformations
@@ -81,7 +94,7 @@ export interface GameRolePlayGroupMonsterInformations extends ActorSchema {
   keyRingBonus: boolean
   lootShare: number
   scaleLevel: number
-  staticInfos: MonsterInGroupLightInformations
+  staticInfos: GroupMonsterStaticInformations
   _type: 'GameRolePlayGroupMonsterInformations'
 }
 
