@@ -3,7 +3,7 @@ import { MODS, NotificationsMod } from '@/mods'
 import { Mod } from '@/mods/mod'
 import { DofusWindow } from '@/dofus-window'
 import { TranslationFunctions } from '@lindo/i18n'
-import { GameCharacter } from '@lindo/shared'
+import { GameCharacter, SaveCharacterImageArgs } from '@lindo/shared'
 
 export interface ManageGameWindowProps {
   dWindow: DofusWindow
@@ -79,22 +79,29 @@ export const manageGameWindow = ({ dWindow, rootStore, game, LL, character }: Ma
           console.error('Character not found')
         }
       }
-      const characterImage = await new Promise((resolve, reject) => {
+      await new Promise<SaveCharacterImageArgs>((resolve, reject) => {
         let i = 0
         const interval = setInterval(() => {
           if (i > 15) {
             reject(new Error('timeout'))
           }
-          if (characterSelection.characterDisplay.entity) {
+          if (characterSelection.characterDisplay.entity && characterSelection.selectedCharacter) {
             clearInterval(interval)
             const image = characterSelection.characterDisplay.canvas.rootElement.toDataURL('image/png')
-            resolve(image)
+            resolve({ image, name: characterSelection.selectedCharacter.name })
           } else {
             console.log('waiting for character display')
           }
           i++
         }, 100)
       })
+        .then((args) => {
+          window.lindoAPI.saveCharacterImage(args)
+        })
+        .catch((e) => {
+          console.warn('Failed to save character image', e)
+        })
+
       characterSelection.btnPlay.tap()
     }
   }

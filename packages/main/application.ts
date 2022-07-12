@@ -1,15 +1,17 @@
-import { GameContext, IPCEvents, RootStore } from '@lindo/shared'
+import { GameContext, IPCEvents, RootStore, SaveCharacterImageArgs } from '@lindo/shared'
 import { app, ipcMain, Menu } from 'electron'
 import express from 'express'
 import getPort from 'get-port'
 import { Server } from 'http'
 import { observe } from 'mobx'
 import { AddressInfo } from 'net'
-import { GAME_PATH } from './constants'
+import { CHARACTER_IMAGES_PATH, GAME_PATH } from './constants'
+import fs from 'fs-extra'
 import { getAppMenu } from './menu'
 import { MultiAccount } from './multi-account'
 import { runUpdater } from './updater'
 import { GameWindow, OptionWindow } from './windows'
+import path from 'path'
 
 export class Application {
   private static _instance: Application
@@ -23,6 +25,7 @@ export class Application {
     // create express server to serve game file
     const serveGameServer = express()
     serveGameServer.use('/', express.static(GAME_PATH))
+    serveGameServer.use('/character-images', express.static(CHARACTER_IMAGES_PATH))
     const port = await getPort({ port: 3000 })
     const server: Server = serveGameServer.listen(port)
 
@@ -131,6 +134,14 @@ export class Application {
 
     ipcMain.handle(IPCEvents.IS_MASTER_PASSWORD_CONFIGURED, () => {
       return this._multiAccount.isMasterPasswordConfigured()
+    })
+
+    ipcMain.on(IPCEvents.SAVE_CHARACTER_IMAGE, (event, { image, name }: SaveCharacterImageArgs) => {
+      const base64Data = image.replace(/^data:image\/png;base64,/, '')
+      fs.mkdirSync(CHARACTER_IMAGES_PATH, { recursive: true })
+      fs.writeFile(path.join(CHARACTER_IMAGES_PATH, `${name}.png`), base64Data, 'base64', (err) => {
+        console.log(err)
+      })
     })
 
     ipcMain.on(IPCEvents.TOGGLE_MAXIMIZE_WINDOW, (event) => {

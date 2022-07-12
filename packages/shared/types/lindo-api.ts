@@ -1,4 +1,5 @@
 import { IJsonPatch } from 'mobx-state-tree'
+import { SaveCharacterImageArgs } from '../constants'
 import { RootStoreSnapshot } from '../models'
 import { GameContext } from './game-context'
 import { UpdateProgress } from './update-progress'
@@ -30,4 +31,5 @@ export interface LindoAPI {
   // multi account
   saveMasterPassword: (masterPassword: string) => Promise<void>
   isMasterPasswordConfigured: () => Promise<boolean>
+  saveCharacterImage: (args: SaveCharacterImageArgs) => void
 }

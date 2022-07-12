@@ -1,6 +1,7 @@
 import { app } from 'electron'
 
 export const GAME_PATH = app.getPath('userData') + '/game/'
+export const CHARACTER_IMAGES_PATH = app.getPath('userData') + '/character-images/'
 export const DOFUS_ORIGIN = 'https://proxyconnection.touch.dofus.com/'
 export const DOFUS_ITUNES_ORIGIN = 'https://itunes.apple.com/lookup?id=1041406978&t=' + new Date().getTime()
 export const LOCAL_ASSET_MAP_PATH = GAME_PATH + 'assetMap.json'

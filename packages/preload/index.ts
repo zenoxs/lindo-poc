@@ -1,7 +1,15 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron'
 import { domReady } from './utils'
 import { IJsonPatch } from 'mobx-state-tree'
-import { GameContext, IPCEvents, LindoAPI, LindoTitleBar, RootStoreSnapshot, UpdateProgress } from '@lindo/shared'
+import {
+  GameContext,
+  IPCEvents,
+  LindoAPI,
+  LindoTitleBar,
+  RootStoreSnapshot,
+  SaveCharacterImageArgs,
+  UpdateProgress
+} from '@lindo/shared'
 import { Titlebar, Color } from 'custom-electron-titlebar'
 ;(async () => {
   await domReady()
@@ -140,6 +148,10 @@ const isMasterPasswordConfigured = (): Promise<boolean> => {
   return ipcRenderer.invoke(IPCEvents.IS_MASTER_PASSWORD_CONFIGURED)
 }
 
+const saveCharacterImage = (args: SaveCharacterImageArgs) => {
+  ipcRenderer.send(IPCEvents.SAVE_CHARACTER_IMAGE, args)
+}
+
 const lindoApi: LindoAPI = {
   fetchInitialStateAsync,
   resetStore,
@@ -155,6 +167,7 @@ const lindoApi: LindoAPI = {
   focusCurrentWindow,
   closeOptionWindow,
   saveMasterPassword,
-  isMasterPasswordConfigured
+  isMasterPasswordConfigured,
+  saveCharacterImage
 }
 contextBridge.exposeInMainWorld('lindoAPI', lindoApi)
