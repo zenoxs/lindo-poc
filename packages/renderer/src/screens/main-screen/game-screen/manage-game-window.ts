@@ -68,7 +68,7 @@ export const manageGameWindow = ({ dWindow, rootStore, game, LL, character }: Ma
     const characterSelection = dWindow.gui.windowsContainer._childrenList.find((w) => w.id === 'characterSelection')
 
     if (characterSelection && characterSelection.id === 'characterSelection') {
-      if (character) {
+      if (!character) {
         return
       }
       await new Promise((resolve) => setTimeout(resolve, 100))

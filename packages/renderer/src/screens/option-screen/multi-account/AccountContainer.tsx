@@ -3,9 +3,7 @@ import {
   Box,
   Button,
   Card,
-  CardActions,
   CardContent,
-  CardMedia,
   Dialog,
   DialogActions,
   DialogContent,
@@ -20,15 +18,11 @@ import { PasswordElement, TextFieldElement } from 'react-hook-form-mui'
 import { useForm } from 'react-hook-form'
 import React from 'react'
 import { GameCharacterSnapshotIn } from '@lindo/shared'
-import { useGameContext } from '@/providers'
-
-// gui.windowsContainer._childrenList[111].charactersTable._childrenList[1]._childrenList[0].tap()
-// gui.windowsContainer._childrenList[111].btnPlay.tap()
+import { CharacterCard } from './CharacterCard'
 
 export const AccountContainer = () => {
   const theme = useTheme()
   const { optionStore } = useStores()
-  const gameContext = useGameContext()
   const { control, handleSubmit, reset } = useForm<GameCharacterSnapshotIn>()
   const [openAddCharacterDialog, setOpenAddCharacterDialog] = React.useState(false)
 
@@ -54,8 +48,8 @@ export const AccountContainer = () => {
   }
 
   const onSubmit = (data: GameCharacterSnapshotIn) => {
-    console.log(data)
     optionStore.gameMultiAccount.addCharacter(data)
+    handleCloseAddCharacterDialog()
   }
 
   return (
@@ -73,40 +67,7 @@ export const AccountContainer = () => {
           {() => (
             <>
               {optionStore.gameMultiAccount.characters.map((character) => (
-                <Card key={character.name} style={cardStyle}>
-                  <div
-                    style={{
-                      height: '140px',
-                      width: '100%',
-                      overflow: 'hidden',
-                      position: 'relative',
-                      flexShrink: 0
-                    }}
-                  >
-                    <CardMedia
-                      style={{
-                        height: 'auto',
-                        position: 'absolute',
-                        width: '100%',
-                        bottom: '0'
-                      }}
-                      component='img'
-                      image={gameContext.characterImagesSrc + character.name + '.png'}
-                      alt='green iguana'
-                    />
-                  </div>
-                  <CardContent
-                    sx={{ padding: 0, flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-                  >
-                    {character.name}
-                  </CardContent>
-                  <CardActions>
-                    <Button color='error' size='small'>
-                      Delete
-                    </Button>
-                    <Button size='small'>Edit</Button>
-                  </CardActions>
-                </Card>
+                <CharacterCard key={character.id} style={cardStyle} character={character} />
               ))}
             </>
           )}

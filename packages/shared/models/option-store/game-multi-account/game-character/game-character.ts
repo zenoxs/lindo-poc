@@ -1,9 +1,11 @@
 import { Instance, SnapshotIn, SnapshotOut, types } from 'mobx-state-tree'
+import { v4 as uuidv4 } from 'uuid'
 
 /**
  * Model description here for TypeScript hints.
  */
 export const GameCharacterModel = types.model('GameCharacter').props({
+  id: types.optional(types.identifier, () => uuidv4()),
   account: types.string,
   password: types.string,
   name: types.string
