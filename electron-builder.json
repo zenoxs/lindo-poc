@@ -11,6 +11,7 @@
     "dist"
   ],
   "win": {
+    "icon": "resources/icon.ico",
     "target": [
       "zip",
       "portable",
