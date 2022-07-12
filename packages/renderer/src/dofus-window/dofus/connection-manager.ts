@@ -1,24 +1,21 @@
 import TypedEmitter from 'typed-emitter'
-import { GameRolePlayActor } from '../iso-engine'
+import { CharacterBaseInformations, GameRolePlayActor } from '../iso-engine'
 
 export interface ChatMessage {
   channel: number
   senderName: string
   content: string
 }
-
 export interface PartyInvitationMessage {
   fromName: string
 }
 export interface GameRolePlayAggressionMessage {
   defenderId: number
 }
-
 export interface TextInformationMessage {
   msgId: number
   parameters: Array<string>
 }
-
 export interface TaxMessage {
   guild: {
     id: string
@@ -32,55 +29,51 @@ export interface TaxMessage {
     lastName: string
   }
 }
-
 export interface ChallengeInfoMessage {
   xpBonus: number
   challengeId: number
 }
-
 export interface InventoryWeightMessage {
   weightMax: number
   weight: number
 }
-
 export interface StatedElementUpdatedMessage {
   statedElement: {
     elementId: number
     elementCellId: number
   }
 }
-
 export interface InteractiveUsedMessage {
   elemId: number
   entityId: number
   duration: number
 }
-
 export interface JobExperienceUpdateMessage {
   experiencesUpdate: {
     jobXpNextLevelFloor: number
   }
 }
-
 export interface MapComplementaryInformationsDataMessage {
   actors: Array<GameRolePlayActor>
 }
-
 export interface ExchangeStartOkHumanVendorMessage {
   sellerId: number
 }
-
 export interface GameRolePlayShowActorMessage {
   informations: GameRolePlayActor
 }
-
 export interface GameMapMovementMessage {
   actorId: number
   keyMovements: Array<number>
 }
-
 export interface GameContextRemoveElementMessage {
   id: number
+}
+export interface CharactersListMessage {
+  characters: Array<CharacterBaseInformations>
+  _isInitialized: boolean
+  _type: 'CharactersListMessage'
+  hasStartupActions: boolean
 }
 
 export type ConnectionManagerEvents = {
@@ -110,6 +103,7 @@ export type ConnectionManagerEvents = {
   GameRolePlayShowActorMessage: (msg: GameRolePlayShowActorMessage) => void
   GameMapMovementMessage: (msg: GameMapMovementMessage) => void
   GameContextRemoveElementMessage: (msg: GameContextRemoveElementMessage) => void
+  CharactersListMessage: (msg: CharactersListMessage) => void
 }
 
 export interface ConnectionManager extends TypedEmitter<ConnectionManagerEvents> {}

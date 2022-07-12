@@ -5,6 +5,7 @@ import { GameGroupOptionModel } from './game-group-option'
 import { GameJobOptionModel } from './game-job-option'
 import { GameNotificationOptionModel } from './game-notification-option'
 import { WindowOptionModel } from './window-option'
+import { GameMultiAccountModel } from './game-multi-account'
 
 // TODO: remove later only for POC
 
@@ -17,7 +18,8 @@ export const OptionStoreModel = types.model('OptionStore').props({
   gameFight: types.optional(GameFightOptionModel, {}),
   gameGroup: types.optional(GameGroupOptionModel, {}),
   gameJob: types.optional(GameJobOptionModel, {}),
-  gameNotification: types.optional(GameNotificationOptionModel, {})
+  gameNotification: types.optional(GameNotificationOptionModel, {}),
+  gameMultiAccount: types.optional(GameMultiAccountModel, {})
 })
 
 /**

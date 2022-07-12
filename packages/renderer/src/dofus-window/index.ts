@@ -1,13 +1,12 @@
-import { CharacterDisplayClass } from './character-display'
 import { Config } from './config'
 import { Dofus } from './dofus'
-import { GUI } from './gui'
+import { CharacterDisplayClass, GUI } from './gui'
 import { ActorManager, IsoEngine } from './iso-engine'
 
 export * from './dofus'
 export * from './gui'
 export * from './iso-engine'
-export * from './character-display'
+export * from './gui/character-display'
 
 export interface DofusWindow extends Window {
   d: {

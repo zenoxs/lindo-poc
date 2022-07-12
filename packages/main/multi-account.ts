@@ -6,6 +6,11 @@ interface MultiAccountStore {
   isEncrypted: boolean
 }
 
+interface MultiAccountStore {
+  masterPassword: string
+  isEncrypted: boolean
+}
+
 export class MultiAccount {
   private _store = new ElectronStore<MultiAccountStore>()
 

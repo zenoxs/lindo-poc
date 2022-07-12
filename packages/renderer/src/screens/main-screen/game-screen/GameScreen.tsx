@@ -41,7 +41,13 @@ export const GameScreen = memo(({ game }: GameScreenProps) => {
       gameWindow.openDatabase = undefined
       gameWindow.initDofus(() => {
         console.log('initDofus done')
-        manageGameWindow({ dWindow: gameWindow, game, rootStore, LL })
+        manageGameWindow({
+          dWindow: gameWindow,
+          game,
+          rootStore,
+          LL,
+          character: rootStore.optionStore.gameMultiAccount.characters[1]
+        })
       })
     }
   }

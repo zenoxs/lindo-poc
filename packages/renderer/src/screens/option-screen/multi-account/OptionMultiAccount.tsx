@@ -14,6 +14,7 @@ import { PasswordElement, PasswordRepeatElement } from 'react-hook-form-mui'
 import { useForm } from 'react-hook-form'
 import { Observer } from 'mobx-react-lite'
 import { useI18nContext } from '@lindo/i18n'
+import { AccountContainer } from './AccountContainer'
 
 interface PasswordForm {
   password: string
@@ -81,6 +82,9 @@ export const OptionMultiAccount = () => {
                       Remove the password
                     </Button>
                   </Stack>
+                  <Box sx={{ mt: 3 }}>
+                    <AccountContainer />
+                  </Box>
                 </>
               )}
             </Box>

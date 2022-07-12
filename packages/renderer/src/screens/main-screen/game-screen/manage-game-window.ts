@@ -3,15 +3,17 @@ import { MODS, NotificationsMod } from '@/mods'
 import { Mod } from '@/mods/mod'
 import { DofusWindow } from '@/dofus-window'
 import { TranslationFunctions } from '@lindo/i18n'
+import { GameCharacter } from '@lindo/shared'
 
 export interface ManageGameWindowProps {
   dWindow: DofusWindow
   game: Game
   rootStore: RootStore
   LL: TranslationFunctions
+  character?: GameCharacter
 }
 
-export const manageGameWindow = ({ dWindow, rootStore, game, LL }: ManageGameWindowProps) => {
+export const manageGameWindow = ({ dWindow, rootStore, game, LL, character }: ManageGameWindowProps) => {
   const mods: Array<Mod> = []
 
   const startMods = () => {
@@ -62,6 +64,42 @@ export const manageGameWindow = ({ dWindow, rootStore, game, LL }: ManageGameWin
     }
   }
 
+  const handleCharactersListMessage = async () => {
+    const characterSelection = dWindow.gui.windowsContainer._childrenList.find((w) => w.id === 'characterSelection')
+
+    if (characterSelection && characterSelection.id === 'characterSelection') {
+      if (character) {
+        await new Promise((resolve) => setTimeout(resolve, 100))
+        const row = characterSelection.charactersTable.content._childrenList.find(
+          (c) => c.data?.name === character.name
+        )
+        if (row) {
+          row.tap()
+        } else {
+          console.error('Character not found')
+        }
+      }
+      const characterImage = await new Promise((resolve, reject) => {
+        let i = 0
+        const interval = setInterval(() => {
+          if (i > 15) {
+            reject(new Error('timeout'))
+          }
+          if (characterSelection.characterDisplay.entity) {
+            clearInterval(interval)
+            const image = characterSelection.characterDisplay.canvas.rootElement.toDataURL('image/png')
+            resolve(image)
+          } else {
+            console.log('waiting for character display')
+          }
+          i++
+        }, 100)
+      })
+      characterSelection.btnPlay.tap()
+    }
+  }
+
+  dWindow.dofus.connectionManager.on('CharactersListMessage', handleCharactersListMessage)
   dWindow.gui.playerData.on('characterSelectedSuccess', handleCharacterSelectedSuccess)
   dWindow.gui.on('disconnect', handleDisconnect)
 }

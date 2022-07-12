@@ -1,17 +1,42 @@
 import TypedEmitter from 'typed-emitter'
+import { CharacterDisplay } from './character-display'
+import { CharacterBaseInformations } from '../iso-engine'
 import { Chat } from './chat'
 import { FightManager } from './fight-manager'
 import { PlayerData } from './player-data'
 import { Scroller } from './scroller'
 
 export interface GUIElement {
-  tap: () => void
-  hasClassName: (className: string) => boolean
-  setText: (text: string) => boolean
   id: string
   _contentType: 'wui' | undefined
   _childrenList: Array<GUIElement>
   rootElement: HTMLDivElement
+}
+
+export interface GUICanvas {
+  rootElement: HTMLCanvasElement
+}
+
+export interface GUIText extends GUIElement {
+  hasClassName: (className: string) => boolean
+  setText: (text: string) => boolean
+}
+
+export interface GUIButton extends GUIElement {
+  isEnable: () => boolean
+  setEnable: (enable: boolean) => void
+  cancelTap: () => void
+  tap: () => void
+}
+
+export interface GUITableRowContent<T> extends GUIButton {
+  data?: T
+}
+
+export interface GUITable<T> extends GUIElement {
+  content: {
+    _childrenList: Array<GUITableRowContent<T>>
+  }
 }
 
 export interface WUIElement extends GUIElement {
@@ -40,7 +65,7 @@ export type GUIWindowEvents = {
   opened: () => void
 }
 export interface GUIWindowSchema extends GUIElement, TypedEmitter<GUIWindowEvents> {
-  id: 'itemRecipes' | 'bidHouseShop' | 'grimoire' | 'social' | 'equipment'
+  id: 'itemRecipes' | 'bidHouseShop' | 'grimoire' | 'social' | 'equipment' | 'characterSelection'
   openState: boolean
 }
 
@@ -54,7 +79,17 @@ export interface EquipmentWindow extends GUIWindowSchema {
   storageBox: GUIElement
 }
 
-export type GUIWindow = EquipmentWindow | GenericWindow
+export interface CharacterSelection extends GUIWindowSchema {
+  id: 'characterSelection'
+  characterDisplay: CharacterDisplay
+  btnCreate: GUIButton
+  btnDelete: GUIButton
+  btnPlay: GUIButton
+  selectedCharacter?: CharacterBaseInformations
+  charactersTable: GUITable<CharacterBaseInformations>
+}
+
+export type GUIWindow = EquipmentWindow | GenericWindow | CharacterSelection
 
 export interface ChallengeIcon {
   description: string
@@ -98,6 +133,9 @@ export type GUIEvents = {
 export interface GUI extends TypedEmitter<GUIEvents> {
   _resizeUi: () => void
   isConnected: boolean
+  loginScreen: {
+    _connectMethod: 'manual' | 'lastCharacter' | 'lastServer'
+  }
   shopFloatingToolbar: {
     hide: () => void
     show: () => void
@@ -108,7 +146,7 @@ export interface GUI extends TypedEmitter<GUIEvents> {
     dialogs: Record<string, GUIDialog>
   }
   windowsContainer: {
-    _childrenList: Array<WUIElement>
+    _childrenList: Array<GUIWindow>
     getChildren: () => Array<GUIWindow>
   }
   menuBar: {
