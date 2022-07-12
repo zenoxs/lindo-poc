@@ -33,7 +33,7 @@ export class UpdaterWindow extends (EventEmitter as new () => TypedEmitter<Updat
     })
 
     if (app.isPackaged) {
-      this._win.loadURL(`file://${join(__dirname, '../renderer/index.html#/updater')}`)
+      this._win.loadURL(`file://${join(__dirname, '../renderer/index.html')}#/updater`)
     } else {
       // 🚧 Use ['ENV_NAME'] avoid vite:define plugin
 
