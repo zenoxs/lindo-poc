@@ -69,15 +69,14 @@ export const manageGameWindow = ({ dWindow, rootStore, game, LL, character }: Ma
 
     if (characterSelection && characterSelection.id === 'characterSelection') {
       if (character) {
-        await new Promise((resolve) => setTimeout(resolve, 100))
-        const row = characterSelection.charactersTable.content._childrenList.find(
-          (c) => c.data?.name === character.name
-        )
-        if (row) {
-          row.tap()
-        } else {
-          console.error('Character not found')
-        }
+        return
+      }
+      await new Promise((resolve) => setTimeout(resolve, 100))
+      const row = characterSelection.charactersTable.content._childrenList.find((c) => c.data?.name === character.name)
+      if (row) {
+        row.tap()
+      } else {
+        console.error('Character not found')
       }
       await new Promise<SaveCharacterImageArgs>((resolve, reject) => {
         let i = 0
