@@ -4,6 +4,15 @@
 This project is a rewrite of the `Lindo` application with the latest technologies under React, Typescript, Vite and electron and security in mind. It will also featuring dynamic plugin integration with systemJS and rollup.
 It also provide an easy way to share the application state across the browsers and the electron process with mobx and a synchronisation with IPC (heavely inspired by [electron-vite-boilerplate](https://github.com/klarna/electron-redux) ).
 
+
+## Run the arm64 mac os version for M1/M2 processors
+![Issue with arm64 build](./screenshots/arm64-issue.png)
+- Drop the **Lindo.app** into your `/Applications` folder
+- Then open the `Terminal` application and run the following command:
+```bash
+xattr -d com.apple.quarantine /Applications/Lindo.app
+```
+
 ## Quick start
 TODO 
 
