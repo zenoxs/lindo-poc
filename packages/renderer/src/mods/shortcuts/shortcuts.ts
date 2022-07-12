@@ -1,4 +1,4 @@
-import { DofusWindow } from '@/dofus-window'
+import { DofusWindow, GUIButton } from '@/dofus-window'
 import { RootStore } from '@/store'
 import { TranslationFunctions } from '@lindo/i18n'
 import { GameInterfaceHotkey } from '@lindo/shared'
@@ -245,7 +245,10 @@ export class ShortcutsMod extends Mod {
         if (this.wGame.gui.notificationBar._elementIsVisible) {
           const dialogName = this.wGame.gui.notificationBar.currentOpenedId
           // If notifiaction is openened, allow to close it with ESC
-          this.wGame.gui.notificationBar.dialogs[dialogName]._childrenList[0]._childrenList[1].tap()
+          // TODO: find better typing solution for the guibutton
+          const notification = this.wGame.gui.notificationBar.dialogs[dialogName]._childrenList[0]
+            ._childrenList[1] as GUIButton
+          notification.tap()
           winClosed++
         }
         if (this.rootStore.optionStore.gameGeneral.activeOpenMenu && !winClosed) {

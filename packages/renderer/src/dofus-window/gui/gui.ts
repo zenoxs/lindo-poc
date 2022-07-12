@@ -11,16 +11,15 @@ export interface GUIElement {
   _contentType: 'wui' | undefined
   _childrenList: Array<GUIElement>
   rootElement: HTMLDivElement
+  setText: (text: string) => boolean
+  hasClassName: (className: string) => boolean
 }
 
 export interface GUICanvas {
   rootElement: HTMLCanvasElement
 }
 
-export interface GUIText extends GUIElement {
-  hasClassName: (className: string) => boolean
-  setText: (text: string) => boolean
-}
+export interface GUIText extends GUIElement {}
 
 export interface GUIButton extends GUIElement {
   isEnable: () => boolean
@@ -65,12 +64,14 @@ export type GUIWindowEvents = {
   opened: () => void
 }
 export interface GUIWindowSchema extends GUIElement, TypedEmitter<GUIWindowEvents> {
-  id: 'itemRecipes' | 'bidHouseShop' | 'grimoire' | 'social' | 'equipment' | 'characterSelection'
+  id: 'itemRecipes' | 'bidHouseShop' | 'grimoire' | 'social' | 'equipment' | 'characterSelection' | 'recaptcha'
+  isVisible: () => boolean
+  close: () => void
   openState: boolean
 }
 
 export interface GenericWindow extends GUIWindowSchema {
-  id: 'itemRecipes' | 'bidHouseShop' | 'grimoire' | 'social'
+  id: 'itemRecipes' | 'bidHouseShop' | 'grimoire' | 'social' | 'recaptcha'
   storageBox: {}
 }
 
@@ -151,7 +152,7 @@ export interface GUI extends TypedEmitter<GUIEvents> {
   }
   menuBar: {
     _icons: {
-      _childrenList: Array<GUIElement>
+      _childrenList: Array<GUIButton>
     }
   }
   challengeIndicator: {
