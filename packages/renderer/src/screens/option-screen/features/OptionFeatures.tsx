@@ -28,7 +28,7 @@ export const OptionFeatures = () => {
               <Tab label={LL.option.features.job.header()} />
             </Tabs>
           </Box>
-          <Box sx={{ p: 1, flexGrow: 1, overflowY: 'scroll', maxHeight: 'calc(100vh - 120px)' }}>
+          <Box sx={{ p: 1, flexGrow: 1, overflowY: 'auto', maxHeight: 'calc(100vh - 120px)' }}>
             <TabPanel value={value} index={0}>
               <OptionGeneralFeatures />
             </TabPanel>

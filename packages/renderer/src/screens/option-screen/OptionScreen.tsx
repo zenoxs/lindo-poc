@@ -74,7 +74,7 @@ export const OptionScreen = () => {
               display: 'flex',
               flex: 1,
               flexDirection: 'column',
-              overflowY: 'scroll'
+              overflowY: 'auto'
             }}
           >
             <TabPanel value={selectedTab} index={0}>

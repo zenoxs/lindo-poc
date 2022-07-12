@@ -29,7 +29,7 @@ export const OptionShortcuts = () => {
               <Tab label={LL.option.shortcuts.mods.header()} />
             </Tabs>
           </Box>
-          <Box sx={{ p: 1, flexGrow: 1, overflowY: 'scroll', maxHeight: 'calc(100vh - 120px)' }}>
+          <Box sx={{ p: 1, flexGrow: 1, overflowY: 'auto', maxHeight: 'calc(100vh - 120px)' }}>
             <Box>
               <TabPanel value={value} index={0}>
                 <Grid component='form' noValidate autoComplete='off' container spacing={1} margin={0}>

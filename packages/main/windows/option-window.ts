@@ -15,7 +15,7 @@ export class OptionWindow extends (EventEmitter as new () => TypedEmitter<Option
     super()
     this._win = new BrowserWindow({
       show: false,
-      width: 820,
+      width: 860,
       height: 600,
       title: 'Options',
       fullscreenable: false,
