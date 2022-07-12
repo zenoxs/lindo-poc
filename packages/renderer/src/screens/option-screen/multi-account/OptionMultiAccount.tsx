@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Box,
   Button,
@@ -22,19 +22,34 @@ interface PasswordForm {
 
 export const OptionMultiAccount = () => {
   const { LL } = useI18nContext()
-  const { control, handleSubmit } = useForm<PasswordForm>()
+  const { control, handleSubmit, reset } = useForm<PasswordForm>()
   const [openConfigurePasswordDialog, setOpenConfigurePasswordDialog] = React.useState(false)
+  const [isMasterPasswordConfigured, setMasterPasswordConfigured] = React.useState(false)
 
   const handleOpenConfigurePasswordDialog = () => {
+    reset()
     setOpenConfigurePasswordDialog(true)
   }
 
   const handleCloseConfigurePasswordDialog = () => {
+    reset()
     setOpenConfigurePasswordDialog(false)
   }
 
-  const onSubmit = (data: PasswordForm) => {
-    console.log(data)
+  useEffect(() => {
+    window.lindoAPI.isMasterPasswordConfigured().then((isConfigured) => {
+      setMasterPasswordConfigured(isConfigured)
+    })
+  })
+
+  const onSubmit = async (data: PasswordForm) => {
+    await window.lindoAPI.saveMasterPassword(data.password)
+    console.log('1')
+    await window.lindoAPI.isMasterPasswordConfigured().then((isConfigured) => {
+      console.log(isConfigured)
+      setMasterPasswordConfigured(isConfigured)
+    })
+    console.log('3')
   }
 
   return (
@@ -43,12 +58,31 @@ export const OptionMultiAccount = () => {
         {() => (
           <>
             <Box sx={{ p: 2, flexGrow: 1, flex: 1 }}>
-              <Typography>{LL.option.multiAccount.notConfigured()}</Typography>
-              <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
-                <Button variant='outlined' onClick={handleOpenConfigurePasswordDialog}>
-                  {LL.option.multiAccount.configurePassword()}
-                </Button>
-              </Box>
+              {!isMasterPasswordConfigured && (
+                <>
+                  <Typography>{LL.option.multiAccount.notConfigured()}</Typography>
+
+                  <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+                    <Button variant='outlined' onClick={handleOpenConfigurePasswordDialog}>
+                      {LL.option.multiAccount.configurePassword()}
+                    </Button>
+                  </Box>
+                </>
+              )}
+              {isMasterPasswordConfigured && (
+                <>
+                  <Typography>The multi account is enabled with your master password</Typography>
+
+                  <Stack spacing={2} direction='row' sx={{ mt: 3 }}>
+                    <Button variant='outlined' onClick={handleOpenConfigurePasswordDialog}>
+                      Change password
+                    </Button>
+                    <Button variant='outlined' onClick={handleOpenConfigurePasswordDialog}>
+                      Remove the password
+                    </Button>
+                  </Stack>
+                </>
+              )}
             </Box>
           </>
         )}

@@ -7,11 +7,13 @@ import { observe } from 'mobx'
 import { AddressInfo } from 'net'
 import { GAME_PATH } from './constants'
 import { getAppMenu } from './menu'
+import { MultiAccount } from './multi-account'
 import { runUpdater } from './updater'
 import { GameWindow, OptionWindow } from './windows'
 
 export class Application {
   private static _instance: Application
+  private _multiAccount = new MultiAccount()
 
   static async init(rootStore: RootStore) {
     if (Application._instance) {
@@ -121,6 +123,14 @@ export class Application {
 
     ipcMain.on(IPCEvents.RESET_STORE, () => {
       this._rootStore.reset()
+    })
+
+    ipcMain.handle(IPCEvents.SAVE_MASTER_PASSWORD, (event, masterPassword) => {
+      return this._multiAccount.saveMasterPassword(masterPassword)
+    })
+
+    ipcMain.handle(IPCEvents.IS_MASTER_PASSWORD_CONFIGURED, () => {
+      return this._multiAccount.isMasterPasswordConfigured()
     })
 
     ipcMain.on(IPCEvents.TOGGLE_MAXIMIZE_WINDOW, (event) => {
