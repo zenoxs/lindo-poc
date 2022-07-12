@@ -46,7 +46,7 @@ export const GameScreen = memo(({ game }: GameScreenProps) => {
           game,
           rootStore,
           LL,
-          character: rootStore.optionStore.gameMultiAccount.characters[1]
+          character: rootStore.optionStore.gameMultiAccount.characters[0]
         })
       })
     }

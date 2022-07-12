@@ -12,7 +12,7 @@ export const TabPanel = (props: TabPanelProps) => {
   return (
     <div
       role='tabpanel'
-      style={value === index ? { display: 'flex', flex: 1 } : { display: 'none' }}
+      style={value === index ? { display: 'flex', flexShrink: 0 } : { display: 'none' }}
       hidden={value !== index}
       id={`vertical-tabpanel-${index}`}
       aria-labelledby={`vertical-tab-${index}`}

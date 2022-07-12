@@ -109,6 +109,7 @@ export class Application {
       const serverAddress: AddressInfo = this._serveGameServer.address() as AddressInfo
       const context: GameContext = {
         gameSrc: 'http://localhost:' + serverAddress.port + '/index.html?delayed=true',
+        characterImagesSrc: 'http://localhost:' + serverAddress.port + '/character-images/',
         windowId: event.sender.id
       }
       return JSON.stringify(context)

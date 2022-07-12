@@ -57,7 +57,7 @@ export const OptionMultiAccount = () => {
     <>
       <Observer>
         {() => (
-          <>
+          <Box>
             <Box sx={{ p: 2, flexGrow: 1, flex: 1 }}>
               {!isMasterPasswordConfigured && (
                 <>
@@ -82,13 +82,15 @@ export const OptionMultiAccount = () => {
                       Remove the password
                     </Button>
                   </Stack>
-                  <Box sx={{ mt: 3 }}>
-                    <AccountContainer />
-                  </Box>
                 </>
               )}
             </Box>
-          </>
+            {isMasterPasswordConfigured && (
+              <Box>
+                <AccountContainer />
+              </Box>
+            )}
+          </Box>
         )}
       </Observer>
       <Dialog open={openConfigurePasswordDialog} onClose={handleCloseConfigurePasswordDialog}>
