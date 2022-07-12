@@ -26,7 +26,6 @@ export const OptionFeatures = () => {
               <Tab label={LL.option.features.fight.header()} />
               <Tab label={LL.option.features.group.header()} />
               <Tab label={LL.option.features.job.header()} />
-              <Tab label={LL.option.features.accounts.header()} />
             </Tabs>
           </Box>
           <Box sx={{ p: 1, flexGrow: 1, overflowY: 'scroll', maxHeight: 'calc(100vh - 120px)' }}>

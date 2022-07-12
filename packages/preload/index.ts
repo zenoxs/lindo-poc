@@ -131,6 +131,15 @@ const closeOptionWindow = (): void => {
   ipcRenderer.send(IPCEvents.CLOSE_OPTION)
 }
 
+// Multi account
+const saveMasterPassword = async (masterPassword: string): Promise<void> => {
+  await ipcRenderer.invoke(IPCEvents.SAVE_MASTER_PASSWORD, masterPassword)
+}
+
+const isMasterPasswordConfigured = (): Promise<boolean> => {
+  return ipcRenderer.invoke(IPCEvents.IS_MASTER_PASSWORD_CONFIGURED)
+}
+
 const lindoApi: LindoAPI = {
   fetchInitialStateAsync,
   resetStore,
@@ -144,6 +153,8 @@ const lindoApi: LindoAPI = {
   fetchGameContext,
   openOptionWindow,
   focusCurrentWindow,
-  closeOptionWindow
+  closeOptionWindow,
+  saveMasterPassword,
+  isMasterPasswordConfigured
 }
 contextBridge.exposeInMainWorld('lindoAPI', lindoApi)

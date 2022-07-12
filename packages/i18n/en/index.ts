@@ -309,6 +309,12 @@ const en: BaseTranslation = {
       aggression: 'When someone aggresses you',
       saleMessage: 'When an item is sold'
     },
+    multiAccount: {
+      title: 'Multi Account',
+      notConfigured:
+        'To use this feature, a password must be configured. It will be used to start Lindo with multi-account automation.',
+      configurePassword: 'Configure password'
+    },
     about: {
       title: 'About',
       links: {

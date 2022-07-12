@@ -16,6 +16,7 @@ import {
 import React, { useState } from 'react'
 import { OptionFeatures } from './features'
 import { OptionGeneral } from './general'
+import { OptionMultiAccount } from './multi-account'
 import { OptionNotifications } from './notifications'
 import { OptionShortcuts } from './shortcuts'
 import { TabPanel } from './TabPanel'
@@ -57,6 +58,7 @@ export const OptionScreen = () => {
           <Tab label={LL.option.shortcuts.title()} />
           <Tab label={LL.option.features.title()} />
           <Tab label={LL.option.notifications.title()} />
+          <Tab label={LL.option.multiAccount.title()} />
           <Tab label={LL.option.about.title()} />
         </Tabs>
         <Box
@@ -86,6 +88,9 @@ export const OptionScreen = () => {
             </TabPanel>
             <TabPanel value={selectedTab} index={3}>
               <OptionNotifications />
+            </TabPanel>
+            <TabPanel value={selectedTab} index={4}>
+              <OptionMultiAccount />
             </TabPanel>
           </Paper>
           <Box

@@ -951,6 +951,20 @@ type RootTranslation = {
 			 */
 			saleMessage: string
 		}
+		multiAccount: {
+			/**
+			 * Multi Account
+			 */
+			title: string
+			/**
+			 * To use this feature, a password must be configured. It will be used to start Lindo with multi-account automation.
+			 */
+			notConfigured: string
+			/**
+			 * Configure password
+			 */
+			configurePassword: string
+		}
 		about: {
 			/**
 			 * About
@@ -1987,6 +2001,20 @@ export type TranslationFunctions = {
 			 * When an item is sold
 			 */
 			saleMessage: () => LocalizedString
+		}
+		multiAccount: {
+			/**
+			 * Multi Account
+			 */
+			title: () => LocalizedString
+			/**
+			 * To use this feature, a password must be configured. It will be used to start Lindo with multi-account automation.
+			 */
+			notConfigured: () => LocalizedString
+			/**
+			 * Configure password
+			 */
+			configurePassword: () => LocalizedString
 		}
 		about: {
 			/**
