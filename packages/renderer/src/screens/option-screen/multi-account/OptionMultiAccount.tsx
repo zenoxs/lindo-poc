@@ -1,15 +1,5 @@
 import React, { useEffect } from 'react'
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Stack,
-  Typography
-} from '@mui/material'
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, Typography } from '@mui/material'
 import { PasswordElement, PasswordRepeatElement } from 'react-hook-form-mui'
 import { useForm } from 'react-hook-form'
 import { Observer } from 'mobx-react-lite'
@@ -96,7 +86,6 @@ export const OptionMultiAccount = () => {
       <Dialog open={openConfigurePasswordDialog} onClose={handleCloseConfigurePasswordDialog}>
         <DialogTitle>Configure master password</DialogTitle>
         <DialogContent>
-          <DialogContentText>All app&apos;s settings will be reset to their default value</DialogContentText>
           <Stack
             id='password-form'
             spacing={2}
@@ -106,19 +95,13 @@ export const OptionMultiAccount = () => {
             autoComplete='off'
             onSubmit={handleSubmit(onSubmit)}
           >
-            <PasswordElement
-              name='password'
-              control={control}
-              required
-              fullWidth
-              label={LL.option.features.group.autoGroup.leader()}
-            />
+            <PasswordElement name='password' control={control} required fullWidth label={'Password'} />
             <PasswordRepeatElement
               name='password_repeat'
               passwordFieldName='password'
               control={control}
               fullWidth
-              label={LL.option.features.group.autoGroup.leader()}
+              label={'Confirm'}
             />
           </Stack>
         </DialogContent>
