@@ -1,4 +1,4 @@
-import { RootStore } from '@lindo/shared'
+import { IPCEvents, RootStore } from '@lindo/shared'
 import { ipcMain, safeStorage } from 'electron'
 import crypto from 'crypto-js'
 import * as argon2 from 'argon2'
@@ -39,11 +39,17 @@ export class MultiAccount {
   }
 
   async unlock() {
-    this._masterPassword = 'test'
     const multiAccountWindow = new UnlockWindow(this._rootStore)
+
+    // wait for user master password
     this._masterPassword = await new Promise<string>((resolve, reject) => {
-      ipcMain.handleOnce('multi-account-unlock', async (event, masterPassword) => {
-        resolve(masterPassword)
+      ipcMain.handle(IPCEvents.UNLOCK_APPLICATION, async (event, masterPassword: string) => {
+        const passwordOk = await this._checkMasterPassword(masterPassword)
+        if (passwordOk) {
+          resolve(masterPassword)
+          ipcMain.removeHandler(IPCEvents.UNLOCK_APPLICATION)
+        }
+        return passwordOk
       })
       multiAccountWindow.on('close', () => reject(new Error('Multi-account unlock window was closed')))
     })
@@ -64,12 +70,11 @@ export class MultiAccount {
   async saveMasterPassword(masterPassword: string) {
     const isEncryptionAvailable = await safeStorage.isEncryptionAvailable()
     let encryptedPassword = await argon2.hash(masterPassword)
-    console.log(encryptedPassword)
     if (!isEncryptionAvailable) {
       console.log('Safe storage is not available, warn multi-account will use non secure storage')
       this._store.set('useSecureStorage', false)
     } else {
-      const buffer = safeStorage.encryptString(masterPassword)
+      const buffer = safeStorage.encryptString(encryptedPassword)
       encryptedPassword = JSON.stringify(buffer.toJSON())
       this._store.set('useSecureStorage', true)
     }
@@ -80,7 +85,7 @@ export class MultiAccount {
     return this._store.has('masterPassword')
   }
 
-  async checkMasterPassword(input: string): Promise<boolean> {
+  private async _checkMasterPassword(input: string): Promise<boolean> {
     const encryptedPassword = this._store.get('masterPassword')
     const isEncrypted = this._store.get('useSecureStorage')
     let hashedPassword = encryptedPassword

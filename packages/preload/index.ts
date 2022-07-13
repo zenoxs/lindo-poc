@@ -148,6 +148,10 @@ const saveMasterPassword = async (masterPassword: string): Promise<void> => {
   await ipcRenderer.invoke(IPCEvents.SAVE_MASTER_PASSWORD, masterPassword)
 }
 
+const unlockApplication = async (masterPassword: string): Promise<boolean> => {
+  return ipcRenderer.invoke(IPCEvents.UNLOCK_APPLICATION, masterPassword)
+}
+
 const isMasterPasswordConfigured = (): Promise<boolean> => {
   return ipcRenderer.invoke(IPCEvents.IS_MASTER_PASSWORD_CONFIGURED)
 }
@@ -173,6 +177,7 @@ const lindoApi: LindoAPI = {
   setAudioMuteWindow,
   saveMasterPassword,
   isMasterPasswordConfigured,
-  saveCharacterImage
+  saveCharacterImage,
+  unlockApplication
 }
 contextBridge.exposeInMainWorld('lindoAPI', lindoApi)

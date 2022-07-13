@@ -16,8 +16,8 @@ export class UnlockWindow extends (EventEmitter as new () => TypedEmitter<Unlock
     this._store = store
     this._win = new BrowserWindow({
       show: false,
-      width: 860,
-      height: 600,
+      width: 600,
+      height: 300,
       title: 'Unlock Multi-Accounts',
       fullscreenable: false,
       autoHideMenuBar: true,
