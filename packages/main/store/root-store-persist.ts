@@ -4,16 +4,14 @@ import { onSnapshot, applySnapshot, IStateTreeNode } from 'mobx-state-tree'
 
 export interface IOptions {
   storage: ElectronStore<{ rootStore: RootStoreSnapshot }>
-  readonly whitelist?: Array<string>
-  readonly blacklist?: Array<string>
+  beforeSave?: (rootStore: RootStoreSnapshot) => object
 }
 export interface IArgs {
   (name: 'rootStore', store: RootStore & IStateTreeNode, options?: IOptions): Promise<void>
 }
-type StrToAnyMap = { [key: string]: unknown }
 
 export const persist: IArgs = (name, store, options) => {
-  const { storage, whitelist, blacklist } = options ?? {}
+  const { storage, beforeSave } = options ?? {}
 
   // use AsyncLocalStorage by default (or if localStorage was passed in)
   if (!storage) {
@@ -26,20 +24,9 @@ export const persist: IArgs = (name, store, options) => {
     )
   }
 
-  const whitelistDict = arrToDict(whitelist)
-  const blacklistDict = arrToDict(blacklist)
-
-  onSnapshot(store, (_snapshot: StrToAnyMap) => {
+  onSnapshot(store, (_snapshot: RootStoreSnapshot) => {
     // need to shallow clone as otherwise properties are non-configurable (https://github.com/agilgur5/mst-persist/pull/21#discussion_r348105595)
-    const snapshot = { ..._snapshot }
-    Object.keys(snapshot).forEach((key) => {
-      if (whitelist && !whitelistDict[key]) {
-        delete snapshot[key]
-      }
-      if (blacklist && blacklistDict[key]) {
-        delete snapshot[key]
-      }
-    })
+    const snapshot = beforeSave ? beforeSave(_snapshot) : _snapshot
     storage.set(name, snapshot)
   })
 
@@ -55,18 +42,6 @@ export const persist: IArgs = (name, store, options) => {
       console.log(e)
     }
   })
-}
-
-type StrToBoolMap = { [key: string]: boolean }
-
-function arrToDict(arr?: Array<string>): StrToBoolMap {
-  if (!arr) {
-    return {}
-  }
-  return arr.reduce((dict: StrToBoolMap, elem) => {
-    dict[elem] = true
-    return dict
-  }, {})
 }
 
 function isString(value: unknown): value is string {

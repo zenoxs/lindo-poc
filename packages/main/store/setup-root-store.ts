@@ -25,7 +25,19 @@ export async function setupRootStore(): Promise<RootStore> {
   const rootStore: Instance<typeof RootStoreModel> = RootStoreModel.create({}, env)
   const storage = new ElectronStore<{ rootStore: RootStoreSnapshot }>()
 
-  await persist('rootStore', rootStore, { storage })
+  await persist('rootStore', rootStore, {
+    storage,
+    beforeSave: (rootStore: RootStoreSnapshot) => {
+      // ignore gameMultiAccount, will be encrypted later
+      return {
+        ...rootStore,
+        optionStore: {
+          ...rootStore.optionStore,
+          gameMultiAccount: undefined
+        }
+      }
+    }
+  })
   console.log('RootStore -> restored')
 
   const patchesFromRenderer: Array<string> = []

@@ -15,7 +15,7 @@ import path from 'path'
 
 export class Application {
   private static _instance: Application
-  private _multiAccount = new MultiAccount()
+  private readonly _multiAccount: MultiAccount
 
   static async init(rootStore: RootStore) {
     if (Application._instance) {
@@ -42,7 +42,9 @@ export class Application {
   private _gWindows: Array<GameWindow> = []
   private _optionWindow?: OptionWindow
 
-  private constructor(private _rootStore: RootStore, private _serveGameServer: Server) {}
+  private constructor(private _rootStore: RootStore, private _serveGameServer: Server) {
+    this._multiAccount = new MultiAccount(this._rootStore)
+  }
 
   async run() {
     this._setupIPCHandlers()
@@ -68,7 +70,22 @@ export class Application {
     })
 
     this._setAppMenu()
-    this.createGameWindow()
+
+    // TODO: unlock the master password
+    await this._initGameWindows()
+  }
+
+  private async _initGameWindows() {
+    const multiAccountEnabled = await this._multiAccount.isEnabled()
+    console.log({ multiAccountEnabled })
+    if (multiAccountEnabled) {
+      const selectedTeam = await this._multiAccount.unlock()
+      console.log(selectedTeam)
+      this.createGameWindow()
+      // for(this._rootStore.optionStore.gameMultiAccount
+    } else {
+      this.createGameWindow()
+    }
   }
 
   private _setAppMenu() {
