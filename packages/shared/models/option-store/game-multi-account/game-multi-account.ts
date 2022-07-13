@@ -1,6 +1,6 @@
 import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 import { GameCharacter, GameCharacterModel, GameCharacterSnapshot, GameCharacterSnapshotIn } from './game-character'
-import { GameTeamModel, GameTeamSnapshotIn } from './game-team'
+import { GameTeam, GameTeamModel, GameTeamSnapshotIn } from './game-team'
 
 /**
  * Model description here for TypeScript hints.
@@ -21,6 +21,9 @@ export const GameMultiAccountModel = types
     },
     addTeam(team: GameTeamSnapshotIn) {
       self.teams.push(team)
+    },
+    removeTeam(team: GameTeam) {
+      self.teams.remove(team)
     }
   }))
 

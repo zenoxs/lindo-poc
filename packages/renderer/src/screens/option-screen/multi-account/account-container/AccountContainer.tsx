@@ -8,8 +8,10 @@ import {
   Card,
   CardContent,
   CardHeader,
+  darken,
   Grid,
-  Typography
+  Typography,
+  useTheme
 } from '@mui/material'
 import { Observer } from 'mobx-react-lite'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
@@ -20,11 +22,19 @@ import { useDialog } from '@/hooks'
 import { AddCharacterDialog } from '../add-character-dialog'
 import { AddTeamDialog } from '../add-team-dialog'
 import { CharacterGenericCard } from './CharacterGenericCard'
+import { GameTeam } from '@lindo/shared'
 
 export const AccountContainer = () => {
-  const { optionStore } = useStores()
+  const {
+    optionStore: { gameMultiAccount }
+  } = useStores()
+  const theme = useTheme()
   const [openAddCharacterDialog, , toggleAddCharacterDialog] = useDialog()
   const [openAddTeamDialog, , toggleAddTeamDialog] = useDialog()
+
+  const handleRemoveTeam = (team: GameTeam) => {
+    gameMultiAccount.removeTeam(team)
+  }
 
   return (
     <>
@@ -42,7 +52,7 @@ export const AccountContainer = () => {
         <Observer>
           {() => (
             <>
-              {optionStore.gameMultiAccount.characters.map((character) => (
+              {gameMultiAccount.characters.map((character) => (
                 <CharacterCard key={character.id} character={character} />
               ))}
             </>
@@ -53,8 +63,8 @@ export const AccountContainer = () => {
         <Observer>
           {() => (
             <>
-              {optionStore.gameMultiAccount.teams.map((team) => (
-                <Accordion key={team.id}>
+              {gameMultiAccount.teams.map((team) => (
+                <Accordion key={team.id} sx={{ backgroundColor: darken(theme.palette.background.paper, 0.3) }}>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls='panel1a-content' id='panel1a-header'>
                     <Typography sx={{ width: '33%', flexShrink: 0 }}>{team.name}</Typography>
                     <Typography sx={{ color: 'text.secondary' }}>
@@ -80,6 +90,9 @@ export const AccountContainer = () => {
                         </Grid>
                       ))}
                     </Grid>
+                    <Button onClick={() => handleRemoveTeam(team)} sx={{ mt: 2 }} color='error'>
+                      Delete team
+                    </Button>
                   </AccordionDetails>
                 </Accordion>
               ))}
