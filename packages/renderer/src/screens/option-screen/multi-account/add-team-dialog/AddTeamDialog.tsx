@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
 import { useStores } from '@/store'
 import { GameTeamSnapshotIn } from '@lindo/shared'
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack } from '@mui/material'
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { TextFieldElement } from 'react-hook-form-mui'
+import { TeamWindowCard } from './TeamWindowCard'
 
 export interface AddTeamDialogProps {
   open: boolean
@@ -24,12 +25,11 @@ export const AddTeamDialog = ({ onClose, open }: AddTeamDialogProps) => {
   }
 
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={open} onClose={onClose} maxWidth='md' fullScreen>
       <DialogTitle>Add new team</DialogTitle>
       <DialogContent>
-        <Stack
+        <Box
           id='character-form'
-          spacing={2}
           sx={{ mt: 2 }}
           component='form'
           noValidate
@@ -37,7 +37,15 @@ export const AddTeamDialog = ({ onClose, open }: AddTeamDialogProps) => {
           onSubmit={handleSubmit(onSubmit)}
         >
           <TextFieldElement name='name' control={control} required fullWidth label={'Team Name'} />
-        </Stack>
+          <Grid container spacing={2} sx={{ mt: 2 }}>
+            <Grid item xs={6}>
+              <TeamWindowCard position={1} />
+            </Grid>
+            <Grid item xs={6}>
+              <TeamWindowCard position={2} />
+            </Grid>
+          </Grid>
+        </Box>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
