@@ -1,16 +1,5 @@
 import { useStores } from '@/store'
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Button,
-  Card,
-  CardContent,
-  lighten,
-  Typography,
-  useTheme
-} from '@mui/material'
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, CardContent, Typography } from '@mui/material'
 import { Observer } from 'mobx-react-lite'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import AddIcon from '@mui/icons-material/Add'
@@ -19,23 +8,12 @@ import { CharacterCard } from './CharacterCard'
 import { useDialog } from '@/hooks'
 import { AddCharacterDialog } from '../add-character-dialog'
 import { AddTeamDialog } from '../add-team-dialog'
+import { CharacterGenericCard } from './CharacterGenericCard'
 
 export const AccountContainer = () => {
-  const theme = useTheme()
   const { optionStore } = useStores()
   const [openAddCharacterDialog, , toggleAddCharacterDialog] = useDialog()
   const [openAddTeamDialog, , toggleAddTeamDialog] = useDialog()
-
-  const cardStyle: React.CSSProperties = {
-    flexShrink: 0,
-    height: '220px',
-    width: '150px',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: lighten(theme.palette.background.paper, 0.1)
-  }
 
   return (
     <>
@@ -43,18 +21,18 @@ export const AccountContainer = () => {
         sx={{ flexDirection: 'row', p: 2, display: 'flex', gap: '10px', width: 'calc(100vw - 150px)' }}
         style={{ overflowX: 'auto' }}
       >
-        <Card style={cardStyle}>
+        <CharacterGenericCard>
           <CardContent>
             <Button onClick={toggleAddCharacterDialog} size='small' startIcon={<AddIcon />}>
               Add Account
             </Button>
           </CardContent>
-        </Card>
+        </CharacterGenericCard>
         <Observer>
           {() => (
             <>
               {optionStore.gameMultiAccount.characters.map((character) => (
-                <CharacterCard key={character.id} style={cardStyle} character={character} />
+                <CharacterCard key={character.id} character={character} />
               ))}
             </>
           )}

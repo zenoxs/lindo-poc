@@ -1,16 +1,17 @@
 import { useGameContext } from '@/providers'
 import { useStores } from '@/store'
 import { GameCharacter } from '@lindo/shared'
-import { Box, Button, Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material'
+import { Box, Button, CardActions, CardContent, CardMedia, Typography } from '@mui/material'
 import { Observer } from 'mobx-react-lite'
 import React from 'react'
+import { CharacterGenericCard } from './CharacterGenericCard'
 
 export interface CharacterCardProps {
-  style: React.CSSProperties
   character: GameCharacter
+  onSelect?: (character: GameCharacter) => void
 }
 
-export const CharacterCard = ({ style, character }: CharacterCardProps) => {
+export const CharacterCard = ({ character, onSelect }: CharacterCardProps) => {
   const { optionStore } = useStores()
   const [displayImage, setDisplayImage] = React.useState(true)
   const gameContext = useGameContext()
@@ -23,7 +24,7 @@ export const CharacterCard = ({ style, character }: CharacterCardProps) => {
     <Observer>
       {() => (
         <>
-          <Card key={character.id} style={style}>
+          <CharacterGenericCard key={character.id}>
             <div
               style={{
                 height: '140px',
@@ -58,14 +59,22 @@ export const CharacterCard = ({ style, character }: CharacterCardProps) => {
               {character.name}
             </CardContent>
             <CardActions>
-              <Button color='error' onClick={() => handleDeleteCharacter(character)} size='small'>
-                Delete
-              </Button>
-              <Button size='small' disabled={true}>
-                Edit
-              </Button>
+              {onSelect ? (
+                <Button size='small' onClick={() => onSelect(character)}>
+                  Select
+                </Button>
+              ) : (
+                <>
+                  <Button color='error' onClick={() => handleDeleteCharacter(character)} size='small'>
+                    Delete
+                  </Button>
+                  <Button size='small' disabled={true}>
+                    Edit
+                  </Button>
+                </>
+              )}
             </CardActions>
-          </Card>
+          </CharacterGenericCard>
         </>
       )}
     </Observer>

@@ -2,7 +2,8 @@ import React, { useEffect } from 'react'
 import { useStores } from '@/store'
 import { GameTeamSnapshotIn } from '@lindo/shared'
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid } from '@mui/material'
-import { useForm } from 'react-hook-form'
+import AddIcon from '@mui/icons-material/Add'
+import { useForm, useFieldArray } from 'react-hook-form'
 import { TextFieldElement } from 'react-hook-form-mui'
 import { TeamWindowCard } from './TeamWindowCard'
 
@@ -13,7 +14,15 @@ export interface AddTeamDialogProps {
 
 export const AddTeamDialog = ({ onClose, open }: AddTeamDialogProps) => {
   const { optionStore } = useStores()
-  const { control, handleSubmit, reset } = useForm<GameTeamSnapshotIn>()
+  const { control, handleSubmit, reset } = useForm<GameTeamSnapshotIn>({
+    defaultValues: {
+      windows: [{}]
+    }
+  })
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'windows'
+  })
 
   useEffect(() => {
     reset()
@@ -38,19 +47,21 @@ export const AddTeamDialog = ({ onClose, open }: AddTeamDialogProps) => {
         >
           <TextFieldElement name='name' control={control} required fullWidth label={'Team Name'} />
           <Grid container spacing={2} sx={{ mt: 2 }}>
-            <Grid item xs={6}>
-              <TeamWindowCard position={1} />
-            </Grid>
-            <Grid item xs={6}>
-              <TeamWindowCard position={2} />
-            </Grid>
+            {fields.map((window, index) => (
+              <Grid key={index} item xs={6}>
+                <TeamWindowCard onRemove={() => remove(index)} index={index} control={control} />
+              </Grid>
+            ))}
           </Grid>
+          <Button startIcon={<AddIcon />} variant='outlined' sx={{ mt: 2 }} onClick={() => append({})}>
+            Add window
+          </Button>
         </Box>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
-        <Button variant='outlined' type='submit' form='character-form'>
-          Add
+        <Button variant='contained' type='submit' form='character-form'>
+          Save
         </Button>
       </DialogActions>
     </Dialog>

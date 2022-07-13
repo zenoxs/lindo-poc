@@ -7,7 +7,7 @@ import { GameCharacterModel } from '../game-character'
  */
 export const GameTeamWindowModel = types.model('GameTeamWindow').props({
   id: types.optional(types.identifier, () => uuidv4()),
-  characters: types.array(types.safeReference(GameCharacterModel))
+  characters: types.array(types.safeReference(GameCharacterModel, { acceptsUndefined: false }))
 })
 
 /**
