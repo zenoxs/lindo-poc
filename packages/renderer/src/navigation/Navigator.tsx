@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { MainScreen, OptionScreen, UnlockScreen, UpdaterScreen } from '@/screens'
+import { ChooseTeamScreen, MainScreen, OptionScreen, UnlockScreen, UpdaterScreen } from '@/screens'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { Box } from '@mui/material'
 
@@ -16,6 +16,7 @@ export const Navigator = () => {
           <Route path='updater' element={<UpdaterScreen />} />
           <Route path='option' element={<OptionScreen />} />
           <Route path='unlock' element={<UnlockScreen />} />
+          <Route path='choose-team' element={<ChooseTeamScreen />} />
         </Routes>
       </Box>
     </>

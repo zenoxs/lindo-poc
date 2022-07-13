@@ -53,7 +53,6 @@ export class MultiAccount {
       })
       multiAccountWindow.on('close', () => reject(new Error('Multi-account unlock window was closed')))
     })
-    multiAccountWindow.close()
 
     const encryptedState = this._store.get('multiAccountState')
     if (encryptedState) {
@@ -64,6 +63,17 @@ export class MultiAccount {
       this._rootStore.optionStore.restoreGameMultiAccount(multiAccountState)
     }
 
+    const selectTeam = await new Promise<string>((resolve, reject) => {
+      ipcMain.handleOnce(IPCEvents.SELECT_TEAM_TO_CONNECT, async (event, teamId: string) => {
+        resolve(teamId)
+      })
+      multiAccountWindow.on('close', () => reject(new Error('Multi-account unlock window was closed')))
+    })
+
+    console.log(selectTeam)
+
+    // close the window and unlock the app
+    multiAccountWindow.close()
     this._rootStore.optionStore.gameMultiAccount.unlock()
   }
 

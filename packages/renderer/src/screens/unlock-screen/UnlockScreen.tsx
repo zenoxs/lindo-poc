@@ -2,15 +2,19 @@ import { Box, Button, Stack, Typography, useTheme } from '@mui/material'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { PasswordElement } from 'react-hook-form-mui'
+import { useNavigate } from 'react-router-dom'
 
 export const UnlockScreen = () => {
   const theme = useTheme()
   const { control, handleSubmit, setError } = useForm<{ password: string }>()
+  const navigate = useNavigate()
 
   const onSubmit = async (data: { password: string }) => {
     const result = await window.lindoAPI.unlockApplication(data.password)
     if (!result) {
       setError('password', { message: 'Invalid password' }, { shouldFocus: true })
+    } else {
+      navigate('/choose-team')
     }
   }
 
