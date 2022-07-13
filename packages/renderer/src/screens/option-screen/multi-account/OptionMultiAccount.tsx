@@ -4,7 +4,7 @@ import { PasswordElement, PasswordRepeatElement } from 'react-hook-form-mui'
 import { useForm } from 'react-hook-form'
 import { Observer } from 'mobx-react-lite'
 import { useI18nContext } from '@lindo/i18n'
-import { AccountContainer } from './AccountContainer'
+import { AccountContainer } from './account-container'
 
 interface PasswordForm {
   password: string

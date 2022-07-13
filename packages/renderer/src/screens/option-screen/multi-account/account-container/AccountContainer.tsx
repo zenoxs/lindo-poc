@@ -17,8 +17,8 @@ import AddIcon from '@mui/icons-material/Add'
 import React from 'react'
 import { CharacterCard } from './CharacterCard'
 import { useDialog } from '@/hooks'
-import { AddCharacterDialog } from './AddCharacterDialog'
-import { AddTeamDialog } from './AddTeamDialog'
+import { AddCharacterDialog } from '../add-character-dialog'
+import { AddTeamDialog } from '../add-team-dialog'
 
 export const AccountContainer = () => {
   const theme = useTheme()
