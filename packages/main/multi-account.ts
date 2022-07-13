@@ -41,10 +41,11 @@ export class MultiAccount {
   async unlock() {
     this._masterPassword = 'test'
     const multiAccountWindow = new UnlockWindow(this._rootStore)
-    this._masterPassword = await new Promise<string>((resolve) => {
+    this._masterPassword = await new Promise<string>((resolve, reject) => {
       ipcMain.handleOnce('multi-account-unlock', async (event, masterPassword) => {
         resolve(masterPassword)
       })
+      multiAccountWindow.on('close', () => reject(new Error('Multi-account unlock window was closed')))
     })
     multiAccountWindow.close()
 

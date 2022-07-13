@@ -79,9 +79,14 @@ export class Application {
     const multiAccountEnabled = await this._multiAccount.isEnabled()
     console.log({ multiAccountEnabled })
     if (multiAccountEnabled) {
-      const selectedTeam = await this._multiAccount.unlock()
-      console.log(selectedTeam)
-      this.createGameWindow()
+      try {
+        const selectedTeam = await this._multiAccount.unlock()
+        console.log(selectedTeam)
+        this.createGameWindow()
+      } catch (e) {
+        console.log(e)
+        this.createGameWindow()
+      }
       // for(this._rootStore.optionStore.gameMultiAccount
     } else {
       this.createGameWindow()

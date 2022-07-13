@@ -41,10 +41,19 @@ export class UnlockWindow extends (EventEmitter as new () => TypedEmitter<Unlock
       }
     }
 
+    this._win.on('close', (event) => {
+      this._close(event)
+    })
+
     // Show window when page is ready
     this._win.webContents.on('did-finish-load', () => {
       this._win.show()
     })
+  }
+
+  _close(event: Event) {
+    this._win.removeAllListeners()
+    this.emit('close', event)
   }
 
   close() {
