@@ -1,20 +1,25 @@
 import React, { useEffect } from 'react'
 import { useStores } from '@/store'
-import { GameTeamSnapshotIn } from '@lindo/shared'
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import { useForm, useFieldArray } from 'react-hook-form'
 import { TextFieldElement } from 'react-hook-form-mui'
-import { TeamWindowCard } from './TeamWindowCard'
+import { TeamWindowCard, TeamWindowForm } from './TeamWindowCard'
+import { GameTeamSnapshotIn } from '@lindo/shared'
 
 export interface AddTeamDialogProps {
   open: boolean
   onClose: () => void
 }
 
+export interface TeamForm {
+  name: string
+  windows: Array<TeamWindowForm>
+}
+
 export const AddTeamDialog = ({ onClose, open }: AddTeamDialogProps) => {
   const { optionStore } = useStores()
-  const { control, handleSubmit, reset } = useForm<GameTeamSnapshotIn>({
+  const { control, handleSubmit, reset } = useForm<TeamForm>({
     defaultValues: {
       windows: [{}]
     }
@@ -28,8 +33,14 @@ export const AddTeamDialog = ({ onClose, open }: AddTeamDialogProps) => {
     reset()
   }, [open])
 
-  const onSubmit = (data: GameTeamSnapshotIn) => {
-    optionStore.gameMultiAccount.addTeam(data)
+  const onSubmit = (data: TeamForm) => {
+    const team: GameTeamSnapshotIn = {
+      name: data.name,
+      windows: data.windows.map((window) => ({
+        characters: window.characters.map((c) => c.id)
+      }))
+    }
+    optionStore.gameMultiAccount.addTeam(team)
     onClose()
   }
 

@@ -1,28 +1,35 @@
 import React from 'react'
-import { GameCharacterSnapshotIn, GameTeamSnapshotIn, GameCharacter } from '@lindo/shared'
-import { Button, Card, CardHeader, DialogActions, DialogContent, IconButton } from '@mui/material'
+import { GameCharacter, GameCharacterSnapshot } from '@lindo/shared'
+import { Button, Card, CardHeader, DialogActions, DialogContent, Grid, IconButton } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from '@mui/icons-material/Close'
-import { Control, useFieldArray } from 'react-hook-form'
+import { Control, useFieldArray, useWatch } from 'react-hook-form'
 import { useDialog } from '@/hooks'
 import { SelectCharacterDialog } from './SelectCharacterDialog'
 import { getSnapshot } from 'mobx-state-tree'
+import { CharacterCard } from '../account-container/CharacterCard'
+import { TeamForm } from './AddTeamDialog'
 
 export interface TeamWindowCardProps {
   index: number
-  control: Control<GameTeamSnapshotIn, object>
+  control: Control<TeamForm, object>
   onRemove: () => void
 }
 
-export interface _WindowForm {
-  characters: Array<GameCharacterSnapshotIn>
+export interface TeamWindowForm {
+  characters: Array<GameCharacterSnapshot>
 }
 
 export const TeamWindowCard = ({ index, control, onRemove }: TeamWindowCardProps) => {
   const [openSelectCharacterDialog, , toggleSelectCharacterDialog] = useDialog()
-  const { fields, append } = useFieldArray<_WindowForm, 'characters', 'id'>({
-    control: control as never,
-    name: `windows.${index}.characters` as never
+  const { fields, append } = useFieldArray({
+    control,
+    name: `windows.${index}.characters`
+  })
+  const selectedCharacters: Array<GameCharacterSnapshot> = useWatch({
+    control,
+    name: `windows.${index}.characters`,
+    defaultValue: []
   })
 
   const handleAddCharacter = (character: GameCharacter) => {
@@ -42,9 +49,13 @@ export const TeamWindowCard = ({ index, control, onRemove }: TeamWindowCardProps
           title={'Window ' + (index + 1)}
         />
         <DialogContent>
-          {fields.map((character, index) => (
-            <div key={index}>{character.name}</div>
-          ))}
+          <Grid container spacing={2}>
+            {fields.map((character, index) => (
+              <Grid item key={index}>
+                <CharacterCard size='small' character={character} display='preview' />
+              </Grid>
+            ))}
+          </Grid>
         </DialogContent>
         <DialogActions>
           <Button onClick={toggleSelectCharacterDialog} startIcon={<AddIcon />} size='small'>
@@ -53,6 +64,7 @@ export const TeamWindowCard = ({ index, control, onRemove }: TeamWindowCardProps
         </DialogActions>
       </Card>
       <SelectCharacterDialog
+        ignore={selectedCharacters.map((character) => character.id)}
         onSelect={handleAddCharacter}
         open={openSelectCharacterDialog}
         onClose={toggleSelectCharacterDialog}

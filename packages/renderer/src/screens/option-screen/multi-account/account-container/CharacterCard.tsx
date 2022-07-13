@@ -1,17 +1,19 @@
 import { useGameContext } from '@/providers'
 import { useStores } from '@/store'
-import { GameCharacter } from '@lindo/shared'
+import { GameCharacter, GameCharacterSnapshot } from '@lindo/shared'
 import { Box, Button, CardActions, CardContent, CardMedia, Typography } from '@mui/material'
 import { Observer } from 'mobx-react-lite'
 import React from 'react'
-import { CharacterGenericCard } from './CharacterGenericCard'
+import { CharacterGenericCard, CharacterGenericSize, CHARACTER_SIZE_RATIO } from './CharacterGenericCard'
 
 export interface CharacterCardProps {
-  character: GameCharacter
+  character: GameCharacter | GameCharacterSnapshot
   onSelect?: (character: GameCharacter) => void
+  display?: 'preview' | 'action'
+  size?: CharacterGenericSize
 }
 
-export const CharacterCard = ({ character, onSelect }: CharacterCardProps) => {
+export const CharacterCard = ({ character, onSelect, display = 'action', size = 'large' }: CharacterCardProps) => {
   const { optionStore } = useStores()
   const [displayImage, setDisplayImage] = React.useState(true)
   const gameContext = useGameContext()
@@ -20,14 +22,16 @@ export const CharacterCard = ({ character, onSelect }: CharacterCardProps) => {
     optionStore.gameMultiAccount.removeCharacter(character)
   }
 
+  const height = 65 * CHARACTER_SIZE_RATIO[size]
+
   return (
     <Observer>
       {() => (
         <>
-          <CharacterGenericCard key={character.id}>
+          <CharacterGenericCard key={character.id} size={size}>
             <div
               style={{
-                height: '140px',
+                height: height + 'px',
                 width: '100%',
                 overflow: 'hidden',
                 position: 'relative',
@@ -51,29 +55,33 @@ export const CharacterCard = ({ character, onSelect }: CharacterCardProps) => {
                 />
               ) : (
                 <Box sx={{ display: 'flex', p: 1, height: '100%', alignItems: 'center', justifyContent: 'center' }}>
-                  <Typography variant='caption'>Character image will be save during the login</Typography>
+                  {size !== 'small' && (
+                    <Typography variant='caption'>Character image will be save during the login</Typography>
+                  )}
                 </Box>
               )}
             </div>
             <CardContent sx={{ padding: 0, flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               {character.name}
             </CardContent>
-            <CardActions>
-              {onSelect ? (
-                <Button size='small' onClick={() => onSelect(character)}>
-                  Select
-                </Button>
-              ) : (
-                <>
-                  <Button color='error' onClick={() => handleDeleteCharacter(character)} size='small'>
-                    Delete
+            {display === 'action' && (
+              <CardActions>
+                {onSelect ? (
+                  <Button size='small' onClick={() => onSelect(character)}>
+                    Select
                   </Button>
-                  <Button size='small' disabled={true}>
-                    Edit
-                  </Button>
-                </>
-              )}
-            </CardActions>
+                ) : (
+                  <>
+                    <Button color='error' onClick={() => handleDeleteCharacter(character)} size='small'>
+                      Delete
+                    </Button>
+                    <Button size='small' disabled={true}>
+                      Edit
+                    </Button>
+                  </>
+                )}
+              </CardActions>
+            )}
           </CharacterGenericCard>
         </>
       )}

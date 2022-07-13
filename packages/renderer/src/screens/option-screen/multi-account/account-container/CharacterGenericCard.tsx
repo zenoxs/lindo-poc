@@ -3,14 +3,25 @@ import React from 'react'
 
 export interface CharacterGenericCardProps {
   children?: React.ReactNode | React.ReactNode[]
+  size?: CharacterGenericSize
 }
 
-export const CharacterGenericCard = ({ children }: CharacterGenericCardProps) => {
+export type CharacterGenericSize = 'small' | 'medium' | 'large'
+
+export const CHARACTER_SIZE_RATIO = {
+  small: 1,
+  medium: 1.5,
+  large: 2
+}
+
+export const CharacterGenericCard = ({ children, size = 'large' }: CharacterGenericCardProps) => {
   const theme = useTheme()
+  const width = 75 * CHARACTER_SIZE_RATIO[size]
+  const height = 95 * CHARACTER_SIZE_RATIO[size]
   const cardStyle: React.CSSProperties = {
     flexShrink: 0,
-    height: '220px',
-    width: '150px',
+    height: height + 'px',
+    width: width + 'px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',

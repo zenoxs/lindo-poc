@@ -1,15 +1,23 @@
 import { Instance, SnapshotIn, SnapshotOut, types } from 'mobx-state-tree'
 import { v4 as uuidv4 } from 'uuid'
+import { GameCharacter } from '../game-character'
 import { GameTeamWindowModel } from './game-team-window'
 
 /**
  * Model description here for TypeScript hints.
  */
-export const GameTeamModel = types.model('GameTeam').props({
-  id: types.optional(types.identifier, () => uuidv4()),
-  name: types.string,
-  windows: types.array(GameTeamWindowModel)
-})
+export const GameTeamModel = types
+  .model('GameTeam')
+  .props({
+    id: types.optional(types.identifier, () => uuidv4()),
+    name: types.string,
+    windows: types.array(GameTeamWindowModel)
+  })
+  .views((self) => ({
+    get allCharacters() {
+      return self.windows.flatMap((window) => window.characters as Array<GameCharacter>)
+    }
+  }))
 
 /**
  * Un-comment the following to omit model attributes from your snapshots (and from async storage).

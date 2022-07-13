@@ -1,5 +1,5 @@
 import { Instance, SnapshotOut, types } from 'mobx-state-tree'
-import { GameCharacter, GameCharacterModel, GameCharacterSnapshotIn } from './game-character'
+import { GameCharacter, GameCharacterModel, GameCharacterSnapshot, GameCharacterSnapshotIn } from './game-character'
 import { GameTeamModel, GameTeamSnapshotIn } from './game-team'
 
 /**
@@ -16,7 +16,7 @@ export const GameMultiAccountModel = types
     addCharacter(character: GameCharacterSnapshotIn) {
       self.characters.push(character)
     },
-    removeCharacter(character: GameCharacter) {
+    removeCharacter(character: GameCharacter | GameCharacterSnapshot) {
       self.characters.remove(character)
     },
     addTeam(team: GameTeamSnapshotIn) {

@@ -1,5 +1,16 @@
 import { useStores } from '@/store'
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, CardContent, Typography } from '@mui/material'
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Grid,
+  Typography
+} from '@mui/material'
 import { Observer } from 'mobx-react-lite'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import AddIcon from '@mui/icons-material/Add'
@@ -45,13 +56,30 @@ export const AccountContainer = () => {
               {optionStore.gameMultiAccount.teams.map((team) => (
                 <Accordion key={team.id}>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls='panel1a-content' id='panel1a-header'>
-                    <Typography>{team.name}</Typography>
+                    <Typography sx={{ width: '33%', flexShrink: 0 }}>{team.name}</Typography>
+                    <Typography sx={{ color: 'text.secondary' }}>
+                      {team.allCharacters.map((c) => `${c.name}`).join(', ')}
+                    </Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Typography>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet
-                      blandit leo lobortis eget.
-                    </Typography>
+                    <Grid container spacing={2}>
+                      {team.windows.map((window, index) => (
+                        <Grid xs={6} item key={window.id}>
+                          <Card>
+                            <CardHeader title={'Window ' + (index + 1)}></CardHeader>
+                            <CardContent>
+                              <Grid container spacing={2}>
+                                {window.characters.map((character) => (
+                                  <Grid item key={character.id}>
+                                    <CharacterCard display='preview' size='small' character={character} />
+                                  </Grid>
+                                ))}
+                              </Grid>
+                            </CardContent>
+                          </Card>
+                        </Grid>
+                      ))}
+                    </Grid>
                   </AccordionDetails>
                 </Accordion>
               ))}
