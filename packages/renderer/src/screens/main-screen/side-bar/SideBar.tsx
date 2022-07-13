@@ -1,6 +1,6 @@
 import React from 'react'
 import { styled } from '@mui/system'
-import SettingsIcon from '@mui/icons-material/Settings'
+import { Settings, VolumeOff, VolumeUp } from '@mui/icons-material'
 import {
   DndContext,
   closestCenter,
@@ -22,7 +22,7 @@ import { restrictToVerticalAxis, restrictToWindowEdges } from '@dnd-kit/modifier
 import { Observer } from 'mobx-react-lite'
 import { Game, useStores } from '@/store'
 import { TabAdd, TabGame } from './tab'
-import { Box, IconButton, useTheme } from '@mui/material'
+import { Box, IconButton } from '@mui/material'
 
 const SideBarContainer = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -50,7 +50,6 @@ const SortableItem = ({ game }: { game: Game }) => {
 }
 export const SideBar = () => {
   const { gameStore } = useStores()
-  const theme = useTheme()
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -75,6 +74,10 @@ export const SideBar = () => {
     }
   }
 
+  const handleToggleVolume = () => {
+    gameStore.toggleMute()
+  }
+
   return (
     <SideBarContainer>
       <Observer>
@@ -95,8 +98,14 @@ export const SideBar = () => {
       </Observer>
       <TabAdd />
       <Box sx={{ flex: 1 }} />
-      <IconButton onClick={handleOpenOption} sx={{ color: theme.palette.text.primary, mb: 1 }} aria-label='settings'>
-        <SettingsIcon />
+
+      <IconButton onClick={handleToggleVolume} sx={{ mb: 1 }} aria-label='toggle-volume'>
+        <Observer>
+          {() => (gameStore.isMuted ? <VolumeOff color={'error'} /> : <VolumeUp color={'primary'} />)}
+        </Observer>
+      </IconButton>
+      <IconButton onClick={handleOpenOption} sx={{ mb: 1 }} aria-label='settings'>
+        <Settings />
       </IconButton>
     </SideBarContainer>
   )

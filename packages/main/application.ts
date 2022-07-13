@@ -160,5 +160,13 @@ export class Application {
         gWindow.focus()
       }
     })
+
+    ipcMain.on(IPCEvents.AUDIO_MUTE_WINDOW, (event, value) => {
+      console.log('Application ->', 'AUDIO_MUTE_WINDOW')
+      const gWindow = this._gWindows.find((gWindow) => gWindow.id === event.sender.id)
+      if (gWindow) {
+        gWindow.setAudioMute(value)
+      }
+    })
   }
 }

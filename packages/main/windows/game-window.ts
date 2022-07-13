@@ -117,4 +117,8 @@ export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWind
   toggleMaximize() {
     return this._win.isMaximized() ? this._win.unmaximize() : this._win.maximize()
   }
+
+  setAudioMute(value: boolean) {
+    this._win.webContents.setAudioMuted(value)
+  }
 }

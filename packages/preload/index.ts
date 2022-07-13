@@ -139,6 +139,10 @@ const closeOptionWindow = (): void => {
   ipcRenderer.send(IPCEvents.CLOSE_OPTION)
 }
 
+const setAudioMuteWindow = (value: boolean): void => {
+  ipcRenderer.send(IPCEvents.AUDIO_MUTE_WINDOW, value)
+}
+
 // Multi account
 const saveMasterPassword = async (masterPassword: string): Promise<void> => {
   await ipcRenderer.invoke(IPCEvents.SAVE_MASTER_PASSWORD, masterPassword)
@@ -166,6 +170,7 @@ const lindoApi: LindoAPI = {
   openOptionWindow,
   focusCurrentWindow,
   closeOptionWindow,
+  setAudioMuteWindow,
   saveMasterPassword,
   isMasterPasswordConfigured,
   saveCharacterImage

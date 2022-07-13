@@ -7,11 +7,17 @@ import { Game, GameModel } from './game'
 export const GameStoreModel = types
   .model('GameStore')
   .props({
+    isMuted: types.optional(types.boolean, false),
     _games: types.map(GameModel),
     gamesOrder: types.array(types.safeReference(GameModel, { acceptsUndefined: false })),
     selectedGame: types.safeReference(GameModel)
   })
   .actions((self) => ({
+    toggleMute() {
+      self.isMuted = !self.isMuted
+      console.log(self.isMuted)
+      window.lindoAPI.setAudioMuteWindow(self.isMuted)
+    },
     addGame() {
       if (self._games.size > 5) {
         throw new Error('More than 6 game tabs are not supported')

@@ -28,6 +28,7 @@ export interface LindoAPI {
   openOptionWindow: () => void
   focusCurrentWindow: () => void
   closeOptionWindow: () => void
+  setAudioMuteWindow: (value: boolean) => void
   // multi account
   saveMasterPassword: (masterPassword: string) => Promise<void>
   isMasterPasswordConfigured: () => Promise<boolean>
