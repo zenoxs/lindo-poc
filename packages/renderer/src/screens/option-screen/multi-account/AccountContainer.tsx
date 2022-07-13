@@ -1,40 +1,30 @@
 import { useStores } from '@/store'
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Box,
   Button,
   Card,
   CardContent,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
   lighten,
-  Stack,
+  Typography,
   useTheme
 } from '@mui/material'
 import { Observer } from 'mobx-react-lite'
-import { PasswordElement, TextFieldElement } from 'react-hook-form-mui'
-import { useForm } from 'react-hook-form'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import AddIcon from '@mui/icons-material/Add'
 import React from 'react'
-import { GameCharacterSnapshotIn } from '@lindo/shared'
 import { CharacterCard } from './CharacterCard'
+import { useDialog } from '@/hooks'
+import { AddCharacterDialog } from './AddCharacterDialog'
+import { AddTeamDialog } from './AddTeamDialog'
 
 export const AccountContainer = () => {
   const theme = useTheme()
   const { optionStore } = useStores()
-  const { control, handleSubmit, reset } = useForm<GameCharacterSnapshotIn>()
-  const [openAddCharacterDialog, setOpenAddCharacterDialog] = React.useState(false)
-
-  const handleOpenAddCharacterDialog = () => {
-    reset()
-    setOpenAddCharacterDialog(true)
-  }
-
-  const handleCloseAddCharacterDialog = () => {
-    reset()
-    setOpenAddCharacterDialog(false)
-  }
+  const [openAddCharacterDialog, , toggleAddCharacterDialog] = useDialog()
+  const [openAddTeamDialog, , toggleAddTeamDialog] = useDialog()
 
   const cardStyle: React.CSSProperties = {
     flexShrink: 0,
@@ -47,11 +37,6 @@ export const AccountContainer = () => {
     backgroundColor: lighten(theme.palette.background.paper, 0.1)
   }
 
-  const onSubmit = (data: GameCharacterSnapshotIn) => {
-    optionStore.gameMultiAccount.addCharacter(data)
-    handleCloseAddCharacterDialog()
-  }
-
   return (
     <>
       <Box
@@ -60,7 +45,9 @@ export const AccountContainer = () => {
       >
         <Card style={cardStyle}>
           <CardContent>
-            <Button onClick={handleOpenAddCharacterDialog}>Add Account</Button>
+            <Button onClick={toggleAddCharacterDialog} size='small' startIcon={<AddIcon />}>
+              Add Account
+            </Button>
           </CardContent>
         </Card>
         <Observer>
@@ -73,31 +60,32 @@ export const AccountContainer = () => {
           )}
         </Observer>
       </Box>
-      <Dialog open={openAddCharacterDialog} onClose={handleCloseAddCharacterDialog}>
-        <DialogTitle>Configure master password</DialogTitle>
-        <DialogContent>
-          <DialogContentText>All app&apos;s settings will be reset to their default value</DialogContentText>
-          <Stack
-            id='character-form'
-            spacing={2}
-            sx={{ mt: 2 }}
-            component='form'
-            noValidate
-            autoComplete='off'
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <TextFieldElement name='account' control={control} required fullWidth label={'Account'} />
-            <PasswordElement name='password' control={control} required fullWidth label={'Password'} />
-            <TextFieldElement name='name' control={control} required fullWidth label={'Character'} />
-          </Stack>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseAddCharacterDialog}>Cancel</Button>
-          <Button variant='outlined' type='submit' form='character-form'>
-            Add
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <Box sx={{ p: 2 }}>
+        <Observer>
+          {() => (
+            <>
+              {optionStore.gameMultiAccount.teams.map((team) => (
+                <Accordion key={team.id}>
+                  <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls='panel1a-content' id='panel1a-header'>
+                    <Typography>{team.name}</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet
+                      blandit leo lobortis eget.
+                    </Typography>
+                  </AccordionDetails>
+                </Accordion>
+              ))}
+            </>
+          )}
+        </Observer>
+        <Button size='small' sx={{ mt: 1 }} onClick={toggleAddTeamDialog} startIcon={<AddIcon />}>
+          New Team
+        </Button>
+      </Box>
+      <AddCharacterDialog open={openAddCharacterDialog} onClose={toggleAddCharacterDialog} />
+      <AddTeamDialog open={openAddTeamDialog} onClose={toggleAddTeamDialog} />
     </>
   )
 }

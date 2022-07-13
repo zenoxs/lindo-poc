@@ -1,7 +1,7 @@
 import { useGameContext } from '@/providers'
 import { useStores } from '@/store'
 import { GameCharacter } from '@lindo/shared'
-import { Button, Card, CardActions, CardContent, CardMedia } from '@mui/material'
+import { Box, Button, Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material'
 import { Observer } from 'mobx-react-lite'
 import React from 'react'
 
@@ -33,7 +33,7 @@ export const CharacterCard = ({ style, character }: CharacterCardProps) => {
                 flexShrink: 0
               }}
             >
-              {displayImage && (
+              {displayImage ? (
                 <CardMedia
                   style={{
                     height: 'auto',
@@ -48,6 +48,10 @@ export const CharacterCard = ({ style, character }: CharacterCardProps) => {
                   }}
                   alt='green iguana'
                 />
+              ) : (
+                <Box sx={{ display: 'flex', p: 1, height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+                  <Typography variant='caption'>Character image will be save during the login</Typography>
+                </Box>
               )}
             </div>
             <CardContent sx={{ padding: 0, flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
