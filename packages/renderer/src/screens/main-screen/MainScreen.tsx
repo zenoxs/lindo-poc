@@ -1,13 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box } from '@mui/material'
 import { SideBar } from './side-bar/SideBar'
 import { Observer } from 'mobx-react-lite'
 import { GameScreen } from './game-screen/GameScreen'
 import { useStores } from '@/store'
 import { TabManager } from './tab-manager'
+import { useGameContext } from '@/providers'
 
 export const MainScreen = () => {
   const { gameStore } = useStores()
+  const gameContext = useGameContext()
+
+  useEffect(() => {
+    if (gameContext.teamId) {
+      gameStore.gameFromTeam(gameContext.teamId)
+    } else {
+      gameStore.addGame()
+    }
+  }, [])
 
   return (
     <TabManager>

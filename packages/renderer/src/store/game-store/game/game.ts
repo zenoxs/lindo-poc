@@ -1,5 +1,6 @@
 import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 import { v4 as uuidv4 } from 'uuid'
+import { GameCharacterModel } from '@lindo/shared'
 
 /**
  * Model description here for TypeScript hints.
@@ -8,6 +9,7 @@ export const GameModel = types
   .model('Game')
   .props({
     id: types.optional(types.identifier, () => uuidv4()),
+    character: types.safeReference(GameCharacterModel),
     characterName: types.maybe(types.string),
     characterIcon: types.maybe(types.frozen<HTMLElement>()),
     hasNotification: types.optional(types.boolean, false)

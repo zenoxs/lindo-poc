@@ -18,6 +18,7 @@ export const GameStoreModel = types
       console.log(self.isMuted)
       window.lindoAPI.setAudioMuteWindow(self.isMuted)
     },
+    gameFromTeam(team: string) {},
     addGame() {
       if (self._games.size > 5) {
         throw new Error('More than 6 game tabs are not supported')
@@ -86,12 +87,6 @@ export const GameStoreModel = types
      */
     get games() {
       return Array.from(self._games.values())
-    }
-  }))
-  // lifecycle hooks
-  .actions((self) => ({
-    afterCreate() {
-      self.addGame()
     }
   }))
 
