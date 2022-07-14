@@ -35,4 +35,5 @@ export interface LindoAPI {
   isMasterPasswordConfigured: () => Promise<boolean>
   saveCharacterImage: (args: SaveCharacterImageArgs) => void
   closeUnlockWindow: () => void
+  selectTeamToConnect: (teamId: string) => void
 }

@@ -69,17 +69,18 @@ export class MultiAccount {
 
     this._rootStore.optionStore.gameMultiAccount.unlock()
 
-    const selectTeam = await new Promise<string>((resolve, reject) => {
+    const selectTeamId = await new Promise<string>((resolve, reject) => {
       ipcMain.handleOnce(IPCEvents.SELECT_TEAM_TO_CONNECT, async (event, teamId: string) => {
         resolve(teamId)
       })
       multiAccountWindow.once('close', () => reject(new Error('Multi-account unlock window was closed')))
     })
-    console.log(selectTeam)
+    console.log(selectTeamId)
 
     // close the window and unlock the app
     multiAccountWindow.close()
     ipcMain.removeListener(IPCEvents.CLOSE_UNLOCK_WINDOW, closeListener)
+    return selectTeamId
   }
 
   async saveMasterPassword(masterPassword: string) {

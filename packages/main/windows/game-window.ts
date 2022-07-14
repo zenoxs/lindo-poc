@@ -1,4 +1,4 @@
-import { RootStore } from '@lindo/shared'
+import { GameTeamWindow, RootStore } from '@lindo/shared'
 import { app, BeforeSendResponse, BrowserWindow } from 'electron'
 import { attachTitlebarToWindow } from 'custom-electron-titlebar/main'
 import { join } from 'path'
@@ -12,14 +12,16 @@ type GameWindowEvents = {
 export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWindowEvents>) {
   private readonly _win: BrowserWindow
   private readonly _store: RootStore
+  readonly teamWindow?: GameTeamWindow
 
   get id() {
     return this._win.webContents.id!
   }
 
-  private constructor(userAgent: string, store: RootStore) {
+  private constructor(userAgent: string, store: RootStore, team?: GameTeamWindow) {
     super()
     this._store = store
+    this.teamWindow = team
     this._win = new BrowserWindow({
       show: false,
       resizable: true,
@@ -100,9 +102,9 @@ export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWind
     attachTitlebarToWindow(this._win)
   }
 
-  static async init(store: RootStore): Promise<GameWindow> {
+  static async init(store: RootStore, team?: GameTeamWindow): Promise<GameWindow> {
     const userAgent = await generateUserArgent()
-    return new GameWindow(userAgent, store)
+    return new GameWindow(userAgent, store, team)
   }
 
   private _close(event: Event) {

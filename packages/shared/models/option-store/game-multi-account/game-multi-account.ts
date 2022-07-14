@@ -32,6 +32,9 @@ export const GameMultiAccountModel = types
     },
     removeTeam(team: GameTeam) {
       self.teams.remove(team)
+    },
+    selectTeamById(teamId: string) {
+      return self.teams.find((t) => t.id === teamId)
     }
   }))
 

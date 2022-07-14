@@ -1,4 +1,4 @@
-import { GameContext, IPCEvents, RootStore, SaveCharacterImageArgs } from '@lindo/shared'
+import { GameContext, IPCEvents, RootStore, SaveCharacterImageArgs, GameTeamWindow } from '@lindo/shared'
 import { app, ipcMain, Menu } from 'electron'
 import express from 'express'
 import getPort from 'get-port'
@@ -80,9 +80,14 @@ export class Application {
     console.log({ multiAccountEnabled })
     if (multiAccountEnabled) {
       try {
-        const selectedTeam = await this._multiAccount.unlock()
-        console.log(selectedTeam)
-        this.createGameWindow()
+        const selectedTeamId = await this._multiAccount.unlock()
+        const team = this._rootStore.optionStore.gameMultiAccount.selectTeamById(selectedTeamId)
+        if (!team) {
+          throw new Error('Team not found')
+        }
+        for (const window of team.windows) {
+          this.createGameWindow(window)
+        }
       } catch (e) {
         console.log(e)
         this.createGameWindow()
@@ -104,9 +109,9 @@ export class Application {
     })
   }
 
-  async createGameWindow() {
+  async createGameWindow(teamWindow?: GameTeamWindow) {
     console.log('Application ->', '_createGameWindow')
-    const gWindow = await GameWindow.init(this._rootStore)
+    const gWindow = await GameWindow.init(this._rootStore, teamWindow)
     gWindow.on('close', () => {
       this._gWindows.splice(this._gWindows.indexOf(gWindow), 1)
     })
@@ -129,10 +134,12 @@ export class Application {
     // handlers
     ipcMain.handle(IPCEvents.GET_GAME_CONTEXT, (event) => {
       const serverAddress: AddressInfo = this._serveGameServer.address() as AddressInfo
+      const gWindow = this._gWindows.find((gWindow) => gWindow.id === event.sender.id)
       const context: GameContext = {
         gameSrc: 'http://localhost:' + serverAddress.port + '/index.html?delayed=true',
         characterImagesSrc: 'http://localhost:' + serverAddress.port + '/character-images/',
-        windowId: event.sender.id
+        windowId: event.sender.id,
+        teamId: gWindow?.teamWindow?.id
       }
       return JSON.stringify(context)
     })

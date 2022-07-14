@@ -18,6 +18,7 @@ import {
 import { Observer } from 'mobx-react-lite'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { CharacterCard } from '../option-screen/multi-account/account-container/CharacterCard'
+import { GameTeam } from '@lindo/shared'
 
 export const ChooseTeamScreen = () => {
   const theme = useTheme()
@@ -27,6 +28,12 @@ export const ChooseTeamScreen = () => {
 
   const handleSkip = () => {
     window.lindoAPI.closeUnlockWindow()
+  }
+
+  const handleConnect = (e: React.MouseEvent<HTMLElement>, team: GameTeam) => {
+    e.stopPropagation()
+    console.log('connecting to team', team)
+    window.lindoAPI.selectTeamToConnect(team.id)
   }
 
   return (
@@ -50,7 +57,11 @@ export const ChooseTeamScreen = () => {
               {gameMultiAccount.teams.map((team) => (
                 <Accordion key={team.id} sx={{ backgroundColor: darken(theme.palette.background.paper, 0.3) }}>
                   <AccordionSummary
-                    sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between'
+                    }}
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls='panel1a-content'
                     id='panel1a-header'
@@ -59,7 +70,9 @@ export const ChooseTeamScreen = () => {
                     <Typography sx={{ color: 'text.secondary', flex: 1 }}>
                       {team.allCharacters.map((c) => `${c.name}`).join(', ')}
                     </Typography>
-                    <Button sx={{ mr: 1 }}>Connect</Button>
+                    <Button onClick={(e) => handleConnect(e, team)} sx={{ mr: 1 }}>
+                      Connect
+                    </Button>
                   </AccordionSummary>
                   <AccordionDetails>
                     <Grid container spacing={2}>

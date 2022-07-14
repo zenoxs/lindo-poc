@@ -164,6 +164,10 @@ const closeUnlockWindow = () => {
   ipcRenderer.send(IPCEvents.CLOSE_UNLOCK_WINDOW)
 }
 
+const selectTeamToConnect = (teamId: string) => {
+  ipcRenderer.invoke(IPCEvents.SELECT_TEAM_TO_CONNECT, teamId)
+}
+
 const lindoApi: LindoAPI = {
   fetchInitialStateAsync,
   resetStore,
@@ -183,6 +187,7 @@ const lindoApi: LindoAPI = {
   isMasterPasswordConfigured,
   saveCharacterImage,
   unlockApplication,
-  closeUnlockWindow
+  closeUnlockWindow,
+  selectTeamToConnect
 }
 contextBridge.exposeInMainWorld('lindoAPI', lindoApi)
