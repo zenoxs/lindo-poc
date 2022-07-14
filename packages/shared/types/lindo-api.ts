@@ -31,6 +31,8 @@ export interface LindoAPI {
   setAudioMuteWindow: (value: boolean) => void
   // multi account
   saveMasterPassword: (masterPassword: string) => Promise<void>
+  encryptCharacterPassword: (characterPassword: string) => Promise<string>
+  decryptCharacterPassword: (encryptedCharacterPassword: string) => Promise<string>
   unlockApplication: (masterPassword: string) => Promise<boolean>
   isMasterPasswordConfigured: () => Promise<boolean>
   saveCharacterImage: (args: SaveCharacterImageArgs) => void

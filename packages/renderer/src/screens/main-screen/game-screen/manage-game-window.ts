@@ -19,15 +19,18 @@ export const manageGameWindow = ({ dWindow, rootStore, game, LL, character }: Ma
   // auto connect the account
   if (character) {
     const gameIndex = rootStore.gameStore.games.indexOf(game)
-    setTimeout(() => {
+    setTimeout(async () => {
       dWindow.gui.loginScreen._connectMethod = 'lastServer'
-      dWindow.gui.loginScreen._login(character.account, character.password, false)
+      dWindow.gui.loginScreen._login(
+        character.account,
+        await window.lindoAPI.decryptCharacterPassword(character.password),
+        false
+      )
       game.removeLogin()
     }, gameIndex * 1500 + 1500)
   }
 
   const startMods = () => {
-    console.log(dWindow)
     for (const key in MODS) {
       const mod: Mod = new MODS[key](dWindow, rootStore, LL)
       if (mod instanceof NotificationsMod) {

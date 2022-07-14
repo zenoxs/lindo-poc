@@ -32,6 +32,22 @@ export class MultiAccount {
         this._store.set('multiAccountState', encryptedState)
       }
     })
+
+    ipcMain.handle(IPCEvents.SAVE_MASTER_PASSWORD, (event, masterPassword) => {
+      return this.saveMasterPassword(masterPassword)
+    })
+
+    ipcMain.handle(IPCEvents.IS_MASTER_PASSWORD_CONFIGURED, () => {
+      return this.isMasterPasswordConfigured()
+    })
+
+    ipcMain.handle(IPCEvents.DECRYPT_CHARACTER_PASSWORD, (event, input: string) => {
+      return this.decryptWithMasterPassword(input)
+    })
+
+    ipcMain.handle(IPCEvents.ENCRYPT_CHARACTER_PASSWORD, (event, input: string) => {
+      return this.encryptWithMasterPassword(input)
+    })
   }
 
   isEnabled() {
@@ -110,5 +126,19 @@ export class MultiAccount {
       hashedPassword = await safeStorage.decryptString(buffer)
     }
     return argon2.verify(hashedPassword, input)
+  }
+
+  encryptWithMasterPassword(input: string) {
+    if (this._masterPassword) {
+      return crypto.AES.encrypt(input, this._masterPassword).toString()
+    }
+    throw new Error('Master password is not configured')
+  }
+
+  decryptWithMasterPassword(input: string) {
+    if (this._masterPassword) {
+      return crypto.AES.decrypt(input, this._masterPassword).toString(crypto.enc.Utf8)
+    }
+    throw new Error('Master password is not configured')
   }
 }

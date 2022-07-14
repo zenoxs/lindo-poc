@@ -1,4 +1,4 @@
-import { Instance, SnapshotOut, types } from 'mobx-state-tree'
+import { flow, Instance, SnapshotOut, types } from 'mobx-state-tree'
 import { GameCharacter, GameCharacterModel, GameCharacterSnapshot, GameCharacterSnapshotIn } from './game-character'
 import { GameTeam, GameTeamModel, GameTeamSnapshotIn } from './game-team'
 
@@ -21,9 +21,12 @@ export const GameMultiAccountModel = types
     unlock() {
       self.locked = false
     },
-    addCharacter(character: GameCharacterSnapshotIn) {
-      self.characters.push(character)
-    },
+    addCharacter: flow(function* (character: GameCharacterSnapshotIn) {
+      self.characters.push({
+        ...character,
+        password: yield window.lindoAPI.encryptCharacterPassword(character.password)
+      })
+    }),
     removeCharacter(character: GameCharacter | GameCharacterSnapshot) {
       self.characters.remove(character)
     },

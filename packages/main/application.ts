@@ -158,14 +158,6 @@ export class Application {
       this._rootStore.reset()
     })
 
-    ipcMain.handle(IPCEvents.SAVE_MASTER_PASSWORD, (event, masterPassword) => {
-      return this._multiAccount.saveMasterPassword(masterPassword)
-    })
-
-    ipcMain.handle(IPCEvents.IS_MASTER_PASSWORD_CONFIGURED, () => {
-      return this._multiAccount.isMasterPasswordConfigured()
-    })
-
     ipcMain.on(IPCEvents.SAVE_CHARACTER_IMAGE, (event, { image, name }: SaveCharacterImageArgs) => {
       const base64Data = image.replace(/^data:image\/png;base64,/, '')
       fs.mkdirSync(CHARACTER_IMAGES_PATH, { recursive: true })
