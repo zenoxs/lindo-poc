@@ -1,40 +1,21 @@
 import { useStores } from '@/store'
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  darken,
-  Grid,
-  Typography,
-  useTheme
-} from '@mui/material'
-import { Observer } from 'mobx-react-lite'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import AddIcon from '@mui/icons-material/Add'
 import React from 'react'
+import { Box, Button, CardContent } from '@mui/material'
+import { Observer } from 'mobx-react-lite'
+import AddIcon from '@mui/icons-material/Add'
 import { CharacterCard } from './CharacterCard'
 import { useDialog } from '@/hooks'
 import { AddCharacterDialog } from '../add-character-dialog'
-import { AddTeamDialog } from '../add-team-dialog'
+import { FormTeamDialog } from '../form-team-dialog'
 import { CharacterGenericCard } from './CharacterGenericCard'
-import { GameTeam } from '@lindo/shared'
+import { TeamAccordion } from './TeamAccordion'
 
 export const AccountContainer = () => {
   const {
     optionStore: { gameMultiAccount }
   } = useStores()
-  const theme = useTheme()
   const [openAddCharacterDialog, , toggleAddCharacterDialog] = useDialog()
   const [openAddTeamDialog, , toggleAddTeamDialog] = useDialog()
-
-  const handleRemoveTeam = (team: GameTeam) => {
-    gameMultiAccount.removeTeam(team)
-  }
 
   return (
     <>
@@ -64,37 +45,7 @@ export const AccountContainer = () => {
           {() => (
             <>
               {gameMultiAccount.teams.map((team) => (
-                <Accordion key={team.id} sx={{ backgroundColor: darken(theme.palette.background.paper, 0.3) }}>
-                  <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls='panel1a-content' id='panel1a-header'>
-                    <Typography sx={{ width: '33%', flexShrink: 0 }}>{team.name}</Typography>
-                    <Typography sx={{ color: 'text.secondary' }}>
-                      {team.allCharacters.map((c) => `${c.name}`).join(', ')}
-                    </Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Grid container spacing={2}>
-                      {team.windows.map((window, index) => (
-                        <Grid xs={6} item key={window.id}>
-                          <Card>
-                            <CardHeader title={'Window ' + (index + 1)}></CardHeader>
-                            <CardContent>
-                              <Grid container spacing={2}>
-                                {window.characters.map((character) => (
-                                  <Grid item key={character.id}>
-                                    <CharacterCard display='preview' size='small' character={character} />
-                                  </Grid>
-                                ))}
-                              </Grid>
-                            </CardContent>
-                          </Card>
-                        </Grid>
-                      ))}
-                    </Grid>
-                    <Button onClick={() => handleRemoveTeam(team)} sx={{ mt: 2 }} color='error'>
-                      Delete team
-                    </Button>
-                  </AccordionDetails>
-                </Accordion>
+                <TeamAccordion key={team.id} team={team} />
               ))}
             </>
           )}
@@ -104,7 +55,7 @@ export const AccountContainer = () => {
         </Button>
       </Box>
       <AddCharacterDialog open={openAddCharacterDialog} onClose={toggleAddCharacterDialog} />
-      <AddTeamDialog open={openAddTeamDialog} onClose={toggleAddTeamDialog} />
+      <FormTeamDialog open={openAddTeamDialog} onClose={toggleAddTeamDialog} />
     </>
   )
 }

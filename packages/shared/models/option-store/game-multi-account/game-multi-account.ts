@@ -1,6 +1,6 @@
-import { flow, Instance, SnapshotOut, types } from 'mobx-state-tree'
+import { cast, flow, Instance, SnapshotOut, types } from 'mobx-state-tree'
 import { GameCharacter, GameCharacterModel, GameCharacterSnapshot, GameCharacterSnapshotIn } from './game-character'
-import { GameTeam, GameTeamModel, GameTeamSnapshotIn } from './game-team'
+import { GameTeam, GameTeamModel, GameTeamSnapshot, GameTeamSnapshotIn } from './game-team'
 
 /**
  * Model description here for TypeScript hints.
@@ -32,6 +32,10 @@ export const GameMultiAccountModel = types
     },
     addTeam(team: GameTeamSnapshotIn) {
       self.teams.push(team)
+    },
+    updateTeam(team: GameTeamSnapshot) {
+      const index = self.teams.findIndex((t) => t.id === team.id)!
+      self.teams[index] = cast(team)
     },
     removeTeam(team: GameTeam) {
       self.teams.remove(team)

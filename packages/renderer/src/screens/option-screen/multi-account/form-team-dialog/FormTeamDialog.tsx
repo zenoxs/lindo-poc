@@ -5,24 +5,38 @@ import AddIcon from '@mui/icons-material/Add'
 import { useForm, useFieldArray } from 'react-hook-form'
 import { TextFieldElement } from 'react-hook-form-mui'
 import { TeamWindowCard, TeamWindowForm } from './TeamWindowCard'
-import { GameTeamSnapshotIn } from '@lindo/shared'
+import { GameTeam, GameTeamSnapshotIn } from '@lindo/shared'
 
 export interface AddTeamDialogProps {
   open: boolean
   onClose: () => void
+  value?: GameTeam
 }
 
 export interface TeamForm {
+  id?: string
   name: string
   windows: Array<TeamWindowForm>
 }
 
-export const AddTeamDialog = ({ onClose, open }: AddTeamDialogProps) => {
+const mapValuesToForm = (value: GameTeam): TeamForm => {
+  return {
+    id: value.id,
+    name: value.name,
+    windows: value.windows.map((window) => ({
+      characters: window.characters
+    }))
+  }
+}
+
+export const FormTeamDialog = ({ onClose, open, value }: AddTeamDialogProps) => {
   const { optionStore } = useStores()
   const { control, handleSubmit, reset } = useForm<TeamForm>({
-    defaultValues: {
-      windows: [{}]
-    }
+    defaultValues: value
+      ? mapValuesToForm(value)
+      : {
+          windows: [{}]
+        }
   })
   const { fields, append, remove } = useFieldArray({
     control,
@@ -30,17 +44,28 @@ export const AddTeamDialog = ({ onClose, open }: AddTeamDialogProps) => {
   })
 
   useEffect(() => {
-    reset()
-  }, [open])
+    reset(
+      value
+        ? mapValuesToForm(value)
+        : {
+            windows: [{}]
+          }
+    )
+  }, [open, value])
 
   const onSubmit = (data: TeamForm) => {
     const team: GameTeamSnapshotIn = {
+      id: data.id,
       name: data.name,
       windows: data.windows.map((window) => ({
         characters: window.characters.map((c) => c.id)
       }))
     }
-    optionStore.gameMultiAccount.addTeam(team)
+    if (data.id) {
+      optionStore.gameMultiAccount.updateTeam(team)
+    } else {
+      optionStore.gameMultiAccount.addTeam(team)
+    }
     onClose()
   }
 

@@ -8,7 +8,7 @@ import { useDialog } from '@/hooks'
 import { SelectCharacterDialog } from './SelectCharacterDialog'
 import { getSnapshot } from 'mobx-state-tree'
 import { CharacterCard } from '../account-container/CharacterCard'
-import { TeamForm } from './AddTeamDialog'
+import { TeamForm } from './FormTeamDialog'
 
 export interface TeamWindowCardProps {
   index: number
