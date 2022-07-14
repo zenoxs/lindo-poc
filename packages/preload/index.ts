@@ -160,6 +160,10 @@ const saveCharacterImage = (args: SaveCharacterImageArgs) => {
   ipcRenderer.send(IPCEvents.SAVE_CHARACTER_IMAGE, args)
 }
 
+const closeUnlockWindow = () => {
+  ipcRenderer.send(IPCEvents.CLOSE_UNLOCK_WINDOW)
+}
+
 const lindoApi: LindoAPI = {
   fetchInitialStateAsync,
   resetStore,
@@ -178,6 +182,7 @@ const lindoApi: LindoAPI = {
   saveMasterPassword,
   isMasterPasswordConfigured,
   saveCharacterImage,
-  unlockApplication
+  unlockApplication,
+  closeUnlockWindow
 }
 contextBridge.exposeInMainWorld('lindoAPI', lindoApi)

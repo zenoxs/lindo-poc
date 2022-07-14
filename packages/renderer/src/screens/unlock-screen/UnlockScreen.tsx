@@ -18,6 +18,10 @@ export const UnlockScreen = () => {
     }
   }
 
+  const handleSkip = () => {
+    window.lindoAPI.closeUnlockWindow()
+  }
+
   return (
     <Box
       component='form'
@@ -45,7 +49,7 @@ export const UnlockScreen = () => {
           control={control}
         />
         <Stack sx={{ mt: 2 }} alignSelf={'stretch'} direction='row' justifyContent='space-between'>
-          <Button>Skip</Button>
+          <Button onClick={handleSkip}>Skip</Button>
           <Button variant='contained' type='submit'>
             Unlock
           </Button>

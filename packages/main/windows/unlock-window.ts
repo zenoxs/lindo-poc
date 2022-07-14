@@ -51,7 +51,7 @@ export class UnlockWindow extends (EventEmitter as new () => TypedEmitter<Unlock
     })
   }
 
-  _close(event: Event) {
+  private _close(event: Event) {
     this._win.removeAllListeners()
     this.emit('close', event)
   }

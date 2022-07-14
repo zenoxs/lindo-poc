@@ -40,6 +40,10 @@ export class MultiAccount {
 
   async unlock() {
     const multiAccountWindow = new UnlockWindow(this._rootStore)
+    const closeListener = () => {
+      multiAccountWindow.close()
+    }
+    ipcMain.on(IPCEvents.CLOSE_UNLOCK_WINDOW, closeListener)
 
     // wait for user master password
     this._masterPassword = await new Promise<string>((resolve, reject) => {
@@ -51,7 +55,7 @@ export class MultiAccount {
         }
         return passwordOk
       })
-      multiAccountWindow.on('close', () => reject(new Error('Multi-account unlock window was closed')))
+      multiAccountWindow.once('close', () => reject(new Error('Multi-account unlock window was closed')))
     })
 
     const encryptedState = this._store.get('multiAccountState')
@@ -63,18 +67,19 @@ export class MultiAccount {
       this._rootStore.optionStore.restoreGameMultiAccount(multiAccountState)
     }
 
+    this._rootStore.optionStore.gameMultiAccount.unlock()
+
     const selectTeam = await new Promise<string>((resolve, reject) => {
       ipcMain.handleOnce(IPCEvents.SELECT_TEAM_TO_CONNECT, async (event, teamId: string) => {
         resolve(teamId)
       })
-      multiAccountWindow.on('close', () => reject(new Error('Multi-account unlock window was closed')))
+      multiAccountWindow.once('close', () => reject(new Error('Multi-account unlock window was closed')))
     })
-
     console.log(selectTeam)
 
     // close the window and unlock the app
     multiAccountWindow.close()
-    this._rootStore.optionStore.gameMultiAccount.unlock()
+    ipcMain.removeListener(IPCEvents.CLOSE_UNLOCK_WINDOW, closeListener)
   }
 
   async saveMasterPassword(masterPassword: string) {

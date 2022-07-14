@@ -25,7 +25,9 @@ export const ChooseTeamScreen = () => {
     optionStore: { gameMultiAccount }
   } = useStores()
 
-  console.log(gameMultiAccount)
+  const handleSkip = () => {
+    window.lindoAPI.closeUnlockWindow()
+  }
 
   return (
     <Box
@@ -85,7 +87,7 @@ export const ChooseTeamScreen = () => {
           )}
         </Observer>
         <Stack sx={{ mt: 2 }} alignSelf={'stretch'} direction='row' justifyContent='space-between'>
-          <Button>Skip</Button>
+          <Button onClick={handleSkip}>Skip</Button>
         </Stack>
       </Box>
     </Box>

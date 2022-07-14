@@ -34,4 +34,5 @@ export interface LindoAPI {
   unlockApplication: (masterPassword: string) => Promise<boolean>
   isMasterPasswordConfigured: () => Promise<boolean>
   saveCharacterImage: (args: SaveCharacterImageArgs) => void
+  closeUnlockWindow: () => void
 }
