@@ -16,6 +16,18 @@ export interface ManageGameWindowProps {
 export const manageGameWindow = ({ dWindow, rootStore, game, LL, character }: ManageGameWindowProps) => {
   const mods: Array<Mod> = []
 
+  console.log(character)
+  // auto connect the account
+  if (character) {
+    const gameIndex = rootStore.gameStore.games.indexOf(game)
+    console.log('Will auto-connect')
+    setTimeout(() => {
+      dWindow.gui.loginScreen._connectMethod = 'lastServer'
+      dWindow.gui.loginScreen._login(character.account, character.password, false)
+      game.removeLogin()
+    }, gameIndex * 1500 + 1500)
+  }
+
   const startMods = () => {
     console.log(dWindow)
     for (const key in MODS) {

@@ -9,7 +9,7 @@ export const GameModel = types
   .model('Game')
   .props({
     id: types.optional(types.identifier, () => uuidv4()),
-    character: types.safeReference(GameCharacterModel),
+    character: types.maybe(types.reference(GameCharacterModel)),
     characterName: types.maybe(types.string),
     characterIcon: types.maybe(types.frozen<HTMLElement>()),
     hasNotification: types.optional(types.boolean, false)
@@ -29,6 +29,10 @@ export const GameModel = types
       self.characterName = undefined
       self.characterIcon = undefined
       self.hasNotification = false
+      self.character = undefined
+    },
+    removeLogin() {
+      self.character = undefined
     }
   }))
 

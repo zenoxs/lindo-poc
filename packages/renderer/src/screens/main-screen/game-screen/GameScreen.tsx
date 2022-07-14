@@ -45,9 +45,8 @@ export const GameScreen = memo(({ game }: GameScreenProps) => {
           dWindow: gameWindow,
           game,
           rootStore,
-          LL
-          // TODO: forward correct game account
-          // character: rootStore.optionStore.gameMultiAccount.characters[0]
+          LL,
+          character: game.character
         })
       })
     }

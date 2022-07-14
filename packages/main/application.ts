@@ -1,4 +1,4 @@
-import { GameContext, IPCEvents, RootStore, SaveCharacterImageArgs, GameTeamWindow } from '@lindo/shared'
+import { GameContext, IPCEvents, RootStore, SaveCharacterImageArgs, GameTeamWindow, GameTeam } from '@lindo/shared'
 import { app, ipcMain, Menu } from 'electron'
 import express from 'express'
 import getPort from 'get-port'
@@ -86,7 +86,7 @@ export class Application {
           throw new Error('Team not found')
         }
         for (const window of team.windows) {
-          this.createGameWindow(window)
+          this.createGameWindow(team, window)
         }
       } catch (e) {
         console.log(e)
@@ -109,9 +109,9 @@ export class Application {
     })
   }
 
-  async createGameWindow(teamWindow?: GameTeamWindow) {
+  async createGameWindow(team?: GameTeam, teamWindow?: GameTeamWindow) {
     console.log('Application ->', '_createGameWindow')
-    const gWindow = await GameWindow.init(this._rootStore, teamWindow)
+    const gWindow = await GameWindow.init(this._rootStore, team, teamWindow)
     gWindow.on('close', () => {
       this._gWindows.splice(this._gWindows.indexOf(gWindow), 1)
     })
@@ -139,7 +139,7 @@ export class Application {
         gameSrc: 'http://localhost:' + serverAddress.port + '/index.html?delayed=true',
         characterImagesSrc: 'http://localhost:' + serverAddress.port + '/character-images/',
         windowId: event.sender.id,
-        teamId: gWindow?.teamWindow?.id
+        multiAccount: gWindow?.multiAccount
       }
       return JSON.stringify(context)
     })

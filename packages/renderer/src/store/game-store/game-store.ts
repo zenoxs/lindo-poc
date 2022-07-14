@@ -1,4 +1,5 @@
 import { Instance, SnapshotOut, types } from 'mobx-state-tree'
+import { GameCharacter, MultiAccountContext, withRootStore } from '@lindo/shared'
 import { Game, GameModel } from './game'
 
 /**
@@ -12,18 +13,19 @@ export const GameStoreModel = types
     gamesOrder: types.array(types.safeReference(GameModel, { acceptsUndefined: false })),
     selectedGame: types.safeReference(GameModel)
   })
+  .extend(withRootStore)
   .actions((self) => ({
     toggleMute() {
       self.isMuted = !self.isMuted
       console.log(self.isMuted)
       window.lindoAPI.setAudioMuteWindow(self.isMuted)
     },
-    gameFromTeam(team: string) {},
-    addGame() {
+    addGame(character?: GameCharacter) {
       if (self._games.size > 5) {
         throw new Error('More than 6 game tabs are not supported')
       }
-      const game = self._games.put({})
+      console.log(character?.id)
+      const game = self._games.put({ character: character?.id })
       self.gamesOrder.push(game)
       self.selectedGame = game
     },
@@ -54,6 +56,16 @@ export const GameStoreModel = types
     }
   }))
   .actions((self) => ({
+    gamesFromTeamWindow(context: MultiAccountContext) {
+      console.log(context)
+      const team = self.rootStore.optionStore.gameMultiAccount
+        .selectTeamById(context.teamId)
+        ?.windows.find((w) => w.id === context.teamWindowId)
+      console.log(team)
+      team?.characters.forEach((character) => {
+        self.addGame(character)
+      })
+    },
     selectNextGame() {
       const index = self.gamesOrder.indexOf(self.selectedGame!)
       if (index !== -1) {
