@@ -1,4 +1,4 @@
-import { HTMLIFrameElementWithDofus } from '@/dofus-window'
+import { DofusWindow, HTMLIFrameElementWithDofus } from '@/dofus-window'
 import { useGameContext } from '@/providers'
 import { useStores } from '@/store'
 import { Game } from '@/store/game-store/game'
@@ -41,6 +41,27 @@ export const GameScreen = memo(({ game }: GameScreenProps) => {
   const handleLoad = () => {
     if (iframeGameRef.current) {
       const gameWindow = iframeGameRef.current.contentWindow
+
+      // only for debug purpose
+      gameWindow.findSingleton = (searchKey: string, window: DofusWindow) => {
+        const singletons = Object.values(window.singletons.c)
+
+        const results = singletons.filter(({ exports }) => {
+          if (!!exports.prototype && searchKey in exports.prototype) {
+            return true
+          } else if (searchKey in exports) {
+            return true
+          } else return false
+        })
+
+        if (results.length > 1) {
+          console.warn(`[MG] Singleton searcher found multiple results for key "${searchKey}". Returning all of them.`)
+          return results
+        }
+
+        return results.pop()
+      }
+
       // can't use SQL Database in modern iframe
       gameWindow.openDatabase = undefined
       gameWindow.initDofus(() => {

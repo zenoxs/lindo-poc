@@ -23,6 +23,10 @@ export interface DofusWindow extends Window {
   actorManager: ActorManager
   CharacterDisplay: CharacterDisplayClass
   Config: Config
+  singletons: {
+    c: Array<{ exports: { prototype: object } }>
+  }
+  findSingleton: (name: string, window: DofusWindow) => unknown
 }
 
 export interface HTMLIFrameElementWithDofus extends HTMLIFrameElement {
