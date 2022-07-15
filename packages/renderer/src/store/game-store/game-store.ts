@@ -1,4 +1,4 @@
-import { Instance, SnapshotOut, types } from 'mobx-state-tree'
+import { detach, Instance, SnapshotOut, types } from 'mobx-state-tree'
 import { GameCharacter, MultiAccountContext, withRootStore } from '@lindo/shared'
 import { Game, GameModel } from './game'
 
@@ -31,7 +31,8 @@ export const GameStoreModel = types
     },
     removeGame(game: Game) {
       if (self.selectedGame === game) {
-        if (self._games.size > 1) {
+        detach(self.selectedGame)
+        if (self._games.size > 0) {
           if (self.gamesOrder.indexOf(game) === self.gamesOrder.length - 1) {
             self.selectedGame = self.gamesOrder[self.gamesOrder.indexOf(game) - 1]
           } else {
