@@ -3,12 +3,10 @@ import React from 'react'
 import { Box, Button, CardContent } from '@mui/material'
 import { Observer } from 'mobx-react-lite'
 import AddIcon from '@mui/icons-material/Add'
-import { CharacterCard } from './CharacterCard'
+import { CharacterCard, CharacterGenericCard, TeamAccordion } from '../components'
 import { useDialog } from '@/hooks'
 import { AddCharacterDialog } from '../add-character-dialog'
 import { FormTeamDialog } from '../form-team-dialog'
-import { CharacterGenericCard } from './CharacterGenericCard'
-import { TeamAccordion } from './TeamAccordion'
 
 export const AccountContainer = () => {
   const {

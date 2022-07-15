@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid } from '@mui/material'
 import { useStores } from '@/store'
 import { Observer } from 'mobx-react-lite'
-import { CharacterCard } from '../account-container/CharacterCard'
+import { CharacterCard } from '../components'
 import { GameCharacter } from '@lindo/shared'
 
 export interface SelectCharacterDialogProps {

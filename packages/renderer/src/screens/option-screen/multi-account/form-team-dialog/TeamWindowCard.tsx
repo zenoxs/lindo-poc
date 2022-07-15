@@ -7,7 +7,7 @@ import { Control, useFieldArray, useWatch } from 'react-hook-form'
 import { useDialog } from '@/hooks'
 import { SelectCharacterDialog } from './SelectCharacterDialog'
 import { getSnapshot } from 'mobx-state-tree'
-import { CharacterCard } from '../account-container/CharacterCard'
+import { CharacterCard } from '../components'
 import { TeamForm } from './FormTeamDialog'
 
 export interface TeamWindowCardProps {
@@ -22,7 +22,7 @@ export interface TeamWindowForm {
 
 export const TeamWindowCard = ({ index, control, onRemove }: TeamWindowCardProps) => {
   const [openSelectCharacterDialog, , toggleSelectCharacterDialog] = useDialog()
-  const { fields, append } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control,
     name: `windows.${index}.characters`
   })
@@ -35,6 +35,10 @@ export const TeamWindowCard = ({ index, control, onRemove }: TeamWindowCardProps
   const handleAddCharacter = (character: GameCharacter) => {
     append(getSnapshot(character))
     toggleSelectCharacterDialog()
+  }
+
+  const handleRemoveCharacter = (index: number) => {
+    remove(index)
   }
 
   return (
@@ -52,7 +56,12 @@ export const TeamWindowCard = ({ index, control, onRemove }: TeamWindowCardProps
           <Grid container spacing={2}>
             {fields.map((character, index) => (
               <Grid item key={index}>
-                <CharacterCard size='small' character={character} display='preview' />
+                <CharacterCard
+                  size='medium'
+                  character={character}
+                  onRemove={() => handleRemoveCharacter(index)}
+                  display='preview'
+                />
               </Grid>
             ))}
           </Grid>

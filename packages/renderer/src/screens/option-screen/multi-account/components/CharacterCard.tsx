@@ -1,19 +1,27 @@
 import { useGameContext } from '@/providers'
 import { useStores } from '@/store'
 import { GameCharacter, GameCharacterSnapshot } from '@lindo/shared'
-import { Box, Button, CardActions, CardContent, CardMedia, Typography } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
+import { Box, Button, CardActions, CardHeader, CardMedia, IconButton, Typography } from '@mui/material'
 import { Observer } from 'mobx-react-lite'
 import React from 'react'
-import { CharacterGenericCard, CharacterGenericSize, CHARACTER_SIZE_RATIO } from './CharacterGenericCard'
+import { CharacterGenericCard, CharacterGenericSize } from './CharacterGenericCard'
 
 export interface CharacterCardProps {
   character: GameCharacter | GameCharacterSnapshot
   onSelect?: (character: GameCharacter) => void
+  onRemove?: () => void
   display?: 'preview' | 'action'
   size?: CharacterGenericSize
 }
 
-export const CharacterCard = ({ character, onSelect, display = 'action', size = 'large' }: CharacterCardProps) => {
+export const CharacterCard = ({
+  character,
+  onSelect,
+  onRemove,
+  display = 'action',
+  size = 'large'
+}: CharacterCardProps) => {
   const { optionStore } = useStores()
   const [displayImage, setDisplayImage] = React.useState(true)
   const gameContext = useGameContext()
@@ -22,29 +30,50 @@ export const CharacterCard = ({ character, onSelect, display = 'action', size = 
     optionStore.gameMultiAccount.removeCharacter(character)
   }
 
-  const height = 65 * CHARACTER_SIZE_RATIO[size]
-
   return (
     <Observer>
       {() => (
         <>
           <CharacterGenericCard key={character.id} size={size}>
+            <CardHeader
+              sx={{
+                p: 1,
+                paddingX: 1,
+                alignSelf: 'stretch',
+                display: 'flex',
+                overflow: 'hidden',
+                '& .MuiCardHeader-content': {
+                  overflow: 'hidden'
+                }
+              }}
+              action={
+                onRemove ? (
+                  <IconButton onClick={onRemove} aria-label='remove-character'>
+                    <CloseIcon fontSize='small' />
+                  </IconButton>
+                ) : null
+              }
+              titleTypographyProps={{
+                variant: size === 'small' ? 'caption' : 'body1',
+                noWrap: true
+              }}
+              title={character.name}
+            />
             <div
               style={{
-                height: height + 'px',
-                width: '100%',
+                width: '80%',
+                flex: 1,
                 overflow: 'hidden',
-                position: 'relative',
-                flexShrink: 0
+                position: 'relative'
               }}
             >
               {displayImage ? (
                 <CardMedia
                   style={{
-                    height: 'auto',
                     position: 'absolute',
+                    height: 'auto',
                     width: '100%',
-                    bottom: '0'
+                    bottom: size !== 'large' ? '10px' : '0px'
                   }}
                   component='img'
                   image={gameContext.characterImagesSrc + character.name + '.png'}
@@ -61,9 +90,6 @@ export const CharacterCard = ({ character, onSelect, display = 'action', size = 
                 </Box>
               )}
             </div>
-            <CardContent sx={{ padding: 0, flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              {character.name}
-            </CardContent>
             {display === 'action' && (
               <CardActions>
                 {onSelect ? (

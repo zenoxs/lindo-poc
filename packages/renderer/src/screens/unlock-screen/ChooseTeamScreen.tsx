@@ -17,7 +17,7 @@ import {
 } from '@mui/material'
 import { Observer } from 'mobx-react-lite'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import { CharacterCard } from '../option-screen/multi-account/account-container/CharacterCard'
+import { CharacterCard } from '../option-screen/multi-account/components'
 import { GameTeam } from '@lindo/shared'
 
 export const ChooseTeamScreen = () => {
