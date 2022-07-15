@@ -5,6 +5,7 @@ import { DofusWindow } from '@/dofus-window'
 import { TranslationFunctions } from '@lindo/i18n'
 import { SaveCharacterImageArgs } from '@lindo/shared'
 import { useEffect, useRef } from 'react'
+import { IMapDidChange, observe } from 'mobx'
 
 export interface GameManagerProps {
   game: Game
@@ -14,9 +15,11 @@ export interface GameManagerProps {
 
 export const useGameManager = ({ game, rootStore, LL }: GameManagerProps) => {
   const mods = useRef<Array<Mod>>([])
-  // const disposers = useRef<Array<() => void>>([])
+  const gameId = game.id
+  const disposers = useRef<Array<() => void>>([])
 
   const destroyMods = () => {
+    console.log('destroy mods')
     for (const mod of mods.current) {
       mod.destroy()
     }
@@ -24,13 +27,11 @@ export const useGameManager = ({ game, rootStore, LL }: GameManagerProps) => {
   }
 
   useEffect(() => {
-    return () => {
-      console.log('destroy game')
-      // destroyMods()
-      // for (const disposer of disposers.current) {
-      //   disposer()
-      // }
-    }
+    return observe(rootStore.gameStore._games, (change: IMapDidChange) => {
+      if (change.type === 'delete' && change.oldValue.identifier === gameId) {
+        destroyMods()
+      }
+    })
   })
 
   return {
@@ -141,13 +142,13 @@ export const useGameManager = ({ game, rootStore, LL }: GameManagerProps) => {
       dWindow.gui.playerData.on('characterSelectedSuccess', handleCharacterSelectedSuccess)
       dWindow.gui.on('disconnect', handleDisconnect)
 
-      // disposers.current = [
-      //   () => {
-      //     dWindow.dofus.connectionManager.off('CharactersListMessage', handleCharactersListMessage)
-      //     dWindow.gui.playerData.off('characterSelectedSuccess', handleCharacterSelectedSuccess)
-      //     dWindow.gui.off('disconnect', handleDisconnect)
-      //   }
-      // ]
+      disposers.current = [
+        () => {
+          dWindow.dofus.connectionManager.off('CharactersListMessage', handleCharactersListMessage)
+          dWindow.gui.playerData.off('characterSelectedSuccess', handleCharacterSelectedSuccess)
+          dWindow.gui.off('disconnect', handleDisconnect)
+        }
+      ]
     }
   }
 }
