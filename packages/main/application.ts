@@ -47,9 +47,17 @@ export class Application {
   }
 
   async run() {
+    // setup global IPC handlers
     this._setupIPCHandlers()
 
+    // run updater
     await runUpdater(this._rootStore)
+
+    // set the app menu
+    this._setAppMenu()
+
+    // TODO: unlock the master password
+    await this._initGameWindows()
 
     app.on('second-instance', () => {
       console.log('Application ->', 'second-instance')
@@ -68,11 +76,6 @@ export class Application {
         this.createGameWindow()
       }
     })
-
-    this._setAppMenu()
-
-    // TODO: unlock the master password
-    await this._initGameWindows()
   }
 
   private async _initGameWindows() {
@@ -80,7 +83,7 @@ export class Application {
     console.log({ multiAccountEnabled })
     if (multiAccountEnabled) {
       try {
-        const selectedTeamId = await this._multiAccount.unlock()
+        const selectedTeamId = await this._multiAccount.unlockWithTeam()
         const team = this._rootStore.optionStore.gameMultiAccount.selectTeamById(selectedTeamId)
         if (!team) {
           throw new Error('Team not found')
@@ -92,7 +95,6 @@ export class Application {
         console.log(e)
         this.createGameWindow()
       }
-      // for(this._rootStore.optionStore.gameMultiAccount
     } else {
       this.createGameWindow()
     }

@@ -1,4 +1,4 @@
-import { IPCEvents, RootStore } from '@lindo/shared'
+import { GameMultiAccountSnapshot, IPCEvents, RootStore } from '@lindo/shared'
 import { ipcMain, safeStorage } from 'electron'
 import crypto from 'crypto-js'
 import * as argon2 from 'argon2'
@@ -22,84 +22,127 @@ export class MultiAccount {
   private _rootStore: RootStore
   private _masterPassword?: string
 
+  private static _encrypt(input: string, password?: string): string {
+    if (password) {
+      const encJson = crypto.AES.encrypt(input, password).toString()
+      return crypto.enc.Base64.stringify(crypto.enc.Utf8.parse(encJson))
+    }
+    throw new Error('Master password is not configured')
+  }
+
+  private static _decrypt(input: string, password?: string): string {
+    if (password) {
+      const decData = crypto.enc.Base64.parse(input).toString(crypto.enc.Utf8)
+      return crypto.AES.decrypt(decData, password).toString(crypto.enc.Utf8)
+    }
+    throw new Error('Master password is not configured')
+  }
+
   constructor(rootStore: RootStore) {
     this._rootStore = rootStore
 
     onSnapshot(rootStore.optionStore.gameMultiAccount, (snapshot) => {
       if (!rootStore.optionStore.gameMultiAccount.locked && this._masterPassword) {
         console.log('Multi-account is unlocked, gonna encrypt the store')
-        const encryptedState = crypto.AES.encrypt(JSON.stringify(snapshot), this._masterPassword).toString()
-        this._store.set('multiAccountState', encryptedState)
+        this._encryptAndSaveState(snapshot, this._masterPassword)
       }
     })
 
     ipcMain.handle(IPCEvents.SAVE_MASTER_PASSWORD, (event, masterPassword) => {
-      return this.saveMasterPassword(masterPassword)
+      return this._saveMasterPassword(masterPassword)
+    })
+
+    ipcMain.handle(IPCEvents.REMOVE_MASTER_PASSWORD, () => {
+      return this._removeMasterPassword()
+    })
+
+    ipcMain.handle(IPCEvents.CHANGE_MASTER_PASSWORD, (event, masterPassword, oldPassword) => {
+      return this._changeMasterPassword(masterPassword, oldPassword)
     })
 
     ipcMain.handle(IPCEvents.IS_MASTER_PASSWORD_CONFIGURED, () => {
-      return this.isMasterPasswordConfigured()
+      return this._isMasterPasswordConfigured()
     })
 
     ipcMain.handle(IPCEvents.DECRYPT_CHARACTER_PASSWORD, (event, input: string) => {
-      return this.decryptWithMasterPassword(input)
+      return MultiAccount._decrypt(input, this._masterPassword)
     })
 
     ipcMain.handle(IPCEvents.ENCRYPT_CHARACTER_PASSWORD, (event, input: string) => {
-      return this.encryptWithMasterPassword(input)
+      return MultiAccount._encrypt(input, this._masterPassword)
+    })
+
+    ipcMain.handle(IPCEvents.UNLOCK_APPLICATION, async (event, masterPassword: string) => {
+      return this._unlockApplication(masterPassword)
+    })
+
+    this._isMasterPasswordConfigured().then((isConfigured) => {
+      this._rootStore.optionStore.gameMultiAccount.setConfigured(isConfigured)
     })
   }
 
   isEnabled() {
-    return this.isMasterPasswordConfigured()
+    return this._isMasterPasswordConfigured()
   }
 
-  async unlock() {
-    const multiAccountWindow = new UnlockWindow(this._rootStore)
+  async unlockWithTeam() {
+    const unlockWindow = new UnlockWindow(this._rootStore)
     const closeListener = () => {
-      multiAccountWindow.close()
+      unlockWindow.close()
     }
     ipcMain.on(IPCEvents.CLOSE_UNLOCK_WINDOW, closeListener)
 
-    // wait for user master password
-    this._masterPassword = await new Promise<string>((resolve, reject) => {
-      ipcMain.handle(IPCEvents.UNLOCK_APPLICATION, async (event, masterPassword: string) => {
-        const passwordOk = await this._checkMasterPassword(masterPassword)
-        if (passwordOk) {
-          resolve(masterPassword)
-          ipcMain.removeHandler(IPCEvents.UNLOCK_APPLICATION)
-        }
-        return passwordOk
-      })
-      multiAccountWindow.once('close', () => reject(new Error('Multi-account unlock window was closed')))
+    unlockWindow.once('close', () => {
+      console.log('Unlock window closed')
+      return new Error('Multi-account unlock window was closed')
     })
-
-    const encryptedState = this._store.get('multiAccountState')
-    if (encryptedState) {
-      console.log('Multi-account is unlocked, gonna decrypt the store')
-      const multiAccountState = JSON.parse(
-        crypto.AES.decrypt(encryptedState, this._masterPassword).toString(crypto.enc.Utf8)
-      )
-      this._rootStore.optionStore.restoreGameMultiAccount(multiAccountState)
-    }
-
-    this._rootStore.optionStore.gameMultiAccount.unlock()
 
     const selectTeamId = await new Promise<string>((resolve, reject) => {
       ipcMain.handleOnce(IPCEvents.SELECT_TEAM_TO_CONNECT, async (event, teamId: string) => {
         resolve(teamId)
       })
-      multiAccountWindow.once('close', () => reject(new Error('Multi-account unlock window was closed')))
+      unlockWindow.once('close', () => {
+        reject(new Error('Multi-account unlock window was closed'))
+      })
     })
-    console.log(selectTeamId)
 
-    // close the window and unlock the app
-    multiAccountWindow.close()
+    // close the window and return the selected team id
+    unlockWindow.close()
     ipcMain.removeListener(IPCEvents.CLOSE_UNLOCK_WINDOW, closeListener)
     return selectTeamId
   }
 
-  async saveMasterPassword(masterPassword: string) {
+  private async _removeMasterPassword(): Promise<void> {
+    this._store.delete('masterPassword')
+    this._store.delete('multiAccountState')
+    this._store.delete('useSecureStorage')
+    this._masterPassword = undefined
+    this._rootStore.optionStore.restoreGameMultiAccount({})
+  }
+
+  private async _changeMasterPassword(masterPassword: string, oldPassword: string): Promise<boolean> {
+    if (await this._checkMasterPassword(oldPassword)) {
+      // decrypt state with the old password
+      const encryptedState = this._store.get('multiAccountState')
+      const strState = MultiAccount._decrypt(encryptedState, oldPassword)
+      const state: GameMultiAccountSnapshot = JSON.parse(strState)
+      const stateWithNewPassword: GameMultiAccountSnapshot = {
+        ...state,
+        characters: state.characters.map((character) => {
+          return {
+            ...character,
+            password: MultiAccount._encrypt(MultiAccount._decrypt(character.password, oldPassword), masterPassword)
+          }
+        })
+      }
+      this._saveMasterPassword(masterPassword)
+      this._encryptAndSaveState(stateWithNewPassword, masterPassword)
+      return true
+    }
+    return false
+  }
+
+  private async _saveMasterPassword(masterPassword: string): Promise<void> {
     const isEncryptionAvailable = await safeStorage.isEncryptionAvailable()
     let encryptedPassword = await argon2.hash(masterPassword)
     if (!isEncryptionAvailable) {
@@ -111,9 +154,12 @@ export class MultiAccount {
       this._store.set('useSecureStorage', true)
     }
     this._store.set('masterPassword', encryptedPassword)
+    this._masterPassword = masterPassword
+    this._rootStore.optionStore.gameMultiAccount.setConfigured(true)
+    this._rootStore.optionStore.gameMultiAccount.unlock()
   }
 
-  async isMasterPasswordConfigured(): Promise<boolean> {
+  private async _isMasterPasswordConfigured(): Promise<boolean> {
     return this._store.has('masterPassword')
   }
 
@@ -128,17 +174,27 @@ export class MultiAccount {
     return argon2.verify(hashedPassword, input)
   }
 
-  encryptWithMasterPassword(input: string) {
-    if (this._masterPassword) {
-      return crypto.AES.encrypt(input, this._masterPassword).toString()
-    }
-    throw new Error('Master password is not configured')
+  private _encryptAndSaveState(snapshot: GameMultiAccountSnapshot, password: string): void {
+    const encryptedState = MultiAccount._encrypt(JSON.stringify(snapshot), password)
+    this._store.set('multiAccountState', encryptedState)
   }
 
-  decryptWithMasterPassword(input: string) {
-    if (this._masterPassword) {
-      return crypto.AES.decrypt(input, this._masterPassword).toString(crypto.enc.Utf8)
+  private async _unlockApplication(masterPassword: string): Promise<boolean> {
+    const passwordOk = await this._checkMasterPassword(masterPassword)
+    if (passwordOk) {
+      this._masterPassword = masterPassword
+
+      const encryptedState = this._store.get('multiAccountState')
+      if (encryptedState) {
+        console.log('Multi-account is unlocked, gonna decrypt the store')
+        const decrypted = MultiAccount._decrypt(encryptedState, masterPassword)
+        const multiAccountState = JSON.parse(decrypted)
+        this._rootStore.optionStore.restoreGameMultiAccount(multiAccountState)
+        this._rootStore.optionStore.gameMultiAccount.setConfigured(true)
+      }
+
+      this._rootStore.optionStore.gameMultiAccount.unlock()
     }
-    throw new Error('Master password is not configured')
+    return passwordOk
   }
 }

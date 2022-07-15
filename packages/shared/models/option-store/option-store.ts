@@ -5,7 +5,7 @@ import { GameGroupOptionModel } from './game-group-option'
 import { GameJobOptionModel } from './game-job-option'
 import { GameNotificationOptionModel } from './game-notification-option'
 import { WindowOptionModel } from './window-option'
-import { GameMultiAccountModel, GameMultiAccountSnapshot } from './game-multi-account'
+import { GameMultiAccountModel, GameMultiAccountSnapshotIn } from './game-multi-account'
 
 // TODO: remove later only for POC
 
@@ -24,7 +24,7 @@ export const OptionStoreModel = types
     gameMultiAccount: types.optional(GameMultiAccountModel, {})
   })
   .actions((self) => ({
-    restoreGameMultiAccount(gameMultiAccount: GameMultiAccountSnapshot) {
+    restoreGameMultiAccount(gameMultiAccount: GameMultiAccountSnapshotIn) {
       applySnapshot(self.gameMultiAccount, gameMultiAccount)
     }
   }))

@@ -148,6 +148,14 @@ const saveMasterPassword = async (masterPassword: string): Promise<void> => {
   await ipcRenderer.invoke(IPCEvents.SAVE_MASTER_PASSWORD, masterPassword)
 }
 
+const changeMasterPassword = async (masterPassword: string, oldPassword: string): Promise<boolean> => {
+  return ipcRenderer.invoke(IPCEvents.CHANGE_MASTER_PASSWORD, masterPassword, oldPassword)
+}
+
+const removeMasterPassword = async (): Promise<void> => {
+  return ipcRenderer.invoke(IPCEvents.REMOVE_MASTER_PASSWORD)
+}
+
 const encryptCharacterPassword = async (characterPassword: string): Promise<string> => {
   return ipcRenderer.invoke(IPCEvents.ENCRYPT_CHARACTER_PASSWORD, characterPassword)
 }
@@ -198,6 +206,8 @@ const lindoApi: LindoAPI = {
   closeUnlockWindow,
   selectTeamToConnect,
   encryptCharacterPassword,
-  decryptCharacterPassword
+  decryptCharacterPassword,
+  changeMasterPassword,
+  removeMasterPassword
 }
 contextBridge.exposeInMainWorld('lindoAPI', lindoApi)

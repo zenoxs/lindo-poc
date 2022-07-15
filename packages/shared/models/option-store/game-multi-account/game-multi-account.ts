@@ -1,6 +1,6 @@
-import { cast, flow, Instance, SnapshotOut, types } from 'mobx-state-tree'
+import { cast, flow, Instance, SnapshotIn, SnapshotOut, types } from 'mobx-state-tree'
 import { GameCharacter, GameCharacterModel, GameCharacterSnapshot, GameCharacterSnapshotIn } from './game-character'
-import { GameTeam, GameTeamModel, GameTeamSnapshot, GameTeamSnapshotIn } from './game-team'
+import { GameTeam, GameTeamModel, GameTeamSnapshotIn } from './game-team'
 
 /**
  * Model description here for TypeScript hints.
@@ -9,6 +9,7 @@ export const GameMultiAccountModel = types
   .model('GameMultiAccount')
   .props({
     locked: types.optional(types.boolean, true),
+    configured: types.optional(types.boolean, false),
     teams: types.array(GameTeamModel),
     characters: types.array(GameCharacterModel)
   })
@@ -20,6 +21,9 @@ export const GameMultiAccountModel = types
   .actions((self) => ({
     unlock() {
       self.locked = false
+    },
+    setConfigured(value: boolean) {
+      self.configured = value
     },
     addCharacter: flow(function* (character: GameCharacterSnapshotIn) {
       self.characters.push({
@@ -33,7 +37,7 @@ export const GameMultiAccountModel = types
     addTeam(team: GameTeamSnapshotIn) {
       self.teams.push(team)
     },
-    updateTeam(team: GameTeamSnapshot) {
+    updateTeam(team: GameTeamSnapshotIn) {
       const index = self.teams.findIndex((t) => t.id === team.id)!
       self.teams[index] = cast(team)
     },
@@ -60,3 +64,7 @@ export interface GameMultiAccount extends GameMultiAccountType {}
 type GameMultiAccountSnapshotType = SnapshotOut<typeof GameMultiAccountModel>
 
 export interface GameMultiAccountSnapshot extends GameMultiAccountSnapshotType {}
+
+type GameMultiAccountSnapshotTypeIn = SnapshotIn<typeof GameMultiAccountModel>
+
+export interface GameMultiAccountSnapshotIn extends GameMultiAccountSnapshotTypeIn {}
