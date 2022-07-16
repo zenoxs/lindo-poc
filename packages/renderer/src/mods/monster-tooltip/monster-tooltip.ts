@@ -1,10 +1,10 @@
 import {
   ConnectionManagerEvents,
   DofusWindow,
-  GameRolePlayGroupMonsterInformations,
-  MonsterInGroupAlternativeInformations,
-  MonsterInGroupInformations,
-  MonsterInGroupLightInformations,
+  _GameRolePlayGroupMonsterInformations,
+  _MonsterInGroupAlternativeInformations,
+  _MonsterInGroupInformations,
+  _MonsterInGroupLightInformations,
   PartyFrom
 } from '@/dofus-window'
 import { RootStore } from '@/store'
@@ -21,7 +21,7 @@ type TooltipData = {
   soloXp: number
   partyXp: number
   bonusPackActive: boolean
-  monsters: Array<MonsterInGroupInformations | MonsterInGroupLightInformations>
+  monsters: Array<_MonsterInGroupInformations | _MonsterInGroupLightInformations>
 }
 
 export interface Monster {
@@ -42,7 +42,7 @@ const toInt = (e: number) => {
 
 export class MonsterTooltipMod extends Mod {
   private visible = false
-  private monsterGroups: Array<GameRolePlayGroupMonsterInformations> = []
+  private monsterGroups: Array<_GameRolePlayGroupMonsterInformations> = []
   private settingDisposer: () => void
   private shortcutDisposer?: () => void
   private eventManager = new EventManager()
@@ -121,7 +121,7 @@ export class MonsterTooltipMod extends Mod {
       ({ actors }) => {
         this.monsterGroups = actors.filter(
           (actor) => actor._type === 'GameRolePlayGroupMonsterInformations'
-        ) as Array<GameRolePlayGroupMonsterInformations>
+        ) as Array<_GameRolePlayGroupMonsterInformations>
         this.update()
       }
     )
@@ -251,7 +251,7 @@ export class MonsterTooltipMod extends Mod {
   }
 
   private getReduceAndSortMonsters(
-    monsters: Array<MonsterInGroupInformations | MonsterInGroupLightInformations>
+    monsters: Array<_MonsterInGroupInformations | _MonsterInGroupLightInformations>
   ): Monster[] {
     const result: Monster[] = []
 
@@ -274,15 +274,15 @@ export class MonsterTooltipMod extends Mod {
   }
 
   // FIXME Problems with formula
-  private getTooltipData(group: GameRolePlayGroupMonsterInformations): TooltipData {
+  private getTooltipData(group: _GameRolePlayGroupMonsterInformations): TooltipData {
     // General data
     const { partyData, characterBaseInformations } = this.wGame.gui.playerData
     const allMonsters = [group.staticInfos.mainCreatureLightInfos, ...group.staticInfos.underlings]
     const starsCount = Math.min(Math.round(group.ageBonus / 20), 10)
     const redStarsCount = Math.max(starsCount - 5, 0)
     const yellowStarsCount = Math.min(starsCount, 5) - redStarsCount
-    const alternatives: Map<number, MonsterInGroupAlternativeInformations> = new Map()
-    let monsters: Array<MonsterInGroupInformations | MonsterInGroupLightInformations> = []
+    const alternatives: Map<number, _MonsterInGroupAlternativeInformations> = new Map()
+    let monsters: Array<_MonsterInGroupInformations | _MonsterInGroupLightInformations> = []
     let playerCount: number = 1
     // Party data
     let party: PartyFrom

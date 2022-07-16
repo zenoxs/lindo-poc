@@ -1,4 +1,4 @@
-import { EntityLook } from '../iso-engine'
+import { _EntityLook } from '../dofus'
 import { GUICanvas } from './gui'
 
 export type CharacterDisplayClass = new (props: { scale: 'fitin' }) => CharacterDisplay
@@ -8,7 +8,7 @@ export interface CharacterDisplay {
   canvas: GUICanvas
   canvasInitialized: boolean
   cts: CanvasRenderingContext2D
-  entity?: EntityLook
+  entity?: _EntityLook
   horizontalAlign: 'none'
   only4Directions: boolean
   renderingRequired: boolean
