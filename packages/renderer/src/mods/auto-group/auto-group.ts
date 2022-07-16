@@ -36,16 +36,13 @@ export class AutoGroupMod extends Mod {
 
   constructor(wGame: DofusWindow, rootStore: RootStore, LL: TranslationFunctions) {
     super(wGame, rootStore, LL)
-    this.settingDisposer = observe(
-      this.rootStore.optionStore,
-      'gameGroup',
-      (change) => {
-        console.log(change)
-        // this._stop()
-        // this._start()
-      },
-      true
-    )
+    this.settingDisposer = observe(this.rootStore.optionStore.gameGroup, (change) => {
+      if (change.name === 'autoGrouping' || change.name === 'followLeader' || change.name === 'enterGroupFight') {
+        this._stop()
+        this._start()
+      }
+    })
+    this._start()
   }
 
   private _start() {
@@ -365,7 +362,7 @@ export class AutoGroupMod extends Mod {
     // a quoi sert réellement cellIdFollowInstruction ????
     const occupiedCells = this.wGame.isoEngine.actorManager._occupiedCells
     const currentCellId = this.wGame.isoEngine.actorManager.userActor.cellId
-    if (occupiedCells === {} || currentCellId == null) {
+    if (!currentCellId) {
       return undefined
     }
     const canMoveDiagonally = this.wGame.isoEngine.actorManager.userActor.canMoveDiagonally

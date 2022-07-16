@@ -1,4 +1,4 @@
-import { GameTeam, GameTeamWindow, MultiAccountContext, RootStore } from '@lindo/shared'
+import { FollowInstruction, GameTeam, GameTeamWindow, IPCEvents, MultiAccountContext, RootStore } from '@lindo/shared'
 import { app, BeforeSendResponse, BrowserWindow } from 'electron'
 import { attachTitlebarToWindow } from 'custom-electron-titlebar/main'
 import { join } from 'path'
@@ -133,5 +133,9 @@ export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWind
 
   setAudioMute(value: boolean) {
     this._win.webContents.setAudioMuted(value)
+  }
+
+  sendAutoGroupInstruction(instruction: FollowInstruction) {
+    this._win.webContents.send(IPCEvents.AUTO_GROUP_PUSH_PATH, instruction)
   }
 }

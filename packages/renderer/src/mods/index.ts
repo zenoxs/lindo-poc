@@ -1,3 +1,4 @@
+import { AutoGroupMod } from './auto-group'
 import { ChallengePercentMod } from './challenge-percent'
 import { DamageEstimatorMod } from './damage-estimator'
 import { FightChronometerMod } from './fight-chronometer'
@@ -36,5 +37,6 @@ export const MODS = [
   HarvestBarMod,
   JobXPMod,
   MonsterTooltipMod,
+  AutoGroupMod,
   ...GENERAL_MODS
 ] as const

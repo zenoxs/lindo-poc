@@ -176,6 +176,13 @@ export class Application {
       }
     })
 
+    ipcMain.on(IPCEvents.AUTO_GROUP_PUSH_PATH, (event, instruction) => {
+      console.log('Application ->', 'AUTO_GROUP_PUSH_PATH')
+      for (const gWindow of this._gWindows) {
+        gWindow.sendAutoGroupInstruction(instruction)
+      }
+    })
+
     ipcMain.on(IPCEvents.FOCUS_WINDOW, (event) => {
       console.log('Application ->', 'FOCUS_WINDOW')
       const gWindow = this._gWindows.find((gWindow) => gWindow.id === event.sender.id)
