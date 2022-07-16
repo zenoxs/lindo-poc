@@ -1,101 +1,61 @@
+import { _FightTeamMemberInformations, _GroupMonsterStaticInformations, _HumanInformations, _Npc } from '../dofus/actor'
 import { AlignmentInfos } from './alignment-infos'
 
-export interface EntityLook {
-  bonesId: number
-  speed: number
-  _type: 'EntityLook'
-}
-
-export interface EntityDispositionInformations {
-  cellId: number
-  direction: number
-  _type: 'EntityDispositionInformations'
-}
-
-export interface MonsterStaticInfos {
-  isBoss: boolean
-  isMiniBoss: boolean
-  level: number
-  nameId: string
-  xp: number
-}
-
-export interface MonsterInGroupLightInformations {
-  creatureGenericId: number
-  grade: number
-  level: number
-  staticInfos: MonsterStaticInfos
-  xp: number
-  _type: 'MonsterInGroupLightInformations'
-}
-
-export interface MonsterInGroupInformations {
-  creatureGenericId: 489
-  grade: 5
-  level: 24
-  look: EntityLook
-  staticInfos: MonsterStaticInfos
-  xp: 3400
-  _type: 'MonsterInGroupInformations'
-}
-
-export interface MonsterInGroupAlternativeInformations {
-  playerCount: number
-  monsters: Array<MonsterInGroupInformations>
-  _type: unknown
-}
-
-export interface GroupMonsterStaticInformations {
-  mainCreatureLightInfos: MonsterInGroupLightInformations
-  underlings: Array<MonsterInGroupInformations>
-  alternatives?: Array<MonsterInGroupAlternativeInformations>
-  _type: 'GroupMonsterStaticInformations'
-}
+export type ActorType =
+  | 'GameRolePlayNpcInformations'
+  | 'GameRolePlayGroupMonsterInformations'
+  | 'GameRolePlayCharacterInformations'
+  | 'GameRolePlayMerchantInformations'
+  | 'FightTeamInformations'
 
 export interface ActorSchema {
-  contextualId: number
-  disposition: EntityDispositionInformations
-  look: EntityLook
-  _type:
-    | 'GameRolePlayNpcInformations'
-    | 'GameRolePlayGroupMonsterInformations'
-    | 'GameRolePlayCharacterInformations'
-    | 'GameRolePlayMerchantInformations'
+  actorId: number
+  type: ActorType
 }
 
 export interface GameRolePlayNpcInformations extends ActorSchema {
   npcId: number
-  sex: false
-  specialArtworkId: number
-  _npcData: {
-    id: number
-    gender: number
-    nameId: string
-    _type: 'Npc'
-  }
-  _type: 'GameRolePlayNpcInformations'
+  actorId: number
+  _npcData: _Npc
+  type: 'GameRolePlayNpcInformations'
 }
 
 export interface GameRolePlayMerchantInformations extends ActorSchema {
-  _type: 'GameRolePlayMerchantInformations'
+  type: 'GameRolePlayMerchantInformations'
+}
+
+export interface FightTeamInformations extends ActorSchema {
+  fightId: number
+  leaderId: number
+  teamId: number
+  teamMembers: Array<_FightTeamMemberInformations>
+  teamSide: number
+  teamTypeId: number
+  type: 'FightTeamInformations'
 }
 
 export interface GameRolePlayCharacterInformations extends ActorSchema {
   accountId: number
   name: string
+  playerId: number
   alignmentInfos: AlignmentInfos
-  _type: 'GameRolePlayCharacterInformations'
+  humanoidInfo: _HumanInformations
+  teamTypeId?: number
+  type: 'GameRolePlayCharacterInformations'
 }
 
 export interface GameRolePlayGroupMonsterInformations extends ActorSchema {
+  actorId: number
   ageBonus: number
   alignmentSide: number
+  contextualId: number
   hasHardcoreDrop: boolean
   keyRingBonus: boolean
   lootShare: number
   scaleLevel: number
-  staticInfos: GroupMonsterStaticInformations
-  _type: 'GameRolePlayGroupMonsterInformations'
+  staticInfos: _GroupMonsterStaticInformations
+  groupBoss?: unknown
+  type: 'GameRolePlayGroupMonsterInformations'
 }
 
 export type GameRolePlayActor =
@@ -103,3 +63,4 @@ export type GameRolePlayActor =
   | GameRolePlayCharacterInformations
   | GameRolePlayMerchantInformations
   | GameRolePlayNpcInformations
+  | FightTeamInformations

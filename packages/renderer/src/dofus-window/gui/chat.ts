@@ -6,6 +6,7 @@ export interface Chat {
   active: boolean
   activate: () => void
   deactivate: () => void
+  logMsg: (msg: string) => void
   chatInput: {
     sentMessageHistory: {
       goBack: () => void

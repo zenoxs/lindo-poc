@@ -1,12 +1,12 @@
-import { EntityLook } from './actor'
+import { _EntityLook } from './actor'
 
-export interface CharacterBaseInformations {
+export interface _CharacterBaseInformations {
   id: number
   name: string
   level: string
   bonusXp: number
   breed: number
-  entityLook: EntityLook
+  entityLook: _EntityLook
   sex: boolean
   _type: 'CharacterBaseInformations'
 }

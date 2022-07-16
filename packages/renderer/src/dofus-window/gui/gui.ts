@@ -1,6 +1,6 @@
 import TypedEmitter from 'typed-emitter'
+import { _CharacterBaseInformations } from '../dofus'
 import { CharacterDisplay } from './character-display'
-import { CharacterBaseInformations } from '../iso-engine'
 import { Chat } from './chat'
 import { FightManager } from './fight-manager'
 import { PlayerData } from './player-data'
@@ -86,8 +86,8 @@ export interface CharacterSelection extends GUIWindowSchema {
   btnCreate: GUIButton
   btnDelete: GUIButton
   btnPlay: GUIButton
-  selectedCharacter?: CharacterBaseInformations
-  charactersTable: GUITable<CharacterBaseInformations>
+  selectedCharacter?: _CharacterBaseInformations
+  charactersTable: GUITable<_CharacterBaseInformations>
 }
 
 export type GUIWindow = EquipmentWindow | GenericWindow | CharacterSelection

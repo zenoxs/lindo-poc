@@ -1,6 +1,7 @@
 import { IJsonPatch } from 'mobx-state-tree'
 import { SaveCharacterImageArgs } from '../constants'
 import { RootStoreSnapshot } from '../models'
+import { FollowInstruction } from './auto-group'
 import { GameContext } from './game-context'
 import { UpdateProgress } from './update-progress'
 
@@ -40,4 +41,7 @@ export interface LindoAPI {
   saveCharacterImage: (args: SaveCharacterImageArgs) => void
   closeUnlockWindow: () => void
   selectTeamToConnect: (teamId: string) => void
+  // auto-group
+  subscribeToAutoGroupPathInstruction: (callback: (instruction: FollowInstruction) => void) => () => void
+  sendAutoGroupPathInstruction: (instruction: FollowInstruction) => void
 }

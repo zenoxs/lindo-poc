@@ -2,6 +2,7 @@ import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron'
 import { domReady } from './utils'
 import { IJsonPatch } from 'mobx-state-tree'
 import {
+  FollowInstruction,
   GameContext,
   IPCEvents,
   LindoAPI,
@@ -179,9 +180,24 @@ const saveCharacterImage = (args: SaveCharacterImageArgs) => {
 const closeUnlockWindow = () => {
   ipcRenderer.send(IPCEvents.CLOSE_UNLOCK_WINDOW)
 }
-
 const selectTeamToConnect = (teamId: string) => {
   ipcRenderer.invoke(IPCEvents.SELECT_TEAM_TO_CONNECT, teamId)
+}
+
+// Auto group
+const subscribeToAutoGroupPathInstruction = (callback: (instruction: FollowInstruction) => void): (() => void) => {
+  const listener = (_: IpcRendererEvent, instruction: FollowInstruction) => {
+    callback(instruction)
+  }
+  ipcRenderer.on(IPCEvents.AUTO_GROUP_PUSH_PATH, listener)
+
+  return () => {
+    ipcRenderer.removeListener(IPCEvents.AUTO_GROUP_PUSH_PATH, listener)
+  }
+}
+
+const sendAutoGroupPathInstruction = (instruction: FollowInstruction) => {
+  ipcRenderer.send(IPCEvents.AUTO_GROUP_PUSH_PATH, instruction)
 }
 
 const lindoApi: LindoAPI = {
@@ -208,6 +224,8 @@ const lindoApi: LindoAPI = {
   encryptCharacterPassword,
   decryptCharacterPassword,
   changeMasterPassword,
-  removeMasterPassword
+  removeMasterPassword,
+  subscribeToAutoGroupPathInstruction,
+  sendAutoGroupPathInstruction
 }
 contextBridge.exposeInMainWorld('lindoAPI', lindoApi)

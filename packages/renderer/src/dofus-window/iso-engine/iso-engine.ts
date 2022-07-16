@@ -5,6 +5,8 @@ export interface IsoEngine {
   background: {
     render: () => void
   }
+  useInteractive: (elemId: number, skillInstanceUid?: number) => void
+  _movePlayerOnMap: (cellId: number, bool: boolean, cb: () => void) => void
   _castSpellImmediately: (cellId: number) => void
   mapScene: {
     l: number
@@ -23,8 +25,20 @@ export interface IsoEngine {
   mapRenderer: {
     isFightMode: boolean
     mapId: number
-    isWalkable: (cell: number) => boolean
-    getChangeMapFlags: (cell: number) => Record<MapDirection, boolean>
+    interactiveElements: Record<
+      number,
+      {
+        enabledSkills: Record<
+          number,
+          {
+            skillId: number
+            skillInstanceUid: number
+          }
+        >
+      }
+    >
+    isWalkable: (cell: number | null) => boolean
+    getChangeMapFlags: (cell: number | null) => Record<MapDirection, boolean>
     getCellSceneCoordinate: (cell: number) => {
       x: number
       y: number
@@ -37,6 +51,11 @@ export interface IsoEngine {
         i: number // x
         j: number // y
       }
+      grid: Array<
+        Array<{
+          cellId: number
+        }>
+      >
     }
   }
   actorManager: ActorManager

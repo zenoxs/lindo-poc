@@ -1,5 +1,6 @@
 import TypedEmitter from 'typed-emitter'
-import { CharacterBaseInformations, GameRolePlayActor } from '../iso-engine'
+import { _GameRolePlayActor } from './actor'
+import { _CharacterBaseInformations } from './character'
 
 export interface ChatMessage {
   channel: number
@@ -8,6 +9,7 @@ export interface ChatMessage {
 }
 export interface PartyInvitationMessage {
   fromName: string
+  partyId: number
 }
 export interface GameRolePlayAggressionMessage {
   defenderId: number
@@ -46,6 +48,7 @@ export interface StatedElementUpdatedMessage {
 export interface InteractiveUsedMessage {
   elemId: number
   entityId: number
+  skillId: number
   duration: number
 }
 export interface JobExperienceUpdateMessage {
@@ -54,34 +57,60 @@ export interface JobExperienceUpdateMessage {
   }
 }
 export interface MapComplementaryInformationsDataMessage {
-  actors: Array<GameRolePlayActor>
+  actors: Array<_GameRolePlayActor>
+  fights: Record<
+    string,
+    {
+      fightId: number
+      fightTeams: Record<
+        string,
+        {
+          leaderId: number
+        }
+      >
+    }
+  >
 }
 export interface ExchangeStartOkHumanVendorMessage {
   sellerId: number
 }
 export interface GameRolePlayShowActorMessage {
-  informations: GameRolePlayActor
+  informations: _GameRolePlayActor
 }
 export interface GameMapMovementMessage {
   actorId: number
   keyMovements: Array<number>
 }
+
+export interface CurrentMapMessage {}
 export interface GameContextRemoveElementMessage {
   id: number
 }
 export interface CharactersListMessage {
-  characters: Array<CharacterBaseInformations>
+  characters: Array<_CharacterBaseInformations>
   _isInitialized: boolean
   _type: 'CharactersListMessage'
   hasStartupActions: boolean
 }
+
+export interface BasicWhoIsMessage {
+  playerState: number
+}
+
+export interface PartyMemberInFightMessage {
+  memberId: number
+  fightId: number
+  fightMap: {
+    mapId: number
+  }
+}
+export interface MapComplementaryInformationsWithCoordsMessage extends MapComplementaryInformationsDataMessage {}
 
 export type ConnectionManagerEvents = {
   ChallengeInfoMessage: (msg: ChallengeInfoMessage) => void
   GameFightEndMessage: () => void
   GameFightStartMessage: () => void
   GameFightLeaveMessage: () => void
-  MapComplementaryInformationsWithCoordsMessage: () => void
   MapComplementaryInformationsDataMessage: (msg: MapComplementaryInformationsDataMessage) => void
   ChatServerMessage: (msg: ChatMessage) => void
   TaxCollectorAttackedMessage: (tax: TaxMessage) => void
@@ -104,6 +133,10 @@ export type ConnectionManagerEvents = {
   GameMapMovementMessage: (msg: GameMapMovementMessage) => void
   GameContextRemoveElementMessage: (msg: GameContextRemoveElementMessage) => void
   CharactersListMessage: (msg: CharactersListMessage) => void
+  BasicWhoIsMessage: (msg: BasicWhoIsMessage) => void
+  CurrentMapMessage: (msg: CurrentMapMessage) => void
+  PartyMemberInFightMessage: (msg: PartyMemberInFightMessage) => void
+  MapComplementaryInformationsWithCoordsMessage: (msg: MapComplementaryInformationsWithCoordsMessage) => void
 }
 
 export interface ConnectionManager extends TypedEmitter<ConnectionManagerEvents> {}
