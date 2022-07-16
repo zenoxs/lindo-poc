@@ -75,6 +75,7 @@ export interface ExchangeStartOkHumanVendorMessage {
   sellerId: number
 }
 export interface GameRolePlayShowActorMessage {
+  id: number
   informations: _GameRolePlayActor
 }
 export interface GameMapMovementMessage {
@@ -85,6 +86,7 @@ export interface GameMapMovementMessage {
 export interface CurrentMapMessage {}
 export interface GameContextRemoveElementMessage {
   id: number
+  informations: _GameRolePlayActor
 }
 export interface CharactersListMessage {
   characters: Array<_CharacterBaseInformations>
@@ -105,6 +107,14 @@ export interface PartyMemberInFightMessage {
   }
 }
 export interface MapComplementaryInformationsWithCoordsMessage extends MapComplementaryInformationsDataMessage {}
+
+export interface PartyJoinMessage {}
+export interface PartyUpdateMessage {}
+export interface PartyMemberEjectedMessage {}
+export interface PartyMemberRemoveMessage {}
+export interface PartyNewMemberMessage {}
+export interface PartyNewGuestMessage {}
+export interface PartyLeaderUpdateMessage {}
 
 export type ConnectionManagerEvents = {
   ChallengeInfoMessage: (msg: ChallengeInfoMessage) => void
@@ -137,6 +147,13 @@ export type ConnectionManagerEvents = {
   CurrentMapMessage: (msg: CurrentMapMessage) => void
   PartyMemberInFightMessage: (msg: PartyMemberInFightMessage) => void
   MapComplementaryInformationsWithCoordsMessage: (msg: MapComplementaryInformationsWithCoordsMessage) => void
+  PartyJoinMessage: (msg: PartyJoinMessage) => void
+  PartyUpdateMessage: (msg: PartyUpdateMessage) => void
+  PartyMemberEjectedMessage: (msg: PartyMemberEjectedMessage) => void
+  PartyMemberRemoveMessage: (msg: PartyMemberRemoveMessage) => void
+  PartyNewMemberMessage: (msg: PartyNewMemberMessage) => void
+  PartyNewGuestMessage: (msg: PartyNewGuestMessage) => void
+  PartyLeaderUpdateMessage: (msg: PartyLeaderUpdateMessage) => void
 }
 
 export interface ConnectionManager extends TypedEmitter<ConnectionManagerEvents> {}

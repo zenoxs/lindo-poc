@@ -9,6 +9,7 @@ import { HealthBarMod } from './health-bar'
 import { JobXPMod } from './job-xp'
 import { MonsterTooltipMod } from './monster-tooltip'
 import { NotificationsMod } from './notifications'
+import { PartyInfoMod, PartyMemberMod } from './party-info'
 import { ShortcutsMod } from './shortcuts'
 import { VerticalTimelineMod } from './vertical-timeline'
 
@@ -38,5 +39,7 @@ export const MODS = [
   JobXPMod,
   MonsterTooltipMod,
   AutoGroupMod,
+  PartyMemberMod,
+  PartyInfoMod,
   ...GENERAL_MODS
 ] as const

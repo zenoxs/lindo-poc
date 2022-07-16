@@ -357,6 +357,9 @@ const en: BaseTranslation = {
     monsterTooltip: {
       level: 'Level',
       group: 'Group'
+    },
+    partyInfo: {
+      level: 'Lvl.'
     }
   }
 }

@@ -1067,6 +1067,12 @@ type RootTranslation = {
 			 */
 			group: string
 		}
+		partyInfo: {
+			/**
+			 * Lvl.
+			 */
+			level: string
+		}
 	}
 }
 
@@ -2115,6 +2121,12 @@ export type TranslationFunctions = {
 			 * Group
 			 */
 			group: () => LocalizedString
+		}
+		partyInfo: {
+			/**
+			 * Lvl.
+			 */
+			level: () => LocalizedString
 		}
 	}
 }

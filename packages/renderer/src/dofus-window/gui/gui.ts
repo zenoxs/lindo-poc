@@ -3,6 +3,7 @@ import { _CharacterBaseInformations } from '../dofus'
 import { CharacterDisplay } from './character-display'
 import { Chat } from './chat'
 import { FightManager } from './fight-manager'
+import { Party } from './party'
 import { PlayerData } from './player-data'
 import { Scroller } from './scroller'
 
@@ -200,4 +201,5 @@ export interface GUI extends TypedEmitter<GUIEvents> {
     fighterListScroller: Scroller
   }
   chat: Chat
+  party: Party
 }
