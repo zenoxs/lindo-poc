@@ -102,23 +102,23 @@ export const OptionScreen = () => {
             }}
           >
             <Button color='error' onClick={handleOpenResetDialog}>
-              Reset Settings
+              {LL.window.options.button.reset()}
             </Button>
             <Button variant='contained' onClick={() => window.lindoAPI.closeOptionWindow()}>
-              Close
+              {LL.window.options.button.close()}
             </Button>
           </Box>
         </Box>
       </Box>
       <Dialog open={openResetDialog} onClose={handleCloseResetDialog}>
-        <DialogTitle>Reset all the settings ?</DialogTitle>
+        <DialogTitle>{LL.window.options.dialogs.resetSettings.title()}</DialogTitle>
         <DialogContent>
-          <DialogContentText>All app&apos;s settings will be reset to their default value</DialogContentText>
+          <DialogContentText> {LL.window.options.dialogs.resetSettings.message()}</DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleResetStore}>Reset</Button>
+          <Button onClick={handleResetStore}> {LL.window.options.dialogs.resetSettings.confirm()}</Button>
           <Button onClick={handleCloseResetDialog} autoFocus>
-            Cancel
+            {LL.window.options.dialogs.resetSettings.cancel()}
           </Button>
         </DialogActions>
       </Dialog>

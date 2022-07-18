@@ -7,11 +7,13 @@ import { CharacterCard, CharacterGenericCard, TeamAccordion } from '../component
 import { useDialog } from '@/hooks'
 import { AddCharacterDialog } from '../add-character-dialog'
 import { FormTeamDialog } from '../form-team-dialog'
+import { useI18nContext } from '@lindo/i18n'
 
 export const AccountContainer = () => {
   const {
     optionStore: { gameMultiAccount }
   } = useStores()
+  const { LL } = useI18nContext()
   const [openAddCharacterDialog, , toggleAddCharacterDialog] = useDialog()
   const [openAddTeamDialog, , toggleAddTeamDialog] = useDialog()
 
@@ -24,7 +26,7 @@ export const AccountContainer = () => {
         <CharacterGenericCard>
           <CardContent>
             <Button onClick={toggleAddCharacterDialog} size='small' startIcon={<AddIcon />}>
-              Add Account
+              {LL.option.multiAccount.addCharacter()}
             </Button>
           </CardContent>
         </CharacterGenericCard>
@@ -49,7 +51,7 @@ export const AccountContainer = () => {
           )}
         </Observer>
         <Button size='small' sx={{ mt: 1 }} onClick={toggleAddTeamDialog} startIcon={<AddIcon />}>
-          New Team
+          {LL.option.multiAccount.newTeam()}
         </Button>
       </Box>
       <AddCharacterDialog open={openAddCharacterDialog} onClose={toggleAddCharacterDialog} />

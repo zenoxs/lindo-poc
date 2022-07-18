@@ -125,7 +125,12 @@ export const OptionGeneral = () => {
               </Button>
             </Stack>
             <FormControl fullWidth>
-              <FormControlLabel control={<Checkbox />} label={LL.option.general.early()} />
+              <FormControlLabel
+                onChange={(_, checked) => appStore.setDofusTouchEarly(checked)}
+                checked={appStore.dofusTouchEarly}
+                control={<Checkbox />}
+                label={LL.option.general.early()}
+              />
             </FormControl>
           </Box>
         </>

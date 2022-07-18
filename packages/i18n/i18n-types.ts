@@ -143,12 +143,6 @@ type RootTranslation = {
 				 */
 				message: string
 			}
-			tabsOverflow: {
-				/**
-				 * Lindo doesn't support more than 6 tab per window, above that it can be laggy and buggy. But you can open a new window and it will be working just fine.
-				 */
-				text: string
-			}
 		}
 	}
 	notifications: {
@@ -185,6 +179,14 @@ type RootTranslation = {
 		saleMessage: string
 	}
 	window: {
+		main: {
+			tabsOverflow: {
+				/**
+				 * Lindo doesn't support more than 6 tab per window, above that it can be laggy and buggy. But you can open a new window and it will be working just fine.
+				 */
+				text: string
+			}
+		}
 		changelog: {
 			/**
 			 * Release notes
@@ -276,9 +278,33 @@ type RootTranslation = {
 			title: string
 			button: {
 				/**
-				 * Completed
+				 * Reset Settings
+				 */
+				reset: string
+				/**
+				 * Close
 				 */
 				close: string
+			}
+			dialogs: {
+				resetSettings: {
+					/**
+					 * Reset all the settings ?
+					 */
+					title: string
+					/**
+					 * All app's settings will be reset to their default value
+					 */
+					message: string
+					/**
+					 * Reset
+					 */
+					confirm: string
+					/**
+					 * Cancel
+					 */
+					cancel: string
+				}
 			}
 		}
 	}
@@ -773,6 +799,112 @@ type RootTranslation = {
 			 * Configure password
 			 */
 			configurePassword: string
+			/**
+			 * Add Character
+			 */
+			addCharacter: string
+			/**
+			 * New Team
+			 */
+			newTeam: string
+			dialogs: {
+				characterDialog: {
+					/**
+					 * Add new character account
+					 */
+					title: string
+					/**
+					 * Add
+					 */
+					confirm: string
+					/**
+					 * Cancel
+					 */
+					cancel: string
+				}
+				teamDialog: {
+					/**
+					 * Add new team
+					 */
+					title: string
+					/**
+					 * Team Name
+					 */
+					teamName: string
+					/**
+					 * Add Window
+					 */
+					addWindow: string
+					/**
+					 * Save
+					 */
+					confirm: string
+					/**
+					 * Cancel
+					 */
+					cancel: string
+				}
+				selectCharacter: {
+					/**
+					 * Select a character
+					 */
+					title: string
+					/**
+					 * Cancel
+					 */
+					cancel: string
+				}
+			}
+			characterCard: {
+				/**
+				 * Character image will be save during the login
+				 */
+				characterImageNotLoaded: string
+				buttons: {
+					/**
+					 * Select
+					 */
+					select: string
+					/**
+					 * Delete
+					 */
+					'delete': string
+					/**
+					 * Edit
+					 */
+					edit: string
+					/**
+					 * Remove
+					 */
+					remove: string
+				}
+			}
+			teamWindowCard: {
+				/**
+				 * Window {position}
+				 * @param {number} position
+				 */
+				window: RequiredParams<'position'>
+				/**
+				 * Add Character
+				 */
+				addCharacter: string
+			}
+			teamAccordion: {
+				/**
+				 * Delete team
+				 */
+				'delete': string
+				/**
+				 * Edit team
+				 */
+				edit: string
+				/**
+				 * Window {position}
+				 * @param {number} position
+				 */
+				window: RequiredParams<'position'>
+			}
 		}
 		about: {
 			/**
@@ -1038,12 +1170,6 @@ export type TranslationFunctions = {
 				 */
 				message: () => LocalizedString
 			}
-			tabsOverflow: {
-				/**
-				 * Lindo doesn't support more than 6 tab per window, above that it can be laggy and buggy. But you can open a new window and it will be working just fine.
-				 */
-				text: () => LocalizedString
-			}
 		}
 	}
 	notifications: {
@@ -1077,6 +1203,14 @@ export type TranslationFunctions = {
 		saleMessage: () => LocalizedString
 	}
 	window: {
+		main: {
+			tabsOverflow: {
+				/**
+				 * Lindo doesn't support more than 6 tab per window, above that it can be laggy and buggy. But you can open a new window and it will be working just fine.
+				 */
+				text: () => LocalizedString
+			}
+		}
 		changelog: {
 			/**
 			 * Release notes
@@ -1168,9 +1302,33 @@ export type TranslationFunctions = {
 			title: () => LocalizedString
 			button: {
 				/**
-				 * Completed
+				 * Reset Settings
+				 */
+				reset: () => LocalizedString
+				/**
+				 * Close
 				 */
 				close: () => LocalizedString
+			}
+			dialogs: {
+				resetSettings: {
+					/**
+					 * Reset all the settings ?
+					 */
+					title: () => LocalizedString
+					/**
+					 * All app's settings will be reset to their default value
+					 */
+					message: () => LocalizedString
+					/**
+					 * Reset
+					 */
+					confirm: () => LocalizedString
+					/**
+					 * Cancel
+					 */
+					cancel: () => LocalizedString
+				}
 			}
 		}
 	}
@@ -1662,6 +1820,110 @@ export type TranslationFunctions = {
 			 * Configure password
 			 */
 			configurePassword: () => LocalizedString
+			/**
+			 * Add Character
+			 */
+			addCharacter: () => LocalizedString
+			/**
+			 * New Team
+			 */
+			newTeam: () => LocalizedString
+			dialogs: {
+				characterDialog: {
+					/**
+					 * Add new character account
+					 */
+					title: () => LocalizedString
+					/**
+					 * Add
+					 */
+					confirm: () => LocalizedString
+					/**
+					 * Cancel
+					 */
+					cancel: () => LocalizedString
+				}
+				teamDialog: {
+					/**
+					 * Add new team
+					 */
+					title: () => LocalizedString
+					/**
+					 * Team Name
+					 */
+					teamName: () => LocalizedString
+					/**
+					 * Add Window
+					 */
+					addWindow: () => LocalizedString
+					/**
+					 * Save
+					 */
+					confirm: () => LocalizedString
+					/**
+					 * Cancel
+					 */
+					cancel: () => LocalizedString
+				}
+				selectCharacter: {
+					/**
+					 * Select a character
+					 */
+					title: () => LocalizedString
+					/**
+					 * Cancel
+					 */
+					cancel: () => LocalizedString
+				}
+			}
+			characterCard: {
+				/**
+				 * Character image will be save during the login
+				 */
+				characterImageNotLoaded: () => LocalizedString
+				buttons: {
+					/**
+					 * Select
+					 */
+					select: () => LocalizedString
+					/**
+					 * Delete
+					 */
+					'delete': () => LocalizedString
+					/**
+					 * Edit
+					 */
+					edit: () => LocalizedString
+					/**
+					 * Remove
+					 */
+					remove: () => LocalizedString
+				}
+			}
+			teamWindowCard: {
+				/**
+				 * Window {position}
+				 */
+				window: (arg: { position: number }) => LocalizedString
+				/**
+				 * Add Character
+				 */
+				addCharacter: () => LocalizedString
+			}
+			teamAccordion: {
+				/**
+				 * Delete team
+				 */
+				'delete': () => LocalizedString
+				/**
+				 * Edit team
+				 */
+				edit: () => LocalizedString
+				/**
+				 * Window {position}
+				 */
+				window: (arg: { position: number }) => LocalizedString
+			}
 		}
 		about: {
 			/**

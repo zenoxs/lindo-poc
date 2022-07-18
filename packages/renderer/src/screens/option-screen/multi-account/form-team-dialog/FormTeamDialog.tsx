@@ -6,6 +6,7 @@ import { useForm, useFieldArray } from 'react-hook-form'
 import { TextFieldElement } from 'react-hook-form-mui'
 import { TeamWindowCard, TeamWindowForm } from './TeamWindowCard'
 import { GameTeam, GameTeamSnapshotIn } from '@lindo/shared'
+import { useI18nContext } from '@lindo/i18n'
 
 export interface AddTeamDialogProps {
   open: boolean
@@ -38,6 +39,7 @@ export const FormTeamDialog = ({ onClose, open, value }: AddTeamDialogProps) => 
           windows: [{}]
         }
   })
+  const { LL } = useI18nContext()
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'windows'
@@ -71,7 +73,7 @@ export const FormTeamDialog = ({ onClose, open, value }: AddTeamDialogProps) => 
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth='md' fullScreen>
-      <DialogTitle>Add new team</DialogTitle>
+      <DialogTitle>{LL.option.multiAccount.dialogs.teamDialog.title()}</DialogTitle>
       <DialogContent>
         <Box
           id='character-form'
@@ -81,7 +83,13 @@ export const FormTeamDialog = ({ onClose, open, value }: AddTeamDialogProps) => 
           autoComplete='off'
           onSubmit={handleSubmit(onSubmit)}
         >
-          <TextFieldElement name='name' control={control} required fullWidth label={'Team Name'} />
+          <TextFieldElement
+            name='name'
+            control={control}
+            required
+            fullWidth
+            label={LL.option.multiAccount.dialogs.teamDialog.teamName()}
+          />
           <Grid container spacing={2} sx={{ mt: 2 }}>
             {fields.map((window, index) => (
               <Grid key={index} item xs={6}>
@@ -90,14 +98,14 @@ export const FormTeamDialog = ({ onClose, open, value }: AddTeamDialogProps) => 
             ))}
           </Grid>
           <Button startIcon={<AddIcon />} variant='outlined' sx={{ mt: 2 }} onClick={() => append({})}>
-            Add window
+            {LL.option.multiAccount.dialogs.teamDialog.addWindow()}
           </Button>
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
+        <Button onClick={onClose}>{LL.option.multiAccount.dialogs.teamDialog.cancel()}</Button>
         <Button variant='contained' type='submit' form='character-form'>
-          Save
+          {LL.option.multiAccount.dialogs.teamDialog.confirm()}
         </Button>
       </DialogActions>
     </Dialog>

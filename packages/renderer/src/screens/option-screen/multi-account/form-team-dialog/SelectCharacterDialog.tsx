@@ -4,6 +4,7 @@ import { useStores } from '@/store'
 import { Observer } from 'mobx-react-lite'
 import { CharacterCard } from '../components'
 import { GameCharacter } from '@lindo/shared'
+import { useI18nContext } from '@lindo/i18n'
 
 export interface SelectCharacterDialogProps {
   open: boolean
@@ -16,10 +17,11 @@ export const SelectCharacterDialog = ({ onClose, onSelect, open, ignore = [] }: 
   const {
     optionStore: { gameMultiAccount }
   } = useStores()
+  const { LL } = useI18nContext()
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth='md' fullWidth>
-      <DialogTitle>Select a character</DialogTitle>
+      <DialogTitle>{LL.option.multiAccount.dialogs.selectCharacter.title()}</DialogTitle>
       <DialogContent>
         <Observer>
           {() => (
@@ -36,7 +38,7 @@ export const SelectCharacterDialog = ({ onClose, onSelect, open, ignore = [] }: 
         </Observer>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
+        <Button onClick={onClose}>{LL.option.multiAccount.dialogs.selectCharacter.cancel()}</Button>
       </DialogActions>
     </Dialog>
   )

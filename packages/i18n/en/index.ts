@@ -43,9 +43,6 @@ const en: BaseTranslation = {
       cacheCleared: {
         title: 'Cache cleared',
         message: 'Cache has been cleared on currently opened window'
-      },
-      tabsOverflow: {
-        text: "Lindo doesn't support more than 6 tab per window, above that it can be laggy and buggy. But you can open a new window and it will be working just fine."
       }
     }
   },
@@ -59,6 +56,11 @@ const en: BaseTranslation = {
     saleMessage: 'Bank'
   },
   window: {
+    main: {
+      tabsOverflow: {
+        text: "Lindo doesn't support more than 6 tab per window, above that it can be laggy and buggy. But you can open a new window and it will be working just fine."
+      }
+    },
     changelog: {
       title: 'Release notes',
       prefix: 'Release'
@@ -89,7 +91,16 @@ const en: BaseTranslation = {
     options: {
       title: 'Options',
       button: {
-        close: 'Completed'
+        reset: 'Reset Settings',
+        close: 'Close'
+      },
+      dialogs: {
+        resetSettings: {
+          title: 'Reset all the settings ?',
+          message: "All app's settings will be reset to their default value",
+          confirm: 'Reset',
+          cancel: 'Cancel'
+        }
       }
     }
   },
@@ -247,7 +258,45 @@ const en: BaseTranslation = {
       title: 'Multi Account',
       notConfigured:
         'To use this feature, a password must be configured. It will be used to start Lindo with multi-account automation.',
-      configurePassword: 'Configure password'
+      configurePassword: 'Configure password',
+      addCharacter: 'Add Character',
+      newTeam: 'New Team',
+      dialogs: {
+        characterDialog: {
+          title: 'Add new character account',
+          confirm: 'Add',
+          cancel: 'Cancel'
+        },
+        teamDialog: {
+          title: 'Add new team',
+          teamName: 'Team Name',
+          addWindow: 'Add Window',
+          confirm: 'Save',
+          cancel: 'Cancel'
+        },
+        selectCharacter: {
+          title: 'Select a character',
+          cancel: 'Cancel'
+        }
+      },
+      characterCard: {
+        characterImageNotLoaded: 'Character image will be save during the login',
+        buttons: {
+          select: 'Select',
+          delete: 'Delete',
+          edit: 'Edit',
+          remove: 'Remove'
+        }
+      },
+      teamWindowCard: {
+        window: 'Window {position: number}',
+        addCharacter: 'Add Character'
+      },
+      teamAccordion: {
+        delete: 'Delete team',
+        edit: 'Edit team',
+        window: 'Window {position: number}'
+      }
     },
     about: {
       title: 'About',

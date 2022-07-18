@@ -19,12 +19,14 @@ import { GameTeam } from '@lindo/shared'
 import { useStores } from '@/store'
 import { FormTeamDialog } from '../form-team-dialog'
 import { useDialog } from '@/hooks'
+import { useI18nContext } from '@lindo/i18n'
 
 export const TeamAccordion = ({ team }: { team: GameTeam }) => {
   const {
     optionStore: { gameMultiAccount }
   } = useStores()
   const theme = useTheme()
+  const { LL } = useI18nContext()
   const [openFormTeamDialog, , toggleFormTeamDialog] = useDialog()
 
   const handleRemoveTeam = (team: GameTeam) => {
@@ -38,7 +40,7 @@ export const TeamAccordion = ({ team }: { team: GameTeam }) => {
   return (
     <>
       <Accordion key={team.id} sx={{ backgroundColor: darken(theme.palette.background.paper, 0.3) }}>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls='panel1a-content' id='panel1a-header'>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography sx={{ width: '33%', flexShrink: 0 }}>{team.name}</Typography>
           <Typography sx={{ color: 'text.secondary' }}>
             {team.allCharacters.map((c) => `${c.name}`).join(', ')}
@@ -49,7 +51,7 @@ export const TeamAccordion = ({ team }: { team: GameTeam }) => {
             {team.windows.map((window, index) => (
               <Grid xs={6} item key={window.id}>
                 <Card>
-                  <CardHeader title={'Window ' + (index + 1)}></CardHeader>
+                  <CardHeader title={LL.option.multiAccount.teamAccordion.window({ position: index + 1 })}></CardHeader>
                   <CardContent>
                     <Grid container spacing={2}>
                       {window.characters.map((character) => (
@@ -64,9 +66,9 @@ export const TeamAccordion = ({ team }: { team: GameTeam }) => {
             ))}
           </Grid>
           <Stack direction='row' sx={{ mt: 2 }}>
-            <Button onClick={() => handleEditTeam()}>Edit Team</Button>
+            <Button onClick={() => handleEditTeam()}>{LL.option.multiAccount.teamAccordion.edit()}</Button>
             <Button onClick={() => handleRemoveTeam(team)} color='error'>
-              Delete team
+              {LL.option.multiAccount.teamAccordion.delete()}
             </Button>
           </Stack>
         </AccordionDetails>

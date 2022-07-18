@@ -1,5 +1,6 @@
 import { useGameContext } from '@/providers'
 import { useStores } from '@/store'
+import { useI18nContext } from '@lindo/i18n'
 import { GameCharacter, GameCharacterSnapshot } from '@lindo/shared'
 import CloseIcon from '@mui/icons-material/Close'
 import { Box, Button, CardActions, CardHeader, CardMedia, IconButton, Typography } from '@mui/material'
@@ -25,6 +26,7 @@ export const CharacterCard = ({
   const { optionStore } = useStores()
   const [displayImage, setDisplayImage] = React.useState(true)
   const gameContext = useGameContext()
+  const { LL } = useI18nContext()
 
   const handleDeleteCharacter = (character: GameCharacter) => {
     optionStore.gameMultiAccount.removeCharacter(character)
@@ -85,7 +87,9 @@ export const CharacterCard = ({
               ) : (
                 <Box sx={{ display: 'flex', p: 1, height: '100%', alignItems: 'center', justifyContent: 'center' }}>
                   {size !== 'small' && (
-                    <Typography variant='caption'>Character image will be save during the login</Typography>
+                    <Typography variant='caption'>
+                      {LL.option.multiAccount.characterCard.characterImageNotLoaded()}
+                    </Typography>
                   )}
                 </Box>
               )}
@@ -94,15 +98,15 @@ export const CharacterCard = ({
               <CardActions>
                 {onSelect ? (
                   <Button size='small' onClick={() => onSelect(character)}>
-                    Select
+                    {LL.option.multiAccount.characterCard.buttons.select()}
                   </Button>
                 ) : (
                   <>
                     <Button color='error' onClick={() => handleDeleteCharacter(character)} size='small'>
-                      Delete
+                      {LL.option.multiAccount.characterCard.buttons.delete()}
                     </Button>
                     <Button size='small' disabled={true}>
-                      Edit
+                      {LL.option.multiAccount.characterCard.buttons.edit()}
                     </Button>
                   </>
                 )}

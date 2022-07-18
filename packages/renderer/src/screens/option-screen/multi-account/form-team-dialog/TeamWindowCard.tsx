@@ -9,6 +9,7 @@ import { SelectCharacterDialog } from './SelectCharacterDialog'
 import { getSnapshot } from 'mobx-state-tree'
 import { CharacterCard } from '../components'
 import { TeamForm } from './FormTeamDialog'
+import { useI18nContext } from '@lindo/i18n'
 
 export interface TeamWindowCardProps {
   index: number
@@ -31,6 +32,7 @@ export const TeamWindowCard = ({ index, control, onRemove }: TeamWindowCardProps
     name: `windows.${index}.characters`,
     defaultValue: []
   })
+  const { LL } = useI18nContext()
 
   const handleAddCharacter = (character: GameCharacter) => {
     append(getSnapshot(character))
@@ -50,7 +52,7 @@ export const TeamWindowCard = ({ index, control, onRemove }: TeamWindowCardProps
               <CloseIcon />
             </IconButton>
           }
-          title={'Window ' + (index + 1)}
+          title={LL.option.multiAccount.teamWindowCard.window({ position: index + 1 })}
         />
         <DialogContent>
           <Grid container spacing={2}>
@@ -68,7 +70,7 @@ export const TeamWindowCard = ({ index, control, onRemove }: TeamWindowCardProps
         </DialogContent>
         <DialogActions>
           <Button onClick={toggleSelectCharacterDialog} startIcon={<AddIcon />} size='small'>
-            Add character
+            {LL.option.multiAccount.teamWindowCard.addCharacter()}
           </Button>
         </DialogActions>
       </Card>
