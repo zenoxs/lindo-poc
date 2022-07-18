@@ -104,13 +104,16 @@ export class Application {
   }
 
   private _setAppMenu() {
-    Menu.setApplicationMenu(getAppMenu(this._rootStore.hotkeyStore.window))
+    Menu.setApplicationMenu(getAppMenu(this._rootStore.hotkeyStore.window, this._i18n))
     console.log('Application ->', '_setAppMenu')
     observe(this._rootStore.hotkeyStore.window, (change) => {
       console.log('Application ->', '_setAppMenu')
       if (change.type === 'update') {
-        Menu.setApplicationMenu(getAppMenu(this._rootStore.hotkeyStore.window))
+        Menu.setApplicationMenu(getAppMenu(this._rootStore.hotkeyStore.window, this._i18n))
       }
+    })
+    this._i18n.on('localeChanged', () => {
+      Menu.setApplicationMenu(getAppMenu(this._rootStore.hotkeyStore.window, this._i18n))
     })
   }
 

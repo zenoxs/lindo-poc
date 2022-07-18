@@ -14,32 +14,122 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	main: {
-		tab: {
-			/**
-			 * Add a game
-			 */
-			add: string
-		}
-		head: {
-			/**
-			 * Enable sound
-			 */
-			toggleAudioOn: string
-			/**
-			 * Mute
-			 */
-			toggleAudioOff: string
-			/**
-			 * Open a new window
-			 */
-			newWindow: string
-		}
-		prompt: {
-			tabsOverflow: {
+		gameMenu: {
+			file: {
 				/**
-				 * Lindo doesn't support more than 6 tab per window, above that it can be laggy and buggy. But you can open a new window and it will be working just fine.
+				 * Application
 				 */
-				text: string
+				title: string
+				/**
+				 * New window
+				 */
+				newWindow: string
+				/**
+				 * New tab
+				 */
+				newTab: string
+				/**
+				 * Close tab
+				 */
+				closeTab: string
+				/**
+				 * Exit
+				 */
+				closeWindow: string
+			}
+			edit: {
+				/**
+				 * Edit
+				 */
+				title: string
+				/**
+				 * Undo
+				 */
+				undo: string
+				/**
+				 * Redo
+				 */
+				redo: string
+				/**
+				 * Cut
+				 */
+				cut: string
+				/**
+				 * Copy
+				 */
+				copy: string
+				/**
+				 * Paste
+				 */
+				paste: string
+				/**
+				 * Select all
+				 */
+				selectAll: string
+			}
+			window: {
+				/**
+				 * Window
+				 */
+				title: string
+				/**
+				 * Reload
+				 */
+				reload: string
+				/**
+				 * Previous tab
+				 */
+				prevTab: string
+				/**
+				 * Next tab
+				 */
+				nextTab: string
+				/**
+				 * Sound
+				 */
+				sound: string
+				/**
+				 * Turn on sound
+				 */
+				enableSound: string
+				/**
+				 * Turn off sound
+				 */
+				disableSound: string
+				/**
+				 * Zoom in
+				 */
+				zoomIn: string
+				/**
+				 * Zoom out
+				 */
+				zoomOut: string
+				/**
+				 * Reset zoom
+				 */
+				resetZoom: string
+				/**
+				 * Toggle Full screen
+				 */
+				fullScreen: string
+			}
+			infos: {
+				/**
+				 * ?
+				 */
+				title: string
+				/**
+				 * Release notes
+				 */
+				changelog: string
+				/**
+				 * Developer console
+				 */
+				console: string
+				/**
+				 * About us...
+				 */
+				about: string
 			}
 		}
 		dialogs: {
@@ -52,6 +142,12 @@ type RootTranslation = {
 				 * Cache has been cleared on currently opened window
 				 */
 				message: string
+			}
+			tabsOverflow: {
+				/**
+				 * Lindo doesn't support more than 6 tab per window, above that it can be laggy and buggy. But you can open a new window and it will be working just fine.
+				 */
+				text: string
 			}
 		}
 	}
@@ -813,32 +909,122 @@ type RootTranslation = {
 
 export type TranslationFunctions = {
 	main: {
-		tab: {
-			/**
-			 * Add a game
-			 */
-			add: () => LocalizedString
-		}
-		head: {
-			/**
-			 * Enable sound
-			 */
-			toggleAudioOn: () => LocalizedString
-			/**
-			 * Mute
-			 */
-			toggleAudioOff: () => LocalizedString
-			/**
-			 * Open a new window
-			 */
-			newWindow: () => LocalizedString
-		}
-		prompt: {
-			tabsOverflow: {
+		gameMenu: {
+			file: {
 				/**
-				 * Lindo doesn't support more than 6 tab per window, above that it can be laggy and buggy. But you can open a new window and it will be working just fine.
+				 * Application
 				 */
-				text: () => LocalizedString
+				title: () => LocalizedString
+				/**
+				 * New window
+				 */
+				newWindow: () => LocalizedString
+				/**
+				 * New tab
+				 */
+				newTab: () => LocalizedString
+				/**
+				 * Close tab
+				 */
+				closeTab: () => LocalizedString
+				/**
+				 * Exit
+				 */
+				closeWindow: () => LocalizedString
+			}
+			edit: {
+				/**
+				 * Edit
+				 */
+				title: () => LocalizedString
+				/**
+				 * Undo
+				 */
+				undo: () => LocalizedString
+				/**
+				 * Redo
+				 */
+				redo: () => LocalizedString
+				/**
+				 * Cut
+				 */
+				cut: () => LocalizedString
+				/**
+				 * Copy
+				 */
+				copy: () => LocalizedString
+				/**
+				 * Paste
+				 */
+				paste: () => LocalizedString
+				/**
+				 * Select all
+				 */
+				selectAll: () => LocalizedString
+			}
+			window: {
+				/**
+				 * Window
+				 */
+				title: () => LocalizedString
+				/**
+				 * Reload
+				 */
+				reload: () => LocalizedString
+				/**
+				 * Previous tab
+				 */
+				prevTab: () => LocalizedString
+				/**
+				 * Next tab
+				 */
+				nextTab: () => LocalizedString
+				/**
+				 * Sound
+				 */
+				sound: () => LocalizedString
+				/**
+				 * Turn on sound
+				 */
+				enableSound: () => LocalizedString
+				/**
+				 * Turn off sound
+				 */
+				disableSound: () => LocalizedString
+				/**
+				 * Zoom in
+				 */
+				zoomIn: () => LocalizedString
+				/**
+				 * Zoom out
+				 */
+				zoomOut: () => LocalizedString
+				/**
+				 * Reset zoom
+				 */
+				resetZoom: () => LocalizedString
+				/**
+				 * Toggle Full screen
+				 */
+				fullScreen: () => LocalizedString
+			}
+			infos: {
+				/**
+				 * ?
+				 */
+				title: () => LocalizedString
+				/**
+				 * Release notes
+				 */
+				changelog: () => LocalizedString
+				/**
+				 * Developer console
+				 */
+				console: () => LocalizedString
+				/**
+				 * About us...
+				 */
+				about: () => LocalizedString
 			}
 		}
 		dialogs: {
@@ -851,6 +1037,12 @@ export type TranslationFunctions = {
 				 * Cache has been cleared on currently opened window
 				 */
 				message: () => LocalizedString
+			}
+			tabsOverflow: {
+				/**
+				 * Lindo doesn't support more than 6 tab per window, above that it can be laggy and buggy. But you can open a new window and it will be working just fine.
+				 */
+				text: () => LocalizedString
 			}
 		}
 	}

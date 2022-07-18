@@ -1,23 +1,24 @@
 import { IPCEvents, WindowHotkey } from '@lindo/shared'
 import { app, Menu, MenuItemConstructorOptions } from 'electron'
 import { Application } from './application'
+import { I18n } from './utils'
 
 const isMac = process.platform === 'darwin'
 
-export const getAppMenu = (windowHotkey: WindowHotkey) => {
+export const getAppMenu = (windowHotkey: WindowHotkey, i18n: I18n) => {
   const template: MenuItemConstructorOptions[] = [
     {
-      label: 'File',
+      label: i18n.LL.main.gameMenu.file.title(),
       submenu: [
         {
-          label: 'New Window',
+          label: i18n.LL.main.gameMenu.file.newWindow(),
           accelerator: windowHotkey.newWindow,
           click() {
             Application.instance.createGameWindow()
           }
         },
         {
-          label: 'New Tab',
+          label: i18n.LL.main.gameMenu.file.newTab(),
           accelerator: windowHotkey.newTab,
           click(_, focusedWindow) {
             focusedWindow?.webContents.send(IPCEvents.NEW_TAB, {})
@@ -27,14 +28,14 @@ export const getAppMenu = (windowHotkey: WindowHotkey) => {
           type: 'separator'
         },
         {
-          label: 'Close Tab',
+          label: i18n.LL.main.gameMenu.file.closeTab(),
           accelerator: windowHotkey.closeTab,
           click(_, focusedWindow) {
             focusedWindow?.webContents.send(IPCEvents.CLOSE_TAB, {})
           }
         },
         {
-          label: 'Close Window',
+          label: i18n.LL.main.gameMenu.file.closeWindow(),
           accelerator: 'Shift+CmdOrCtrl+W',
           click(item, focusedWindow) {
             if (focusedWindow) focusedWindow.close()
@@ -43,42 +44,42 @@ export const getAppMenu = (windowHotkey: WindowHotkey) => {
       ]
     },
     {
-      label: 'Edit',
+      label: i18n.LL.main.gameMenu.edit.title(),
       submenu: [
         {
-          label: 'Undo',
+          label: i18n.LL.main.gameMenu.edit.undo(),
           role: 'undo'
         },
         {
-          label: 'Redo',
+          label: i18n.LL.main.gameMenu.edit.redo(),
           role: 'redo'
         },
         {
           type: 'separator'
         },
         {
-          label: 'Cut',
+          label: i18n.LL.main.gameMenu.edit.cut(),
           role: 'cut'
         },
         {
-          label: 'Copy',
+          label: i18n.LL.main.gameMenu.edit.copy(),
           role: 'copy'
         },
         {
-          label: 'Paste',
+          label: i18n.LL.main.gameMenu.edit.paste(),
           role: 'paste'
         },
         {
-          label: 'Select All',
+          label: i18n.LL.main.gameMenu.edit.selectAll(),
           role: 'selectAll'
         }
       ]
     },
     {
-      label: 'Window',
+      label: i18n.LL.main.gameMenu.window.title(),
       submenu: [
         {
-          label: 'Reload',
+          label: i18n.LL.main.gameMenu.window.reload(),
           accelerator: 'CmdOrCtrl+R',
           click(item, focusedWindow) {
             if (focusedWindow) focusedWindow.reload()
@@ -89,14 +90,14 @@ export const getAppMenu = (windowHotkey: WindowHotkey) => {
         },
 
         {
-          label: 'Prev Tab',
+          label: i18n.LL.main.gameMenu.window.prevTab(),
           accelerator: windowHotkey.prevTab,
           click(_, focusedWindow) {
             focusedWindow?.webContents.send(IPCEvents.PREV_TAB, {})
           }
         },
         {
-          label: 'Next Tab',
+          label: i18n.LL.main.gameMenu.window.nextTab(),
           accelerator: windowHotkey.nextTab,
           click(_, focusedWindow) {
             focusedWindow?.webContents.send(IPCEvents.NEXT_TAB, {})
@@ -106,38 +107,38 @@ export const getAppMenu = (windowHotkey: WindowHotkey) => {
           type: 'separator'
         },
         {
-          label: 'Disable Sound',
+          label: i18n.LL.main.gameMenu.window.disableSound(),
           type: 'checkbox',
           click(item, focusedWindow) {
             if (focusedWindow) focusedWindow.webContents.setAudioMuted(item.checked)
           }
         },
         {
-          label: 'Zoom In',
+          label: i18n.LL.main.gameMenu.window.zoomIn(),
           role: 'zoomIn'
         },
         {
-          label: 'Zoom Out',
+          label: i18n.LL.main.gameMenu.window.zoomOut(),
           role: 'zoomOut'
         },
         {
-          label: 'Reset Zoom',
+          label: i18n.LL.main.gameMenu.window.resetZoom(),
           role: 'resetZoom'
         },
         {
           type: 'separator'
         },
         {
-          label: 'Enter Full Screen',
+          label: i18n.LL.main.gameMenu.window.fullScreen(),
           role: 'togglefullscreen'
         }
       ]
     },
     {
-      label: 'Infos',
+      label: i18n.LL.main.gameMenu.infos.title(),
       submenu: [
         {
-          label: 'Console',
+          label: i18n.LL.main.gameMenu.infos.console(),
           accelerator: process.platform === 'darwin' ? 'Alt+Command+I' : 'Ctrl+Shift+I',
           click(item, focusedWindow) {
             if (focusedWindow) focusedWindow.webContents.toggleDevTools()
@@ -181,25 +182,25 @@ export const getAppMenu = (windowHotkey: WindowHotkey) => {
       ]
     })
     // Edit menu.
-    const windowSubmenu = template[2]!.submenu as Array<MenuItemConstructorOptions>
-    windowSubmenu.push!(
-      {
-        type: 'separator'
-      },
-      {
-        label: 'Sound',
-        submenu: [
-          {
-            label: 'Enable Sound',
-            role: 'startSpeaking'
-          },
-          {
-            label: 'Disable Sound',
-            role: 'stopSpeaking'
-          }
-        ]
-      }
-    )
+    // const windowSubmenu = template[2]!.submenu as Array<MenuItemConstructorOptions>
+    // windowSubmenu.push!(
+    //   {
+    //     type: 'separator'
+    //   },
+    //   {
+    //     label: 'Sound',
+    //     submenu: [
+    //       {
+    //         label: 'Enable Sound',
+    //         role: 'startSpeaking'
+    //       },
+    //       {
+    //         label: 'Disable Sound',
+    //         role: 'stopSpeaking'
+    //       }
+    //     ]
+    //   }
+    // )
   }
 
   return Menu.buildFromTemplate(template)

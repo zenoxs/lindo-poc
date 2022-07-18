@@ -2,23 +2,50 @@ import type { BaseTranslation } from '../i18n-types'
 
 const en: BaseTranslation = {
   main: {
-    tab: {
-      add: 'Add a game'
-    },
-    head: {
-      toggleAudioOn: 'Enable sound',
-      toggleAudioOff: 'Mute',
-      newWindow: 'Open a new window'
-    },
-    prompt: {
-      tabsOverflow: {
-        text: "Lindo doesn't support more than 6 tab per window, above that it can be laggy and buggy. But you can open a new window and it will be working just fine."
+    gameMenu: {
+      file: {
+        title: 'Application',
+        newWindow: 'New window',
+        newTab: 'New tab',
+        closeTab: 'Close tab',
+        closeWindow: 'Exit'
+      },
+      edit: {
+        title: 'Edit',
+        undo: 'Undo',
+        redo: 'Redo',
+        cut: 'Cut',
+        copy: 'Copy',
+        paste: 'Paste',
+        selectAll: 'Select all'
+      },
+      window: {
+        title: 'Window',
+        reload: 'Reload',
+        prevTab: 'Previous tab',
+        nextTab: 'Next tab',
+        sound: 'Sound',
+        enableSound: 'Turn on sound',
+        disableSound: 'Turn off sound',
+        zoomIn: 'Zoom in',
+        zoomOut: 'Zoom out',
+        resetZoom: 'Reset zoom',
+        fullScreen: 'Toggle Full screen'
+      },
+      infos: {
+        title: '?',
+        changelog: 'Release notes',
+        console: 'Developer console',
+        about: 'About us...'
       }
     },
     dialogs: {
       cacheCleared: {
         title: 'Cache cleared',
         message: 'Cache has been cleared on currently opened window'
+      },
+      tabsOverflow: {
+        text: "Lindo doesn't support more than 6 tab per window, above that it can be laggy and buggy. But you can open a new window and it will be working just fine."
       }
     }
   },

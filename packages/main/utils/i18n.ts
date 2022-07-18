@@ -15,6 +15,7 @@ export class I18n extends (EventEmitter as new () => TypedEmitter<I18nEvents>) {
     super()
     observe(this._rootStore.appStore, 'language', () => {
       this._locale = this._rootStore.appStore.language as Locales
+      this.emit('localeChanged', this._locale)
     })
   }
 
