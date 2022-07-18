@@ -25,7 +25,9 @@ export interface _Item {
   shatterResults: Array<unknown>
   shieldBonuses: Array<unknown>
   shieldModelId: number
-  type: unknown
+  type: {
+    id: number
+  }
   typeId: number
   upgradeEffects: Array<unknown>
   useAnimationId: number

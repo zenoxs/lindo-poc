@@ -360,6 +360,9 @@ const en: BaseTranslation = {
     },
     partyInfo: {
       level: 'Lvl.'
+    },
+    runeLister: {
+      message: 'Obtained {quantity: number} {runeName: string}'
     }
   }
 }

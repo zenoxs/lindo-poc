@@ -1,4 +1,5 @@
 import TypedEmitter from 'typed-emitter'
+import { _ObjectItem } from '../dofus'
 import { CharacterStats } from './character-stats'
 import { Spell } from './spell'
 
@@ -113,6 +114,7 @@ export interface PlayerData extends TypedEmitter<PlayerDataEvents> {
   inventory: {
     maxWeight: number
     weight: number
+    objects: Record<number, _ObjectItem>
   }
   alliance: Alliance
   guild: Guild

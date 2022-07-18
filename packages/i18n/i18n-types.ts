@@ -1073,6 +1073,14 @@ type RootTranslation = {
 			 */
 			level: string
 		}
+		runeLister: {
+			/**
+			 * Obtained {quantity} {runeName}
+			 * @param {number} quantity
+			 * @param {string} runeName
+			 */
+			message: RequiredParams<'quantity' | 'runeName'>
+		}
 	}
 }
 
@@ -2127,6 +2135,12 @@ export type TranslationFunctions = {
 			 * Lvl.
 			 */
 			level: () => LocalizedString
+		}
+		runeLister: {
+			/**
+			 * Obtained {quantity} {runeName}
+			 */
+			message: (arg: { quantity: number, runeName: string }) => LocalizedString
 		}
 	}
 }

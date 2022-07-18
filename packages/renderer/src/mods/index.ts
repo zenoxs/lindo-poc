@@ -11,6 +11,7 @@ import { MonsterTooltipMod } from './monster-tooltip'
 import { NotificationsMod } from './notifications'
 import { PartyInfoMod, PartyMemberMod } from './party-info'
 import { RapidExchangeMod } from './rapid-exchange'
+import { RuneListerMod } from './rune-lister'
 import { ShortcutsMod } from './shortcuts'
 import { VerticalTimelineMod } from './vertical-timeline'
 
@@ -43,5 +44,6 @@ export const MODS = [
   PartyMemberMod,
   PartyInfoMod,
   RapidExchangeMod,
+  RuneListerMod,
   ...GENERAL_MODS
 ] as const

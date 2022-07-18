@@ -2,6 +2,9 @@ import TypedEmitter from 'typed-emitter'
 import { _GameRolePlayActor } from './actor'
 import { _CharacterBaseInformations } from './character'
 
+export interface DataSchema {
+  _messageType: 'ObjectQuantityMessage' | 'InventoryWeightMessage' | 'ObjectUseMessage'
+}
 export interface ChatMessage {
   channel: number
   senderName: string
@@ -38,6 +41,7 @@ export interface ChallengeInfoMessage {
 export interface InventoryWeightMessage {
   weightMax: number
   weight: number
+  _messageType: 'InventoryWeightMessage'
 }
 export interface StatedElementUpdatedMessage {
   statedElement: {
@@ -116,6 +120,36 @@ export interface PartyNewMemberMessage {}
 export interface PartyNewGuestMessage {}
 export interface PartyLeaderUpdateMessage {}
 
+export interface ObjectQuantityMessage extends DataSchema {
+  objectUID: number
+  quantity: number
+  _messageType: 'ObjectQuantityMessage'
+}
+export interface ObjectUseMessage extends DataSchema {
+  objectUID: number
+  _messageType: 'ObjectUseMessage'
+}
+
+export type Data = ObjectUseMessage | InventoryWeightMessage | ObjectQuantityMessage
+
+// Sent message
+export interface MessageSentDataSchema {
+  type: 'ObjectUseMessage'
+}
+export interface SentObjectUseMessage extends MessageSentDataSchema {
+  data: {
+    objectUID: number
+  }
+  type: 'ObjectUseMessage'
+}
+
+export type MessageSentData = SentObjectUseMessage
+export interface MessageSent {
+  data: {
+    data: MessageSentData
+  }
+}
+
 export type ConnectionManagerEvents = {
   ChallengeInfoMessage: (msg: ChallengeInfoMessage) => void
   GameFightEndMessage: () => void
@@ -154,6 +188,8 @@ export type ConnectionManagerEvents = {
   PartyNewMemberMessage: (msg: PartyNewMemberMessage) => void
   PartyNewGuestMessage: (msg: PartyNewGuestMessage) => void
   PartyLeaderUpdateMessage: (msg: PartyLeaderUpdateMessage) => void
+  send: (msg: MessageSent) => void
+  data: (msg: Data) => void
 }
 
 export interface ConnectionManager extends TypedEmitter<ConnectionManagerEvents> {}
