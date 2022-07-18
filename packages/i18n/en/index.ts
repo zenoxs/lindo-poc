@@ -256,11 +256,14 @@ const en: BaseTranslation = {
     },
     multiAccount: {
       title: 'Multi Account',
+      enable: 'The multi account is enabled with your master password',
       notConfigured:
         'To use this feature, a password must be configured. It will be used to start Lindo with multi-account automation.',
       configurePassword: 'Configure password',
       addCharacter: 'Add Character',
       newTeam: 'New Team',
+      removePassword: 'Remove the password',
+      changePassword: 'Change the password',
       dialogs: {
         characterDialog: {
           title: 'Add new character account',
@@ -276,6 +279,18 @@ const en: BaseTranslation = {
         },
         selectCharacter: {
           title: 'Select a character',
+          cancel: 'Cancel'
+        },
+        passwordDialog: {
+          configurePassword: 'Configure master password',
+          changePassword: 'Change master password',
+          removePassword: 'Remove your master password ?',
+          removePasswordInfo: 'If you remove your master password you will lost your multi account configuration',
+          password: 'Password',
+          confirmPassword: 'Confirm Password',
+          oldPassword: 'Old Password',
+          confirmRemovePassword: 'Remove password',
+          validate: 'Validate',
           cancel: 'Cancel'
         }
       },

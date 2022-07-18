@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Dialog, DialogTitle, DialogContent, Stack, DialogActions, Button } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { PasswordElement, PasswordRepeatElement } from 'react-hook-form-mui'
+import { useI18nContext } from '@lindo/i18n'
 
 interface ChangePasswordForm {
   old_password: string
@@ -15,7 +16,7 @@ export interface ChangePasswordDialogProps {
 }
 
 export const ChangePasswordDialog = ({ open, onClose }: ChangePasswordDialogProps) => {
-  // const { LL } = useI18nContext()
+  const { LL } = useI18nContext()
   const { control, handleSubmit, reset, setError } = useForm<ChangePasswordForm>()
 
   const onSubmit = async (data: ChangePasswordForm) => {
@@ -33,7 +34,7 @@ export const ChangePasswordDialog = ({ open, onClose }: ChangePasswordDialogProp
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Configure master password</DialogTitle>
+      <DialogTitle>{LL.option.multiAccount.dialogs.passwordDialog.changePassword()}</DialogTitle>
       <DialogContent>
         <Stack
           id='configure-password-form'
@@ -44,21 +45,33 @@ export const ChangePasswordDialog = ({ open, onClose }: ChangePasswordDialogProp
           autoComplete='off'
           onSubmit={handleSubmit(onSubmit)}
         >
-          <PasswordElement name='old_password' control={control} required fullWidth label={'Old Password'} />
-          <PasswordElement name='password' control={control} required fullWidth label={'Password'} />
+          <PasswordElement
+            name='old_password'
+            control={control}
+            required
+            fullWidth
+            label={LL.option.multiAccount.dialogs.passwordDialog.oldPassword()}
+          />
+          <PasswordElement
+            name='password'
+            control={control}
+            required
+            fullWidth
+            label={LL.option.multiAccount.dialogs.passwordDialog.password()}
+          />
           <PasswordRepeatElement
             name='password_repeat'
             passwordFieldName='password'
             control={control}
             fullWidth
-            label={'Confirm'}
+            label={LL.option.multiAccount.dialogs.passwordDialog.confirmPassword()}
           />
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
+        <Button onClick={onClose}>{LL.option.multiAccount.dialogs.passwordDialog.cancel()}</Button>
         <Button variant='outlined' type='submit' form='configure-password-form'>
-          Validate
+          {LL.option.multiAccount.dialogs.passwordDialog.validate()}
         </Button>
       </DialogActions>
     </Dialog>

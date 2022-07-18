@@ -46,14 +46,14 @@ export const OptionMultiAccount = () => {
               )}
               {!gameMultiAccount.locked && gameMultiAccount.configured && (
                 <Box>
-                  <Typography>The multi account is enabled with your master password</Typography>
+                  <Typography>{LL.option.multiAccount.enable()}</Typography>
 
                   <Stack spacing={2} direction='row' sx={{ mt: 3 }}>
                     <Button variant='outlined' onClick={toggleChangePasswordDialog}>
-                      Change password
+                      {LL.option.multiAccount.changePassword()}
                     </Button>
                     <Button variant='outlined' onClick={toggleRemovePasswordDialog}>
-                      Remove the password
+                      {LL.option.multiAccount.removePassword()}
                     </Button>
                   </Stack>
                 </Box>
@@ -71,10 +71,10 @@ export const OptionMultiAccount = () => {
                   <UnlockForm />
                   <Stack spacing={2} direction='row' sx={{ mt: 3 }}>
                     <Button variant='outlined' onClick={toggleChangePasswordDialog}>
-                      Change password
+                      {LL.option.multiAccount.changePassword()}
                     </Button>
                     <Button variant='outlined' onClick={toggleRemovePasswordDialog}>
-                      Remove the password
+                      {LL.option.multiAccount.removePassword()}
                     </Button>
                   </Stack>
                 </Box>

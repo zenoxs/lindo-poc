@@ -792,6 +792,10 @@ type RootTranslation = {
 			 */
 			title: string
 			/**
+			 * The multi account is enabled with your master password
+			 */
+			enable: string
+			/**
 			 * To use this feature, a password must be configured. It will be used to start Lindo with multi-account automation.
 			 */
 			notConfigured: string
@@ -807,6 +811,14 @@ type RootTranslation = {
 			 * New Team
 			 */
 			newTeam: string
+			/**
+			 * Remove the password
+			 */
+			removePassword: string
+			/**
+			 * Change the password
+			 */
+			changePassword: string
 			dialogs: {
 				characterDialog: {
 					/**
@@ -849,6 +861,48 @@ type RootTranslation = {
 					 * Select a character
 					 */
 					title: string
+					/**
+					 * Cancel
+					 */
+					cancel: string
+				}
+				passwordDialog: {
+					/**
+					 * Configure master password
+					 */
+					configurePassword: string
+					/**
+					 * Change master password
+					 */
+					changePassword: string
+					/**
+					 * Remove your master password ?
+					 */
+					removePassword: string
+					/**
+					 * If you remove your master password you will lost your multi account configuration
+					 */
+					removePasswordInfo: string
+					/**
+					 * Password
+					 */
+					password: string
+					/**
+					 * Confirm Password
+					 */
+					confirmPassword: string
+					/**
+					 * Old Password
+					 */
+					oldPassword: string
+					/**
+					 * Remove password
+					 */
+					confirmRemovePassword: string
+					/**
+					 * Validate
+					 */
+					validate: string
 					/**
 					 * Cancel
 					 */
@@ -1813,6 +1867,10 @@ export type TranslationFunctions = {
 			 */
 			title: () => LocalizedString
 			/**
+			 * The multi account is enabled with your master password
+			 */
+			enable: () => LocalizedString
+			/**
 			 * To use this feature, a password must be configured. It will be used to start Lindo with multi-account automation.
 			 */
 			notConfigured: () => LocalizedString
@@ -1828,6 +1886,14 @@ export type TranslationFunctions = {
 			 * New Team
 			 */
 			newTeam: () => LocalizedString
+			/**
+			 * Remove the password
+			 */
+			removePassword: () => LocalizedString
+			/**
+			 * Change the password
+			 */
+			changePassword: () => LocalizedString
 			dialogs: {
 				characterDialog: {
 					/**
@@ -1870,6 +1936,48 @@ export type TranslationFunctions = {
 					 * Select a character
 					 */
 					title: () => LocalizedString
+					/**
+					 * Cancel
+					 */
+					cancel: () => LocalizedString
+				}
+				passwordDialog: {
+					/**
+					 * Configure master password
+					 */
+					configurePassword: () => LocalizedString
+					/**
+					 * Change master password
+					 */
+					changePassword: () => LocalizedString
+					/**
+					 * Remove your master password ?
+					 */
+					removePassword: () => LocalizedString
+					/**
+					 * If you remove your master password you will lost your multi account configuration
+					 */
+					removePasswordInfo: () => LocalizedString
+					/**
+					 * Password
+					 */
+					password: () => LocalizedString
+					/**
+					 * Confirm Password
+					 */
+					confirmPassword: () => LocalizedString
+					/**
+					 * Old Password
+					 */
+					oldPassword: () => LocalizedString
+					/**
+					 * Remove password
+					 */
+					confirmRemovePassword: () => LocalizedString
+					/**
+					 * Validate
+					 */
+					validate: () => LocalizedString
 					/**
 					 * Cancel
 					 */

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, DialogContentText } from '@mui/material'
+import { useI18nContext } from '@lindo/i18n'
 
 export interface RemovePasswordDialogProps {
   onClose: () => void
@@ -7,6 +8,7 @@ export interface RemovePasswordDialogProps {
 }
 
 export const RemovePasswordDialog = ({ open, onClose }: RemovePasswordDialogProps) => {
+  const { LL } = useI18nContext()
   const handleRemovePassword = async () => {
     window.lindoAPI.removeMasterPassword()
     onClose()
@@ -14,18 +16,16 @@ export const RemovePasswordDialog = ({ open, onClose }: RemovePasswordDialogProp
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Remove your master password ?</DialogTitle>
+      <DialogTitle>{LL.option.multiAccount.dialogs.passwordDialog.removePassword()}</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          If you remove your master password you will lost your multi account configuration
-        </DialogContentText>
+        <DialogContentText>{LL.option.multiAccount.dialogs.passwordDialog.removePasswordInfo()}</DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleRemovePassword} color='error'>
-          Remove Password
+          {LL.option.multiAccount.dialogs.passwordDialog.confirmRemovePassword()}
         </Button>
         <Button onClick={onClose} autoFocus>
-          Cancel
+          {LL.option.multiAccount.dialogs.passwordDialog.cancel()}
         </Button>
       </DialogActions>
     </Dialog>
