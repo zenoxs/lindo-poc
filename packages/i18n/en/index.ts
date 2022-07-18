@@ -58,108 +58,9 @@ const en: BaseTranslation = {
       button: {
         close: 'Completed'
       }
-    },
-    bugReport: {
-      title: 'Report a bug',
-      description: "If you've observed an unexpected behavior on Lindo, you can report it by describing it below.",
-      instructions: 'Please provide at least these information:',
-      list: {
-        '1': 'The unexpected behavior description',
-        '2': 'How to reproduce it',
-        '3': 'What would the usual expected behavior be'
-      },
-      placeholder: 'Description',
-      send: 'Send'
     }
   },
   option: {
-    vip: {
-      'multi-account': {
-        'home-no-master':
-          'To use this feature, a password must be configured. It will be used to start Lindo with multi-account automation.',
-        header: 'Multi accounts',
-        active: 'Enable multi accounts',
-        window: 'Window',
-        'delete-window': 'Delete',
-        'add-window': 'Add a window',
-        add: 'Add an account',
-        'account-name': 'Username',
-        password: 'Password',
-        modify_password: 'Change the password',
-        configure_password: 'Setting password',
-        delete_password: 'Removing the password',
-        'request-master-password': {
-          explanation:
-            'To access your account management, you must first enter your master password. This password was set on the first activation of the multi-account.',
-          label: 'Enter your password',
-          bad: 'The password is incorrect',
-          confirm: 'Carry on',
-          'ignore-step': 'Skip this step'
-        },
-        prompt: {
-          'add-master': {
-            title: 'Setting the Password',
-            confirm: 'Save',
-            cancel: 'Cancel',
-            'min-length': 'The password must contain at least length}} characters',
-            'success-text': 'The password will now be used to start the application.'
-          },
-          'edit-master': {
-            title: 'Changing the password',
-            'input-old-placeholder': 'Old password',
-            'input-new-placeholder': 'New password',
-            confirm: 'Save',
-            cancel: 'Cancel',
-            'min-length': 'The new password must contain at least {length:number} characters',
-            'incorrect-old': 'The old password is incorrect',
-            'success-text': 'The password has been changed.'
-          },
-          'delete-master': {
-            title: 'Removing the password',
-            text: 'Are you sure?<br/>This will delete the saved accounts.',
-            confirm: 'Remove',
-            cancel: 'Cancel',
-            'success-text': 'The password has been deleted.'
-          },
-          'maximum-account': {
-            title: 'Oops!',
-            text: 'You can not save more than 4 accounts without Wabbit donor rank.',
-            confirm: 'Increase my VIP rank',
-            cancel: 'I understood'
-          },
-          'add-account': {
-            title: 'Adding an account',
-            'input-login-placeholder': 'Username',
-            'input-password-placeholder': 'Password',
-            confirm: 'Save',
-            cancel: 'Cancel',
-            'min-length-login': 'The username must contain at least 1 character',
-            'min-length-password': 'The password must contain at least 1 character'
-          },
-          'edit-account': {
-            title: 'Changing an account',
-            'input-login-placeholder': 'Username',
-            'input-password-placeholder': 'Password',
-            confirm: 'Save',
-            cancel: 'Cancel',
-            'min-length-login': 'The username must contain at least 1 character',
-            'min-length-password': 'The password must contain at least 1 character'
-          }
-        }
-      },
-      zaapSearchFilter: {
-        placeholder: 'Search a zaap',
-        placeholderZaapi: 'Search a zaapi',
-        placeholderPrisme: 'Search a prisme'
-      },
-      jobsXp: {
-        text: ' XP missing<br>before level '
-      },
-      monsterTooltip: {
-        level: 'Level',
-        group: 'Group'
-      }
-    },
     general: {
       title: 'General',
       interface: 'Interface',
@@ -330,7 +231,7 @@ const en: BaseTranslation = {
     reset: 'Reset',
     save: 'Apply',
     prompt: {
-      'reset-option': {
+      resetOption: {
         text: 'By continuing, all parameters will be reset.<br/>This operation is not reversible.'
       }
     }

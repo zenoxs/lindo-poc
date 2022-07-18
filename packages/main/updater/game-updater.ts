@@ -69,7 +69,11 @@ export class GameUpdater {
     })
 
     this._updaterWindow.sendProgress({ message: 'DOWNLOAD MISSING ASSETS FILES ON DISK..', percent: 10 })
-    await this._downloadAssetsFiles(assetDiffManifest, remoteAssetManifest)
+    await this._downloadAssetsFiles(assetDiffManifest, remoteAssetManifest).catch((error) => {
+      console.log('Error while downloading assets files:', error)
+      console.log('Will restart in non async mod')
+      this._downloadAssetsFiles(assetDiffManifest, remoteAssetManifest, false)
+    })
 
     this._updaterWindow.sendProgress({ message: 'DOWNLOAD MISSING LINDO AND DOFUS FILES IN MEMORY..', percent: 40 })
     const [missingLindoFiles, missingDofusFiles] = await this._retrieveMissingLindoAndDofusFiles(
@@ -202,7 +206,7 @@ export class GameUpdater {
       }
     }
 
-    /** Redownload forced dofus if regex has changed */
+    /** Re-download forced dofus if regex has changed */
     if (lindoDiff['regex.json'] === 1) {
       for (const i in dofusDiff) dofusDiff[i] = 1
     }
@@ -224,18 +228,6 @@ export class GameUpdater {
 
     if (async) {
       const promises = []
-
-      let intervalLastValue = 0
-      const interval = setInterval(() => {
-        if (intervalLastValue === currentDownload) {
-          clearInterval(interval)
-          console.log('FAILED TO DOWNLOAD IN ASYNC. RESTARTING IN SYNCHRONOUS MODE')
-
-          // this.startingUpdate(false)
-        }
-
-        intervalLastValue = currentDownload
-      }, 30000)
 
       for (const i in diffManifest) {
         if (diffManifest[i] === 1) {
