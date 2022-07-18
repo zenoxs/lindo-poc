@@ -20,6 +20,14 @@ export const OptionGeneral = () => {
   const { appStore, optionStore } = useStores()
   const { LL } = useI18nContext()
 
+  const handleResetGameData = () => {
+    window.lindoAPI.resetGameData()
+  }
+
+  const handleClearCache = () => {
+    window.lindoAPI.clearCache()
+  }
+
   return (
     <Observer>
       {() => (
@@ -109,8 +117,12 @@ export const OptionGeneral = () => {
               {LL.option.general.gameData()}
             </Typography>
             <Stack alignItems='flex-start' spacing={1}>
-              <Button variant='outlined'>{LL.option.general.resetGame()}</Button>
-              <Button variant='outlined'>{LL.option.general.clearCache()}</Button>
+              <Button variant='outlined' onClick={handleResetGameData}>
+                {LL.option.general.resetGame()}
+              </Button>
+              <Button variant='outlined' onClick={handleClearCache}>
+                {LL.option.general.clearCache()}
+              </Button>
             </Stack>
             <FormControl fullWidth>
               <FormControlLabel control={<Checkbox />} label={LL.option.general.early()} />

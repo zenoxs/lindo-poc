@@ -14,6 +14,12 @@ const en: BaseTranslation = {
       tabsOverflow: {
         text: "Lindo doesn't support more than 6 tab per window, above that it can be laggy and buggy. But you can open a new window and it will be working just fine."
       }
+    },
+    dialogs: {
+      cacheCleared: {
+        title: 'Cache cleared',
+        message: 'Cache has been cleared on currently opened window'
+      }
     }
   },
   notifications: {

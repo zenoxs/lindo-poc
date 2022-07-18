@@ -12,7 +12,7 @@ export const AppStoreModel = types
     appVersion: types.optional(types.string, '1.0.0'),
     buildVersion: types.optional(types.string, '1.0.0'),
     lindoVersion: types.optional(types.string, '1.0.0'),
-    language: types.optional(types.enumeration(LANGUAGE_KEYS as Array<string>), 'en')
+    language: types.optional(types.enumeration<LanguageKey>(LANGUAGE_KEYS as Array<LanguageKey>), 'en')
   })
   .actions((self) => ({
     setAppVersion(appVersion: string) {

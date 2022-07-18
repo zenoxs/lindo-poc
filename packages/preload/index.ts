@@ -200,6 +200,14 @@ const sendAutoGroupPathInstruction = (instruction: FollowInstruction) => {
   ipcRenderer.send(IPCEvents.AUTO_GROUP_PUSH_PATH, instruction)
 }
 
+// options
+const resetGameData = () => {
+  ipcRenderer.send(IPCEvents.RESET_GAME_DATA)
+}
+const clearCache = () => {
+  ipcRenderer.send(IPCEvents.CLEAR_CACHE)
+}
+
 const lindoApi: LindoAPI = {
   fetchInitialStateAsync,
   resetStore,
@@ -226,6 +234,8 @@ const lindoApi: LindoAPI = {
   changeMasterPassword,
   removeMasterPassword,
   subscribeToAutoGroupPathInstruction,
-  sendAutoGroupPathInstruction
+  sendAutoGroupPathInstruction,
+  resetGameData,
+  clearCache
 }
 contextBridge.exposeInMainWorld('lindoAPI', lindoApi)

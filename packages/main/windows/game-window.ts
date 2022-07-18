@@ -138,4 +138,8 @@ export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWind
   sendAutoGroupInstruction(instruction: FollowInstruction) {
     this._win.webContents.send(IPCEvents.AUTO_GROUP_PUSH_PATH, instruction)
   }
+
+  clearCache() {
+    return this._win.webContents.session.clearCache()
+  }
 }

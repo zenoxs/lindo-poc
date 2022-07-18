@@ -42,6 +42,18 @@ type RootTranslation = {
 				text: string
 			}
 		}
+		dialogs: {
+			cacheCleared: {
+				/**
+				 * Cache cleared
+				 */
+				title: string
+				/**
+				 * Cache has been cleared on currently opened window
+				 */
+				message: string
+			}
+		}
 	}
 	notifications: {
 		/**
@@ -173,307 +185,8 @@ type RootTranslation = {
 				close: string
 			}
 		}
-		bugReport: {
-			/**
-			 * Report a bug
-			 */
-			title: string
-			/**
-			 * If you've observed an unexpected behavior on Lindo, you can report it by describing it below.
-			 */
-			description: string
-			/**
-			 * Please provide at least these information:
-			 */
-			instructions: string
-			list: {
-				/**
-				 * The unexpected behavior description
-				 */
-				'1': string
-				/**
-				 * How to reproduce it
-				 */
-				'2': string
-				/**
-				 * What would the usual expected behavior be
-				 */
-				'3': string
-			}
-			/**
-			 * Description
-			 */
-			placeholder: string
-			/**
-			 * Send
-			 */
-			send: string
-		}
 	}
 	option: {
-		vip: {
-			'multi-account': {
-				/**
-				 * To use this feature, a password must be configured. It will be used to start Lindo with multi-account automation.
-				 */
-				'home-no-master': string
-				/**
-				 * Multi accounts
-				 */
-				header: string
-				/**
-				 * Enable multi accounts
-				 */
-				active: string
-				/**
-				 * Window
-				 */
-				window: string
-				/**
-				 * Delete
-				 */
-				'delete-window': string
-				/**
-				 * Add a window
-				 */
-				'add-window': string
-				/**
-				 * Add an account
-				 */
-				add: string
-				/**
-				 * Username
-				 */
-				'account-name': string
-				/**
-				 * Password
-				 */
-				password: string
-				/**
-				 * Change the password
-				 */
-				modify_password: string
-				/**
-				 * Setting password
-				 */
-				configure_password: string
-				/**
-				 * Removing the password
-				 */
-				delete_password: string
-				'request-master-password': {
-					/**
-					 * To access your account management, you must first enter your master password. This password was set on the first activation of the multi-account.
-					 */
-					explanation: string
-					/**
-					 * Enter your password
-					 */
-					label: string
-					/**
-					 * The password is incorrect
-					 */
-					bad: string
-					/**
-					 * Carry on
-					 */
-					confirm: string
-					/**
-					 * Skip this step
-					 */
-					'ignore-step': string
-				}
-				prompt: {
-					'add-master': {
-						/**
-						 * Setting the Password
-						 */
-						title: string
-						/**
-						 * Save
-						 */
-						confirm: string
-						/**
-						 * Cancel
-						 */
-						cancel: string
-						/**
-						 * The password must contain at least length}} characters
-						 */
-						'min-length': string
-						/**
-						 * The password will now be used to start the application.
-						 */
-						'success-text': string
-					}
-					'edit-master': {
-						/**
-						 * Changing the password
-						 */
-						title: string
-						/**
-						 * Old password
-						 */
-						'input-old-placeholder': string
-						/**
-						 * New password
-						 */
-						'input-new-placeholder': string
-						/**
-						 * Save
-						 */
-						confirm: string
-						/**
-						 * Cancel
-						 */
-						cancel: string
-						/**
-						 * The new password must contain at least {length} characters
-						 * @param {number} length
-						 */
-						'min-length': RequiredParams<'length'>
-						/**
-						 * The old password is incorrect
-						 */
-						'incorrect-old': string
-						/**
-						 * The password has been changed.
-						 */
-						'success-text': string
-					}
-					'delete-master': {
-						/**
-						 * Removing the password
-						 */
-						title: string
-						/**
-						 * Are you sure?<br/>This will delete the saved accounts.
-						 */
-						text: string
-						/**
-						 * Remove
-						 */
-						confirm: string
-						/**
-						 * Cancel
-						 */
-						cancel: string
-						/**
-						 * The password has been deleted.
-						 */
-						'success-text': string
-					}
-					'maximum-account': {
-						/**
-						 * Oops!
-						 */
-						title: string
-						/**
-						 * You can not save more than 4 accounts without Wabbit donor rank.
-						 */
-						text: string
-						/**
-						 * Increase my VIP rank
-						 */
-						confirm: string
-						/**
-						 * I understood
-						 */
-						cancel: string
-					}
-					'add-account': {
-						/**
-						 * Adding an account
-						 */
-						title: string
-						/**
-						 * Username
-						 */
-						'input-login-placeholder': string
-						/**
-						 * Password
-						 */
-						'input-password-placeholder': string
-						/**
-						 * Save
-						 */
-						confirm: string
-						/**
-						 * Cancel
-						 */
-						cancel: string
-						/**
-						 * The username must contain at least 1 character
-						 */
-						'min-length-login': string
-						/**
-						 * The password must contain at least 1 character
-						 */
-						'min-length-password': string
-					}
-					'edit-account': {
-						/**
-						 * Changing an account
-						 */
-						title: string
-						/**
-						 * Username
-						 */
-						'input-login-placeholder': string
-						/**
-						 * Password
-						 */
-						'input-password-placeholder': string
-						/**
-						 * Save
-						 */
-						confirm: string
-						/**
-						 * Cancel
-						 */
-						cancel: string
-						/**
-						 * The username must contain at least 1 character
-						 */
-						'min-length-login': string
-						/**
-						 * The password must contain at least 1 character
-						 */
-						'min-length-password': string
-					}
-				}
-			}
-			zaapSearchFilter: {
-				/**
-				 * Search a zaap
-				 */
-				placeholder: string
-				/**
-				 * Search a zaapi
-				 */
-				placeholderZaapi: string
-				/**
-				 * Search a prisme
-				 */
-				placeholderPrisme: string
-			}
-			jobsXp: {
-				/**
-				 *  XP missing<br>before level 
-				 */
-				text: string
-			}
-			monsterTooltip: {
-				/**
-				 * Level
-				 */
-				level: string
-				/**
-				 * Group
-				 */
-				group: string
-			}
-		}
 		general: {
 			/**
 			 * General
@@ -1002,7 +715,7 @@ type RootTranslation = {
 		 */
 		save: string
 		prompt: {
-			'reset-option': {
+			resetOption: {
 				/**
 				 * By continuing, all parameters will be reset.<br/>This operation is not reversible.
 				 */
@@ -1126,6 +839,18 @@ export type TranslationFunctions = {
 				 * Lindo doesn't support more than 6 tab per window, above that it can be laggy and buggy. But you can open a new window and it will be working just fine.
 				 */
 				text: () => LocalizedString
+			}
+		}
+		dialogs: {
+			cacheCleared: {
+				/**
+				 * Cache cleared
+				 */
+				title: () => LocalizedString
+				/**
+				 * Cache has been cleared on currently opened window
+				 */
+				message: () => LocalizedString
 			}
 		}
 	}
@@ -1256,306 +981,8 @@ export type TranslationFunctions = {
 				close: () => LocalizedString
 			}
 		}
-		bugReport: {
-			/**
-			 * Report a bug
-			 */
-			title: () => LocalizedString
-			/**
-			 * If you've observed an unexpected behavior on Lindo, you can report it by describing it below.
-			 */
-			description: () => LocalizedString
-			/**
-			 * Please provide at least these information:
-			 */
-			instructions: () => LocalizedString
-			list: {
-				/**
-				 * The unexpected behavior description
-				 */
-				'1': () => LocalizedString
-				/**
-				 * How to reproduce it
-				 */
-				'2': () => LocalizedString
-				/**
-				 * What would the usual expected behavior be
-				 */
-				'3': () => LocalizedString
-			}
-			/**
-			 * Description
-			 */
-			placeholder: () => LocalizedString
-			/**
-			 * Send
-			 */
-			send: () => LocalizedString
-		}
 	}
 	option: {
-		vip: {
-			'multi-account': {
-				/**
-				 * To use this feature, a password must be configured. It will be used to start Lindo with multi-account automation.
-				 */
-				'home-no-master': () => LocalizedString
-				/**
-				 * Multi accounts
-				 */
-				header: () => LocalizedString
-				/**
-				 * Enable multi accounts
-				 */
-				active: () => LocalizedString
-				/**
-				 * Window
-				 */
-				window: () => LocalizedString
-				/**
-				 * Delete
-				 */
-				'delete-window': () => LocalizedString
-				/**
-				 * Add a window
-				 */
-				'add-window': () => LocalizedString
-				/**
-				 * Add an account
-				 */
-				add: () => LocalizedString
-				/**
-				 * Username
-				 */
-				'account-name': () => LocalizedString
-				/**
-				 * Password
-				 */
-				password: () => LocalizedString
-				/**
-				 * Change the password
-				 */
-				modify_password: () => LocalizedString
-				/**
-				 * Setting password
-				 */
-				configure_password: () => LocalizedString
-				/**
-				 * Removing the password
-				 */
-				delete_password: () => LocalizedString
-				'request-master-password': {
-					/**
-					 * To access your account management, you must first enter your master password. This password was set on the first activation of the multi-account.
-					 */
-					explanation: () => LocalizedString
-					/**
-					 * Enter your password
-					 */
-					label: () => LocalizedString
-					/**
-					 * The password is incorrect
-					 */
-					bad: () => LocalizedString
-					/**
-					 * Carry on
-					 */
-					confirm: () => LocalizedString
-					/**
-					 * Skip this step
-					 */
-					'ignore-step': () => LocalizedString
-				}
-				prompt: {
-					'add-master': {
-						/**
-						 * Setting the Password
-						 */
-						title: () => LocalizedString
-						/**
-						 * Save
-						 */
-						confirm: () => LocalizedString
-						/**
-						 * Cancel
-						 */
-						cancel: () => LocalizedString
-						/**
-						 * The password must contain at least length}} characters
-						 */
-						'min-length': () => LocalizedString
-						/**
-						 * The password will now be used to start the application.
-						 */
-						'success-text': () => LocalizedString
-					}
-					'edit-master': {
-						/**
-						 * Changing the password
-						 */
-						title: () => LocalizedString
-						/**
-						 * Old password
-						 */
-						'input-old-placeholder': () => LocalizedString
-						/**
-						 * New password
-						 */
-						'input-new-placeholder': () => LocalizedString
-						/**
-						 * Save
-						 */
-						confirm: () => LocalizedString
-						/**
-						 * Cancel
-						 */
-						cancel: () => LocalizedString
-						/**
-						 * The new password must contain at least {length} characters
-						 */
-						'min-length': (arg: { length: number }) => LocalizedString
-						/**
-						 * The old password is incorrect
-						 */
-						'incorrect-old': () => LocalizedString
-						/**
-						 * The password has been changed.
-						 */
-						'success-text': () => LocalizedString
-					}
-					'delete-master': {
-						/**
-						 * Removing the password
-						 */
-						title: () => LocalizedString
-						/**
-						 * Are you sure?<br/>This will delete the saved accounts.
-						 */
-						text: () => LocalizedString
-						/**
-						 * Remove
-						 */
-						confirm: () => LocalizedString
-						/**
-						 * Cancel
-						 */
-						cancel: () => LocalizedString
-						/**
-						 * The password has been deleted.
-						 */
-						'success-text': () => LocalizedString
-					}
-					'maximum-account': {
-						/**
-						 * Oops!
-						 */
-						title: () => LocalizedString
-						/**
-						 * You can not save more than 4 accounts without Wabbit donor rank.
-						 */
-						text: () => LocalizedString
-						/**
-						 * Increase my VIP rank
-						 */
-						confirm: () => LocalizedString
-						/**
-						 * I understood
-						 */
-						cancel: () => LocalizedString
-					}
-					'add-account': {
-						/**
-						 * Adding an account
-						 */
-						title: () => LocalizedString
-						/**
-						 * Username
-						 */
-						'input-login-placeholder': () => LocalizedString
-						/**
-						 * Password
-						 */
-						'input-password-placeholder': () => LocalizedString
-						/**
-						 * Save
-						 */
-						confirm: () => LocalizedString
-						/**
-						 * Cancel
-						 */
-						cancel: () => LocalizedString
-						/**
-						 * The username must contain at least 1 character
-						 */
-						'min-length-login': () => LocalizedString
-						/**
-						 * The password must contain at least 1 character
-						 */
-						'min-length-password': () => LocalizedString
-					}
-					'edit-account': {
-						/**
-						 * Changing an account
-						 */
-						title: () => LocalizedString
-						/**
-						 * Username
-						 */
-						'input-login-placeholder': () => LocalizedString
-						/**
-						 * Password
-						 */
-						'input-password-placeholder': () => LocalizedString
-						/**
-						 * Save
-						 */
-						confirm: () => LocalizedString
-						/**
-						 * Cancel
-						 */
-						cancel: () => LocalizedString
-						/**
-						 * The username must contain at least 1 character
-						 */
-						'min-length-login': () => LocalizedString
-						/**
-						 * The password must contain at least 1 character
-						 */
-						'min-length-password': () => LocalizedString
-					}
-				}
-			}
-			zaapSearchFilter: {
-				/**
-				 * Search a zaap
-				 */
-				placeholder: () => LocalizedString
-				/**
-				 * Search a zaapi
-				 */
-				placeholderZaapi: () => LocalizedString
-				/**
-				 * Search a prisme
-				 */
-				placeholderPrisme: () => LocalizedString
-			}
-			jobsXp: {
-				/**
-				 *  XP missing<br>before level 
-				 */
-				text: () => LocalizedString
-			}
-			monsterTooltip: {
-				/**
-				 * Level
-				 */
-				level: () => LocalizedString
-				/**
-				 * Group
-				 */
-				group: () => LocalizedString
-			}
-		}
 		general: {
 			/**
 			 * General
@@ -2081,7 +1508,7 @@ export type TranslationFunctions = {
 		 */
 		save: () => LocalizedString
 		prompt: {
-			'reset-option': {
+			resetOption: {
 				/**
 				 * By continuing, all parameters will be reset.<br/>This operation is not reversible.
 				 */

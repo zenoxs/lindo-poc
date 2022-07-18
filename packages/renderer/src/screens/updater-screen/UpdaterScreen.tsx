@@ -25,7 +25,7 @@ export const UpdaterScreen = () => {
         flexDirection: 'column'
       }}
     >
-      <LinearProgress variant='buffer' sx={{ margin: 2 }} value={progress.percent} />
+      <LinearProgress variant='buffer' sx={{ margin: 2 }} value={progress.percent} valueBuffer={100} />
       <Box sx={{ textAlign: 'center' }}>
         <span>{progress.message}</span>
       </Box>

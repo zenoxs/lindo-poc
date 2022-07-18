@@ -1,5 +1,5 @@
 import { GameContext, IPCEvents, RootStore, SaveCharacterImageArgs, GameTeamWindow, GameTeam } from '@lindo/shared'
-import { app, ipcMain, Menu } from 'electron'
+import { app, BrowserWindow, dialog, ipcMain, Menu } from 'electron'
 import express from 'express'
 import getPort from 'get-port'
 import { Server } from 'http'
@@ -12,10 +12,12 @@ import { MultiAccount } from './multi-account'
 import { runUpdater } from './updater'
 import { GameWindow, OptionWindow } from './windows'
 import path from 'path'
+import { I18n } from './utils'
 
 export class Application {
   private static _instance: Application
   private readonly _multiAccount: MultiAccount
+  private readonly _i18n: I18n
 
   static async init(rootStore: RootStore) {
     if (Application._instance) {
@@ -44,6 +46,7 @@ export class Application {
 
   private constructor(private _rootStore: RootStore, private _serveGameServer: Server) {
     this._multiAccount = new MultiAccount(this._rootStore)
+    this._i18n = new I18n(this._rootStore)
   }
 
   async run() {
@@ -197,6 +200,29 @@ export class Application {
       if (gWindow) {
         gWindow.setAudioMute(value)
       }
+    })
+
+    ipcMain.on(IPCEvents.RESET_GAME_DATA, () => {
+      console.log('Application ->', 'RESET_GAME_DATA')
+      fs.rmSync(GAME_PATH, { recursive: true, force: true })
+      app.relaunch()
+      app.quit()
+    })
+
+    ipcMain.on(IPCEvents.CLEAR_CACHE, async () => {
+      console.log('Application ->', 'CLEAR_CACHE')
+      Promise.all(this._gWindows.map((gWindow) => gWindow.clearCache())).finally(() => {
+        dialog
+          .showMessageBox(BrowserWindow.getFocusedWindow()!, {
+            type: 'info',
+            title: this._i18n.LL.main.dialogs.cacheCleared.title(),
+            message: this._i18n.LL.main.dialogs.cacheCleared.message(),
+            buttons: ['OK']
+          })
+          .then(() => {
+            app.exit()
+          })
+      })
     })
   }
 }

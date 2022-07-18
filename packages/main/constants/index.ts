@@ -7,8 +7,7 @@ export const DOFUS_ITUNES_ORIGIN = 'https://itunes.apple.com/lookup?id=104140697
 export const LOCAL_ASSET_MAP_PATH = GAME_PATH + 'assetMap.json'
 export const REMOTE_ASSET_MAP_URL = DOFUS_ORIGIN + 'assetMap.json'
 export const LOCAL_LINDO_MANIFEST_PATH = GAME_PATH + 'lindoManifest.json'
-export const REMOTE_LINDO_MANIFEST_URL =
-  'https://raw.githubusercontent.com/Clover-Lindo/lindo-game-base/master/manifest.json'
+export const REMOTE_LINDO_MANIFEST_URL = 'https://raw.githubusercontent.com/zenoxs/lindo-game-base/master/manifest.json'
 export const LOCAL_DOFUS_MANIFEST_PATH = GAME_PATH + 'manifest.json'
 export const REMOTE_DOFUS_MANIFEST_URL = DOFUS_ORIGIN + 'manifest.json'
 export const LOCAL_VERSIONS_PATH = GAME_PATH + 'versions.json'
