@@ -363,6 +363,11 @@ const en: BaseTranslation = {
     },
     runeLister: {
       message: 'Obtained {quantity: number} {runeName: string}'
+    },
+    zaapSearchFilter: {
+      placeholder: 'Search a zaap',
+      placeholderZaapi: 'Search a zaapi',
+      placeholderPrisme: 'Search a prisme'
     }
   }
 }

@@ -1081,6 +1081,20 @@ type RootTranslation = {
 			 */
 			message: RequiredParams<'quantity' | 'runeName'>
 		}
+		zaapSearchFilter: {
+			/**
+			 * Search a zaap
+			 */
+			placeholder: string
+			/**
+			 * Search a zaapi
+			 */
+			placeholderZaapi: string
+			/**
+			 * Search a prisme
+			 */
+			placeholderPrisme: string
+		}
 	}
 }
 
@@ -2141,6 +2155,20 @@ export type TranslationFunctions = {
 			 * Obtained {quantity} {runeName}
 			 */
 			message: (arg: { quantity: number, runeName: string }) => LocalizedString
+		}
+		zaapSearchFilter: {
+			/**
+			 * Search a zaap
+			 */
+			placeholder: () => LocalizedString
+			/**
+			 * Search a zaapi
+			 */
+			placeholderZaapi: () => LocalizedString
+			/**
+			 * Search a prisme
+			 */
+			placeholderPrisme: () => LocalizedString
 		}
 	}
 }

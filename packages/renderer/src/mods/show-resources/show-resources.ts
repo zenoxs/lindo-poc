@@ -29,7 +29,7 @@ export class ShowResourcesMod extends Mod {
   private resourcesBox?: HTMLDivElement
   private enabled: boolean = true
   private isHide: boolean = false
-  private settingDisposer: () => void
+  private readonly settingDisposer: () => void
 
   constructor(wGame: DofusWindow, rootStore: RootStore, LL: TranslationFunctions) {
     super(wGame, rootStore, LL)

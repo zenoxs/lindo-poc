@@ -15,6 +15,7 @@ import { RuneListerMod } from './rune-lister'
 import { ShortcutsMod } from './shortcuts'
 import { ShowResourcesMod } from './show-resources'
 import { VerticalTimelineMod } from './vertical-timeline'
+import { ZaapSearchFilterMod } from './zaap-search-filter'
 
 export * from './shortcuts'
 export * from './notifications'
@@ -47,5 +48,6 @@ export const MODS = [
   RapidExchangeMod,
   RuneListerMod,
   ShowResourcesMod,
+  ZaapSearchFilterMod,
   ...GENERAL_MODS
 ] as const
