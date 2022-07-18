@@ -1,6 +1,7 @@
 export interface StatedElement {
   elementId: number
   elementState: number
+  elementCellId: number
 }
 export interface InteractiveElement {
   elementId: number

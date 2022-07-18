@@ -1,10 +1,4 @@
-import {
-  ConnectionManagerEvents,
-  DofusWindow,
-  EquipmentWindow,
-  GUIWindowEvents,
-  InventoryWeightMessage
-} from '@/dofus-window'
+import { ConnectionManagerEvents, DofusWindow, EquipmentWindow, GUIWindowEvents } from '@/dofus-window'
 import { RootStore } from '@/store'
 import { TranslationFunctions } from '@lindo/i18n'
 import { EventManager } from '../helpers'
@@ -52,7 +46,7 @@ export class ShowPodsMod extends Mod {
       throw new Error("can't find the pod label")
     }
 
-    const updatePods = (msg: InventoryWeightMessage) => {
+    const updatePods = (msg: { weight: number; weightMax: number }) => {
       const pods = this.formatNumber(msg.weightMax - msg.weight)
       podsLabel.setText(`${pods} Pods:`)
     }

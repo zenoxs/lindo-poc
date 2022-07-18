@@ -39,7 +39,7 @@ export interface ChallengeInfoMessage {
   xpBonus: number
   challengeId: number
 }
-export interface InventoryWeightMessage {
+export interface InventoryWeightMessage extends DataSchema {
   weightMax: number
   weight: number
   _messageType: 'InventoryWeightMessage'
