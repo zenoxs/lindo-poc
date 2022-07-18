@@ -1,4 +1,5 @@
 import { ActorManager } from './actor-manager'
+import { InteractiveElement, StatedElement } from './element'
 import { MapCell, MapDirection } from './map'
 
 export interface IsoEngine {
@@ -25,18 +26,8 @@ export interface IsoEngine {
   mapRenderer: {
     isFightMode: boolean
     mapId: number
-    interactiveElements: Record<
-      number,
-      {
-        enabledSkills: Record<
-          number,
-          {
-            skillId: number
-            skillInstanceUid: number
-          }
-        >
-      }
-    >
+    interactiveElements: Record<number, InteractiveElement>
+    statedElements: Record<number, StatedElement>
     isWalkable: (cell: number | null) => boolean
     getChangeMapFlags: (cell: number | null) => Record<MapDirection, boolean>
     getCellSceneCoordinate: (cell: number) => {

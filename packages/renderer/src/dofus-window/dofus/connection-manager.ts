@@ -1,4 +1,5 @@
 import TypedEmitter from 'typed-emitter'
+import { InteractiveElement, StatedElement } from '../iso-engine'
 import { _GameRolePlayActor } from './actor'
 import { _CharacterBaseInformations } from './character'
 
@@ -44,10 +45,7 @@ export interface InventoryWeightMessage {
   _messageType: 'InventoryWeightMessage'
 }
 export interface StatedElementUpdatedMessage {
-  statedElement: {
-    elementId: number
-    elementCellId: number
-  }
+  statedElement: StatedElement
 }
 export interface InteractiveUsedMessage {
   elemId: number
@@ -62,6 +60,8 @@ export interface JobExperienceUpdateMessage {
 }
 export interface MapComplementaryInformationsDataMessage {
   actors: Array<_GameRolePlayActor>
+  interactiveElements: Array<InteractiveElement>
+  statedElements: Array<StatedElement>
   fights: Record<
     string,
     {

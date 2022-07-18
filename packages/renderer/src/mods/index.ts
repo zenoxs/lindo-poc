@@ -13,6 +13,7 @@ import { PartyInfoMod, PartyMemberMod } from './party-info'
 import { RapidExchangeMod } from './rapid-exchange'
 import { RuneListerMod } from './rune-lister'
 import { ShortcutsMod } from './shortcuts'
+import { ShowResourcesMod } from './show-resources'
 import { VerticalTimelineMod } from './vertical-timeline'
 
 export * from './shortcuts'
@@ -45,5 +46,6 @@ export const MODS = [
   PartyInfoMod,
   RapidExchangeMod,
   RuneListerMod,
+  ShowResourcesMod,
   ...GENERAL_MODS
 ] as const
