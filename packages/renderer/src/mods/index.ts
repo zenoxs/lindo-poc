@@ -10,6 +10,7 @@ import { JobXPMod } from './job-xp'
 import { MonsterTooltipMod } from './monster-tooltip'
 import { NotificationsMod } from './notifications'
 import { PartyInfoMod, PartyMemberMod } from './party-info'
+import { RapidExchangeMod } from './rapid-exchange'
 import { ShortcutsMod } from './shortcuts'
 import { VerticalTimelineMod } from './vertical-timeline'
 
@@ -41,5 +42,6 @@ export const MODS = [
   AutoGroupMod,
   PartyMemberMod,
   PartyInfoMod,
+  RapidExchangeMod,
   ...GENERAL_MODS
 ] as const

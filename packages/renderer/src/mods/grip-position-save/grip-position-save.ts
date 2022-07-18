@@ -1,5 +1,5 @@
 import { Mod } from '../mod'
-import { DofusWindow, GUIElement, GUIEvents } from '@/dofus-window'
+import { DofusWindow, WuiDom, GUIEvents } from '@/dofus-window'
 import { RootStore } from '@/store'
 import { TranslationFunctions } from '@lindo/i18n'
 import { PlayerDataEvents } from '@/dofus-window/gui/player-data'
@@ -104,7 +104,7 @@ export class GripPositionSaveMod extends Mod {
 
   private registerGrip(grip: string) {
     this.eventManager.on(this.wGame.gui[grip as never], 'dragEnd', () => {
-      const element = this.wGame.gui[grip as never] as GUIElement
+      const element = this.wGame.gui[grip as never] as WuiDom
       this.savePosition(grip, element.rootElement.style.top, element.rootElement.style.left)
     })
 

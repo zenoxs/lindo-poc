@@ -1,98 +1,39 @@
 import TypedEmitter from 'typed-emitter'
-import { _CharacterBaseInformations } from '../dofus'
-import { CharacterDisplay } from './character-display'
 import { Chat } from './chat'
 import { FightManager } from './fight-manager'
 import { Party } from './party'
 import { PlayerData } from './player-data'
 import { Scroller } from './scroller'
+import { TapBehavior } from './tap-behavior'
+import { GUIWindow } from './window'
+import { WuiDom } from './wui-dom'
 
-export interface GUIElement {
-  id: string
-  _contentType: 'wui' | undefined
-  _childrenList: Array<GUIElement>
-  rootElement: HTMLDivElement
-  setText: (text: string) => boolean
-  hasClassName: (className: string) => boolean
+export type SlotEvents = {
+  doubletap: () => void
+}
+export interface Slot extends TypedEmitter<SlotEvents> {
+  tap: () => void
 }
 
 export interface GUICanvas {
   rootElement: HTMLCanvasElement
 }
-
-export interface GUIText extends GUIElement {}
-
-export interface GUIButton extends GUIElement {
-  isEnable: () => boolean
-  setEnable: (enable: boolean) => void
-  cancelTap: () => void
-  tap: () => void
+export interface GUIButton extends WuiDom, TapBehavior {
+  id: string
 }
 
-export interface GUITableRowContent<T> extends GUIButton {
+export interface GUITableRowContent<T> extends TapBehavior {
   data?: T
 }
 
-export interface GUITable<T> extends GUIElement {
+export interface GUITable<T> extends WuiDom {
   content: {
     _childrenList: Array<GUITableRowContent<T>>
   }
 }
-
-export interface WUIElement extends GUIElement {
-  isVisible: () => boolean
-  close: () => void
-  _childrenList: Array<GUIElement>
-  _contentType: 'wui'
+export interface GUIDialog extends WuiDom {
+  _childrenList: Array<WuiDom>
 }
-
-export interface GUIDialog extends GUIElement {
-  isVisible: () => boolean
-  close: () => void
-  _childrenList: Array<GUIElement>
-}
-
-export interface WindowOpenEvent {
-  id: string
-  tabId: string
-  itemData: {
-    _type: string
-  }
-  _messageType: string
-}
-export type GUIWindowEvents = {
-  open: (event: WindowOpenEvent) => void
-  opened: () => void
-}
-export interface GUIWindowSchema extends GUIElement, TypedEmitter<GUIWindowEvents> {
-  id: 'itemRecipes' | 'bidHouseShop' | 'grimoire' | 'social' | 'equipment' | 'characterSelection' | 'recaptcha'
-  isVisible: () => boolean
-  close: () => void
-  openState: boolean
-}
-
-export interface GenericWindow extends GUIWindowSchema {
-  id: 'itemRecipes' | 'bidHouseShop' | 'grimoire' | 'social' | 'recaptcha'
-  storageBox: {}
-}
-
-export interface EquipmentWindow extends GUIWindowSchema {
-  id: 'equipment'
-  storageBox: GUIElement
-}
-
-export interface CharacterSelection extends GUIWindowSchema {
-  id: 'characterSelection'
-  characterDisplay: CharacterDisplay
-  btnCreate: GUIButton
-  btnDelete: GUIButton
-  btnPlay: GUIButton
-  selectedCharacter?: _CharacterBaseInformations
-  charactersTable: GUITable<_CharacterBaseInformations>
-}
-
-export type GUIWindow = EquipmentWindow | GenericWindow | CharacterSelection
-
 export interface ChallengeIcon {
   description: string
   details: unknown
@@ -104,19 +45,19 @@ export interface ChallengeIcon {
   points: number
   xpBonus: number
 }
-
-export type SlotEvents = {
-  doubletap: () => void
-}
-export interface Slot extends TypedEmitter<SlotEvents> {
-  tap: () => void
-}
-
 export interface GameFightTurnStartMessage {
   id: number
   waitTime: number
   _isInitialized: false
   _messageType: 'GameFightTurnStartMessage'
+}
+
+export interface ExchangeObjectAddedMessage {
+  remote?: unknown
+  object: {
+    objectUID: number
+    quantity: number
+  }
 }
 
 export type GUIEvents = {
@@ -130,6 +71,7 @@ export type GUIEvents = {
   GameActionFightLifePointsLostMessage: () => void
   GameActionFightLifeAndShieldPointsLostMessage: () => void
   GameActionFightPointsVariationMessage: () => void
+  ExchangeObjectAddedMessage: (msg: ExchangeObjectAddedMessage) => void
 }
 
 export interface GUI extends TypedEmitter<GUIEvents> {
