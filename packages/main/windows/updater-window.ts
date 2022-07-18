@@ -1,4 +1,4 @@
-import { IPCEvents, UpdateProgress } from '@lindo/shared'
+import { IPCEvents, RootStore, UpdateProgress } from '@lindo/shared'
 import { app, BrowserWindow } from 'electron'
 import { join } from 'path'
 import { EventEmitter } from 'stream'
@@ -52,8 +52,8 @@ export class UpdaterWindow extends (EventEmitter as new () => TypedEmitter<Updat
     })
   }
 
-  static async init(): Promise<UpdaterWindow> {
-    const userAgent = await generateUserArgent()
+  static async init(store: RootStore): Promise<UpdaterWindow> {
+    const userAgent = await generateUserArgent(store.appStore.appVersion)
     return new UpdaterWindow(userAgent)
   }
 

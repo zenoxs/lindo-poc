@@ -114,7 +114,7 @@ export class GameWindow extends (EventEmitter as new () => TypedEmitter<GameWind
   }
 
   static async init(store: RootStore, team?: GameTeam, teamWindow?: GameTeamWindow): Promise<GameWindow> {
-    const userAgent = await generateUserArgent()
+    const userAgent = await generateUserArgent(store.appStore.appVersion)
     return new GameWindow(userAgent, store, team, teamWindow)
   }
 

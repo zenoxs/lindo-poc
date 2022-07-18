@@ -1,6 +1,6 @@
 import * as macaddress from 'macaddress'
 
-export const generateUserArgent = async () => {
+export const generateUserArgent = async (appVersion: string) => {
   const phones: String[] = [
     'Linux; Android 6.0.1; SM-G900F Build/MMB29M',
     'Linux; Android 7.0; SAMSUNG-SM-G891A Build/NRD90M',
@@ -107,5 +107,5 @@ export const generateUserArgent = async () => {
   const userAgent =
     'Mozilla/5.0 (' + device + '; wv)' + ' AppleWebKit/537.36 (KHTML, like Gecko) ' + chrome + ' Mobile Safari/537.36'
 
-  return userAgent + ' DofusTouch Client ' // + settings.getSync('appVersion');
+  return userAgent + ' DofusTouch Client ' + appVersion
 }

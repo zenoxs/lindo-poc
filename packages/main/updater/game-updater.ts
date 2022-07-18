@@ -40,7 +40,7 @@ export class GameUpdater {
   }
 
   static async init(rootStore: RootStore): Promise<GameUpdater> {
-    const updaterWindow = await UpdaterWindow.init()
+    const updaterWindow = await UpdaterWindow.init(rootStore)
     return new GameUpdater(updaterWindow, rootStore)
   }
 
