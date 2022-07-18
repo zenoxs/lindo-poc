@@ -19,9 +19,11 @@ import { Observer } from 'mobx-react-lite'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { CharacterCard } from '../option-screen/multi-account/components'
 import { GameTeam } from '@lindo/shared'
+import { useI18nContext } from '@lindo/i18n'
 
 export const ChooseTeamScreen = () => {
   const theme = useTheme()
+  const { LL } = useI18nContext()
   const {
     optionStore: { gameMultiAccount }
   } = useStores()
@@ -32,7 +34,6 @@ export const ChooseTeamScreen = () => {
 
   const handleConnect = (e: React.MouseEvent<HTMLElement>, team: GameTeam) => {
     e.stopPropagation()
-    console.log('connecting to team', team)
     window.lindoAPI.selectTeamToConnect(team.id)
   }
 
@@ -50,7 +51,7 @@ export const ChooseTeamScreen = () => {
       }}
     >
       <Box>
-        <Typography>Choose a team to connect</Typography>
+        <Typography>{LL.window.unlockScreen.chooseTeamConnect()}</Typography>
         <Observer>
           {() => (
             <>
@@ -71,7 +72,7 @@ export const ChooseTeamScreen = () => {
                       {team.allCharacters.map((c) => `${c.name}`).join(', ')}
                     </Typography>
                     <Button onClick={(e) => handleConnect(e, team)} sx={{ mr: 1 }}>
-                      Connect
+                      {LL.window.unlockScreen.connect()}
                     </Button>
                   </AccordionSummary>
                   <AccordionDetails>
@@ -100,7 +101,7 @@ export const ChooseTeamScreen = () => {
           )}
         </Observer>
         <Stack sx={{ mt: 2 }} alignSelf={'stretch'} direction='row' justifyContent='space-between'>
-          <Button onClick={handleSkip}>Skip</Button>
+          <Button onClick={handleSkip}>{LL.window.unlockScreen.skip()}</Button>
         </Stack>
       </Box>
     </Box>

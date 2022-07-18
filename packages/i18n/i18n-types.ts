@@ -197,23 +197,35 @@ type RootTranslation = {
 			 */
 			prefix: string
 		}
-		masterPassword: {
+		unlockScreen: {
 			/**
-			 * Continue
+			 * Enter your master password to connect your dofus touch accounts automatically
 			 */
-			'continue': string
+			info: string
 			/**
-			 * Skip this step
+			 * Choose a team to connect
+			 */
+			chooseTeamConnect: string
+			/**
+			 * Connect
+			 */
+			connect: string
+			/**
+			 * Master password
+			 */
+			masterPassword: string
+			/**
+			 * Invalid password
+			 */
+			invalidPassword: string
+			/**
+			 * Unlock
+			 */
+			unlock: string
+			/**
+			 * Skip
 			 */
 			skip: string
-			/**
-			 * Enter the master password
-			 */
-			passwordLabel: string
-			/**
-			 * The password is incorrect
-			 */
-			wrongPassword: string
 		}
 		updateGame: {
 			/**
@@ -988,60 +1000,6 @@ type RootTranslation = {
 			 */
 			text2: string
 		}
-		/**
-		 * Reset
-		 */
-		reset: string
-		/**
-		 * Apply
-		 */
-		save: string
-		prompt: {
-			resetOption: {
-				/**
-				 * By continuing, all parameters will be reset.<br/>This operation is not reversible.
-				 */
-				text: string
-			}
-		}
-	}
-	prompt: {
-		title: {
-			/**
-			 * Confirmation required
-			 */
-			confirm: string
-			/**
-			 * Warning !
-			 */
-			warning: string
-			/**
-			 * Successful operation !
-			 */
-			success: string
-			/**
-			 * Operation failed !
-			 */
-			error: string
-			/**
-			 * Information
-			 */
-			info: string
-		}
-		button: {
-			/**
-			 * Cancel
-			 */
-			cancel: string
-			/**
-			 * I confirm
-			 */
-			confirm: string
-			/**
-			 * Close
-			 */
-			close: string
-		}
 	}
 	mod: {
 		jobXP: {
@@ -1275,23 +1233,35 @@ export type TranslationFunctions = {
 			 */
 			prefix: () => LocalizedString
 		}
-		masterPassword: {
+		unlockScreen: {
 			/**
-			 * Continue
+			 * Enter your master password to connect your dofus touch accounts automatically
 			 */
-			'continue': () => LocalizedString
+			info: () => LocalizedString
 			/**
-			 * Skip this step
+			 * Choose a team to connect
+			 */
+			chooseTeamConnect: () => LocalizedString
+			/**
+			 * Connect
+			 */
+			connect: () => LocalizedString
+			/**
+			 * Master password
+			 */
+			masterPassword: () => LocalizedString
+			/**
+			 * Invalid password
+			 */
+			invalidPassword: () => LocalizedString
+			/**
+			 * Unlock
+			 */
+			unlock: () => LocalizedString
+			/**
+			 * Skip
 			 */
 			skip: () => LocalizedString
-			/**
-			 * Enter the master password
-			 */
-			passwordLabel: () => LocalizedString
-			/**
-			 * The password is incorrect
-			 */
-			wrongPassword: () => LocalizedString
 		}
 		updateGame: {
 			/**
@@ -2060,60 +2030,6 @@ export type TranslationFunctions = {
 			 * Originally known as DOFUS Touch No-Emu, this software developed by Daniel and Thomas was forced to close cause of an advertisement from Ankama.
 			 */
 			text2: () => LocalizedString
-		}
-		/**
-		 * Reset
-		 */
-		reset: () => LocalizedString
-		/**
-		 * Apply
-		 */
-		save: () => LocalizedString
-		prompt: {
-			resetOption: {
-				/**
-				 * By continuing, all parameters will be reset.<br/>This operation is not reversible.
-				 */
-				text: () => LocalizedString
-			}
-		}
-	}
-	prompt: {
-		title: {
-			/**
-			 * Confirmation required
-			 */
-			confirm: () => LocalizedString
-			/**
-			 * Warning !
-			 */
-			warning: () => LocalizedString
-			/**
-			 * Successful operation !
-			 */
-			success: () => LocalizedString
-			/**
-			 * Operation failed !
-			 */
-			error: () => LocalizedString
-			/**
-			 * Information
-			 */
-			info: () => LocalizedString
-		}
-		button: {
-			/**
-			 * Cancel
-			 */
-			cancel: () => LocalizedString
-			/**
-			 * I confirm
-			 */
-			confirm: () => LocalizedString
-			/**
-			 * Close
-			 */
-			close: () => LocalizedString
 		}
 	}
 	mod: {

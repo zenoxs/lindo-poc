@@ -65,11 +65,14 @@ const en: BaseTranslation = {
       title: 'Release notes',
       prefix: 'Release'
     },
-    masterPassword: {
-      continue: 'Continue',
-      skip: 'Skip this step',
-      passwordLabel: 'Enter the master password',
-      wrongPassword: 'The password is incorrect'
+    unlockScreen: {
+      info: 'Enter your master password to connect your dofus touch accounts automatically',
+      chooseTeamConnect: 'Choose a team to connect',
+      connect: 'Connect',
+      masterPassword: 'Master password',
+      invalidPassword: 'Invalid password',
+      unlock: 'Unlock',
+      skip: 'Skip'
     },
     updateGame: {
       title: 'Lindo update',
@@ -324,27 +327,6 @@ const en: BaseTranslation = {
         'Unlike an Android emulator, the code is directly interpreted by your computer, which makes it faster so you can play DOFUS Touch with the full performance of your computer !',
       text2:
         'Originally known as DOFUS Touch No-Emu, this software developed by Daniel and Thomas was forced to close cause of an advertisement from Ankama.'
-    },
-    reset: 'Reset',
-    save: 'Apply',
-    prompt: {
-      resetOption: {
-        text: 'By continuing, all parameters will be reset.<br/>This operation is not reversible.'
-      }
-    }
-  },
-  prompt: {
-    title: {
-      confirm: 'Confirmation required',
-      warning: 'Warning !',
-      success: 'Successful operation !',
-      error: 'Operation failed !',
-      info: 'Information'
-    },
-    button: {
-      cancel: 'Cancel',
-      confirm: 'I confirm',
-      close: 'Close'
     }
   },
   // MODS Texts
