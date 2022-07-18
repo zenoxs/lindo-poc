@@ -77,12 +77,12 @@ export class RapidExchangeMod extends Mod {
   // Listen to the "ctrl" key, and remember it's state
   private setKeyListener() {
     const keydown = (event: KeyboardEvent) => {
-      if (event.metaKey) {
+      if (event.key === 'Meta' || event.key === 'Ctrl') {
         this.keyPressed = true
       }
     }
     const keyup = (event: KeyboardEvent) => {
-      if (event.metaKey) {
+      if (event.key === 'Meta' || event.key === 'Ctrl') {
         this.keyPressed = false
       }
     }
