@@ -54,6 +54,9 @@ export const generateUserArgent = async (appVersion: string) => {
   ]
 
   const chromes: String[] = [
+    'Chrome/103.0.5060.71',
+    'Chrome/102.0.5005.125',
+    'Chrome/88.0.4324.93',
     'Chrome/85.0.4183.81',
     'Chrome/84.0.4147.89',
     'Chrome/83.0.4103.106',
@@ -105,7 +108,14 @@ export const generateUserArgent = async (appVersion: string) => {
   let chrome = chromes[randomChrome]
   chrome = chrome.replace(/(\w+\/)((\d+\.){3})(\d+)/, '$1$2' + Math.round((seed % 90) + 60))
   const userAgent =
-    'Mozilla/5.0 (' + device + '; wv)' + ' AppleWebKit/537.36 (KHTML, like Gecko) ' + chrome + ' Mobile Safari/537.36'
+    'Mozilla/5.0 (' +
+    device +
+    '; wv)' +
+    ' AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 ' +
+    chrome +
+    ' Mobile Safari/537.36' +
+    ' DofusTouch Client ' +
+    appVersion
 
-  return userAgent + ' DofusTouch Client ' + appVersion
+  return userAgent
 }
