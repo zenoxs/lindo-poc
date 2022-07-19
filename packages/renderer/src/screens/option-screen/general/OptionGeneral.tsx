@@ -129,7 +129,7 @@ export const OptionGeneral = () => {
               <FormControl>
                 <FormControlLabel
                   onChange={(_, checked) => {
-                    setDisplayRestart(checked && !appStore.dofusTouchEarly)
+                    setDisplayRestart(checked !== appStore.dofusTouchEarly)
                     return appStore.setDofusTouchEarly(checked)
                   }}
                   checked={appStore.dofusTouchEarly}
