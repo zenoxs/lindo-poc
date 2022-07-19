@@ -17,7 +17,8 @@ import {
   LOCAL_REGEX_PATH,
   LOCAL_VERSIONS_PATH,
   REMOTE_ASSET_MAP_URL,
-  REMOTE_DOFUS_MANIFEST_URL
+  REMOTE_DOFUS_MANIFEST_URL,
+  DOFUS_EARLY_ORIGIN
 } from '../constants'
 import { RootStore } from '@lindo/shared'
 import { app } from 'electron'
@@ -31,11 +32,13 @@ export class GameUpdater {
   private readonly _updaterWindow: UpdaterWindow
   private readonly _rootStore: RootStore
   private readonly _httpClient: AxiosInstance
+  private readonly _dofusOrigin: string
 
   private constructor(updaterWindow: UpdaterWindow, rootStore: RootStore) {
     this._updaterWindow = updaterWindow
     this._rootStore = rootStore
     this._httpClient = axios.create()
+    this._dofusOrigin = rootStore.appStore.dofusTouchEarly ? DOFUS_EARLY_ORIGIN : DOFUS_ORIGIN
     axiosRetry(this._httpClient, { retries: 5, retryDelay: () => 1000 })
   }
 
@@ -214,7 +217,7 @@ export class GameUpdater {
     const dofusFiles: Files = {}
     for (const i in dofusDiff) {
       if (dofusDiff[i] === 1) {
-        dofusFiles[i] = await this._downloadFile(DOFUS_ORIGIN + remoteDofus.files[i].filename)
+        dofusFiles[i] = await this._downloadFile(this._dofusOrigin + remoteDofus.files[i].filename)
       }
     }
     return [lindoFiles, dofusFiles]
@@ -233,7 +236,7 @@ export class GameUpdater {
         if (diffManifest[i] === 1) {
           promises.push(
             new Promise((resolve) => {
-              const url = DOFUS_ORIGIN + remoteAsset.files[i].filename
+              const url = this._dofusOrigin + remoteAsset.files[i].filename
               const filePath = GAME_PATH + remoteAsset.files[i].filename
 
               const directoryPath = path.dirname(filePath)
@@ -260,7 +263,7 @@ export class GameUpdater {
     } else {
       for (const i in diffManifest) {
         if (diffManifest[i] === 1) {
-          const url = DOFUS_ORIGIN + remoteAsset.files[i].filename
+          const url = this._dofusOrigin + remoteAsset.files[i].filename
           const filePath = GAME_PATH + remoteAsset.files[i].filename
 
           const directoryPath = path.dirname(filePath)

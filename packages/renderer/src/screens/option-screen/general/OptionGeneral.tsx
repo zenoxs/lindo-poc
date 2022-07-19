@@ -18,6 +18,7 @@ import { useI18nContext } from '@lindo/i18n'
 
 export const OptionGeneral = () => {
   const { appStore, optionStore } = useStores()
+  const [displayRestart, setDisplayRestart] = React.useState(false)
   const { LL } = useI18nContext()
 
   const handleResetGameData = () => {
@@ -124,14 +125,24 @@ export const OptionGeneral = () => {
                 {LL.option.general.clearCache()}
               </Button>
             </Stack>
-            <FormControl fullWidth>
-              <FormControlLabel
-                onChange={(_, checked) => appStore.setDofusTouchEarly(checked)}
-                checked={appStore.dofusTouchEarly}
-                control={<Checkbox />}
-                label={LL.option.general.early()}
-              />
-            </FormControl>
+            <Stack alignItems='flex-start' direction='row' spacing={1}>
+              <FormControl>
+                <FormControlLabel
+                  onChange={(_, checked) => {
+                    setDisplayRestart(checked && !appStore.dofusTouchEarly)
+                    return appStore.setDofusTouchEarly(checked)
+                  }}
+                  checked={appStore.dofusTouchEarly}
+                  control={<Checkbox />}
+                  label={LL.option.general.early()}
+                />
+              </FormControl>
+              {displayRestart && (
+                <Button variant='text' color='warning' onClick={handleResetGameData}>
+                  You need to restart to apply change
+                </Button>
+              )}
+            </Stack>
           </Box>
         </>
       )}
