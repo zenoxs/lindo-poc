@@ -17,7 +17,7 @@ export const TabAdd = styled((props: TabAddProps) => {
     if (gameStore.games.length < 6) {
       gameStore.addGame()
     } else {
-      alert(LL.main.dialogs.tabsOverflow.text())
+      alert(LL.window.main.tabsOverflow.text())
       gameStore.addGame()
     }
   }
