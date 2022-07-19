@@ -50,7 +50,7 @@ export class GameUpdater {
 
   async run() {
     // create folder if missing
-    fs.rmSync(GAME_PATH, { recursive: true, force: true })
+    // fs.rmSync(GAME_PATH, { recursive: true, force: true })
     fs.mkdirSync(GAME_PATH, { recursive: true })
     fs.mkdirSync(GAME_PATH + 'build', { recursive: true })
 

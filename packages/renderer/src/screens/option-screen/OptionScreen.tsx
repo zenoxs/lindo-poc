@@ -1,3 +1,4 @@
+import { useDialog } from '@/hooks'
 import { useI18nContext } from '@lindo/i18n'
 import {
   Box,
@@ -14,6 +15,7 @@ import {
   useTheme
 } from '@mui/material'
 import React, { useState } from 'react'
+import { ChangelogDialog } from './changelog'
 import { OptionFeatures } from './features'
 import { OptionGeneral } from './general'
 import { OptionMultiAccount } from './multi-account'
@@ -23,25 +25,23 @@ import { TabPanel } from './TabPanel'
 
 export const OptionScreen = () => {
   const [selectedTab, setSelectedTab] = useState(0)
-  const [openResetDialog, setOpenResetDialog] = React.useState(false)
+  const [openResetDialog, , toggleResetDialog] = useDialog()
+  const [openChangelogDialog, , toggleChangelogDialog] = useDialog()
   const { LL } = useI18nContext()
   const theme = useTheme()
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    console.log(newValue)
+    if (newValue === 6) {
+      toggleChangelogDialog()
+      return
+    }
     setSelectedTab(newValue)
-  }
-
-  const handleOpenResetDialog = () => {
-    setOpenResetDialog(true)
-  }
-
-  const handleCloseResetDialog = () => {
-    setOpenResetDialog(false)
   }
 
   const handleResetStore = () => {
     window.lindoAPI.resetStore()
-    handleCloseResetDialog()
+    toggleResetDialog()
   }
   return (
     <>
@@ -60,6 +60,7 @@ export const OptionScreen = () => {
           <Tab label={LL.option.notifications.title()} />
           <Tab label={LL.option.multiAccount.title()} />
           <Tab label={LL.option.about.title()} />
+          <Tab label={'Changelog'} sx={{ color: theme.palette.secondary.dark, fontSize: 13 }} />
         </Tabs>
         <Box
           sx={{
@@ -101,7 +102,7 @@ export const OptionScreen = () => {
               justifyContent: 'space-between'
             }}
           >
-            <Button color='error' onClick={handleOpenResetDialog}>
+            <Button color='error' onClick={toggleResetDialog}>
               {LL.window.options.button.reset()}
             </Button>
             <Button variant='contained' onClick={() => window.lindoAPI.closeOptionWindow()}>
@@ -110,18 +111,19 @@ export const OptionScreen = () => {
           </Box>
         </Box>
       </Box>
-      <Dialog open={openResetDialog} onClose={handleCloseResetDialog}>
+      <Dialog open={openResetDialog} onClose={toggleResetDialog}>
         <DialogTitle>{LL.window.options.dialogs.resetSettings.title()}</DialogTitle>
         <DialogContent>
           <DialogContentText> {LL.window.options.dialogs.resetSettings.message()}</DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleResetStore}> {LL.window.options.dialogs.resetSettings.confirm()}</Button>
-          <Button onClick={handleCloseResetDialog} autoFocus>
+          <Button onClick={toggleResetDialog} autoFocus>
             {LL.window.options.dialogs.resetSettings.cancel()}
           </Button>
         </DialogActions>
       </Dialog>
+      <ChangelogDialog open={openChangelogDialog} onClose={toggleChangelogDialog} />
     </>
   )
 }

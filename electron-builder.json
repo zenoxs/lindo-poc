@@ -8,7 +8,9 @@
     "buildResources": "resources"
   },
   "files": [
-    "dist"
+    "dist",
+    "CHANGELOG.md",
+    "LICENCE"
   ],
   "win": {
     "icon": "resources/icon.ico",

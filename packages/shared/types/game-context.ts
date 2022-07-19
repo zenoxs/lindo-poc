@@ -8,4 +8,5 @@ export interface GameContext {
   characterImagesSrc: string
   windowId: number
   multiAccount?: MultiAccountContext
+  changeLogSrc: string
 }

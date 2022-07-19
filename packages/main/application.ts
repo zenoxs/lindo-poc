@@ -5,13 +5,14 @@ import getPort from 'get-port'
 import { Server } from 'http'
 import { observe } from 'mobx'
 import { AddressInfo } from 'net'
-import { CHARACTER_IMAGES_PATH, GAME_PATH } from './constants'
+import { APP_PATH, CHARACTER_IMAGES_PATH, GAME_PATH } from './constants'
 import fs from 'fs-extra'
 import { getAppMenu } from './menu'
 import { MultiAccount } from './multi-account'
 import { runUpdater } from './updater'
 import { GameWindow, OptionWindow } from './windows'
 import path from 'path'
+import cors from 'cors'
 import { I18n } from './utils'
 
 export class Application {
@@ -26,8 +27,14 @@ export class Application {
 
     // create express server to serve game file
     const serveGameServer = express()
+    serveGameServer.use(
+      cors({
+        origin: '*'
+      })
+    )
     serveGameServer.use('/', express.static(GAME_PATH))
     serveGameServer.use('/character-images', express.static(CHARACTER_IMAGES_PATH))
+    serveGameServer.use('/changelog', express.static(APP_PATH + '/CHANGELOG.md'))
     const port = await getPort({ port: 3000 })
     const server: Server = serveGameServer.listen(port)
 
@@ -146,6 +153,7 @@ export class Application {
       const context: GameContext = {
         gameSrc: 'http://localhost:' + serverAddress.port + '/index.html?delayed=true',
         characterImagesSrc: 'http://localhost:' + serverAddress.port + '/character-images/',
+        changeLogSrc: 'http://localhost:' + serverAddress.port + '/changelog',
         windowId: event.sender.id,
         multiAccount: gWindow?.multiAccount
       }
