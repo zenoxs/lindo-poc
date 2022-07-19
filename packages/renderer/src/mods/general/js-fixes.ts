@@ -1,4 +1,4 @@
-import { DofusWindow } from '@/dofus-window'
+import { DofusWindow, IScroll, MapScene, WorldMap } from '@/dofus-window'
 import { RootStore } from '@/store'
 import { TranslationFunctions } from '@lindo/i18n'
 import { Mod } from '../mod'
@@ -10,6 +10,7 @@ export class JsFixesMod extends Mod {
     super(wGame, rootStore, LL)
     this.contextLost()
     this.spritesOutOfScreen()
+    this.mapZoom()
   }
 
   private contextLost() {
@@ -44,6 +45,46 @@ export class JsFixesMod extends Mod {
 
     this._disposers.push(() => {
       this.wGame.isoEngine.mapScene._refreshAreas = _refreshAreasBackup
+    })
+  }
+
+  private mapZoom() {
+    const worldZoom = function (worldMap: WorldMap, e: IScroll) {
+      const zoom = -e.deltaY / 600
+      const previousZ = worldMap._scene.camera.zoomTarget
+      worldMap._scene.camera.zoomTo(worldMap._scene.camera.zoom * (1 + zoom))
+      const newZ = worldMap._scene.camera.zoomTarget
+      const deltaZ = newZ / previousZ
+      worldMap._scene.move(0, 0, e.layerX * (deltaZ - 1), e.layerY * (deltaZ - 1), 1)
+      worldMap._loadChunksInView()
+    }
+
+    const mapZoom = function (mapScene: MapScene, e: IScroll) {
+      const zoom = -e.deltaY / 600
+      mapScene.camera.zoomTo(mapScene.camera.zoom * (1 + zoom))
+    }
+
+    this.wGame.gui.windowsContainer.getChildren().forEach((child) => {
+      if (child.id === 'worldMap') {
+        child.on('open', () => {
+          const onMouseWheel = (e: Event) => {
+            worldZoom(child._worldMap, e as IScroll)
+          }
+          child._worldMap.rootElement.addEventListener('mousewheel', onMouseWheel)
+          this._disposers.push(() => {
+            child._worldMap.rootElement.removeEventListener('mousewheel', onMouseWheel)
+          })
+        })
+      }
+    })
+
+    const onMouseWheel = (e: Event) => {
+      mapZoom(this.wGame.isoEngine.mapScene, e as IScroll)
+    }
+
+    this.wGame.foreground.rootElement.addEventListener('mousewheel', onMouseWheel)
+    this._disposers.push(() => {
+      this.wGame.foreground.rootElement.removeEventListener('mousewheel', onMouseWheel)
     })
   }
 

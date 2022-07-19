@@ -5,6 +5,7 @@ import { _CharacterBaseInformations } from '../dofus'
 import { StorageViewer } from './storage-viewer'
 import { TradeSpace } from './trade-space'
 import { WuiDom } from './wui-dom'
+import { WorldMap } from './world-map'
 
 export interface WindowOpenEvent {
   id: string
@@ -31,6 +32,7 @@ export type WindowID =
   | 'tradeWithPlayerAndNPCInventory'
   | 'tradeWithNPC'
   | 'tradeWithPlayer'
+  | 'worldMap'
 export interface GUIWindowSchema extends WuiDom {
   id: WindowID
   isVisible: () => boolean
@@ -87,6 +89,11 @@ export interface CharacterSelection extends GUIWindowSchema, TypedEmitter<GUIWin
   charactersTable: GUITable<_CharacterBaseInformations>
 }
 
+export interface WorldMapWindow extends GUIWindowSchema, TypedEmitter<GUIWindowEvents> {
+  id: 'worldMap'
+  _worldMap: WorldMap
+}
+
 export type GUIWindow =
   | EquipmentWindow
   | GenericWindow
@@ -96,3 +103,4 @@ export type GUIWindow =
   | ExchangeInventoryWindow
   | TradeWithNPCWindow
   | TradeWithPlayerWindow
+  | WorldMapWindow

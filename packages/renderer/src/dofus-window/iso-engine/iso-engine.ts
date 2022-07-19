@@ -1,6 +1,6 @@
 import { ActorManager } from './actor-manager'
 import { InteractiveElement, StatedElement } from './element'
-import { MapCell, MapDirection } from './map'
+import { MapCell, MapDirection, MapScene } from './map'
 
 export interface IsoEngine {
   background: {
@@ -9,19 +9,7 @@ export interface IsoEngine {
   useInteractive: (elemId: number, skillInstanceUid?: number) => void
   _movePlayerOnMap: (cellId: number, bool: boolean, cb: () => void) => void
   _castSpellImmediately: (cellId: number) => void
-  mapScene: {
-    l: number
-    t: number
-    areasToRefresh: Record<string, Array<number>>
-    convertSceneToCanvasCoordinate: (
-      x: number,
-      y: number
-    ) => {
-      x: number
-      y: number
-    }
-    _refreshAreas: () => void
-  }
+  mapScene: MapScene
   gotoNeighbourMap: (direction: MapDirection, cell: number, x: number, y: number) => void
   mapRenderer: {
     isFightMode: boolean

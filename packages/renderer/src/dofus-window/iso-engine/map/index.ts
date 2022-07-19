@@ -1,3 +1,5 @@
+export * from './map-scene'
+
 export type MapDirection = 'left' | 'right' | 'top' | 'bottom'
 
 export interface MapCell {
